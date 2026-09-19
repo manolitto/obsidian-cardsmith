@@ -124,7 +124,7 @@ duplex-flip: long-edge
 cut-marks:
   enabled: true
   length: 3 # mm
-  margin: 0 # mm between the card corner and the mark; 0 makes the two arms meet at the corner
+  margin: 0 # mm between the card corner and the mark; 0 makes the four arms meet at the corner
   color: "#aaaaaa"
   weight: 0.25 # mm
 

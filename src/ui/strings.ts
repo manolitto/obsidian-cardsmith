@@ -119,7 +119,7 @@ const en = {
   "deck-key.duplex-flip":
     "Which paper edge is the binding when printing duplex, so fronts and backs align: `long-edge` or `short-edge`.",
   "deck-key.cut-marks":
-    "The alignment marks in the margins; the fields merge, so one can change alone.",
+    "The cut marks at every card corner; the fields merge, so one can change alone.",
   "deck-key.paper-background":
     "`textured` prints the system's background pictures, `plain` leaves them out. Default: the plugin setting.",
   "deck-key.folder-recursive": "Include the folder's subfolders.",
@@ -291,7 +291,7 @@ const de: Strings = {
   "deck-key.duplex-flip":
     "Welche Papierkante beim Duplexdruck die Bindung ist, damit Vorder- und Rückseiten übereinanderliegen: `long-edge` oder `short-edge`.",
   "deck-key.cut-marks":
-    "Die Schnittmarken in den Rändern; die Felder verschmelzen, eines lässt sich allein ändern.",
+    "Die Schnittmarken an jeder Kartenecke; die Felder verschmelzen, eines lässt sich allein ändern.",
   "deck-key.paper-background":
     "`textured` druckt die Hintergrundbilder des Systems, `plain` lässt sie weg. Standard: die Plugin-Einstellung.",
   "deck-key.folder-recursive": "Die Unterordner des Ordners einschließen.",

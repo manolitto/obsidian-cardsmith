@@ -60,7 +60,9 @@ export function exportDocument(
         (cell) =>
           `<div class="cs-cell" style="left:${mm(cell.x)}mm;top:${mm(cell.y)}mm;width:${mm(grid.card.width)}mm;height:${mm(grid.card.height)}mm">${cell.html}</div>`
       );
-    return `<div class="${pageClass}" data-cs-side="${page.side}">${cutMarksSvg(page, grid, cutMarks)}${cells.join("")}</div>`;
+    // The marks come last: siblings paint in order, so they lie over the
+    // cards, where the corners of a gapless grid are.
+    return `<div class="${pageClass}" data-cs-side="${page.side}">${cells.join("")}${cutMarksSvg(page, grid, cutMarks)}</div>`;
   });
 
   return [

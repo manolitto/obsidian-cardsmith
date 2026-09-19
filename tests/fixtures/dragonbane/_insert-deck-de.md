@@ -32,7 +32,7 @@ card-type: [gear, creature]
 # Welche Papierkante beim Duplexdruck die Bindung ist, damit Vorder- und Rückseiten übereinanderliegen: `long-edge` oder `short-edge`.
 # duplex-flip: long-edge
 
-# Die Schnittmarken in den Rändern; die Felder verschmelzen, eines lässt sich allein ändern.
+# Die Schnittmarken an jeder Kartenecke; die Felder verschmelzen, eines lässt sich allein ändern.
 # cut-marks: {enabled: true, length: 3, margin: 0, color: '#aaaaaa', weight: 0.25}
 
 # `textured` druckt die Hintergrundbilder des Systems, `plain` lässt sie weg. Standard: die Plugin-Einstellung.

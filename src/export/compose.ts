@@ -215,12 +215,16 @@ function at(grid: Grid, column: number, row: number): { x: number; y: number } {
 }
 
 /**
- * Cut marks for a page: short lines in the margins, one pair per cut. Every
- * edge of every card on the page is a cut, and a cut is marked at both ends
- * — outside the block of cards, `margin` clear of it, `length` long — so no
- * mark ever crosses a card face and a cut through the middle of the block
- * is marked at the sheet's edge, where the blade starts. Positions come
- * from the cells as placed, so a back page's marks mirror with its cards.
+ * Cut marks for a page: a cross at every corner of every card — four arms
+ * along the two cuts that meet there, each `margin` clear of the corner and
+ * `length` long. At the block's edge two arms reach into the paper margin
+ * and two lie on the faces; inside the block all four lie on the faces,
+ * where a corner marks the only place a cut can be found between cards
+ * packed without a gap. The document paints the marks over the cards, so
+ * what stays on a cut card is a stub of each arm at each corner, the same
+ * on every card wherever it printed. A corner shared by several cards is
+ * marked once. Positions come from the cells as placed, so a back page's
+ * marks mirror with its cards.
  */
 export function cutMarks(cells: readonly Cell[], grid: Grid, marks: CutMarks): Line[] {
   if (!marks.enabled || cells.length === 0) return [];
@@ -228,29 +232,24 @@ export function cutMarks(cells: readonly Cell[], grid: Grid, marks: CutMarks): L
   const gap = marks.margin ?? 0;
   const { width, height } = grid.card;
 
-  const xs = new Set<number>();
-  const ys = new Set<number>();
-  let left = Infinity;
-  let right = -Infinity;
-  let top = Infinity;
-  let bottom = -Infinity;
+  // Keyed on the printed value: a corner reached from two cells is the
+  // same corner, whatever the last bit of the arithmetic said.
+  const corners = new Map<string, { x: number; y: number }>();
   for (const cell of cells) {
-    xs.add(cell.x).add(cell.x + width);
-    ys.add(cell.y).add(cell.y + height);
-    left = Math.min(left, cell.x);
-    right = Math.max(right, cell.x + width);
-    top = Math.min(top, cell.y);
-    bottom = Math.max(bottom, cell.y + height);
+    for (const x of [cell.x, cell.x + width]) {
+      for (const y of [cell.y, cell.y + height]) {
+        const key = `${mm(x)},${mm(y)}`;
+        if (!corners.has(key)) corners.set(key, { x, y });
+      }
+    }
   }
 
   const out: Line[] = [];
-  for (const x of [...xs].sort((a, b) => a - b)) {
-    out.push({ x1: x, y1: top - gap - length, x2: x, y2: top - gap });
-    out.push({ x1: x, y1: bottom + gap, x2: x, y2: bottom + gap + length });
-  }
-  for (const y of [...ys].sort((a, b) => a - b)) {
-    out.push({ x1: left - gap - length, y1: y, x2: left - gap, y2: y });
-    out.push({ x1: right + gap, y1: y, x2: right + gap + length, y2: y });
+  for (const { x, y } of corners.values()) {
+    out.push({ x1: x, y1: y - gap - length, x2: x, y2: y - gap });
+    out.push({ x1: x, y1: y + gap, x2: x, y2: y + gap + length });
+    out.push({ x1: x - gap - length, y1: y, x2: x - gap, y2: y });
+    out.push({ x1: x + gap, y1: y, x2: x + gap + length, y2: y });
   }
   return out;
 }

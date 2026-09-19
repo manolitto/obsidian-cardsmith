@@ -32,7 +32,7 @@ card-type: simple
 # Which paper edge is the binding when printing duplex, so fronts and backs align: `long-edge` or `short-edge`.
 # duplex-flip: long-edge
 
-# The alignment marks in the margins; the fields merge, so one can change alone.
+# The cut marks at every card corner; the fields merge, so one can change alone.
 # cut-marks: {enabled: true, length: 3, margin: 0, color: '#aaaaaa', weight: 0.25}
 
 # `textured` prints the system's background pictures, `plain` leaves them out. Default: the plugin setting.
