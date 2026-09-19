@@ -60,12 +60,17 @@ them must keep it.
 | `5e/assets/d20-mark.svg` | 5e | A twenty-sided die as a flat silhouette, drawn for this project (MIT). It resembles no publisher's mark. |
 | `eiserne-zeit/assets/eiserne-zeit-logo.png`, and the torn paper edge and the cross fleury drawn as inline SVG in the system's stylesheet | eiserne-zeit | The publisher's logo and two elements of the publisher's own graphic design. **Bundled with the explicit permission of Markus Schauta (Gazer Press, Vienna).** The permission covers their use in this plugin; it does not transfer to anyone extracting them for other use. |
 | `pf2e/assets/p-mark.webp` | pf2e | Paizo's Pathfinder "P" mark, from Paizo's Community Use Package, re-encoded to WebP without any change to colour, typography, design or proportions. Paizo property, used under the Community Use Policy — see the notice below. |
+| `dragonbane/assets/parchment_light.webp`, `tor2e/assets/parchment_light.webp` | dragonbane, tor2e | The parchment behind the cards: *Parchment Paper Background* by Andrea Stöckel, released into the public domain on publicdomainpictures.net, in the lightened version Sibling Dex made for the Dragonbrew template (below); re-encoded to WebP and downscaled for the bundle. |
+| `dragonbane/assets/scroll-n.webp`, `dragonbane/assets/banner-n.webp` | dragonbane | The stat box and the plaques: cut by Sibling Dex for the Dragonbrew template from *Old Scroll Texture II* by Esther Sanz (https://www.deviantart.com/esther-sanz/art/Old-Scroll-Texture-II-114214631), licensed **CC BY 3.0** (https://creativecommons.org/licenses/by/3.0/); re-encoded to WebP. Anyone who shares cards printed with this system keeps this attribution. |
 | The gear back of `dragonbane` and the emblem on its picture-less backs; the flourish on `tor2e`'s picture-less backs | dragonbane, tor2e | Inline SVG drawn for this project (MIT), in each system's stylesheet. |
 | `docs/images/*.png` | — | Renders of the plugin's own test fixtures — invented cards of the `mini-d20` and `simple` systems — made for the README. The icons on the MINI D20 cards are game-icons.net's (above). |
 
-The parchment texture and the two ornament bitmaps of the Dragonbane
-system are under clarification with the author of the template they come
-from; their rows follow once the terms are recorded.
+The three textures above reached this project through the *Dragonbrew*
+template for the Homebrewery by Sibling Dex
+(https://github.com/sibling-dex/homebrewery-templates), a template made
+for Dragonbane material, whose own credits name these sources and ask that
+material made with it say so: this deck design was made using the
+Dragonbrew template by Sibling Dex.
 
 ## Bundled systems
 

@@ -34,7 +34,10 @@ field, ornament strips and plaques, the stat box. German.
 
 Poker unless said otherwise; `de`. Not a Supplement under the game's
 third-party licence — the system bundles no Dragonbane text — and anyone
-who publishes one made with it carries that licence's obligations.
+who publishes one made with it carries that licence's obligations. The
+parchment and the scroll ornaments come through the Dragonbrew template
+by Sibling Dex, from public-domain and CC BY 3.0 textures; the
+attribution travels with the cards.
 
 ## eiserne-zeit
 
