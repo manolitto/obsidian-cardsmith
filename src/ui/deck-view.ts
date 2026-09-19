@@ -14,6 +14,8 @@ import { t } from "./strings";
  * pressed, never on its own: a keystroke in a 200-card deck is not a
  * reason to lay out 200 cards, and neither is a restart. Its state is the
  * deck note's path, so it comes back after one with a *Rebuild* waiting.
+ * Opening it for a note it already shows builds again: the note changed,
+ * or the reader would not have asked.
  */
 
 export const DECK_VIEW_TYPE = "cardsmith-deck-preview";
@@ -24,8 +26,6 @@ const GUTTER = 16;
 
 interface DeckViewState {
   path?: string;
-  /** Set by `openDeckView` and never saved: build now, rather than wait for *Rebuild*. */
-  build?: boolean;
 }
 
 export class DeckView extends ItemView {
@@ -35,7 +35,6 @@ export class DeckView extends ItemView {
   private frame?: HTMLIFrameElement;
   private paperWidth = 0;
   private building = false;
-  private pendingBuild = false;
 
   constructor(
     leaf: WorkspaceLeaf,
@@ -70,7 +69,7 @@ export class DeckView extends ItemView {
     const observer = new ResizeObserver(() => this.fit());
     observer.observe(this.sheet);
     this.register(() => observer.disconnect());
-    this.settle();
+    this.wait();
   }
 
   override getState(): Record<string, unknown> {
@@ -80,24 +79,20 @@ export class DeckView extends ItemView {
   override async setState(state: unknown, result: { history: boolean }): Promise<void> {
     const next = state as DeckViewState | null;
     if (next?.path) this.path = next.path;
-    if (next?.build) this.pendingBuild = true;
-    // The state may arrive before the view has opened; `onOpen` settles it then.
-    if (this.status) this.settle();
+    // The state may arrive before the view has opened; `onOpen` says it then.
+    if (this.status) this.wait();
     await super.setState(state, result);
   }
 
-  /** Build if asked to; otherwise say what the view is waiting for. */
-  private settle(): void {
-    if (this.pendingBuild) {
-      this.pendingBuild = false;
-      void this.build();
-    } else if (!this.frame) {
+  /** Say what the view is waiting for, unless it is showing a deck. */
+  private wait(): void {
+    if (!this.frame) {
       this.status.setText(this.path ? t("view.waiting") : t("view.no-file"));
     }
   }
 
   /** Build the deck and show its document; one build at a time. */
-  private async build(): Promise<void> {
+  async build(): Promise<void> {
     if (this.building || !this.status) return;
     const file = this.path && this.app.vault.getAbstractFileByPath(this.path);
     if (!(file instanceof TFile)) {
@@ -184,6 +179,10 @@ export class DeckView extends ItemView {
  * deck block's button, which showed the progress in its own label — and
  * the view presents it; without, the view builds it itself, as the
  * command asks.
+ *
+ * A leaf in the background may hold a placeholder in place of the view
+ * (a deferred view), so the note it shows is read off the leaf's state,
+ * and the view is loaded before it is spoken to.
  */
 export async function openDeckView(
   app: App,
@@ -192,18 +191,21 @@ export async function openDeckView(
 ): Promise<void> {
   const existing = app.workspace
     .getLeavesOfType(DECK_VIEW_TYPE)
-    .find((leaf) => (leaf.view as DeckView).getState()["path"] === file.path);
-  if (existing) {
-    await app.workspace.revealLeaf(existing);
-    if (built) (existing.view as DeckView).present(built);
-    return;
+    .find(
+      (leaf) =>
+        (leaf.getViewState().state as DeckViewState | undefined)?.path === file.path
+    );
+  const leaf = existing ?? app.workspace.getLeaf("split");
+  if (!existing) {
+    await leaf.setViewState({
+      type: DECK_VIEW_TYPE,
+      state: { path: file.path } satisfies DeckViewState,
+      active: true,
+    });
   }
-  const leaf = app.workspace.getLeaf("split");
-  await leaf.setViewState({
-    type: DECK_VIEW_TYPE,
-    state: { path: file.path, build: !built } satisfies DeckViewState,
-    active: true,
-  });
   await app.workspace.revealLeaf(leaf);
-  if (built) (leaf.view as DeckView).present(built);
+  await leaf.loadIfDeferred();
+  const view = leaf.view as DeckView;
+  if (built) view.present(built);
+  else await view.build();
 }
