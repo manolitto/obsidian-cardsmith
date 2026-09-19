@@ -6,6 +6,7 @@ import {
   type App,
   type MarkdownPostProcessorContext,
 } from "obsidian";
+import type { PaperBackground } from "../definitions/deck-settings";
 import { collectDiagnostics } from "../definitions/diagnostics";
 import { layoutCard } from "../layout/engine";
 import { CARD_PRESETS, DEFAULT_CARD_PRESET } from "../model/card-size";
@@ -41,6 +42,8 @@ export interface CardBlockContext {
   renderer: CardRenderer;
   /** The reader's preview height — the layer under a note's `display-height`. */
   previewHeight(): number;
+  /** The reader's paper background; a note has no say in it. */
+  paperBackground(): PaperBackground;
 }
 
 /** The processor `registerMarkdownCodeBlockProcessor("cardsmith", …)` takes. */
@@ -146,7 +149,8 @@ class CardPreview extends MarkdownRenderChild {
       stylesheet,
       previewFaces(laidOut, card.settings.side),
       card.settings.cardSize ?? CARD_PRESETS[DEFAULT_CARD_PRESET],
-      card.settings.displayHeight ?? this.context.previewHeight()
+      card.settings.displayHeight ?? this.context.previewHeight(),
+      this.context.paperBackground()
     );
     if (laidOut.clipped) diagnostics.warn(t("preview.clipped"));
     this.showDiagnostics(diagnostics.messages);

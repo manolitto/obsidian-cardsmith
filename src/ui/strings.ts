@@ -174,7 +174,7 @@ const en = {
     "Height of a card in the in-note preview, in pixels. A note may override it with display-height.",
   "settings.paper-background.name": "Paper background",
   "settings.paper-background.desc":
-    "Whether a deck prints the system's background textures. A deck may override it with paper-background.",
+    "Whether cards show the system's background textures, in the note and in print. A deck may override it with paper-background.",
   "settings.paper-background.textured": "Textured",
   "settings.paper-background.plain": "Plain",
   "settings.language.name": "Language",
@@ -346,7 +346,7 @@ const de: Strings = {
     "Höhe einer Karte in der Vorschau in der Notiz, in Pixeln. Eine Notiz kann sie mit display-height überschreiben.",
   "settings.paper-background.name": "Papierhintergrund",
   "settings.paper-background.desc":
-    "Ob ein Deck die Hintergrundtexturen des Systems druckt. Ein Deck kann es mit paper-background überschreiben.",
+    "Ob Karten die Hintergrundtexturen des Systems zeigen, in der Notiz und im Druck. Ein Deck kann es mit paper-background überschreiben.",
   "settings.paper-background.textured": "Texturiert",
   "settings.paper-background.plain": "Schlicht",
   "settings.language.name": "Sprache",

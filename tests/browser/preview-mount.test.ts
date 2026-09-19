@@ -1,4 +1,5 @@
 import { afterEach, describe, expect, it } from "vitest";
+import type { PaperBackground } from "../../src/definitions/deck-settings";
 import { collectDiagnostics } from "../../src/definitions/diagnostics";
 import { layoutCard, type LaidOutCard } from "../../src/layout/engine";
 import type { RenderedCard } from "../../src/render/renderer";
@@ -49,7 +50,8 @@ function mountAt(
   card: RenderedCard,
   faces: string[],
   height: number,
-  stylesheet: string
+  stylesheet: string,
+  paperBackground: PaperBackground = "textured"
 ): PreviewMount {
   host = document.createElement("div");
   document.body.append(host);
@@ -59,7 +61,8 @@ function mountAt(
     stylesheet,
     faces,
     card.settings.cardSize!,
-    height
+    height,
+    paperBackground
   );
   return mount;
 }
@@ -100,6 +103,23 @@ describe("mountPreview", () => {
     expect(
       document.head.querySelectorAll('style[data-cs-fonts="dragonbane"]')
     ).toHaveLength(1);
+  });
+
+  it("drops a design's texture on plain paper, and keeps it on textured", async () => {
+    const { system, cards, first } = await laidOut("dragonbane", "Fischspeer");
+    const stylesheet = await system.stylesheet(cards[0]!.cardTypeId);
+    const faces = previewFaces(first, "front");
+    const background = (root: ShadowRoot) =>
+      getComputedStyle(root.querySelector<HTMLElement>(".card-root")!).backgroundImage;
+
+    const textured = mountAt(system, cards[0]!, faces, 300, stylesheet, "textured");
+    expect(textured.root.querySelector(".cs-paper-plain")).toBeNull();
+    expect(background(textured.root)).toContain("url(");
+    textured.remove();
+
+    const plain = mountAt(system, cards[0]!, faces, 300, stylesheet, "plain");
+    expect(plain.root.querySelector(".cs-preview-faces.cs-paper-plain")).not.toBeNull();
+    expect(background(plain.root)).toBe("none");
   });
 
   it("mounts one of a table note's cards", async () => {

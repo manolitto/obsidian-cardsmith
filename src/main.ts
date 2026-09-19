@@ -63,6 +63,7 @@ export default class CardsmithPlugin extends Plugin {
         systems: this.systems,
         renderer: this.renderer,
         previewHeight: () => this.settings.previewHeight,
+        paperBackground: () => this.settings.paperBackground,
       })
     );
 

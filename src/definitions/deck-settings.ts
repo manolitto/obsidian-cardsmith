@@ -33,7 +33,7 @@ export interface DeckSettings {
   duplexFlip?: DuplexFlip;
   /** Alignment marks at each card's corners. Fields merge, so one can change alone. */
   cutMarks?: CutMarks;
-  /** Whether to print the system's background textures. Defaults from the settings. */
+  /** Whether to print the system's background textures. Defaults from the settings, which also govern the card shown in its note. */
   paperBackground?: PaperBackground;
   /** Include notes from subfolders when a deck names a folder. */
   folderRecursive?: boolean;
@@ -46,7 +46,7 @@ export type DuplexFlip = "long-edge" | "short-edge";
 export type PaperBackground =
   /** Use the system's background images. */
   | "textured"
-  /** Drop them from everything printed or previewed as a deck; a card shown in its note keeps its design. */
+  /** Drop them from everything printed or shown — the deck's pages and the card in its note alike. */
   | "plain";
 
 /** Every field optional, because the fold merges them: a deck states only what it changes. */

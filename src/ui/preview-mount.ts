@@ -1,4 +1,5 @@
 import type { CardSide } from "../definitions/card-settings";
+import type { PaperBackground } from "../definitions/deck-settings";
 import type { LaidOutCard } from "../layout/engine";
 import { hoistFontFaces } from "../layout/host";
 import type { CardSize } from "../model/card-size";
@@ -14,7 +15,9 @@ import type { CardSize } from "../model/card-size";
  * Obsidian's never touch. A shadow root cannot load a font, so the
  * `@font-face` rules are hoisted into the document's head the way the
  * layout host does it; a system's fonts are parsed once per document
- * however many previews show it.
+ * however many previews show it. Plain paper is the same hook the export
+ * stamps on its pages, `cs-paper-plain`, here on the faces' wrapper: the
+ * card shows what the printer would print.
  *
  * DOM only: no Obsidian, no measurement, no scaling of text.
  */
@@ -45,7 +48,8 @@ export function previewFaces(card: LaidOutCard, side: CardSide = "both"): string
 /**
  * Put the faces on the screen inside `host`. `stylesheet` is the card's
  * whole cascade as `LoadedSystem.stylesheet` assembles it; `systemId` keys
- * the hoisted fonts; `cardSize` is the size every face was laid out at.
+ * the hoisted fonts; `cardSize` is the size every face was laid out at;
+ * `paperBackground` is the reader's, since a note has no say in it.
  */
 export function mountPreview(
   host: HTMLElement,
@@ -53,7 +57,8 @@ export function mountPreview(
   stylesheet: string,
   faces: readonly string[],
   cardSize: CardSize,
-  displayHeight: number
+  displayHeight: number,
+  paperBackground: PaperBackground = "textured"
 ): PreviewMount {
   const doc = host.ownerDocument;
   const css = hoistFontFaces(doc, systemId, stylesheet);
@@ -66,9 +71,11 @@ export function mountPreview(
   host.appendChild(mount);
 
   const root = mount.attachShadow({ mode: "open" });
+  const facesClass =
+    paperBackground === "plain" ? "cs-preview-faces cs-paper-plain" : "cs-preview-faces";
   root.innerHTML =
     `<style>${css}\n${MOUNT_CSS}</style>` +
-    `<div class="cs-preview-faces">` +
+    `<div class="${facesClass}">` +
     faces
       .map(
         (face) =>
