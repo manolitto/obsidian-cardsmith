@@ -25,7 +25,19 @@ import { FACE_CLASS } from "./overflow-splitter";
 export interface LayoutHost {
   /** What the splitter is handed: the shadow root the faces lay out in. */
   root: ShadowRoot;
-  /** Every face's `.card-root` in print order, as HTML, wrappers dropped. */
+  /**
+   * Swap every picture's data URI for a blob URL and resolve once the
+   * pictures have decoded again. Call it with the faces settled and faded,
+   * before anything measures or restores them.
+   */
+  pinImages(): Promise<void>;
+  /**
+   * The same swap on an HTML string the splitter will parse repeatedly.
+   * Base64 payloads only: a percent-encoded one may carry entities in its
+   * HTML form, and it is short anyway.
+   */
+  pin(html: string): string;
+  /** Every face's `.card-root` in print order, as HTML, wrappers dropped, pictures as data URIs again. */
   faces(): string[];
   /** Take the host off the page. */
   remove(): void;
@@ -57,21 +69,87 @@ export function mountLayoutHost(
     .map((face) => `<div class="${FACE_CLASS}">${face}</div>`)
     .join("")}</div>`;
 
+  const win = doc.defaultView;
+  /** Blob URL → the data URI it stands in for. */
+  const pinned = new Map<string, string>();
+  const pin = (uri: string): string => {
+    if (!win) return uri;
+    for (const [url, held] of pinned) if (held === uri) return url;
+    const blob = blobOfDataUri(uri);
+    if (!blob) return uri;
+    const url = win.URL.createObjectURL(blob);
+    pinned.set(url, uri);
+    return url;
+  };
+
   return {
     root,
+    async pinImages() {
+      const imgs = root.querySelectorAll("img");
+      const decoding: Promise<void>[] = [];
+      for (let i = 0; i < imgs.length; i++) {
+        const img = imgs[i]!;
+        const uri = img.getAttribute("src") ?? "";
+        const url = pin(uri);
+        if (url === uri) continue;
+        img.src = url;
+        decoding.push(
+          img.decode().catch(() => {
+            // The blob would not decode where the data URI did: undo this one.
+            img.src = uri;
+          })
+        );
+      }
+      await Promise.all(decoding);
+    },
+    pin(html) {
+      return html.replace(
+        / src="(data:[^";]*;base64,[^"]*)"/g,
+        (_, uri: string) => ` src="${pin(uri)}"`
+      );
+    },
     faces() {
       const out: string[] = [];
       const wrappers = root.querySelectorAll(`.${FACE_CLASS}`);
       for (let i = 0; i < wrappers.length; i++) {
         const cardRoot = wrappers[i]!.querySelector(".card-root");
-        if (cardRoot) out.push(cardRoot.outerHTML);
+        if (!cardRoot) continue;
+        let html = cardRoot.outerHTML;
+        for (const [url, uri] of pinned) html = html.split(url).join(uri);
+        out.push(html);
       }
       return out;
     },
     remove() {
       host.remove();
+      if (win) for (const url of pinned.keys()) win.URL.revokeObjectURL(url);
+      pinned.clear();
     },
   };
+}
+
+/**
+ * The bytes a data URI carries, as a blob of its media type; `undefined`
+ * for anything that is not a well-formed data URI, which then stays as it
+ * is. Base64 payloads are decoded, percent-encoded ones (an inline SVG)
+ * unescaped.
+ */
+function blobOfDataUri(uri: string): Blob | undefined {
+  const comma = uri.indexOf(",");
+  if (!uri.startsWith("data:") || comma < 0) return undefined;
+  const meta = uri.slice(5, comma);
+  const payload = uri.slice(comma + 1);
+  try {
+    if (meta.endsWith(";base64")) {
+      const binary = atob(payload);
+      const bytes = new Uint8Array(binary.length);
+      for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+      return new Blob([bytes], { type: meta.slice(0, -";base64".length) });
+    }
+    return new Blob([decodeURIComponent(payload)], { type: meta });
+  } catch {
+    return undefined;
+  }
 }
 
 const FONT_FACE_RULE = /@font-face\s*\{[^}]*\}/g;
