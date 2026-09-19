@@ -58,5 +58,5 @@ of the copy, and the price of it.
 | Preference | Meaning |
 |---|---|
 | **Preview height** | Height of a card in the in-note preview, in pixels. A note may override it with `display-height` under `card:`. |
-| **Paper background** | Whether a deck prints the system's background textures — *Textured* or *Plain*. Plain saves ink on a draft; a deck block may override it with `paper-background`. |
+| **Paper background** | Whether cards show the system's background textures — *Textured* or *Plain* — in the note and in print alike. Plain saves ink on a draft; a deck block may override it with `paper-background`. |
 | **Language** | The language of the plugin's own interface — the buttons, the summaries, the messages: *Follow Obsidian*, *English* or *Deutsch*. The language a card prints in is the card's own setting, not this one. |

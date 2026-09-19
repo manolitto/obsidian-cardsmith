@@ -257,7 +257,8 @@
    on white — the ink-saving choice for a home printer. The plaques stay:
    they are the card's furniture, not its paper. The export stamps
    `cs-paper-plain` on every page of a deck whose `paper-background` is
-   `plain` (see base-card.css, "What the export stamps"). */
+   `plain`, the in-note preview when the setting is (see base-card.css,
+   "What the export stamps"). */
 .cs-paper-plain .card-root.dragonbane {
   background: #ffffff;
 }

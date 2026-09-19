@@ -320,11 +320,12 @@
 /* ── What the export stamps ─────────────────────────────────────── */
 
 /*
- * A deck's faces go onto pages in an export document, and the document
- * carries one hook a design may key on:
+ * A deck's faces go onto pages in an export document, a note's card into
+ * a preview, and both carry one hook a design may key on:
  *
  *   .cs-paper-plain    On every `.cs-page` of a deck whose `paper-background`
- *                      is `plain`: the reader wants the cards on white paper,
+ *                      is `plain`, and on the in-note preview when the plugin
+ *                      setting is: the reader wants the cards on white paper,
  *                      without the system's textures — the parchment photo,
  *                      the vignette, the torn edge. A system that paints such
  *                      a texture switches it off under this ancestor and
@@ -332,9 +333,6 @@
  *                      place, since those are the design and not the paper:
  *
  *                          .cs-paper-plain .card-root.my-system { background: #fff; }
- *
- *                      The in-note preview never stamps it: a card shown on
- *                      screen shows its design.
  *
  * This file paints no texture and so has no rule under it.
  */

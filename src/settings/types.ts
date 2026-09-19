@@ -57,9 +57,10 @@ export interface CardsmithSettings {
    */
   previewHeight: number;
   /**
-   * Whether a deck prints the system's textures — the layer under a deck's
-   * own `paper-background`. A reader's preference, not a system's: a system
-   * ships the textures, but whether they are printed is not its call.
+   * Whether cards show the system's textures — the card in its note, and
+   * the layer under a deck's own `paper-background`. A reader's preference,
+   * not a system's: a system ships the textures, but whether they are
+   * printed is not its call.
    */
   paperBackground: PaperBackground;
 }
