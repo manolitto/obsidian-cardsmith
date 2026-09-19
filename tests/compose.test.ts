@@ -158,20 +158,38 @@ describe("composePages", () => {
 });
 
 describe("cut marks", () => {
-  it("mark every cut at both ends, outside the block, and none across a card", () => {
+  it("are a cross of four arms at every corner of every card, shared corners once", () => {
     const { pages, grid } = composePages(deck());
     const marks = pages[0]!.marks;
-    // Three vertical cuts and four horizontal on a full 2 × 3 page, two marks each.
-    expect(marks).toHaveLength(14);
+    // A full 2 × 3 page has 3 × 4 distinct corners.
+    expect(marks).toHaveLength(12 * 4);
     const vertical = marks.filter((l) => l.x1 === l.x2);
-    expect([...new Set(vertical.map((l) => l.x1))]).toEqual([7, 70, 133]);
-    expect(vertical.filter((l) => l.y2 === grid.originY)).toHaveLength(3); // above
-    expect(vertical.filter((l) => l.y1 === grid.originY + 3 * 88)).toHaveLength(3); // below
-    for (const l of marks) {
-      const insideX = l.x1 > 7 && l.x1 < 133 && l.x2 > 7 && l.x2 < 133;
-      const insideY = l.y1 > 8 && l.y1 < 272 && l.y2 > 8 && l.y2 < 272;
-      expect(insideX && insideY).toBe(false);
-    }
+    const horizontal = marks.filter((l) => l.y1 === l.y2);
+    expect(vertical).toHaveLength(24);
+    expect(horizontal).toHaveLength(24);
+    expect([...new Set(vertical.map((l) => l.x1))].sort((a, b) => a - b)).toEqual([
+      7, 70, 133,
+    ]);
+    expect([...new Set(horizontal.map((l) => l.y1))].sort((a, b) => a - b)).toEqual([
+      8, 96, 184, 272,
+    ]);
+    // The top-left corner: up and left into the margin, down and right on the card.
+    const at = (x: number, y: number) =>
+      marks.filter((l) => (l.x1 === x && l.x2 === x) || (l.y1 === y && l.y2 === y));
+    expect(at(7, 8)).toEqual(
+      expect.arrayContaining([
+        { x1: 7, y1: 5, x2: 7, y2: 8 },
+        { x1: 7, y1: 8, x2: 7, y2: 11 },
+        { x1: 4, y1: 8, x2: 7, y2: 8 },
+        { x1: 7, y1: 8, x2: 10, y2: 8 },
+      ])
+    );
+    // An inner corner, shared by four cards: its four arms once.
+    const y = grid.originY + 88;
+    expect(marks.filter((l) => l.x1 === 70 && l.x2 === 70 && l.y2 === y)).toHaveLength(1);
+    expect(marks.filter((l) => l.x1 === 70 && l.x2 === 70 && l.y1 === y)).toHaveLength(1);
+    expect(marks.filter((l) => l.y1 === y && l.y2 === y && l.x2 === 70)).toHaveLength(1);
+    expect(marks.filter((l) => l.y1 === y && l.y2 === y && l.x1 === 70)).toHaveLength(1);
   });
 
   it("keep a margin from the corner, and mirror with the backs on a part-filled page", () => {
@@ -179,12 +197,13 @@ describe("cut marks", () => {
       deck({ cards: cards(1), cutMarks: { enabled: true, length: 4, margin: 1 } })
     );
     const front = pages[0]!.marks;
+    expect(front).toHaveLength(4 * 4);
     expect(front.find((l) => l.x1 === 7 && l.y2 === 8 - 1)).toMatchObject({ y1: 8 - 5 });
+    expect(front.find((l) => l.x1 === 7 && l.y1 === 8 + 1)).toMatchObject({ y2: 8 + 5 });
     // The one card's back sits in the other column, and its marks with it.
     const back = pages[1]!.marks;
-    expect([...new Set(back.filter((l) => l.x1 === l.x2).map((l) => l.x1))]).toEqual([
-      70, 133,
-    ]);
+    const xs = [...new Set(back.filter((l) => l.x1 === l.x2).map((l) => l.x1))];
+    expect(xs.sort((a, b) => a - b)).toEqual([70, 133]);
   });
 
   it("are none when switched off", () => {
@@ -222,10 +241,10 @@ describe("compositionText", () => {
     expect(compositionText(pages, grid)).toBe(
       [
         "2 pages · 140 × 280 mm · 2 × 3 of 63 × 88 mm at 7, 8",
-        "1. front · 10 marks",
+        "1. front · 24 marks",
         "   front #1 at 7, 8 gear/Card 1",
         "   front #2 at 70, 8 gear/Card 1",
-        "2. back · 10 marks",
+        "2. back · 24 marks",
         "   back #1 at 70, 8 (empty) gear/Card 1",
         "   back #2 at 7, 8 gear/Card 1",
         "",
