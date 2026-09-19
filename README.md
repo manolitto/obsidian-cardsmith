@@ -56,8 +56,9 @@ print:
 The title is the note's name; everything else is a property the
 system knows — `content`, `game-name`, `reference` — written under
 `data:`, in the note's frontmatter, or as the note's own text and `##`
-sections. *Insert sample card* in the command palette writes a block with
-every property filled in, and *Show property reference* lists them.
+sections. *Insert sample card block at cursor* in the command palette
+writes a block with every property filled in, and *Show property
+reference* lists them.
 
 To print a folder of such notes, add a deck note beside them:
 

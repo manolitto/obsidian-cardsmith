@@ -56,8 +56,9 @@ card-types:
   prompt:
     front-template: templates/prompt-front.hbs
     back-template: templates/back.hbs
-    # What *Insert sample card* writes: a table note, one prompt per row,
-    # the game's name once in `data:` for every row. Invented prompts.
+    # What *Insert sample card block at cursor* writes: a table note, one
+    # prompt per row, the game's name once in `data:` for every row.
+    # Invented prompts.
     sample-table:
       en:
         columns:

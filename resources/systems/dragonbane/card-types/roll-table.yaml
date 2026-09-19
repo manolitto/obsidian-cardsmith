@@ -14,8 +14,8 @@ stylesheet: styles/roll-table.css
 card-size: poker
 expand-by-roll: true
 
-# What *Insert sample card* writes for this card type: a table note, one
-# row per entry, the columns as the block's `table:` map. The range is
+# What *Insert sample card block at cursor* writes for this card type: a
+# table note, one row per entry, the columns as the block's `table:` map. The range is
 # written twice — as the text the badge shows, and as the two bounds
 # `expand-by-roll` prints one card per value from; a range without its
 # bounds stays one card. The rows are invented — a fishing table of this
