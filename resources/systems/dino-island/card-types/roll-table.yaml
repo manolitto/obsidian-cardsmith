@@ -9,9 +9,9 @@ back-template: templates/back.hbs
 stylesheet: styles/roll-table.css
 expand-by-roll: true
 
-# What *Insert sample card* writes for this card type: a table note, the
-# roll and the entry as columns, the table's title once in `data:` for
-# every row. The rumours are invented for this design.
+# What *Insert sample card block at cursor* writes for this card type: a
+# table note, the roll and the entry as columns, the table's title once
+# in `data:` for every row. The rumours are invented for this design.
 sample-table:
   de:
     columns:

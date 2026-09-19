@@ -42,8 +42,8 @@ settings — each layered over the system's. A card type with one template
 prints one face.
 
 A card type that is one row of a table — a roll table, a prompt deck —
-declares a `sample-table:` per language, and *Insert sample card* then
-writes a table note rather than a single card: the columns as the block's
+declares a `sample-table:` per language, and *Insert sample card block at
+cursor* then writes a table note rather than a single card: the columns as the block's
 `table:` map, property to column header, and the rows by header.
 
 ```yaml from=resources/systems/dino-island/card-types/roll-table.yaml

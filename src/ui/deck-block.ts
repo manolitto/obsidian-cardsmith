@@ -20,8 +20,8 @@ import { t, type StringKey } from "./strings";
  * block. The number of cards is known only after rendering (rows, roll
  * ranges, copies) and is what the export's notice says. Whatever the block
  * gets wrong is listed inline, in the parser's own words. The YAML itself
- * is edited in the editor, as cards are; *Insert deck block* writes it
- * documented.
+ * is edited in the editor, as cards are; *Insert deck block at cursor*
+ * writes it documented.
  *
  * A button that starts an export is disabled while it runs and shows the
  * progress in its own label.

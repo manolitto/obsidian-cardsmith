@@ -13,8 +13,9 @@ system: simple
 
 That is a complete deck: every card note of the `simple` system in the
 deck note's own folder, on A4 in whichever orientation holds more cards.
-Everything else has a default. *Insert deck block* in the command palette
-writes a block with every key as a comment, each with its explanation.
+Everything else has a default. *Insert deck block at cursor* in the
+command palette writes a block with every key as a comment, each with its
+explanation.
 
 ## Which notes
 

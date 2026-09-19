@@ -3,8 +3,8 @@
 A property is a named value a card has — `name`, `price`, `description`.
 The system declares them under `properties:`, the note sets them, and a
 template reads them by the *slot* each is bound to. The declaration is
-also the documentation: *Show property reference* and *Insert sample card*
-are built from it.
+also the documentation: *Show property reference* and *Insert sample card
+block at cursor* are built from it.
 
 ## A property
 
@@ -25,8 +25,8 @@ are built from it.
 | `aliases` | Other names a note may write the property under — the German word, a short form, a synonym. A note may write the canonical name, an alias, or both. |
 | `slot` | The place on the card the value fills; one name or a list. A template reads the slot, never the property. |
 | `default` | The value when no note sets one. One value, not one per language. |
-| `description` | What the property is, per language — shown in the property reference and as the comment *Insert empty card definition* writes. |
-| `sample` | A value per language, for *Insert sample card*. |
+| `description` | What the property is, per language — shown in the property reference and as the comment *Insert empty card block at cursor* writes. |
+| `sample` | A value per language, for *Insert sample card block at cursor*. |
 
 A property with no `slot` is data a template can still read through a
 helper, or a constant another property's default refers to; a property

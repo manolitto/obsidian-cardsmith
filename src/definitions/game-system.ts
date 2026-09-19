@@ -140,8 +140,9 @@ export interface CardTypeDeclaration {
   /** The card type's layer of the card-setting chain — see `SystemDeclaration`. */
   cardSettings: CardSettings;
   /**
-   * The table note *Insert sample card* writes for this card type, per
-   * language — for a kind of card that is one row of a table. Without it
+   * The table note *Insert sample card block at cursor* writes for this
+   * card type, per language — for a kind of card that is one row of a
+   * table. Without it
    * the sample is one card from the properties' samples.
    */
   sampleTable?: Record<string, SampleTable>;
