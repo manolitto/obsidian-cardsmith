@@ -68,15 +68,17 @@ export async function layoutCard(
     host = mountLayoutHost(doc, system.id, stylesheet, faces);
     await waitForSettledLayout(host.root);
     // Pictures get their edge fade here, with the faces settled and before
-    // the splitter takes its snapshot, so a cloned face carries it too.
+    // the splitter takes its snapshot, so a cloned face carries it too —
+    // and then their blob URLs, so the snapshot is cheap to restore from.
     await fadeEdges(host.root);
+    await host.pinImages();
 
     // A card with no front has nothing to paginate: the back is scaled and
     // that is all.
     const result = scaleAndSplitInDom(host.root, {
       mode: front ? (card.settings.overflowMode ?? "none") : "none",
       layout: layoutConfigOf(card.settings),
-      frontHtml: front ?? "",
+      frontHtml: host.pin(front ?? ""),
     });
 
     return {

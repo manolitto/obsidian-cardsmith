@@ -53,6 +53,76 @@ describe("mountLayoutHost", () => {
   });
 });
 
+describe("pinImages", () => {
+  // A 2×3 PNG and a 4×6 SVG, set to a width, so each has a height the
+  // measurement can be checked against.
+  const PNG =
+    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAYAAAC56t6BAAAAEklEQVQIW2NkYGD4z8DAwMgAAAgxAQFoxJyQAAAAAElFTkSuQmCC";
+  const SVG =
+    "data:image/svg+xml," +
+    encodeURIComponent(
+      '<svg xmlns="http://www.w3.org/2000/svg" width="4" height="6"><rect width="4" height="6"/></svg>'
+    );
+  const picture = (src: string) => `<img src="${src}" style="display:block; width:20px">`;
+
+  it("measures the same picture through a blob URL and hands the data URI back", async () => {
+    host = mountLayoutHost(document, "pin", `${BASELINE.stylesheet}\n${TYPE}`, [
+      faceHtml({ body: picture(PNG) + picture(SVG) }),
+      backHtml(),
+    ]);
+    await waitForSettledLayout(host.root);
+    await host.pinImages();
+    const imgs = host.root.querySelectorAll("img");
+    expect(imgs).toHaveLength(2);
+    for (let i = 0; i < imgs.length; i++) {
+      expect(imgs[i]!.src).toMatch(/^blob:/);
+      expect(imgs[i]!.complete).toBe(true);
+    }
+    expect(imgs[0]!.getBoundingClientRect().height).toBe(30);
+    expect(imgs[1]!.getBoundingClientRect().height).toBe(30);
+
+    // A restore from the HTML string — what the splitter does on every
+    // trial — parses the short URL and the picture is there at once.
+    const body = host.root.querySelector<HTMLElement>(".card-body-scalable")!;
+    const snapshot = body.innerHTML;
+    expect(snapshot).not.toContain("data:");
+    body.innerHTML = snapshot;
+    const restored = body.querySelector("img")!;
+    expect(restored.complete).toBe(true);
+    expect(restored.getBoundingClientRect().height).toBe(30);
+
+    const [front] = host.faces();
+    expect(front).toContain(`src="${PNG}"`);
+    expect(front).toContain(`src="${SVG}"`);
+    expect(front).not.toContain("blob:");
+  });
+
+  it("swaps a string's base64 pictures for the same blob URLs", async () => {
+    host = mountLayoutHost(document, "pin", `${BASELINE.stylesheet}\n${TYPE}`, [
+      faceHtml({ body: picture(PNG) }),
+    ]);
+    await waitForSettledLayout(host.root);
+    await host.pinImages();
+    const url = host.root.querySelector("img")!.src;
+    const html = `<p>x</p>${picture(PNG)}${picture(SVG)}`;
+    const pinned = host.pin(html);
+    expect(pinned).toContain(`src="${url}"`);
+    expect(pinned).toContain(`src="${SVG}"`);
+  });
+
+  it("releases the blobs with the host", async () => {
+    host = mountLayoutHost(document, "pin", `${BASELINE.stylesheet}\n${TYPE}`, [
+      faceHtml({ body: picture(PNG) }),
+    ]);
+    await waitForSettledLayout(host.root);
+    await host.pinImages();
+    const url = host.root.querySelector("img")!.src;
+    host.remove();
+    host = undefined;
+    await expect(fetch(url)).rejects.toThrow();
+  });
+});
+
 describe("hoistFontFaces", () => {
   it("moves the @font-face rules into one style element per system", () => {
     const css = `${FONT_RULE}\n\n.a { color: red; }`;
