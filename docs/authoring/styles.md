@@ -19,6 +19,7 @@ A face is a column: header, content, footer, each a direct child of
 | `.card-title` | a one-line title the engine fits to its width |
 | `.text-scalable` | an inline span the engine may shrink to fit its line — wrap a title's text in it |
 | `.card-type-badge` | a one-line badge, fitted like a title |
+| `.cs-check-overflow` | a box inside `.card-body-scalable` whose content must not overflow it sideways — a row of fixed-size figures, say; the engine shrinks the body until it fits |
 | `.cs-wikilink` | a link's display text; unstyled by the base |
 
 A design styles these and its own classes; it does not change their

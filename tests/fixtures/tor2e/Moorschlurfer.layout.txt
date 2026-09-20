@@ -1,9 +1,9 @@
 Moorschlurfer · 1 card · 2 faces · clipped: no
-1. front [cs-layout-default cs-front-first] scale 0.88
+1. front [cs-layout-default cs-front-first] scale 0.78
    div.tor-npc-grid
      div.tor-npc-left
        div.tor-npc-features "Zäh, Geduldig"
-       div.tor-stats-row
+       div.tor-stats-row.cs-check-overflow
          div.tor-stat
            div.tor-stat-label "Ausdauer"
            div.tor-diamond

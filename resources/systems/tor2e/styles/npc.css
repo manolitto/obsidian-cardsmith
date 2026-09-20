@@ -6,14 +6,17 @@
 .npc-card .card-content-container {
   padding: 0.126em 0.236em 0.158em;
 }
+/* The attribute diamond follows the row of small ones at the row's own
+   gap rather than sitting at the far edge: the left column is as wide as
+   its content and only shrinks when the field is too narrow for both. */
 .tor-npc-grid {
   display: flex;
-  gap: 0.158em;
+  gap: 0.3em;
   margin-bottom: 0.079em;
   align-items: flex-end;
 }
 .tor-npc-left {
-  flex: 1;
+  flex: 0 1 auto;
   min-width: 0;
   display: flex;
   flex-direction: column;
@@ -25,8 +28,17 @@
   color: var(--tor-text);
   line-height: 1.3;
 }
+/* The five diamonds keep their size and a fixed gap, so they read the
+   same on every card: neither spread out on a card whose body the engine
+   shrank far, nor squeezed together beside the attribute diamond. When the
+   row is wider than its column the engine shrinks the whole body until it
+   fits — the template marks the row for that. */
 .tor-npc-left .tor-stats-row {
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 0.3em;
+}
+.tor-npc-left .tor-stat {
+  flex: none;
 }
 .tor-npc-attribute {
   display: flex;
