@@ -145,6 +145,78 @@ describe("the statblock", () => {
   });
 });
 
+describe("the inline fields", () => {
+  it("are read from a Key:: line, keyed like a heading, valued like a cell", () => {
+    const note = parse(
+      [
+        "Category:: Wondrous item",
+        "**engl**:: Rope of Climbing",
+        "Geübte Fertigkeiten:: [[Akrobatik]], [[Ausweichen]]",
+        "  Page:: 15",
+        "Tags:: [a, b]",
+        "Portrait:: ![[Seil.png]]",
+        BLOCK,
+      ].join("\n")
+    );
+    expect(note?.fields).toEqual({
+      category: "Wondrous item",
+      engl: "Rope of Climbing",
+      "geübte-fertigkeiten": "[[Akrobatik]], [[Ausweichen]]",
+      page: 15,
+      tags: ["a", "b"],
+      portrait: "![[Seil.png]]",
+    });
+  });
+
+  it("leave the text without their lines, in the body and in a section alike", () => {
+    const note = parse(
+      [
+        "Intro.",
+        "Category:: Wondrous item",
+        "",
+        "## Notes",
+        "Page:: 15",
+        "The notes.",
+        BLOCK,
+      ].join("\n")
+    );
+    expect(note?.sections["body"]).toBe("Intro.");
+    expect(note?.sections["notes"]).toBe("The notes.");
+    expect(note?.text).not.toContain("::");
+  });
+
+  it("set nothing for an empty value, and the line still goes", () => {
+    const note = parse(`Intro.\nDescription::\nCategory:: \n${BLOCK}`);
+    expect(note?.fields).toEqual({});
+    expect(note?.sections["body"]).toBe("Intro.");
+  });
+
+  it("keep the last value of a key written twice", () => {
+    expect(parse(`Page:: 1\nPage:: 2\n${BLOCK}`)?.fields).toEqual({ page: 2 });
+  });
+
+  it("are text anywhere else — a callout, a list item, mid-line, a code block", () => {
+    const text = [
+      "> Ansatz:: Verteidigen",
+      "- Item:: one",
+      "Some prose with [Key:: value] in it.",
+      "Key::value",
+      "https://example.org",
+      "```yaml",
+      "Inside:: a code block",
+      "```",
+      BLOCK,
+    ].join("\n");
+    const note = parse(text);
+    expect(note?.fields).toEqual({});
+    expect(note?.sections["body"]).toContain("> Ansatz:: Verteidigen");
+    expect(note?.sections["body"]).toContain("- Item:: one");
+    expect(note?.sections["body"]).toContain("[Key:: value]");
+    expect(note?.sections["body"]).toContain("Key::value");
+    expect(note?.sections["body"]).not.toContain("Inside::");
+  });
+});
+
 describe("the sections", () => {
   it("key the intro as body and each ## heading in kebab-case", () => {
     const note = parse(

@@ -174,7 +174,7 @@ describe("the settings", () => {
 });
 
 describe("the props", () => {
-  it("fold sections < statblock < frontmatter < data: < row, keys in their one spelling", async () => {
+  it("fold sections < statblock < fields < frontmatter < data: < row, keys in their one spelling", async () => {
     const sys = await system();
     const text = [
       "---",
@@ -198,7 +198,11 @@ describe("the props", () => {
       "grip: from-statblock",
       "Weight:: from-statblock",
       "Roll Max:: 4",
+      "Length:: from-statblock",
       "```",
+      "",
+      "Length:: from-field",
+      "Category:: from-field",
       "",
       block("  system: demo\n  card-type: gear", "data:\n  Grip: from-data\n"),
     ].join("\n");
@@ -206,6 +210,7 @@ describe("the props", () => {
     expect(card?.props["category"]).toBe("from-frontmatter");
     expect(card?.props["grip"]).toBe("from-data");
     expect(card?.props["weight"]).toBe("from-statblock");
+    expect(card?.props["length"]).toBe("from-field");
     expect(card?.props["roll-min"]).toBe(2); // `Roll Min:` in the frontmatter
     expect(card?.props["roll-max"]).toBe(4); // `Roll Max::` in the statblock
     expect(card?.props["layout"]).toBe("Gear"); // read, bound by nothing

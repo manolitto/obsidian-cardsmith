@@ -46,6 +46,7 @@ describe("buildDeck over the fixture folders", () => {
     const { built, diagnostics } = await build("simple");
     expect(diagnostics.messages).toEqual([]);
     expect(names(built.cards)).toEqual([
+      "Cloak of the Marsh",
       "lantern-of-revealing",
       "laterne-der-enthuellung",
       "linked-reference",
@@ -104,10 +105,10 @@ describe("buildDeck over the fixture folders", () => {
     );
     const render = calls.filter(([phase]) => phase === "render");
     const layout = calls.filter(([phase]) => phase === "layout");
-    expect(render.map(([, done]) => done)).toEqual([1, 2, 3, 4, 5, 6]);
-    expect(render.every(([, , total]) => total === 6)).toBe(true);
-    expect(layout.map(([, done]) => done)).toEqual([1, 2, 3, 4, 5, 6]);
-    expect(built.cards).toHaveLength(6);
+    expect(render.map(([, done]) => done)).toEqual([1, 2, 3, 4, 5, 6, 7]);
+    expect(render.every(([, , total]) => total === 7)).toBe(true);
+    expect(layout.map(([, done]) => done)).toEqual([1, 2, 3, 4, 5, 6, 7]);
+    expect(built.cards).toHaveLength(7);
   });
 
   it("applies a card-copies override and warns about one that names nothing", async () => {
@@ -116,7 +117,7 @@ describe("buildDeck over the fixture folders", () => {
       "```cardsmith-deck\nsystem: simple\ncard-copies:\n  - { name: linked-reference, copies: 3 }\n  - { name: Nobody, copies: 2 }\n```"
     );
     expect(names(built.cards).filter((n) => n === "linked-reference")).toHaveLength(3);
-    expect(built.cards).toHaveLength(8);
+    expect(built.cards).toHaveLength(9);
     expect(diagnostics.matching('card-copies: "Nobody" names no card')).toHaveLength(1);
   });
 

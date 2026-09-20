@@ -1,7 +1,7 @@
 import type { Diagnostics } from "../definitions/diagnostics";
 import { stripTags, wikilinkDisplayText } from "../templates/inline-markdown";
 import { propertyKey } from "../util/property-key";
-import { loadNoteYaml } from "./yaml";
+import { coerceScalar, loadNoteYaml } from "./yaml";
 
 /**
  * A card note, taken apart.
@@ -11,10 +11,12 @@ import { loadNoteYaml } from "./yaml";
  * column map (`table:`); the note's frontmatter carries values too, on equal
  * standing; a `statblock` block — the block another plugin renders as a
  * creature's stat block — is values as well, so a note that already has one
- * needs nothing copied; and the note's own text is values too — what stands
- * before the first `##` heading is the property `body`, and every `##`
- * heading is a property named after it. Which of several sources wins a key
- * is the card resolver's fold (`card.ts`); this module only reads them out.
+ * needs nothing copied; and the note's own text is values too — an inline
+ * field (`Key:: value` on a line of its own, the spelling a query plugin
+ * indexes) is the property it names, what stands before the first `##`
+ * heading is the property `body`, and every `##` heading is a property named
+ * after it. Which of several sources wins a key is the card resolver's fold
+ * (`card.ts`); this module only reads them out.
  *
  * Nothing here is Obsidian's. The frontmatter is parsed here rather than
  * read from the metadata cache, through the same loader as the block, which
@@ -35,9 +37,11 @@ export interface CardNote {
   frontmatter: Record<string, unknown>;
   /** The note's first `statblock` block as a mapping, or `{}`. */
   statblock: Record<string, unknown>;
+  /** The inline fields of the note's text, keyed like headings. */
+  fields: Record<string, unknown>;
   /** Heading in kebab-case → the raw markdown under it; `body` for the intro. */
   sections: Record<string, string>;
-  /** The note without its frontmatter and its code blocks — what the table scan reads. */
+  /** The note without its frontmatter, its code blocks and its inline fields — what the table scan reads. */
   text: string;
 }
 
@@ -84,13 +88,14 @@ export function parseNote(
   const block = parseBlock(first[1] ?? "", path, diagnostics);
   if (!block) return undefined;
 
-  const stripped = rest.replace(FENCED_CODE, "");
+  const { fields, text: stripped } = takeInlineFields(rest.replace(FENCED_CODE, ""));
   return {
     path,
     name: basename(path),
     ...block,
     frontmatter: parseFrontmatter(frontmatterText, path, diagnostics),
     statblock: parseStatblock(rest, path, diagnostics),
+    fields,
     sections: extractSections(stripped, path, diagnostics),
     text: stripped,
   };
@@ -259,6 +264,45 @@ function parseStatblock(
     return {};
   }
   return mappingOrEmpty(doc, `${path}: the statblock block`, diagnostics);
+}
+
+// ── Inline fields ──────────────────────────────────────────────────
+
+/**
+ * `Key:: value` on a line of its own: optional indentation, a key of
+ * letters, digits, spaces, hyphens and underscores that starts with a
+ * letter (an emphasis marker around it allowed, so `**engl**::` is a
+ * field), the two colons, then whitespace or the end of the line. Only
+ * that — a field in a callout or a list item, or one inside brackets
+ * mid-line, is text.
+ */
+const INLINE_FIELD =
+  /^[ \t]*((?:\*\*|__|\*|_)?\p{L}[\p{L}\p{N} _*-]*?)::(?:[ \t]+(.*))?$/u;
+
+/**
+ * The inline fields of the text, and the text without them. The key is
+ * spelled like a heading's (`sectionKey`), so `## Reference` and
+ * `Reference::` name one property; the value is read like a table cell.
+ * An empty value sets nothing, but its line goes too: a field is metadata,
+ * and would otherwise print on the card as written. A key written twice
+ * keeps the last value, as YAML would.
+ */
+function takeInlineFields(text: string): {
+  fields: Record<string, unknown>;
+  text: string;
+} {
+  const fields: Record<string, unknown> = {};
+  const kept: string[] = [];
+  for (const line of text.split("\n")) {
+    const match = INLINE_FIELD.exec(line);
+    if (!match) {
+      kept.push(line);
+      continue;
+    }
+    const value = (match[2] ?? "").trim();
+    if (value) fields[sectionKey(match[1] ?? "")] = coerceScalar(value);
+  }
+  return { fields, text: kept.join("\n") };
 }
 
 // ── Sections ───────────────────────────────────────────────────────
