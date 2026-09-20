@@ -63,6 +63,24 @@ in `README.md` or `docs/**` whose info string says `from=<path>` must
 occur verbatim in that file — `tests/docs-examples.test.ts` checks every
 one, so an example that drifts fails the build.
 
+## Sharing a system
+
+The lightest contribution needs no checkout at all. A system is one
+folder with a YAML root document at its top — [Writing a
+system](docs/authoring/system.md) — and a vault runs it from anywhere:
+*Add a vault system* in the settings takes the root document, checks the
+folder and switches the system on. So a system of your own, a redesign of
+a bundled one, or a design for a game the plugin does not cover yet is
+published the moment it works: zip the folder, put it where others can
+download it, and tell them to unzip it into their vault and add it. Start
+from *Copy into vault* on `simple` or on the bundled system closest to
+what you want. Mind the rights: the fonts, pictures and game material a
+shared system carries are yours to share, or come under terms that allow
+it — the bundled systems' `NOTICE.md` rows show what that looks like.
+
+Bundling such a system with the plugin, so that it ships in every install,
+is a pull request — the next section.
+
 ## Adding a bundled system
 
 A system is a folder under `resources/systems/<id>/` with one YAML root
