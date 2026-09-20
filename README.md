@@ -5,8 +5,8 @@ print-ready, double-sided card decks — board game components, reference
 cards, flash cards, any deck you print.
 
 A note is a card. A folder of notes is a deck. A *system* gives the cards
-their look and vocabulary: Cardsmith bundles twelve and lets you write your
-own in the vault.
+their look and vocabulary: Cardsmith bundles [twelve](#bundled-systems)
+and lets you write your own in the vault.
 
 ![A printed sheet: nine cards on A4 with cut marks](docs/images/sheet-front.png)
 
@@ -72,6 +72,24 @@ The block shows how many cards it found and three buttons: *Preview*,
 *Export PDF*, *Export HTML*. The PDF lands beside the note — fronts and
 backs on alternating pages, so a duplex print comes out aligned — and
 opens in a new pane.
+
+## Bundled systems
+
+Twelve card designs ship with the plugin, each with its card types: pick
+the system in the block, name the card type, and the note prints in that
+design. Each picture is one card of the system, front and back, as it
+prints; [Bundled systems](docs/systems.md) shows every card type of every
+one, with sizes, languages and the terms each design comes under. A
+system is also the thing to copy into the vault and make your own.
+
+| | |
+|---|---|
+| <img src="docs/images/cards/simple/simple.webp" alt="simple card, front and back" width="420"><br>[**simple**](docs/systems.md#simple) — any game<br>`simple` | <img src="docs/images/cards/dragonbane/gear.webp" alt="dragonbane gear card, front and back" width="420"><br>[**dragonbane**](docs/systems.md#dragonbane) — *Dragonbane*<br>`gear` `creature` `rule` `roll-table` `generic` |
+| <img src="docs/images/cards/eiserne-zeit/generic.webp" alt="eiserne-zeit generic card, front and back" width="420"><br>[**eiserne-zeit**](docs/systems.md#eiserne-zeit) — *Eiserne Zeit*<br>`generic` | <img src="docs/images/cards/pf2e/item.webp" alt="pf2e item card, front and back" width="420"><br>[**pf2e**](docs/systems.md#pf2e) — *Pathfinder Second Edition*<br>`creature` `item` `feat` `action` `trap` |
+| <img src="docs/images/cards/mini-d20/bestiary.webp" alt="mini-d20 bestiary card, front and back" width="420"><br>[**mini-d20**](docs/systems.md#mini-d20) — *MINI D20*<br>`archetype` `ability` `heritage` `bestiary` `equipment` `quirk` `cover` `generic` | <img src="docs/images/cards/dcc/occupation.webp" alt="dcc occupation card, front and back" width="420"><br>[**dcc**](docs/systems.md#dcc) — *Dungeon Crawl Classics*<br>`occupation` `equipment` |
+| <img src="docs/images/cards/dino-island/location.webp" alt="dino-island location card, front and back" width="420"><br>[**dino-island**](docs/systems.md#dino-island) — *Flucht von Dino Island*<br>`location` `taxonomy` `roll-table` | <img src="docs/images/cards/tor2e/npc.webp" alt="tor2e npc card, front and back" width="420"><br>[**tor2e**](docs/systems.md#tor2e) — *The One Ring*, second edition<br>`gear` `npc` |
+| <img src="docs/images/cards/sw/item.webp" alt="sw item card, front and back" width="420"><br>[**sw**](docs/systems.md#sw) — *Swords & Wizardry*<br>`item` `monster` | <img src="docs/images/cards/troubleshooters/npc.webp" alt="troubleshooters npc card, front and back" width="420"><br>[**troubleshooters**](docs/systems.md#troubleshooters) — *The Troubleshooters*<br>`npc` `mechanic` `gear` |
+| <img src="docs/images/cards/5e/npc.webp" alt="5e npc card, front and back" width="420"><br>[**5e**](docs/systems.md#5e) — fifth-edition play (SRD 5.1)<br>`monster` `npc` | <img src="docs/images/cards/dftq/prompt.webp" alt="dftq prompt card, front and back" width="420"><br>[**dftq**](docs/systems.md#dftq) — games *Descended from the Queen*<br>`prompt` |
 
 ## What is in the box
 

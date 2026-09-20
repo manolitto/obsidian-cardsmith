@@ -10,6 +10,7 @@ import {
   writeLayoutPreview,
 } from "./tests/helpers/golden-commands.ts";
 import { printPdf } from "./tests/helpers/pdf-commands.ts";
+import { cardPictures } from "./tests/helpers/picture-commands.ts";
 
 // Mirror esbuild's `.yaml` / `.css` text loaders (see esbuild.config.mjs) so
 // modules that import bundled resources as raw text also load under vitest.
@@ -63,6 +64,7 @@ export default defineConfig({
             provider: playwright(),
             instances: [{ browser: "chromium" }],
             commands: {
+              cardPictures,
               deckGolden,
               layoutGolden,
               orphanLayoutGoldens,
