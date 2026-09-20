@@ -23,10 +23,10 @@ card-type: simple
 # Where the exports go, with either extension. Default: beside the deck note, under its name.
 # output-path:
 
-# A preset (A3, A4, A5, Letter, Legal) or `210 x 297 mm`; a preset alone lets the deck pick the orientation that holds more cards.
+# A sheet (A3, A4, A5, Letter, Legal), a card size (poker, tarot, … — one card per page) or `210 x 297 mm`; a preset alone lets the deck pick the orientation that holds more cards.
 # paper-size: A4
 
-# Blank space around the card grid, in millimetres.
+# Blank space around the card grid, in millimetres. Yields where the paper is too small for it; the card never does.
 # page-margin: 10
 
 # Which paper edge is the binding when printing duplex, so fronts and backs align: `long-edge` or `short-edge`.

@@ -23,10 +23,10 @@ card-type: [gear, creature]
 # Wohin die Exporte gehen, mit einer der beiden Endungen. Standard: neben der Deck-Notiz, unter ihrem Namen.
 # output-path:
 
-# Ein Preset (A3, A4, A5, Letter, Legal) oder `210 x 297 mm`; ein Preset allein lässt das Deck die Ausrichtung wählen, die mehr Karten fasst.
+# Ein Bogen (A3, A4, A5, Letter, Legal), eine Kartengröße (poker, tarot, … — eine Karte je Seite) oder `210 x 297 mm`; ein Preset allein lässt das Deck die Ausrichtung wählen, die mehr Karten fasst.
 # paper-size: A4
 
-# Rand um das Kartenraster, in Millimetern.
+# Rand um das Kartenraster, in Millimetern. Weicht, wo das Papier zu klein dafür ist; die Karte nie.
 # page-margin: 10
 
 # Welche Papierkante beim Duplexdruck die Bindung ist, damit Vorder- und Rückseiten übereinanderliegen: `long-edge` oder `short-edge`.

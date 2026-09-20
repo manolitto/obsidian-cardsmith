@@ -114,8 +114,9 @@ const en = {
   "deck-key.output-path":
     "Where the exports go, with either extension. Default: beside the deck note, under its name.",
   "deck-key.paper-size":
-    "A preset (A3, A4, A5, Letter, Legal) or `210 x 297 mm`; a preset alone lets the deck pick the orientation that holds more cards.",
-  "deck-key.page-margin": "Blank space around the card grid, in millimetres.",
+    "A sheet (A3, A4, A5, Letter, Legal), a card size (poker, tarot, … — one card per page) or `210 x 297 mm`; a preset alone lets the deck pick the orientation that holds more cards.",
+  "deck-key.page-margin":
+    "Blank space around the card grid, in millimetres. Yields where the paper is too small for it; the card never does.",
   "deck-key.duplex-flip":
     "Which paper edge is the binding when printing duplex, so fronts and backs align: `long-edge` or `short-edge`.",
   "deck-key.cut-marks":
@@ -287,8 +288,9 @@ const de: Strings = {
   "deck-key.output-path":
     "Wohin die Exporte gehen, mit einer der beiden Endungen. Standard: neben der Deck-Notiz, unter ihrem Namen.",
   "deck-key.paper-size":
-    "Ein Preset (A3, A4, A5, Letter, Legal) oder `210 x 297 mm`; ein Preset allein lässt das Deck die Ausrichtung wählen, die mehr Karten fasst.",
-  "deck-key.page-margin": "Rand um das Kartenraster, in Millimetern.",
+    "Ein Bogen (A3, A4, A5, Letter, Legal), eine Kartengröße (poker, tarot, … — eine Karte je Seite) oder `210 x 297 mm`; ein Preset allein lässt das Deck die Ausrichtung wählen, die mehr Karten fasst.",
+  "deck-key.page-margin":
+    "Rand um das Kartenraster, in Millimetern. Weicht, wo das Papier zu klein dafür ist; die Karte nie.",
   "deck-key.duplex-flip":
     "Welche Papierkante beim Duplexdruck die Bindung ist, damit Vorder- und Rückseiten übereinanderliegen: `long-edge` oder `short-edge`.",
   "deck-key.cut-marks":

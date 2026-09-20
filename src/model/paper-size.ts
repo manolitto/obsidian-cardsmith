@@ -1,3 +1,5 @@
+import { CARD_PRESETS } from "./card-size";
+
 /** Paper geometry in millimetres, and which way round the deck is imposed on it. */
 export interface PaperSize {
   width: number;
@@ -8,13 +10,20 @@ export interface PaperSize {
 
 export type PaperOrientation = "portrait" | "landscape" | "auto";
 
-/** Named paper sizes accepted by `paper-size:` on a deck. Portrait dimensions. */
+/**
+ * Named paper sizes accepted by `paper-size:` on a deck. Portrait dimensions.
+ *
+ * The sheets, and every card size as well: a deck of poker cards on `poker`
+ * paper is one card per page, edge to edge — a PDF for a screen rather
+ * than a printer.
+ */
 export const PAPER_PRESETS = {
   a3: { width: 297, height: 420 },
   a4: { width: 210, height: 297 },
   a5: { width: 148, height: 210 },
   letter: { width: 215.9, height: 279.4 },
   legal: { width: 215.9, height: 355.6 },
+  ...CARD_PRESETS,
 } as const satisfies Record<string, { width: number; height: number }>;
 
 export type PaperPreset = keyof typeof PAPER_PRESETS;
@@ -28,10 +37,10 @@ const ORIENTATIONS: readonly PaperOrientation[] = ["portrait", "landscape", "aut
  * Normalize a `paper-size:` value.
  *
  * Accepts a preset name with an optional orientation (`"A4"`, `"A4 landscape"`,
- * case-insensitive) or explicit dimensions (`"210 x 297 mm"`), which are taken
- * as written — the wider way round is `landscape`. A preset alone means
- * `auto`. Returns `undefined` for anything else, so the layer below can answer
- * instead.
+ * `"poker"`, case-insensitive) or explicit dimensions (`"210 x 297 mm"`),
+ * which are taken as written — the wider way round is `landscape`. A preset
+ * alone means `auto`. Returns `undefined` for anything else, so the layer
+ * below can answer instead.
  */
 export function parsePaperSize(raw: unknown): PaperSize | undefined {
   if (typeof raw !== "string") return undefined;
