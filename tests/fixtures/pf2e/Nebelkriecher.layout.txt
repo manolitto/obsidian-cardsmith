@@ -1,0 +1,17 @@
+Nebelkriecher · 1 card · 2 faces · clipped: no
+1. front [cs-layout-image-none cs-front-first] scale 1.00
+   div.pf2e-trait-row "NB mittelgroß Untot Nebel"
+   div.pf2e-stat-line "Wahrnehmung +8; Dunkelsicht, Lebenssinn 9 m"
+   div.pf2e-stat-line.pf2e-creature-skills "Fertigkeiten Heimlichkeit +9, Athletik +6"
+   div.pf2e-creature-attributes "ST +2, GE +3, KO +1, …"
+   hr.pf2e-divider
+   div.pf2e-stat-line "RK 16; ZÄH +7, REF +9, …"
+   div.pf2e-stat-line "TP 30; Immunitäten Gift, Krankheit; Schwächen …"
+   hr.pf2e-divider
+   div.pf2e-stat-line "Laufen ⬻ 6 m, Fliegen 6 …"
+   div.pf2e-entry-list
+     div.pf2e-entry "Nahkampfangriff ⬻ Klaue +9 , Schaden …"
+     div.pf2e-entry "Nebelleib Der Nebelkriecher kann durch jede …"
+   div.pf2e-flavor.pf2e-creature-flavor
+     p "Ein Schemen aus feuchtem Dunst, der …"
+2. back [cs-layout-image-none] scale —

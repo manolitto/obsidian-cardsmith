@@ -82,6 +82,69 @@ describe("the frontmatter", () => {
   });
 });
 
+describe("the statblock", () => {
+  const statblock = (body: string) => `\`\`\`statblock\n${body}\n\`\`\``;
+
+  it("is read as YAML, with the wikilink guard", () => {
+    const note = parse(
+      `${statblock("layout: Creature\nhp: 22\ntraits:\n  - Beast\nimage: [[Ratte.png]]")}\n${BLOCK}`
+    );
+    expect(note?.statblock).toEqual({
+      layout: "Creature",
+      hp: 22,
+      traits: ["Beast"],
+      image: "[[Ratte.png]]",
+    });
+  });
+
+  it("reads a Key:: line as a YAML key, a list continued under it included", () => {
+    const note = parse(
+      `${statblock(
+        'Name:: "Ratte"\nSize:: small\nMerkmale::\n  - name: Tier\n    desc: "a:: b"\nBild::\n'
+      )}\n${BLOCK}`
+    );
+    expect(note?.statblock).toEqual({
+      Name: "Ratte",
+      Size: "small",
+      Merkmale: [{ name: "Tier", desc: "a:: b" }],
+      Bild: null,
+    });
+  });
+
+  it("is empty for a note without one, and the sections never see it", () => {
+    expect(parse(BLOCK)?.statblock).toEqual({});
+    const note = parse(`Intro.\n\n${statblock("hp: 22")}\n${BLOCK}`);
+    expect(note?.sections["body"]).toBe("Intro.");
+    expect(note?.text).not.toContain("hp: 22");
+  });
+
+  it("reads the first of two blocks and reports the second", () => {
+    const diagnostics = collectDiagnostics();
+    const note = parse(
+      `${statblock("hp: 1")}\n${statblock("hp: 2")}\n${BLOCK}`,
+      diagnostics
+    );
+    expect(note?.statblock).toEqual({ hp: 1 });
+    expect(diagnostics.matching("2 statblock blocks")).toHaveLength(1);
+  });
+
+  it("reports broken YAML and leaves the note a card", () => {
+    const diagnostics = collectDiagnostics();
+    const note = parse(`${statblock("hp: [")}\n${BLOCK}`, diagnostics);
+    expect(note?.statblock).toEqual({});
+    expect(note?.data).toEqual({ price: 10 });
+    expect(diagnostics.matching("statblock block is not valid YAML")).toHaveLength(1);
+  });
+
+  it("reports a block that is not a mapping, and yields nothing for it", () => {
+    const diagnostics = collectDiagnostics();
+    expect(parse(`${statblock("- a\n- b")}\n${BLOCK}`, diagnostics)?.statblock).toEqual(
+      {}
+    );
+    expect(diagnostics.matching("statblock block must be a mapping")).toHaveLength(1);
+  });
+});
+
 describe("the sections", () => {
   it("key the intro as body and each ## heading in kebab-case", () => {
     const note = parse(

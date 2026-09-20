@@ -16,15 +16,16 @@ import { tableRows } from "./table";
  *
  * The block's `card:` mapping names the system and the card type and is the
  * note's layer of the card-settings chain; everything else the note says —
- * its sections, its frontmatter, the block's `data:`, a table row — is
- * values, folded in that order, lowest first:
+ * its sections, its statblock, its frontmatter, the block's `data:`, a table
+ * row — is values, folded in that order, lowest first:
  *
- *     sections < frontmatter < data: < table row
+ *     sections < statblock < frontmatter < data: < table row
  *
  * A `## Beschreibung` section is therefore a long `description` written
  * where long text belongs, and a `description:` in the frontmatter still
- * wins. A note without a `table:` is one card; one with it is one card per
- * row, the rows sharing everything below them.
+ * wins; a statblock's `hp:` fills the card until the block's `data:` says
+ * otherwise. A note without a `table:` is one card; one with it is one card
+ * per row, the rows sharing everything below them.
  */
 export interface ResolvedCard {
   cardTypeId: string;
@@ -102,6 +103,7 @@ export function resolveCards(
 
   const below = {
     ...canonicalKeys(note.sections),
+    ...canonicalKeys(note.statblock),
     ...canonicalKeys(note.frontmatter),
     ...canonicalKeys(note.data),
   };
