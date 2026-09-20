@@ -9,9 +9,9 @@ import {
 import { props, yaml } from "./helpers/definitions";
 
 describe("parsePropertyDefs", () => {
-  it("folds canonical keys and alias entries to lowercase", () => {
-    // Note frontmatter keys are folded too; the two have to meet somewhere.
-    const map = props(["Hit-Points: { aliases: [TP, Lebenspunkte] }"]);
+  it("folds canonical keys and alias entries to their one spelling", () => {
+    // Note frontmatter keys are folded the same way; the two have to meet somewhere.
+    const map = props(["Hit_Points: { aliases: [TP, Lebenspunkte, Hit Points] }"]);
     expect(map["hit-points"]?.aliases).toEqual(["tp", "lebenspunkte"]);
   });
 

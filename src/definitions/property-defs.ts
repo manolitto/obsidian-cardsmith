@@ -1,3 +1,4 @@
+import { propertyKey } from "../util/property-key";
 import type { Diagnostics } from "./diagnostics";
 import {
   parseLocalizedText,
@@ -63,8 +64,9 @@ const PROPERTY_FIELD_KEYS: readonly string[] = [
  * Read a `properties:` block — already parsed out of its YAML document — into
  * a map of authored defs.
  *
- * Canonical keys and alias entries are folded to lowercase, because note
- * frontmatter keys are too and the two have to meet.
+ * Canonical keys and alias entries are folded to their one spelling
+ * (`propertyKey`), because a note's keys are too and the two have to meet.
+ * Slot names are not: a template reads a place by the exact name.
  *
  * Returns `undefined` when the block is absent or unusable, and `{}` when it is
  * present but empty, so a caller can tell "said nothing" from "said nothing on
@@ -82,7 +84,7 @@ export function parsePropertyDefs(
 
   const out: PropertyDefsMap = {};
   for (const [rawKey, rawValue] of Object.entries(raw as Record<string, unknown>)) {
-    const canonical = String(rawKey).trim().toLowerCase();
+    const canonical = propertyKey(String(rawKey));
     if (!canonical) continue;
     const entry = parsePropertyEntry(rawValue, canonical, diagnostics);
     if (entry !== null) out[canonical] = entry;
@@ -117,7 +119,7 @@ function parsePropertyEntry(
 
   if ("aliases" in entry) {
     const list = parseNameList(entry["aliases"], `${context}.aliases`, diagnostics);
-    if (list) out.aliases = dedupeDroppingSelf(list, canonical);
+    if (list) out.aliases = dedupeDroppingSelf(list.map(propertyKey), canonical);
   }
   if ("description" in entry) {
     const description = parseLocalizedText(

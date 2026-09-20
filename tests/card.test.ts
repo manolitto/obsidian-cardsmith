@@ -174,12 +174,13 @@ describe("the settings", () => {
 });
 
 describe("the props", () => {
-  it("fold sections < frontmatter < data: < row, keys lowercased", async () => {
+  it("fold sections < statblock < fields < frontmatter < data: < row, keys in their one spelling", async () => {
     const sys = await system();
     const text = [
       "---",
       "Category: from-frontmatter",
       "grip: from-frontmatter",
+      "Roll Min: 2",
       "---",
       "From the body.",
       "",
@@ -187,11 +188,32 @@ describe("the props", () => {
       "",
       "from-section",
       "",
+      "## Weight",
+      "",
+      "from-section",
+      "",
+      "```statblock",
+      "layout: Gear",
+      "category: from-statblock",
+      "grip: from-statblock",
+      "Weight:: from-statblock",
+      "Roll Max:: 4",
+      "Length:: from-statblock",
+      "```",
+      "",
+      "Length:: from-field",
+      "Category:: from-field",
+      "",
       block("  system: demo\n  card-type: gear", "data:\n  Grip: from-data\n"),
     ].join("\n");
     const [card] = resolveCards(note(text), sys, collectDiagnostics());
     expect(card?.props["category"]).toBe("from-frontmatter");
     expect(card?.props["grip"]).toBe("from-data");
+    expect(card?.props["weight"]).toBe("from-statblock");
+    expect(card?.props["length"]).toBe("from-field");
+    expect(card?.props["roll-min"]).toBe(2); // `Roll Min:` in the frontmatter
+    expect(card?.props["roll-max"]).toBe(4); // `Roll Max::` in the statblock
+    expect(card?.props["layout"]).toBe("Gear"); // read, bound by nothing
     expect(card?.props["body"]).toBe("From the body.");
     expect(card?.props["stat-1a"]).toBe("from-data"); // through the slot binding
     expect(card?.props["name"]).toBe("Beil"); // the filename fallback

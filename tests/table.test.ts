@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { collectDiagnostics } from "../src/definitions/diagnostics";
 import { parseNote, type TableColumns } from "../src/render/note";
-import { cellValue, parseTables, tableRows } from "../src/render/table";
+import { parseTables, tableRows } from "../src/render/table";
+import { coerceScalar } from "../src/render/yaml";
 
 const TABLE = `
 | Würfelwurf | Name | Voraussetzungen | Rationen | Effekt |
@@ -100,28 +101,28 @@ describe("parseTables", () => {
   });
 });
 
-describe("cellValue", () => {
+describe("coerceScalar", () => {
   it("keeps prose, and a number that would not print back as written", () => {
-    expect(cellValue("Rotwild")).toBe("Rotwild");
-    expect(cellValue("01")).toBe("01");
-    expect(cellValue("1-3")).toBe("1-3");
-    expect(cellValue("15")).toBe(15);
+    expect(coerceScalar("Rotwild")).toBe("Rotwild");
+    expect(coerceScalar("01")).toBe("01");
+    expect(coerceScalar("1-3")).toBe("1-3");
+    expect(coerceScalar("15")).toBe(15);
   });
 
   it("takes only the literal true/false as booleans", () => {
-    expect(cellValue("true")).toBe(true);
-    expect(cellValue("yes")).toBe("yes");
-    expect(cellValue("No")).toBe("No");
+    expect(coerceScalar("true")).toBe(true);
+    expect(coerceScalar("yes")).toBe("yes");
+    expect(coerceScalar("No")).toBe("No");
   });
 
   it("takes a flow collection and keeps block syntax that emerged from prose", () => {
-    expect(cellValue("[a, b]")).toEqual(["a", "b"]);
-    expect(cellValue("- not a list")).toBe("- not a list");
-    expect(cellValue("Note: not a map")).toBe("Note: not a map");
+    expect(coerceScalar("[a, b]")).toEqual(["a", "b"]);
+    expect(coerceScalar("- not a list")).toBe("- not a list");
+    expect(coerceScalar("Note: not a map")).toBe("Note: not a map");
   });
 
   it("keeps a wikilink and a date-like value as text", () => {
-    expect(cellValue("[[Bild.png]]")).toBe("[[Bild.png]]");
-    expect(cellValue("2024-01-01")).toBe("2024-01-01");
+    expect(coerceScalar("[[Bild.png]]")).toBe("[[Bild.png]]");
+    expect(coerceScalar("2024-01-01")).toBe("2024-01-01");
   });
 });

@@ -7,6 +7,7 @@ import {
 import { prefixDiagnostics, type Diagnostics } from "../definitions/diagnostics";
 import type { CardSize } from "../model/card-size";
 import type { LoadedCardType, LoadedSystem } from "../systems/loader";
+import { propertyKey } from "../util/property-key";
 import type { CardNote } from "./note";
 import { tableRows } from "./table";
 
@@ -15,21 +16,24 @@ import { tableRows } from "./table";
  *
  * The block's `card:` mapping names the system and the card type and is the
  * note's layer of the card-settings chain; everything else the note says —
- * its sections, its frontmatter, the block's `data:`, a table row — is
- * values, folded in that order, lowest first:
+ * its sections, its statblock, its inline fields, its frontmatter, the
+ * block's `data:`, a table row — is values, folded in that order, lowest
+ * first:
  *
- *     sections < frontmatter < data: < table row
+ *     sections < statblock < inline fields < frontmatter < data: < table row
  *
  * A `## Beschreibung` section is therefore a long `description` written
  * where long text belongs, and a `description:` in the frontmatter still
- * wins. A note without a `table:` is one card; one with it is one card per
- * row, the rows sharing everything below them.
+ * wins; a statblock's `hp:` fills the card until the block's `data:` says
+ * otherwise; the inline fields sit beside the frontmatter, which is what
+ * they are to a query plugin. A note without a `table:` is one card; one
+ * with it is one card per row, the rows sharing everything below them.
  */
 export interface ResolvedCard {
   cardTypeId: string;
   /** Baseline → system → card type → deck → note. */
   settings: CardSettings;
-  /** The fold above, prepared: lowercased, defaults filled, the alias proxy on. */
+  /** The fold above, prepared: keys canonical, defaults filled, the alias proxy on. */
   props: Record<string, unknown>;
   /** `settings.language`, or `""` when no layer says. */
   language: string;
@@ -100,9 +104,11 @@ export function resolveCards(
   const language = settings.language ?? "";
 
   const below = {
-    ...lowercased(note.sections),
-    ...lowercased(note.frontmatter),
-    ...lowercased(note.data),
+    ...canonicalKeys(note.sections),
+    ...canonicalKeys(note.statblock),
+    ...canonicalKeys(note.fields),
+    ...canonicalKeys(note.frontmatter),
+    ...canonicalKeys(note.data),
   };
   const rows = note.table ? tableRows(note, note.table, diagnostics) : [{}];
   const prepare = (raw: Record<string, unknown>): Record<string, unknown> =>
@@ -113,7 +119,7 @@ export function resolveCards(
     });
 
   return rows.flatMap((row) => {
-    const raw = { ...below, ...lowercased(row) };
+    const raw = { ...below, ...canonicalKeys(row) };
     const props = prepare(raw);
     const range = rollRange(props);
     if (!range)
@@ -243,9 +249,9 @@ function everythingBut(
   return out;
 }
 
-/** Keys folded to lowercase, so `Preis:` in the frontmatter and `preis:` in the block meet. */
-function lowercased(mapping: Record<string, unknown>): Record<string, unknown> {
+/** Keys in their one spelling, so `Preis:` in the frontmatter and `preis:` in the block meet. */
+function canonicalKeys(mapping: Record<string, unknown>): Record<string, unknown> {
   const out: Record<string, unknown> = {};
-  for (const [key, value] of Object.entries(mapping)) out[key.toLowerCase()] = value;
+  for (const [key, value] of Object.entries(mapping)) out[propertyKey(key)] = value;
   return out;
 }

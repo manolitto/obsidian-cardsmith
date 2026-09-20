@@ -33,20 +33,63 @@ one card type. A note holds one block; a second is reported and ignored.
 
 ## Where a property's value comes from
 
-A property is looked up in four places, each winning over the one before:
+A property is looked up in six places, each winning over the one before:
 
 1. **The note's text.** Everything before the first `##` heading is the
    property `body`; every `##` heading is a property named after it in
    kebab-case — `## Front Side` becomes `front-side`. Code blocks are
    dropped, so the `cardsmith` block itself never lands on a card.
-2. **The frontmatter**, key by key.
-3. **`data:`** in the block.
-4. **A table row**, in a table note (below).
+2. **A `statblock` block** — the block the Fantasy Statblocks plugin
+   renders — key by key. A note that already has one needs nothing copied;
+   `Key:: value` lines inside it read as keys too.
+3. **Inline fields** — `Key:: value` on a line of its own, as Dataview and
+   Datacore read them. The key is spelled like a heading, so
+   `Reference::` and `## Reference` name one property; the line itself
+   leaves the text, so it never prints on the card.
+4. **The frontmatter**, key by key.
+5. **`data:`** in the block.
+6. **A table row**, in a table note (below).
 
-Keys are matched case-insensitively, and each property accepts the aliases
-its system declares — `Beschreibung:` and `description:` are the same
-property in a system that says so. A property nothing sets falls back to
-its default; the card's title falls back to the note's file name.
+However a key is written, it reads as lowercase with spaces and
+underscores as hyphens — `Hit Points:`, `hit_points:` and `hit-points:`
+are one key — and each property accepts the aliases its system declares:
+`Beschreibung:` and `description:` are the same property in a system that
+says so. A property nothing sets falls back to its default; the card's
+title falls back to the note's file name.
+
+A note written for a query plugin, its values as inline fields — the card's
+text is the intro with the field lines gone, and the frontmatter's
+`category:` wins over the field:
+
+````markdown from=tests/fixtures/simple/Cloak of the Marsh.md
+---
+game-name: "Chronicles of the Ember Coast"
+category: "Cloak"
+---
+A weathered cloak of reed-grey wool that sheds rain, and mist, and the
+notice of anyone who is not looking for its wearer.
+
+**Category**:: Wondrous Item
+Reference:: Core Rules, p. 158
+
+```cardsmith
+card:
+  system: simple
+  card-type: simple
+  language: en
+```
+````
+
+A note kept for a stat-block plugin needs only the `cardsmith` block
+beside its statblock; here `data: { name: Nebelkriecher }` prints over
+the statblock's own `name:`:
+
+````markdown from=tests/fixtures/pf2e/Nebelkriecher.md
+```statblock
+layout: Pathfinder 2e Creature Layout
+name: Nebelkriecher (Kampagnenbuch)
+level: Kreatur 2
+````
 
 A note written as prose:
 

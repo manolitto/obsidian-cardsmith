@@ -25,6 +25,33 @@ export function loadNoteYaml(text: string): unknown {
   return repairLinkArrays(restoreLinks(load(guarded)));
 }
 
+/**
+ * A piece of text as a value — a table cell, an inline field's value. Read
+ * through the loader above so `15` is a number and `[a, b]` a list, and a
+ * wikilink survives — but conservatively, since the text is display text
+ * first: a number only when it prints back as written (`01` and `1-3` stay
+ * text), a boolean only for the literal words, and a collection only from
+ * explicit flow syntax — a `- ` bullet or a `word: rest` in prose would
+ * otherwise become a list or a mapping.
+ */
+export function coerceScalar(cell: string): unknown {
+  let value: unknown;
+  try {
+    value = loadNoteYaml(cell);
+  } catch {
+    return cell;
+  }
+  if (value === null || value === undefined) return cell;
+  if (typeof value === "number") return String(value) === cell ? value : cell;
+  if (typeof value === "boolean")
+    return cell === "true" || cell === "false" ? value : cell;
+  if (typeof value === "object") {
+    if (!(cell.startsWith("[") || cell.startsWith("{"))) return cell;
+    return value;
+  }
+  return value;
+}
+
 // Private-use characters no note carries. The embed opener is swapped whole:
 // leaving the `!` in place would still make a YAML tag of what follows.
 const EMBED_OPEN = "";

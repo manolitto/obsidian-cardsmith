@@ -1,6 +1,6 @@
 import type { Diagnostics } from "../definitions/diagnostics";
 import type { CardNote, TableColumns } from "./note";
-import { loadNoteYaml } from "./yaml";
+import { coerceScalar } from "./yaml";
 
 /**
  * Cards from a table.
@@ -77,13 +77,13 @@ export function tableRows(
     for (const binding of bindings) {
       if ("index" in binding) {
         const cell = cells[binding.index]?.trim() ?? "";
-        if (cell) props[binding.property] = cellValue(cell);
+        if (cell) props[binding.property] = coerceScalar(cell);
         continue;
       }
       const items: { name: string; desc: unknown }[] = [];
       for (const member of binding.members) {
         const cell = cells[member.index]?.trim() ?? "";
-        if (cell) items.push({ name: member.name, desc: cellValue(cell) });
+        if (cell) items.push({ name: member.name, desc: coerceScalar(cell) });
       }
       if (items.length > 0) props[binding.property] = items;
     }
@@ -165,32 +165,4 @@ function splitRow(line: string): string[] {
   }
   cells.push(current);
   return cells.map((c) => c.trim());
-}
-
-// ── Cells ──────────────────────────────────────────────────────────
-
-/**
- * A cell as a value. Read through the note's YAML loader so `15` is a number
- * and `[a, b]` a list, and a wikilink survives — but conservatively, since a
- * cell is display text first: a number only when it prints back as written
- * (`01` and `1-3` stay text), a boolean only for the literal words, and a
- * collection only from explicit flow syntax — a `- ` bullet or a `word: rest`
- * in prose would otherwise become a list or a mapping.
- */
-export function cellValue(cell: string): unknown {
-  let value: unknown;
-  try {
-    value = loadNoteYaml(cell);
-  } catch {
-    return cell;
-  }
-  if (value === null || value === undefined) return cell;
-  if (typeof value === "number") return String(value) === cell ? value : cell;
-  if (typeof value === "boolean")
-    return cell === "true" || cell === "false" ? value : cell;
-  if (typeof value === "object") {
-    if (!(cell.startsWith("[") || cell.startsWith("{"))) return cell;
-    return value;
-  }
-  return value;
 }
