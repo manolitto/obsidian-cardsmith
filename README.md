@@ -8,12 +8,22 @@ A note is a card. A folder of notes is a deck. A *system* gives the cards
 their look and vocabulary: Cardsmith bundles [twelve](#bundled-systems)
 and lets you write your own in the vault.
 
-![A printed sheet: nine cards on A4 with cut marks](docs/images/sheet-front.png)
+## Bundled systems
 
-The back of the same sheet, mirrored for duplex printing — the last card
-spilled onto a second one, and the sheet knows:
+Twelve card designs ship with the plugin, each with its card types: a
+note names the system and the card type, and prints in that design. Each picture is one card of the system, front and back, as it
+prints; [Bundled systems](docs/systems.md) shows every card type of every
+one, with sizes, languages and the terms each design comes under. A
+system is also the thing to copy into the vault and make your own.
 
-![The sheet's back page](docs/images/sheet-back.png)
+| | |
+|---|---|
+| <img src="docs/images/cards/simple/simple.webp" alt="simple card, front and back" width="420"><br>[**simple**](docs/systems.md#simple) — any game<br>`simple` | <img src="docs/images/cards/dragonbane/gear.webp" alt="dragonbane gear card, front and back" width="420"><br>[**dragonbane**](docs/systems.md#dragonbane) — *Dragonbane*<br>`gear` `creature` `rule` `roll-table` `generic` |
+| <img src="docs/images/cards/eiserne-zeit/generic.webp" alt="eiserne-zeit generic card, front and back" width="420"><br>[**eiserne-zeit**](docs/systems.md#eiserne-zeit) — *Eiserne Zeit*<br>`generic` | <img src="docs/images/cards/pf2e/item.webp" alt="pf2e item card, front and back" width="420"><br>[**pf2e**](docs/systems.md#pf2e) — *Pathfinder Second Edition*<br>`creature` `item` `feat` `action` `trap` |
+| <img src="docs/images/cards/mini-d20/bestiary.webp" alt="mini-d20 bestiary card, front and back" width="420"><br>[**mini-d20**](docs/systems.md#mini-d20) — *MINI D20*<br>`archetype` `ability` `heritage` `bestiary` `equipment` `quirk` `cover` `generic` | <img src="docs/images/cards/dcc/occupation.webp" alt="dcc occupation card, front and back" width="420"><br>[**dcc**](docs/systems.md#dcc) — *Dungeon Crawl Classics*<br>`occupation` `equipment` |
+| <img src="docs/images/cards/dino-island/location.webp" alt="dino-island location card, front and back" width="420"><br>[**dino-island**](docs/systems.md#dino-island) — *Flucht von Dino Island*<br>`location` `taxonomy` `roll-table` | <img src="docs/images/cards/tor2e/npc.webp" alt="tor2e npc card, front and back" width="420"><br>[**tor2e**](docs/systems.md#tor2e) — *The One Ring*, second edition<br>`gear` `npc` |
+| <img src="docs/images/cards/sw/item.webp" alt="sw item card, front and back" width="420"><br>[**sw**](docs/systems.md#sw) — *Swords & Wizardry*<br>`item` `monster` | <img src="docs/images/cards/troubleshooters/npc.webp" alt="troubleshooters npc card, front and back" width="420"><br>[**troubleshooters**](docs/systems.md#troubleshooters) — *The Troubleshooters*<br>`npc` `mechanic` `gear` |
+| <img src="docs/images/cards/5e/npc.webp" alt="5e npc card, front and back" width="420"><br>[**5e**](docs/systems.md#5e) — fifth-edition play (SRD 5.1)<br>`monster` `npc` | <img src="docs/images/cards/dftq/prompt.webp" alt="dftq prompt card, front and back" width="420"><br>[**dftq**](docs/systems.md#dftq) — games *Descended from the Queen*<br>`prompt` |
 
 ## Install
 
@@ -76,25 +86,28 @@ The block shows how many cards it found and three buttons: *Preview*,
 backs on alternating pages, so a duplex print comes out aligned — and
 opens in a new pane.
 
-## Bundled systems
+The sheets come out like this — nine cards on A4 with cut marks:
 
-Twelve card designs ship with the plugin, each with its card types: pick
-the system in the block, name the card type, and the note prints in that
-design. Each picture is one card of the system, front and back, as it
-prints; [Bundled systems](docs/systems.md) shows every card type of every
-one, with sizes, languages and the terms each design comes under. A
-system is also the thing to copy into the vault and make your own.
+![A printed sheet: nine cards on A4 with cut marks](docs/images/sheet-front.png)
+
+The back of the same sheet, mirrored for duplex printing — the last card
+spilled onto a second one, and the sheet knows:
+
+![The sheet's back page](docs/images/sheet-back.png)
+
+## What is in the box
 
 | | |
 |---|---|
-| <img src="docs/images/cards/simple/simple.webp" alt="simple card, front and back" width="420"><br>[**simple**](docs/systems.md#simple) — any game<br>`simple` | <img src="docs/images/cards/dragonbane/gear.webp" alt="dragonbane gear card, front and back" width="420"><br>[**dragonbane**](docs/systems.md#dragonbane) — *Dragonbane*<br>`gear` `creature` `rule` `roll-table` `generic` |
-| <img src="docs/images/cards/eiserne-zeit/generic.webp" alt="eiserne-zeit generic card, front and back" width="420"><br>[**eiserne-zeit**](docs/systems.md#eiserne-zeit) — *Eiserne Zeit*<br>`generic` | <img src="docs/images/cards/pf2e/item.webp" alt="pf2e item card, front and back" width="420"><br>[**pf2e**](docs/systems.md#pf2e) — *Pathfinder Second Edition*<br>`creature` `item` `feat` `action` `trap` |
-| <img src="docs/images/cards/mini-d20/bestiary.webp" alt="mini-d20 bestiary card, front and back" width="420"><br>[**mini-d20**](docs/systems.md#mini-d20) — *MINI D20*<br>`archetype` `ability` `heritage` `bestiary` `equipment` `quirk` `cover` `generic` | <img src="docs/images/cards/dcc/occupation.webp" alt="dcc occupation card, front and back" width="420"><br>[**dcc**](docs/systems.md#dcc) — *Dungeon Crawl Classics*<br>`occupation` `equipment` |
-| <img src="docs/images/cards/dino-island/location.webp" alt="dino-island location card, front and back" width="420"><br>[**dino-island**](docs/systems.md#dino-island) — *Flucht von Dino Island*<br>`location` `taxonomy` `roll-table` | <img src="docs/images/cards/tor2e/npc.webp" alt="tor2e npc card, front and back" width="420"><br>[**tor2e**](docs/systems.md#tor2e) — *The One Ring*, second edition<br>`gear` `npc` |
-| <img src="docs/images/cards/sw/item.webp" alt="sw item card, front and back" width="420"><br>[**sw**](docs/systems.md#sw) — *Swords & Wizardry*<br>`item` `monster` | <img src="docs/images/cards/troubleshooters/npc.webp" alt="troubleshooters npc card, front and back" width="420"><br>[**troubleshooters**](docs/systems.md#troubleshooters) — *The Troubleshooters*<br>`npc` `mechanic` `gear` |
-| <img src="docs/images/cards/5e/npc.webp" alt="5e npc card, front and back" width="420"><br>[**5e**](docs/systems.md#5e) — fifth-edition play (SRD 5.1)<br>`monster` `npc` | <img src="docs/images/cards/dftq/prompt.webp" alt="dftq prompt card, front and back" width="420"><br>[**dftq**](docs/systems.md#dftq) — games *Descended from the Queen*<br>`prompt` |
+| [Cards](docs/cards.md) | The `cardsmith` block: card settings, where a card's properties come from, tables that make one card per row, pictures, the preview |
+| [Decks](docs/decks.md) | The `cardsmith-deck` block: selecting notes, sort order, copies, card and paper sizes, cut marks, duplex, the two exports and the preview pane |
+| [Settings](docs/settings.md) | The systems list, adding your own, copying a bundled one into the vault, the three preferences |
+| [Bundled systems](docs/systems.md) | The twelve card designs that ship with the plugin, their card types, sizes and languages |
+| [Writing a system](docs/authoring/system.md) | A folder with a YAML root document, templates, stylesheets and fonts — starting from a copy of `simple` |
 
-**These twelve are a start**, not the catalogue: more bundled systems
+## Contributing
+
+**The twelve bundled systems are a start**, not the catalogue: more
 are on the way, and a system does not have to be bundled to be shared.
 A system is one folder — a YAML root document, templates, a stylesheet,
 fonts — and any vault can run one: unzip the folder into the vault, pick
@@ -106,16 +119,6 @@ download it. That is the easiest way to contribute — no build, no pull
 request — though a pull request that bundles it is welcome too;
 [Writing a system](docs/authoring/system.md) shows how to start from a
 copy of `simple`, and [CONTRIBUTING.md](CONTRIBUTING.md) the rest.
-
-## What is in the box
-
-| | |
-|---|---|
-| [Cards](docs/cards.md) | The `cardsmith` block: card settings, where a card's properties come from, tables that make one card per row, pictures, the preview |
-| [Decks](docs/decks.md) | The `cardsmith-deck` block: selecting notes, sort order, copies, card and paper sizes, cut marks, duplex, the two exports and the preview pane |
-| [Settings](docs/settings.md) | The systems list, adding your own, copying a bundled one into the vault, the three preferences |
-| [Bundled systems](docs/systems.md) | The twelve card designs that ship with the plugin, their card types, sizes and languages |
-| [Writing a system](docs/authoring/system.md) | A folder with a YAML root document, templates, stylesheets and fonts — starting from a copy of `simple` |
 
 ## Licence
 
