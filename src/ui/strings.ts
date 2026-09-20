@@ -151,6 +151,7 @@ const en = {
   "copy.rewrite.done": "{count} notes rewritten",
 
   // ── Settings ────────────────────────────────────────────────────
+  "settings.version": "Version {version}",
   "settings.systems.heading": "Systems",
   "settings.systems.desc":
     "The systems your cards can be rendered with. Bundled systems ship with the plugin; a vault system is a folder in your vault with a YAML document at its top naming the system. At most one system per id may be switched on. Obsidian's file explorer lists a system's files (.yaml, .hbs, .css) only with \"Detect all file extensions\" switched on under Files and links.",
@@ -323,6 +324,7 @@ const de: Strings = {
   "copy.rewrite.done": "{count} Notizen umgeschrieben",
 
   // ── Settings ────────────────────────────────────────────────────
+  "settings.version": "Version {version}",
   "settings.systems.heading": "Systeme",
   "settings.systems.desc":
     "Die Systeme, mit denen deine Karten gerendert werden. Mitgelieferte Systeme kommen mit dem Plugin; ein Vault-System ist ein Ordner in deinem Vault mit einem YAML-Dokument darin, das das System benennt. Pro Id darf höchstens ein System eingeschaltet sein. Obsidians Dateiexplorer zeigt die Dateien eines Systems (.yaml, .hbs, .css) nur, wenn unter „Dateien und Links“ „Alle Dateierweiterungen erkennen“ eingeschaltet ist.",
