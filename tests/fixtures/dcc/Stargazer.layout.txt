@@ -1,0 +1,8 @@
+Stargazer · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   p.dcc-flavor "Reads in the stars what others …"
+   div.dcc-section "Trained weapon"
+   p.dcc-value "Staff (1d4)"
+   div.dcc-section "Trade goods"
+   p.dcc-value "Star chart"
+2. back [cs-layout-default] scale —

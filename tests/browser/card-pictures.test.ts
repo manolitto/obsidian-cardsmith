@@ -16,7 +16,10 @@ import { listFixtures, renderFixture } from "./helpers/fixtures";
  * of the system — the first in path order of that card type whose front
  * holds everything, so that its back is the designed one and not a
  * continuation, else simply the first — rendered and laid out through the
- * real engine, so the picture is what the plugin prints. Without the
+ * real engine, so the picture is what the plugin prints. The documentation
+ * is English, so in a system that has `en` among its languages an English
+ * card comes first, and there must be one of every card type; a system
+ * without `en` captions is pictured in the language it has. Without the
  * flag a card type whose picture is missing fails, the way a documentation
  * example that drifts from the tree does; with it the pictures are taken.
  *
@@ -41,11 +44,18 @@ describe.each(BUNDLED_SYSTEMS.map((s) => s.id))("the %s system", (systemId) => {
       }
     }
 
+    const english = system.declaration.languages.includes("en");
     const pictures: CardPicture[] = [];
     for (const cardType of Object.keys(system.cardTypes)) {
       const ofType = laidOut.filter((card) => card.cardTypeId === cardType);
-      const sample = ofType.find(fitsOnTheFront) ?? ofType[0];
+      const sample = english ? englishFirst(ofType) : firstFitting(ofType);
       expect(sample, `${systemId}/${cardType} has no fixture note`).toBeDefined();
+      if (english) {
+        expect(
+          sample!.settings.language,
+          `${systemId}/${cardType} has no English fixture note`
+        ).toBe("en");
+      }
       const faces = sample!.cards[0]!;
       pictures.push({
         cardType,
@@ -63,6 +73,17 @@ describe.each(BUNDLED_SYSTEMS.map((s) => s.id))("the %s system", (systemId) => {
     ).toEqual([]);
   });
 });
+
+/** The first card that fits on its front, else simply the first. */
+function firstFitting(ofType: LaidOutCard[]): LaidOutCard | undefined {
+  return ofType.find(fitsOnTheFront) ?? ofType[0];
+}
+
+/** The same, with the English cards moved to the front of the line. */
+function englishFirst(ofType: LaidOutCard[]): LaidOutCard | undefined {
+  const inEnglish = (card: LaidOutCard) => Number(card.settings.language === "en");
+  return firstFitting([...ofType].sort((a, b) => inEnglish(b) - inEnglish(a)));
+}
 
 /** One physical card whose front the overflow engine never split. */
 function fitsOnTheFront(card: LaidOutCard): boolean {

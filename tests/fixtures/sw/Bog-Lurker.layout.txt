@@ -1,0 +1,22 @@
+Bog-Lurker · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 0.97
+   p.sw-flavour "A sinewy newt the colour of …"
+   div.sw-plate
+     img.sw-plate-image
+   div.sw-stats
+     p.sw-stat "Hit Dice: 3 + 1"
+     p.sw-stat "Armor Class: 6 [13]"
+     p.sw-stat "Attacks: Bite (1d6)"
+     p.sw-stat "Saving Throw: 14"
+     p.sw-stat "Special: Camouflage, Paralysing slime"
+     p.sw-stat "Movement: 9 (swimming 12)"
+     p.sw-stat "Alignment: Neutral"
+     p.sw-stat "Challenge Level/XP: 5/240"
+   div.sw-banner.cs-keep-with-next
+     div.sw-flourish.sw-flourish-left
+     div.sw-banner-label "Abilities"
+     div.sw-flourish.sw-flourish-right
+   div.sw-abilities
+     div.sw-entry "Camouflage In the bog the lurker …"
+     div.sw-entry "Paralysing slime Anyone bitten who fails …"
+2. back [cs-layout-default] scale —

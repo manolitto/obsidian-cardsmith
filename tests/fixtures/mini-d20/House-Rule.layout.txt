@@ -1,0 +1,10 @@
+House-Rule · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   div.mini-d20-generic-body
+     p "A character who drops to 0 …"
+     ul (2 items) "On a success they stay at …"
+     h3 "Healing"
+     p "Any healing brings them up to …"
+2. back [cs-layout-default] scale 1.00
+   div.mini-d20-generic-body
+     p "The house rule applies to player …"

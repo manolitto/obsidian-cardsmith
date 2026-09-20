@@ -1,0 +1,11 @@
+Field-Glasses · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   div.card-title.ts-gear-title "Field Glasses"
+   div.ts-gear-image
+     img
+   p.ts-gear-content "8×30 binoculars in a leather case, …"
+   ul.ts-gear-traits (1 items) "Observation +2 pips at long range"
+   div.ts-gear-story-points "Story points 1"
+   span.cs-fill-1
+   div.ts-reference.ts-reference-right "Rulebook p. 131"
+2. back [cs-layout-default] scale —

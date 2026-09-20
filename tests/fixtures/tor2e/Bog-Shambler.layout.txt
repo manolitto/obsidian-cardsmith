@@ -1,0 +1,40 @@
+Bog-Shambler · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 0.77
+   div.tor-npc-grid
+     div.tor-npc-left
+       div.tor-npc-features "Tough, Patient"
+       div.tor-stats-row.cs-check-overflow
+         div.tor-stat
+           div.tor-stat-label "Endurance"
+           div.tor-diamond
+             div.tor-diamond-inner "20"
+         div.tor-stat
+           div.tor-stat-label "Might"
+           div.tor-diamond
+             div.tor-diamond-inner "2"
+         div.tor-stat
+           div.tor-stat-label "Hate"
+           div.tor-diamond
+             div.tor-diamond-inner "4"
+         div.tor-stat
+           div.tor-stat-label "Parry"
+           div.tor-diamond
+             div.tor-diamond-inner "+1"
+         div.tor-stat
+           div.tor-stat-label "Armour"
+           div.tor-diamond
+             div.tor-diamond-inner "2"
+     div.tor-npc-attribute
+       div.tor-stat-label "Attribute level"
+       div.tor-diamond.tor-diamond-large
+         div.tor-diamond-inner "3"
+   div.tor-section-label "Combat proficiencies"
+   ul.tor-npc-proficiencies (2 items) "Claws 2 (4/14) Grasp 3 (2/12, …"
+   div.tor-section-label "Fell abilities"
+   div.tor-npc-abilities
+     p.tor-npc-ability "Tough. A Heavy Blow costs the …"
+     p.tor-npc-ability "Out of the bog. Whoever did …"
+   div.tor-section-label.tor-description-rule
+   div.tor-npc-description
+     p "What sinks in the bog does …"
+2. back [cs-layout-default] scale —

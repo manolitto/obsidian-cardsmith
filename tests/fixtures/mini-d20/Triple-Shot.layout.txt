@@ -1,0 +1,12 @@
+Triple-Shot · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   div.mini-d20-tags "Active Ranged Combat"
+   span.cs-fill-1.cs-keep-with-next
+   div.mini-d20-subheader.cs-keep-with-next "Effect"
+   div.mini-d20-prose
+     p "With a ranged weapon you can …"
+   span.cs-fill-2
+   span.cs-fill-1.cs-keep-with-next
+   div.mini-d20-ability-notes
+     div.mini-d20-ability-note "[Active] Twice per day per character …"
+2. back [cs-layout-default] scale —

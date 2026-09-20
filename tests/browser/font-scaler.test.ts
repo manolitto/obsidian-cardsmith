@@ -73,6 +73,31 @@ describe("scaleOneBody", () => {
     expect(fitsCommitted(el)).toBe(true);
   });
 
+  it("goes below the scale the height asks for when a row is still too wide there", () => {
+    // Five cells of a fixed em width in a row that is marked for the probe:
+    // by height the body needs a little shrinking, by width a lot more.
+    const cells = Array.from({ length: 5 }, () => '<span class="cell"></span>').join("");
+    const root = mount(
+      faceHtml({
+        body: `<div class="row cs-check-overflow">${cells}</div>${paragraphs(5)}`,
+      }),
+      `${TYPE}
+      .row { display: flex; gap: 0.5em; }
+      .cell { flex: none; width: 4.5em; height: 1em; background: #999; }`
+    );
+    const el = body(root);
+    const byHeight = el.clientHeight / el.scrollHeight;
+    expect(byHeight).toBeLessThan(1);
+    expect(byHeight).toBeGreaterThan(resolveBodyMinScale(el));
+
+    expect(scaleOneBody(el)).toBe(false);
+
+    const scale = readScaleFromTransform(el);
+    expect(scale).toBeLessThan(byHeight);
+    const row = el.querySelector<HTMLElement>(".row")!;
+    expect(row.scrollWidth).toBeLessThanOrEqual(row.clientWidth + 1);
+  });
+
   it("stops at the floor --card-font-size-min sets and reports the clip", () => {
     const root = mount(faceHtml({ body: paragraphs(30) }));
     const el = body(root);
