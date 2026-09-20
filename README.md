@@ -91,6 +91,19 @@ system is also the thing to copy into the vault and make your own.
 | <img src="docs/images/cards/sw/item.webp" alt="sw item card, front and back" width="420"><br>[**sw**](docs/systems.md#sw) — *Swords & Wizardry*<br>`item` `monster` | <img src="docs/images/cards/troubleshooters/npc.webp" alt="troubleshooters npc card, front and back" width="420"><br>[**troubleshooters**](docs/systems.md#troubleshooters) — *The Troubleshooters*<br>`npc` `mechanic` `gear` |
 | <img src="docs/images/cards/5e/npc.webp" alt="5e npc card, front and back" width="420"><br>[**5e**](docs/systems.md#5e) — fifth-edition play (SRD 5.1)<br>`monster` `npc` | <img src="docs/images/cards/dftq/prompt.webp" alt="dftq prompt card, front and back" width="420"><br>[**dftq**](docs/systems.md#dftq) — games *Descended from the Queen*<br>`prompt` |
 
+**These twelve are a start**, not the catalogue: more bundled systems
+are on the way, and a system does not have to be bundled to be shared.
+A system is one folder — a YAML root document, templates, a stylesheet,
+fonts — and any vault can run one: unzip the folder into the vault, pick
+its root document under *Add a vault system* in the settings, and every
+note that names it prints in that design. So a new system, an improved
+one or a different take on a game the plugin already covers is yours to
+publish the moment it works: zip the folder and put it where others can
+download it. That is the easiest way to contribute — no build, no pull
+request — though a pull request that bundles it is welcome too;
+[Writing a system](docs/authoring/system.md) shows how to start from a
+copy of `simple`, and [CONTRIBUTING.md](CONTRIBUTING.md) the rest.
+
 ## What is in the box
 
 | | |
