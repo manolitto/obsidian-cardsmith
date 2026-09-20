@@ -16,7 +16,7 @@ combat-proficiencies:
 fell-abilities:
   - _Zäh._ Ein Schwerer Treffer kostet den Moorschlurfer nur die Hälfte.
   - _Aus dem Moor._ Wer ihn nicht kommen sah, verliert seine erste Aktion.
-img: "[[Moorschlurfer.png]]"
+img: "[[Moorschlurfer.jpg]]"
 ---
 
 ## Beschreibung
