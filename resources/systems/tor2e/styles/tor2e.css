@@ -285,6 +285,11 @@
   opacity: 0.6;
   padding-top: 0.2em;
 }
+/* A linked term — a proficiency, a condition, a rule — reads as a term
+   in the rulebook's own manner: set in italics, in the running text. */
+.card-root.tor2e .cs-wikilink {
+  font-style: italic;
+}
 
 /* ── The back ──────────────────────────────────────────────────────── */
 
