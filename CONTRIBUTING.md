@@ -94,6 +94,13 @@ Beyond the test:
 - **Fixtures**: at least one card note per card type under
   `tests/fixtures/<id>/`, plus a `_deck.md`, all with invented content;
   then `UPDATE_GOLDENS=1 npm test` writes the goldens.
+- **Pictures**: every card type is shown in [Bundled
+  systems](docs/systems.md) — `UPDATE_PICTURES=1 npx vitest run --project
+  browser tests/browser/card-pictures.test.ts` takes one of each from the
+  fixtures into `docs/images/cards/<id>/`, and the page gets a row for the
+  system. Retake them whenever a stylesheet or template changes what a
+  card looks like; without the flag the test only checks that none is
+  missing.
 - **Card-type ids are singular English** (`npc`, `gear`, `creature`)
   whatever the content language.
 - **Sizes are relative.** Card CSS uses `%` of the parent for box geometry
