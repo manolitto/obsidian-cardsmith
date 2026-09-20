@@ -1,9 +1,9 @@
 Beizjagd · 1 card · 2 faces · clipped: no
-1. front [cs-overflow-active cs-layout-default cs-front-first cs-front-has-next] scale 0.89
+1. front [cs-overflow-active cs-layout-default cs-front-first cs-front-has-next] scale 0.91
    div.ez-body.cs-split-head
      p "Eine Beizjagd dauert einen Tag und …"
      p "Wird die Probe mit Vorteil abgelegt …"
-2. back-as-front [cs-overflow-back-as-front cs-overflow-active cs-layout-default cs-front-continued] scale 0.89
+2. back-as-front [cs-overflow-back-as-front cs-overflow-active cs-layout-default cs-front-continued] scale 0.91
    div.ez-body.cs-split-continuation
      div.cs-keep-together
        h3 "Beute (1w6)"

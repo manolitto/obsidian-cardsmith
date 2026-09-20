@@ -194,11 +194,11 @@
      that edge (.ez-side-ref) and the body has to keep clear of it. */
   --ez-body-inset-right: 11%;
 
-  /* The logo. A floor, so that a full face pulls the logo down to it rather
-     than displacing text (6 mm on poker), and a margin of air inside its
-     band on all four sides — see the logo section for why the inset is a cap
-     on the image and not padding on the band. */
-  --ez-logo-min: calc(var(--card-height, 88mm) * 0.068);
+  /* The logo: the air inside its band on all four sides — see the logo
+     section for why the inset is a cap on the image and not padding on the
+     band. The height the band must reach for the logo to show at all is a
+     literal in the container query there; a custom property cannot be
+     queried. */
   --ez-logo-inset: 8%;
 
   background-color: var(--ez-paper);
@@ -726,19 +726,38 @@
    Size: as large as possible, but not edge to edge. `flex: 1 1 0` takes all
    the room left over — the whole body on an empty back, the rest under the
    text on a half-full last face. `flex-grow` also restores the shrink the
-   base stylesheet switches off for body children (`flex-shrink: 0`), so a
-   full face pulls the logo down to --ez-logo-min instead of displacing
-   text. The floor is an absolute length, as the base stylesheet asks of
-   everything the scaler measures in its two passes.
+   base stylesheet switches off for body children (`flex-shrink: 0`), and
+   with `min-height: 0` the band gives way entirely: a full last face keeps
+   every line of its text and the band shrinks to nothing.
+
+   All or nothing. A logo squeezed under a nearly full face is a smudge, not
+   a signature, so the image shows only when its band gets at least 30 % of
+   the body's height, and is otherwise not drawn at all. That is a container
+   query on the band's own height against the body: `.card-body-scalable` is
+   the size container the `cqh` unit resolves against — a unit in a query
+   condition is computed on the queried container, and a container query
+   length there is relative to the container's nearest ancestor container.
+   The body is the right reference rather than `.card-content-container`:
+   the font scaler stretches the body to (100 / scale) % of the container
+   and scales it back down, and the band is laid out inside that stretch, so
+   band and body are in the same frame while the container is not. Neither
+   `container-type` changes a layout: the body's size comes from flex and
+   the scaler, the band's from flex, and size containment only says that
+   the content does not size the box, which it never did. The body is a
+   scroll container (`overflow: hidden`), so its `scrollHeight` — what the
+   scaler and the splitter measure — is untouched by the containment.
 
    Inside the band there is air all round: --ez-logo-inset. The logo fills
    only `100 % − 2 × inset` of its band on both axes and the band centres
    it, so the gap stands on all four sides. Deliberately a cap on the IMAGE
    and NOT `padding` on the band: `box-sizing: border-box` counts padding
-   into the height, and vertical padding would raise the --ez-logo-min floor
+   into the height, and vertical padding would push the band's threshold
    and cost text lines on a full face. A cap on the image leaves every box
    height untouched. --ez-logo-filter switches the steel to greyscale for
    a purely achromatic back.                                                 */
+.card-root.eiserne-zeit .card-body-scalable {
+  container-type: size;
+}
 .card-root.eiserne-zeit .ez-logo-band {
   display: none;
 }
@@ -746,16 +765,24 @@
 .card-root.eiserne-zeit.card-back .ez-logo-band {
   display: flex;
   flex: 1 1 0;
-  min-height: var(--ez-logo-min);
+  min-height: 0;
   align-items: center;
   justify-content: center;
   margin: 0.4em 0 0.1em;
+  container-type: size;
+  container-name: ez-logo-band;
 }
-
 .card-root.eiserne-zeit .ez-logo {
   display: block;
   max-width: calc(100% - 2 * var(--ez-logo-inset));
   max-height: calc(100% - 2 * var(--ez-logo-inset));
   object-fit: contain;
   filter: var(--ez-logo-filter, none);
+}
+/* After the rule above: a container query adds no specificity, and the
+   later of two equal rules wins. */
+@container ez-logo-band (height < 30cqh) {
+  .card-root.eiserne-zeit .ez-logo {
+    display: none;
+  }
 }
