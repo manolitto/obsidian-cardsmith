@@ -1,0 +1,13 @@
+Night-Porter · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   div.ts-line.ts-numbers "Initiative 3 Vitality 3"
+   div.ts-line "Traits Underling"
+   div.ts-line.cs-keep-with-next "Attacks"
+   ul.ts-list (1 items) "Fist: 35%, 2dX, Non-lethal"
+   div.ts-line.cs-keep-with-next "Skills"
+   ul.ts-list (2 items) "Basic: 35% Recognising guests: 65%"
+   div.ts-prose.ts-description
+     p "Sits behind the desk, knows who …"
+   span.cs-fill-1
+   div.ts-reference.ts-reference-right "Rulebook p. 229"
+2. back [cs-layout-default] scale —

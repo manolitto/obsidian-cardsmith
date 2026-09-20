@@ -1,0 +1,19 @@
+Buckler · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   div.tor-stats-row
+     div.tor-stat
+       div.tor-stat-label "Parry modifier"
+       div.tor-diamond
+         div.tor-diamond-inner "+1"
+     div.tor-stat
+       div.tor-stat-label "Load"
+       div.tor-diamond
+         div.tor-diamond-inner "2"
+   div.tor-separator
+   p.tor-line "Notes: Can be carried together with …"
+   span.cs-fill-1
+   div.tor-separator
+   span.cs-fill-2
+   div.tor-separator
+   div.tor-reference "(Core Rules p. 76)"
+2. back [cs-layout-default] scale —

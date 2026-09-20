@@ -1,0 +1,25 @@
+Dwarf · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   div.mini-d20-tags "Passive"
+   span.cs-fill-1.cs-keep-with-next
+   div.mini-d20-subheader.cs-keep-with-next "Trait"
+   div.mini-d20-prose
+     p "+ 1 base damage in melee."
+   span.cs-fill-1.cs-keep-with-next
+   div.mini-d20-subheader.cs-keep-with-next "Names"
+   div.mini-d20-heritage-names
+     div.mini-d20-heritage-name-h "Male"
+     div.mini-d20-heritage-name-h "Female"
+     div.mini-d20-heritage-name-h "Last name"
+     div.mini-d20-heritage-name-v "Artex"
+     div.mini-d20-heritage-name-v "Branca"
+     div.mini-d20-heritage-name-v "Thunderhammer"
+     div.mini-d20-heritage-name-v "Grimthor"
+     div.mini-d20-heritage-name-v "Opal"
+     div.mini-d20-heritage-name-v "Coppereye"
+     div.mini-d20-heritage-name-v "Balin"
+     div.mini-d20-heritage-name-v "Thora"
+     div.mini-d20-heritage-name-v "Stonebeard"
+   span.cs-fill-1.cs-keep-with-next
+   p.mini-d20-flavour "Tough, stubborn, at home in stone."
+2. back [cs-layout-default] scale —

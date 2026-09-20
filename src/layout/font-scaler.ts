@@ -230,9 +230,6 @@ export function scaleOneBody(htmlEl: HTMLElement, forcedScale?: number): boolean
   if (container) container.style.overflow = "visible";
 
   const minScale = resolveBodyMinScale(htmlEl);
-  let lo = Math.max(minScale, contentH > availableH ? availableH / contentH : minScale);
-  let hi = 1;
-  let best = lo;
   // Probe in the SAME geometry the search commits below — width AND the
   // height/min-height stretch — and test the SAME predicate every later
   // clipping check uses (`scrollHeight <= clientHeight + 1`).
@@ -249,15 +246,33 @@ export function scaleOneBody(htmlEl: HTMLElement, forcedScale?: number): boolean
   // in the committed geometry makes the result satisfy the later checks by
   // construction; it costs at most one search step (well under a percent of
   // scale on a dense deck).
+  const stretchTo = (scale: number): void => {
+    const inv = (100 / scale).toFixed(2) + "%";
+    htmlEl.style.width = inv;
+    htmlEl.style.height = inv;
+    htmlEl.style.minHeight = inv;
+  };
+  const fitsAt = (scale: number): boolean => {
+    stretchTo(scale);
+    return (
+      htmlEl.scrollHeight <= htmlEl.clientHeight + 1 && !hasHorizontalOverflow(htmlEl)
+    );
+  };
+  // The scale the height alone asks for is where the search starts, and
+  // what is committed when nothing above it fits: below it the body fits
+  // in height by construction. It says nothing about the width, though — a
+  // row of fixed-size cells wider than its column can need less still — so
+  // when the width overflows there, the search runs down to the floor.
+  let lo = Math.max(minScale, contentH > availableH ? availableH / contentH : minScale);
+  if (lo > minScale) {
+    stretchTo(lo);
+    if (hasHorizontalOverflow(htmlEl)) lo = minScale;
+  }
+  let hi = 1;
+  let best = lo;
   for (let j = 0; j < BINARY_SEARCH_ITERATIONS; j++) {
     const mid = (lo + hi) / 2;
-    const midInv = (100 / mid).toFixed(2) + "%";
-    htmlEl.style.width = midInv;
-    htmlEl.style.height = midInv;
-    htmlEl.style.minHeight = midInv;
-    const fitsH = htmlEl.scrollHeight <= htmlEl.clientHeight + 1;
-    const fitsW = !hasHorizontalOverflow(htmlEl);
-    if (fitsH && fitsW) {
+    if (fitsAt(mid)) {
       best = mid;
       lo = mid;
     } else {

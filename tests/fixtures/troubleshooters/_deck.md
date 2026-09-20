@@ -1,7 +1,7 @@
 # The Troubleshooters fixtures as a deck
 
-Every German card note in this folder — `Taking-Cover` says
-`language: en` and stays out — gear first, then mechanics, then the
+Every German card note in this folder — the English ones say
+`language: en` and stay out — gear first, then mechanics, then the
 characters.
 
 ```cardsmith-deck

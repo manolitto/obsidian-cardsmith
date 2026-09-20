@@ -11,7 +11,8 @@ A card's size is the card type's, else the system's, else poker
 (63 × 88 mm). *Languages* are the ones the system has captions for; a
 note may pick one with `language:`. Every picture is one card of the
 type, front and back, rendered from a sample note exactly as the plugin
-prints it — invented content, never a rulebook's.
+prints it — invented content, never a rulebook's — in English wherever
+the system has English captions.
 
 ## simple
 

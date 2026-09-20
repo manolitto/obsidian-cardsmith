@@ -1,7 +1,7 @@
 # The DCC fixtures as a deck
 
-Every German card note in this folder — `Haumesser` says `language: en`
-and stays out — occupations first.
+Every German card note in this folder — `Haumesser` and `Stargazer` say
+`language: en` and stay out — occupations first.
 
 ```cardsmith-deck
 system: dcc

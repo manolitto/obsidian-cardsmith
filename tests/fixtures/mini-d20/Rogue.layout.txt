@@ -1,0 +1,43 @@
+Rogue · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 0.96
+   span.cs-fill-1.cs-keep-with-next
+   div.mini-d20-stats.mini-d20-archetype-stats
+     div.mini-d20-stat-h "HP"
+     div.mini-d20-stat-h "AC"
+     div.mini-d20-stat-h "ST"
+     div.mini-d20-stat-v "12"
+     div.mini-d20-stat-v "10"
+     div.mini-d20-stat-v "11"
+   span.cs-fill-1.cs-keep-with-next
+   div.mini-d20-subheader.cs-keep-with-next "Skill bonuses"
+   div.mini-d20-archetype-skills
+     div.mini-d20-archetype-skill-name "Stealth"
+     div.mini-d20-archetype-skill-bonus "+4"
+     div.mini-d20-archetype-skill-name "Sleight of Hand"
+     div.mini-d20-archetype-skill-bonus "+4"
+     div.mini-d20-archetype-skill-name "Acrobatics"
+     div.mini-d20-archetype-skill-bonus "+3"
+     div.mini-d20-archetype-skill-name "Perception"
+     div.mini-d20-archetype-skill-bonus "+3"
+     div.mini-d20-archetype-skill-name "Ranged Combat"
+     div.mini-d20-archetype-skill-bonus "+2"
+     div.mini-d20-archetype-skill-name "Melee"
+     div.mini-d20-archetype-skill-bonus "+2"
+   span.cs-fill-1.cs-keep-with-next
+   div.mini-d20-rows.mini-d20-archetype-allowed
+     div.mini-d20-row-label "Allowed armor"
+     div.mini-d20-row-value "Light"
+     div.mini-d20-row-label "Allowed weapons"
+     div.mini-d20-row-value "Light, Medium"
+   span.cs-fill-1.cs-keep-with-next
+   div.mini-d20-subheader.cs-keep-with-next "Abilities"
+   div.mini-d20-prose
+     p "You start with two abilities."
+   span.cs-fill-1.cs-keep-with-next
+   div.mini-d20-subheader.cs-keep-with-next "Level-up"
+   div.mini-d20-prose
+     p "+ 4 HP per level."
+     p "- 1 ST per level."
+     p "On each level-up through level 4 …"
+   span.cs-fill-2
+2. back [cs-layout-default] scale —
