@@ -56,8 +56,10 @@ print:
 The title is the note's name; everything else is a property the
 system knows — `content`, `game-name`, `reference` — written under
 `data:`, in the note's frontmatter, as the note's own text and `##`
-sections, as Dataview-style inline fields, or in a Fantasy Statblocks
-block a note already has. *Insert sample card block at cursor* in the command palette
+sections, as [Dataview](https://blacksmithgu.github.io/obsidian-dataview/)-style
+inline fields, or in a
+[Fantasy Statblocks](https://plugins.javalent.com/statblocks) block a note
+already has. *Insert sample card block at cursor* in the command palette
 writes a block with every property filled in, and *Show property
 reference* lists them.
 

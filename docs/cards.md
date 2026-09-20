@@ -39,13 +39,16 @@ A property is looked up in six places, each winning over the one before:
    property `body`; every `##` heading is a property named after it in
    kebab-case — `## Front Side` becomes `front-side`. Code blocks are
    dropped, so the `cardsmith` block itself never lands on a card.
-2. **A `statblock` block** — the block the Fantasy Statblocks plugin
+2. **A `statblock` block** — the block the
+   [Fantasy Statblocks](https://plugins.javalent.com/statblocks) plugin
    renders — key by key. A note that already has one needs nothing copied;
    `Key:: value` lines inside it read as keys too.
-3. **Inline fields** — `Key:: value` on a line of its own, as Dataview and
-   Datacore read them. The key is spelled like a heading, so
-   `Reference::` and `## Reference` name one property; the line itself
-   leaves the text, so it never prints on the card.
+3. **Inline fields** — `Key:: value` on a line of its own, as
+   [Dataview](https://blacksmithgu.github.io/obsidian-dataview/) and
+   [Datacore](https://blacksmithgu.github.io/datacore/) read them. The
+   key is spelled like a heading, so `Reference::` and `## Reference` name
+   one property; the line itself leaves the text, so it never prints on
+   the card.
 4. **The frontmatter**, key by key.
 5. **`data:`** in the block.
 6. **A table row**, in a table note (below).
