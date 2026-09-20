@@ -24,7 +24,7 @@
     <div class="tor-npc-grid">
       <div class="tor-npc-left">
         {{#if (slot "front-features")}}<div class="tor-npc-features">{{slot "front-features"}}</div>{{/if}}
-        <div class="tor-stats-row">
+        <div class="tor-stats-row cs-check-overflow">
           {{> diamond for="front-endurance"}}
           {{> diamond for="front-might"}}
           {{#if (slot "front-hate")}}{{> diamond for="front-hate"}}{{else}}{{> diamond for="front-resolve"}}{{/if}}

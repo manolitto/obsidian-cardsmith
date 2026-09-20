@@ -196,7 +196,9 @@
   line-height: 1.1;
 }
 /* A rotated square drawn under the number; the number's box is the
-   square's inscribed area, so it shrinks only when it would not fit. */
+   square's inscribed area, so it shrinks only when it would not fit. The
+   square's border counts towards its side, so the rotated corners end
+   exactly at the box — a box that sits at the body's edge keeps its tip. */
 .tor-diamond {
   width: calc(var(--tor-diamond-small) * 1.42);
   height: calc(var(--tor-diamond-small) * 1.42);
@@ -208,6 +210,7 @@
 .tor-diamond::before {
   content: "";
   position: absolute;
+  box-sizing: border-box;
   width: var(--tor-diamond-small);
   height: var(--tor-diamond-small);
   border: var(--tor-diamond-small-border) solid var(--tor-accent);
