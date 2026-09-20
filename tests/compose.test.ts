@@ -72,10 +72,9 @@ describe("layoutGrid", () => {
     expect(g.originY).toBeCloseTo(10 + (277 - 264) / 2);
   });
 
-  it("makes a paper that is the card, either way round, one borderless card", () => {
-    for (const size of ["63 x 88", "88 x 63"]) {
-      const g = layoutGrid(paper(size), card("poker"), 10);
-      expect(g).toMatchObject({
+  it("makes a paper that is the card one borderless card, whatever the margin", () => {
+    for (const size of ["poker", "63 x 88"]) {
+      expect(layoutGrid(paper(size), card("poker"), 10)).toMatchObject({
         paper: { width: 63, height: 88 },
         columns: 1,
         rows: 1,
@@ -83,11 +82,33 @@ describe("layoutGrid", () => {
         originY: 0,
       });
     }
+    // A card preset as paper turns with the card.
+    expect(layoutGrid(paper("poker"), { width: 88, height: 63 }, 10)).toMatchObject({
+      paper: { width: 88, height: 63 },
+      columns: 1,
+      rows: 1,
+      originX: 0,
+      originY: 0,
+    });
+    expect(layoutGrid(paper("large"), card("large"), 25)).toMatchObject({
+      paper: { width: 88.9, height: 127 },
+      columns: 1,
+      rows: 1,
+      originX: 0,
+      originY: 0,
+    });
   });
 
-  it("refuses a card that does not fit even once, naming both", () => {
+  it("keeps the card its size and lets the margin yield, on the axis where it must", () => {
+    // 100 wide leaves 37 for two margins around a 63 mm card; 297 high keeps the 25.
+    const g = layoutGrid(paper("100 x 297"), card("poker"), 25);
+    expect(g).toMatchObject({ columns: 1, rows: 2, originX: 18.5 });
+    expect(g.originY).toBeCloseTo(25 + (247 - 176) / 2);
+  });
+
+  it("refuses a card that does not fit the paper even once, naming both", () => {
     expect(() => layoutGrid(paper("100 x 100"), card("tarot"), 10)).toThrow(
-      "A 70 × 120 mm card does not fit on 100 × 100 mm paper inside a 10 mm margin"
+      "A 70 × 120 mm card does not fit on 100 × 100 mm paper"
     );
   });
 });
@@ -204,6 +225,16 @@ describe("cut marks", () => {
     const back = pages[1]!.marks;
     const xs = [...new Set(back.filter((l) => l.x1 === l.x2).map((l) => l.x1))];
     expect(xs.sort((a, b) => a - b)).toEqual([70, 133]);
+  });
+
+  it("are none on a page that holds one card, and still there on a part-filled last page", () => {
+    const single = composePages(deck({ cards: cards(1), paperSize: paper("poker") }));
+    expect(single.grid).toMatchObject({ columns: 1, rows: 1 });
+    expect(single.pages[0]!.marks).toEqual([]);
+
+    const last = composePages(deck({ cards: cards(7) })).pages.at(-1)!;
+    expect(last.cells).toHaveLength(1);
+    expect(last.marks).toHaveLength(16);
   });
 
   it("are none when switched off", () => {

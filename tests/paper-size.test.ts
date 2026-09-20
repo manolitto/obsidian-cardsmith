@@ -10,6 +10,19 @@ describe("parsePaperSize", () => {
     });
   });
 
+  it("offers every card size as a paper, for one card per page", () => {
+    expect(parsePaperSize("poker")).toEqual({
+      width: 63,
+      height: 88,
+      orientation: "auto",
+    });
+    expect(parsePaperSize("Large landscape")).toEqual({
+      width: 88.9,
+      height: 127,
+      orientation: "landscape",
+    });
+  });
+
   it("takes an orientation after the preset", () => {
     expect(parsePaperSize("A4 landscape")?.orientation).toBe("landscape");
     expect(parsePaperSize("A3 portrait")?.orientation).toBe("portrait");

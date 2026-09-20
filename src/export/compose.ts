@@ -13,6 +13,12 @@ import { DEFAULT_PAPER_PRESET, PAPER_PRESETS, type PaperSize } from "../model/pa
  * along the axis the duplex flip turns about, on the next. What comes out
  * is positions — where each side of each card sits, and where the cut
  * marks go — for the document to render.
+ *
+ * A card is printed at its size, always: the paper and the margin decide
+ * how many fit, never how big one is. Where the margin would leave no
+ * room for a single card it yields, on that axis, to what the paper has —
+ * so a card on paper its own size fills the page edge to edge, whatever
+ * margin the deck asked for.
  */
 
 /** The grid a deck is imposed in: the paper the right way round, and where the cards sit on it. */
@@ -66,22 +72,10 @@ export interface Composable {
 
 /**
  * Lay the grid out. `auto` orientation tries the paper both ways and takes
- * the one that holds more cards, portrait on a tie. A paper that is the card
- * itself, either way round, is one card with no margin: the sheet is the
- * card. A card that does not fit the paper even once is an error naming both.
+ * the one that holds more cards, portrait on a tie. A card that does not
+ * fit the paper even once is an error naming both.
  */
 export function layoutGrid(paper: PaperSize, card: CardSize, pageMargin: number): Grid {
-  if (paperIsCard(paper, card)) {
-    return {
-      paper: { width: card.width, height: card.height },
-      card,
-      columns: 1,
-      rows: 1,
-      originX: 0,
-      originY: 0,
-    };
-  }
-
   const short = Math.min(paper.width, paper.height);
   const long = Math.max(paper.width, paper.height);
   const portrait = fit({ width: short, height: long }, card, pageMargin);
@@ -97,19 +91,22 @@ export function layoutGrid(paper: PaperSize, card: CardSize, pageMargin: number)
 
   if (chosen.columns < 1 || chosen.rows < 1) {
     throw new Error(
-      `A ${card.width} × ${card.height} mm card does not fit on ${chosen.paper.width} × ${chosen.paper.height} mm paper inside a ${pageMargin} mm margin`
+      `A ${card.width} × ${card.height} mm card does not fit on ${chosen.paper.width} × ${chosen.paper.height} mm paper`
     );
   }
   return chosen;
 }
 
+/** The grid on the paper this way round. The margin yields, per axis, where it would not leave room for one card. */
 function fit(
   paper: { width: number; height: number },
   card: CardSize,
   margin: number
 ): Grid {
-  const usableWidth = paper.width - 2 * margin;
-  const usableHeight = paper.height - 2 * margin;
+  const marginX = Math.min(margin, Math.max(0, (paper.width - card.width) / 2));
+  const marginY = Math.min(margin, Math.max(0, (paper.height - card.height) / 2));
+  const usableWidth = paper.width - 2 * marginX;
+  const usableHeight = paper.height - 2 * marginY;
   const columns = Math.max(0, Math.floor(usableWidth / card.width));
   const rows = Math.max(0, Math.floor(usableHeight / card.height));
   return {
@@ -117,17 +114,9 @@ function fit(
     card,
     columns,
     rows,
-    originX: margin + (usableWidth - columns * card.width) / 2,
-    originY: margin + (usableHeight - rows * card.height) / 2,
+    originX: marginX + (usableWidth - columns * card.width) / 2,
+    originY: marginY + (usableHeight - rows * card.height) / 2,
   };
-}
-
-function paperIsCard(paper: PaperSize, card: CardSize): boolean {
-  const same = (a: number, b: number): boolean => Math.abs(a - b) < 0.01;
-  return (
-    (same(paper.width, card.width) && same(paper.height, card.height)) ||
-    (same(paper.width, card.height) && same(paper.height, card.width))
-  );
 }
 
 /**
@@ -225,9 +214,15 @@ function at(grid: Grid, column: number, row: number): { x: number; y: number } {
  * on every card wherever it printed. A corner shared by several cards is
  * marked once. Positions come from the cells as placed, so a back page's
  * marks mirror with its cards.
+ *
+ * A grid that holds one card gets no marks: that page is the card, or as
+ * good as — a sheet for a screen, not for the guillotine. The rule reads
+ * the grid, not the page, so the last page of a deck, part-filled, is
+ * marked like the ones before it.
  */
 export function cutMarks(cells: readonly Cell[], grid: Grid, marks: CutMarks): Line[] {
   if (!marks.enabled || cells.length === 0) return [];
+  if (grid.columns * grid.rows < 2) return [];
   const length = marks.length ?? 3;
   const gap = marks.margin ?? 0;
   const { width, height } = grid.card;

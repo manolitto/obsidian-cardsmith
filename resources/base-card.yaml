@@ -107,20 +107,24 @@ expand-by-roll: false
 
 # ── Deck settings ────────────────────────────────────────────────────
 
-# Paper the deck is imposed on. A preset name or `210 x 297 mm`; a preset may
-# be followed by `portrait` or `landscape`, and without the word the deck
-# picks whichever way holds more cards. Dimensions are as written.
+# Paper the deck is imposed on. A sheet (`A4`, `Letter`, …), a card size
+# (`poker`, `tarot`, … — one card per page, for a screen) or `210 x 297 mm`;
+# a preset may be followed by `portrait` or `landscape`, and without the
+# word the deck picks whichever way holds more cards. Dimensions are as
+# written.
 paper-size: A4
 
-# Blank space around the card grid, in millimetres, on all four sides.
+# Blank space around the card grid, in millimetres, on all four sides. The
+# margin yields where the paper is too small for it; the card never does.
 page-margin: 10
 
 # Which edge of the paper is the binding when printing duplex, so that fronts
 # and backs align after the flip. `long-edge` or `short-edge`.
 duplex-flip: long-edge
 
-# Alignment marks at each card's outer corners. The fields merge across
-# layers, so a deck can change the colour without restating the geometry.
+# Alignment marks at each card's outer corners; a page that holds a single
+# card gets none. The fields merge across layers, so a deck can change the
+# colour without restating the geometry.
 cut-marks:
   enabled: true
   length: 3 # mm
