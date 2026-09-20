@@ -1,5 +1,6 @@
 import type { Diagnostics } from "../definitions/diagnostics";
 import { stripTags, wikilinkDisplayText } from "../templates/inline-markdown";
+import { propertyKey } from "../util/property-key";
 import { loadNoteYaml } from "./yaml";
 
 /**
@@ -142,7 +143,7 @@ function parseTableColumns(
   }
   const out: TableColumns = {};
   for (const [rawKey, rawColumn] of Object.entries(raw)) {
-    const key = rawKey.trim().toLowerCase();
+    const key = propertyKey(rawKey);
     if (!key) continue;
     if (Array.isArray(rawColumn)) {
       const columns = rawColumn

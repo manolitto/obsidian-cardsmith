@@ -50,7 +50,7 @@ describe("the cardsmith block", () => {
   it("reads the table: map in both forms, and reports a key it does not know", () => {
     const diagnostics = collectDiagnostics();
     const note = parse(
-      "```cardsmith\ncard: { system: x }\ntable:\n  roll: Wurf\n  stats: [Rationen, Dauer]\ncolumns: { a: b }\n```",
+      "```cardsmith\ncard: { system: x }\ntable:\n  Roll: Wurf\n  stats: [Rationen, Dauer]\ncolumns: { a: b }\n```",
       diagnostics
     );
     expect(note?.table).toEqual({ roll: "Wurf", stats: ["Rationen", "Dauer"] });

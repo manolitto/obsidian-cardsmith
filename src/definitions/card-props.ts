@@ -1,3 +1,4 @@
+import { propertyKey } from "../util/property-key";
 import { aliasClosure, reverseAliasMap, type AliasMap } from "./bindings";
 import type { PropertyDefsMap } from "./property-defs";
 
@@ -12,7 +13,7 @@ export interface PrepareCardPropsOptions {
 
 /**
  * Turn a note's raw properties into the object a card renders through: keys
- * folded to lowercase, declared defaults filled in, and the whole thing wrapped
+ * in their one spelling, declared defaults filled in, and the whole thing wrapped
  * so canonical and alias names reach the same value.
  *
  * Nothing here reshapes a value. A note that writes one trait where the card
@@ -29,7 +30,7 @@ export function prepareCardProps(
   const { aliases, defs, fileName } = options;
 
   const props: Record<string, unknown> = {};
-  for (const [key, value] of Object.entries(raw)) props[key.toLowerCase()] = value;
+  for (const [key, value] of Object.entries(raw)) props[propertyKey(key)] = value;
 
   if (fileName !== undefined) applyNameFallback(props, fileName, aliases);
   if (defs) applyDefaults(props, defs, aliases);

@@ -55,14 +55,14 @@ properties:
 
   ac:
     slot: front-ac
-    aliases: [armor-class, armor_class, armorclass, rüstungsklasse, ruestungsklasse, rk]
+    aliases: [armor-class, armorclass, rüstungsklasse, ruestungsklasse, rk]
     description:
       en: "Armor Class, usually a number with its source in parentheses — `15 (leather armor, shield)`."
     sample: "13 (natural armor)"
 
   hp:
     slot: front-hp
-    aliases: [hit-points, hit_points, hitpoints, trefferpunkte, tp]
+    aliases: [hit-points, hitpoints, trefferpunkte, tp]
     description:
       en: "Hit Points, usually the average with the hit-die formula in parentheses — `7 (2d6)`."
     sample: "22 (4d8 + 4)"
@@ -138,7 +138,7 @@ properties:
 
   saves:
     slot: front-saves
-    aliases: [saving-throws, saving_throws, savingthrows, rettungswürfe, rettungswuerfe]
+    aliases: [saving-throws, savingthrows, rettungswürfe, rettungswuerfe]
     description:
       en: "Saving-throw bonuses, comma-separated — `Dex +6, Con +13`. The line prints when it is set."
 
@@ -151,26 +151,26 @@ properties:
 
   vulnerabilities:
     slot: front-vulnerabilities
-    aliases: [damage-vulnerabilities, damage_vulnerabilities, schadensanfälligkeiten, schadensanfaelligkeiten]
+    aliases: [damage-vulnerabilities, schadensanfälligkeiten, schadensanfaelligkeiten]
     description:
       en: "Damage vulnerabilities, comma-separated. The line prints when it is set."
 
   resistances:
     slot: front-resistances
-    aliases: [damage-resistances, damage_resistances, schadensresistenzen]
+    aliases: [damage-resistances, schadensresistenzen]
     description:
       en: "Damage resistances, comma-separated. The line prints when it is set."
 
   immunities:
     slot: front-immunities
-    aliases: [damage-immunities, damage_immunities, schadensimmunitäten, schadensimmunitaeten]
+    aliases: [damage-immunities, schadensimmunitäten, schadensimmunitaeten]
     description:
       en: "Damage immunities, comma-separated. The line prints when it is set."
     sample: "fire"
 
   condition-immunities:
     slot: front-condition-immunities
-    aliases: [condition_immunities, conditionimmunities, zustandsimmunitäten, zustandsimmunitaeten]
+    aliases: [conditionimmunities, zustandsimmunitäten, zustandsimmunitaeten]
     description:
       en: "Condition immunities, comma-separated — `charmed, frightened`. The line prints when it is set."
 
@@ -190,7 +190,7 @@ properties:
 
   cr:
     slot: front-cr
-    aliases: [challenge, challenge-rating, challenge_rating, challengerating, herausforderungsgrad, hg]
+    aliases: [challenge, challenge-rating, challengerating, herausforderungsgrad, hg]
     description:
       en: "The challenge rating — a number, a fraction (`1/8`, `1/2`) — with the experience points from `xp` in parentheses after it."
     sample: "1"
@@ -204,7 +204,7 @@ properties:
 
   proficiency-bonus:
     slot: front-proficiency-bonus
-    aliases: [proficiency_bonus, pb, prof, prof-bonus, prof_bonus, übungsbonus, uebungsbonus]
+    aliases: [pb, prof, prof-bonus, übungsbonus, uebungsbonus]
     description:
       en: "The proficiency bonus, as the 2024 rules print it on the challenge line — `+2`. Prints when it is set."
 
@@ -231,7 +231,7 @@ properties:
 
   bonus-actions:
     slot: front-bonus-actions
-    aliases: [bonus_actions, bonusactions, bonusaktionen]
+    aliases: [bonusactions, bonusaktionen]
     description:
       en: "The bonus actions, under their own head — the same shape as `actions`."
 

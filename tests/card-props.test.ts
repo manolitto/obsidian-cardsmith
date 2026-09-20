@@ -8,8 +8,10 @@ const card = (raw: Record<string, unknown>, aliases: AliasMap = {}, fileName?: s
   prepareCardProps(raw, { aliases, fileName });
 
 describe("the keys a note wrote", () => {
-  it("folds them to lowercase", () => {
+  it("folds them to their one spelling", () => {
     expect(card({ Bezeichnung: "Beil" })["bezeichnung"]).toBe("Beil");
+    expect(card({ "Roll Min": 3 })["roll-min"]).toBe(3);
+    expect(card({ roll_max: 5 })["roll-max"]).toBe(5);
   });
 
   it("leaves the caller's object alone", () => {

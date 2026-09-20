@@ -14,18 +14,18 @@ properties:
 
   legendary-actions:
     slot: front-legendary-actions
-    aliases: [legendary_actions, legendaryactions, legendäre-aktionen, legendaere-aktionen]
+    aliases: [legendaryactions, legendäre-aktionen, legendaere-aktionen]
     description:
       en: "The legendary actions — the same shape as `actions`; the preamble is a first entry with only a `desc`, a cost belongs in the name — `Wing Attack (Costs 2 Actions)`."
 
   lair-actions:
     slot: front-lair-actions
-    aliases: [lair_actions, lairactions, hort-aktionen, hort_aktionen]
+    aliases: [lairactions, hort-aktionen]
     description:
       en: "The lair actions — the same shape as `legendary-actions`, the preamble first."
 
   regional-effects:
     slot: front-regional-effects
-    aliases: [regional_effects, regionaleffects, regionale-effekte, regionale_effekte]
+    aliases: [regionaleffects, regionale-effekte]
     description:
       en: "The regional effects — the same shape as `legendary-actions`, the preamble first."

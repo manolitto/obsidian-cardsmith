@@ -174,12 +174,13 @@ describe("the settings", () => {
 });
 
 describe("the props", () => {
-  it("fold sections < frontmatter < data: < row, keys lowercased", async () => {
+  it("fold sections < frontmatter < data: < row, keys in their one spelling", async () => {
     const sys = await system();
     const text = [
       "---",
       "Category: from-frontmatter",
       "grip: from-frontmatter",
+      "Roll Min: 2",
       "---",
       "From the body.",
       "",
@@ -192,6 +193,7 @@ describe("the props", () => {
     const [card] = resolveCards(note(text), sys, collectDiagnostics());
     expect(card?.props["category"]).toBe("from-frontmatter");
     expect(card?.props["grip"]).toBe("from-data");
+    expect(card?.props["roll-min"]).toBe(2); // `Roll Min:` in the frontmatter
     expect(card?.props["body"]).toBe("From the body.");
     expect(card?.props["stat-1a"]).toBe("from-data"); // through the slot binding
     expect(card?.props["name"]).toBe("Beil"); // the filename fallback
