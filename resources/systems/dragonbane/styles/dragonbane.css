@@ -1398,13 +1398,19 @@
 }
 
 /* The emblem, shown when the card has no picture of its own: a twenty-sided
-   die in a ring of the ornament green, drawn as inline SVG in the system's
-   own vocabulary (ink stroke, verdigris stroke over it, flat fills, nothing
-   blurred) and painted as the wrap's background at the height the logo
-   slot had. Keep the greens in step with --db-green / --db-green-dark /
-   --db-green-light by hand — a data URI cannot read a custom property. */
+   die seen face-on, in a ring of the ornament green. Inline SVG in the
+   strips' own vocabulary — every shape a flat fill with an ink outline,
+   nothing blurred, no gradient. The die is a real icosahedron projected
+   along a face normal (a hexagon holding ten faces), lit from the top
+   left and quantised to the four greens the strips use: the front face
+   alone in --db-green-light, the rest stepping with the light through
+   --db-green and --db-green-deep down to the ink of the outline; the
+   "20" is two stroked paths, since an SVG in a background image reaches
+   no font. Painted at the height the illustration would have. Keep the
+   greens in step with the custom properties by hand — a data URI cannot
+   read one. */
 .card-root.dragonbane .db-back-image-wrap.db-back-emblem {
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cg fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='100' cy='100' r='88' stroke='%230a201a' stroke-width='9'/%3E%3Ccircle cx='100' cy='100' r='88' stroke='%23317a61' stroke-width='4'/%3E%3Ccircle cx='100' cy='100' r='73' stroke='%230a201a' stroke-width='4'/%3E%3Ccircle cx='100' cy='100' r='73' stroke='%23317a61' stroke-width='1.6'/%3E%3Cpath d='M100 46 L53.2 73 L53.2 127 L100 154 L146.8 127 L146.8 73 Z M100 70 L74 115 L126 115 Z M100 46 L100 70 M53.2 73 L100 70 L146.8 73 M53.2 73 L74 115 L53.2 127 M74 115 L100 154 L126 115 M146.8 73 L126 115 L146.8 127' stroke='%230a201a' stroke-width='8'/%3E%3Cpath d='M100 46 L53.2 73 L53.2 127 L100 154 L146.8 127 L146.8 73 Z M100 70 L74 115 L126 115 Z M100 46 L100 70 M53.2 73 L100 70 L146.8 73 M53.2 73 L74 115 L53.2 127 M74 115 L100 154 L126 115 M146.8 73 L126 115 L146.8 127' stroke='%23317a61' stroke-width='3.2'/%3E%3Cpath d='M100 70 L74 115 L126 115 Z' fill='%234b9983' fill-opacity='0.35'/%3E%3C/g%3E%3C/svg%3E") center / auto 58% no-repeat;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><circle cx='100' cy='100' r='87.0' fill='none' stroke='%23317a61' stroke-width='10'/><circle cx='100' cy='100' r='92' fill='none' stroke='%230a201a' stroke-width='1.6'/><circle cx='100' cy='100' r='82' fill='none' stroke='%230a201a' stroke-width='1.6'/><path d='M131.5 118.2 L151.0 129.5 L100.0 158.9 Z' fill='%230a201a' stroke='%230a201a' stroke-width='2.4' stroke-linejoin='round'/><path d='M131.5 118.2 L151.0 129.5 L151.0 70.5 Z' fill='%230a201a' stroke='%230a201a' stroke-width='2.4' stroke-linejoin='round'/><path d='M68.5 118.2 L49.0 129.5 L100.0 158.9 Z' fill='%23035e4a' stroke='%230a201a' stroke-width='2.4' stroke-linejoin='round'/><path d='M68.5 118.2 L131.5 118.2 L100.0 158.9 Z' fill='%23035e4a' stroke='%230a201a' stroke-width='2.4' stroke-linejoin='round'/><path d='M100.0 63.6 L131.5 118.2 L151.0 70.5 Z' fill='%23035e4a' stroke='%230a201a' stroke-width='2.4' stroke-linejoin='round'/><path d='M68.5 118.2 L49.0 129.5 L49.0 70.5 Z' fill='%23317a61' stroke='%230a201a' stroke-width='2.4' stroke-linejoin='round'/><path d='M100.0 63.6 L68.5 118.2 L131.5 118.2 Z' fill='%234b9983' stroke='%230a201a' stroke-width='2.4' stroke-linejoin='round'/><path d='M100.0 63.6 L100.0 41.1 L151.0 70.5 Z' fill='%23317a61' stroke='%230a201a' stroke-width='2.4' stroke-linejoin='round'/><path d='M100.0 63.6 L68.5 118.2 L49.0 70.5 Z' fill='%23317a61' stroke='%230a201a' stroke-width='2.4' stroke-linejoin='round'/><path d='M100.0 63.6 L100.0 41.1 L49.0 70.5 Z' fill='%23317a61' stroke='%230a201a' stroke-width='2.4' stroke-linejoin='round'/><g fill='none' stroke='%230a201a' stroke-width='3.9' stroke-linecap='round' stroke-linejoin='round'><path d='M85.6 95.2 C85.6 89.3 97.8 89.3 97.8 96.0 C97.8 100.7 87.5 105.1 85.6 110.6 L97.8 110.6'/><ellipse cx='108.3' cy='100.7' rx='5.6' ry='9.8'/></g></svg>") center / auto 58% no-repeat;
 }
 
 /* ── The three spacers of the shared front ──
