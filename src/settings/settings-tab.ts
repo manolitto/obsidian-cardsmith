@@ -31,6 +31,13 @@ export class CardsmithSettingTab extends PluginSettingTab {
     const { containerEl } = this;
     containerEl.empty();
 
+    // The plugin's name and installed version, from the manifest, so a
+    // beta build identifies itself where the user looks for it.
+    new Setting(containerEl)
+      .setName(this.plugin.manifest.name)
+      .setDesc(t("settings.version", { version: this.plugin.manifest.version }))
+      .setHeading();
+
     new Setting(containerEl)
       .setName(t("settings.systems.heading"))
       .setDesc(t("settings.systems.desc"))
