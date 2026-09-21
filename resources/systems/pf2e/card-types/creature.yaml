@@ -31,6 +31,20 @@ translations:
     front-weaknesses-label: "Schwächen"
     front-stride-label: "Laufen"
     front-speed-label: "Bewegungsrate"
+  # The Bestiary's stat block. Both movement lines are "Speed" there —
+  # "Speed 25 feet" and "Speed 20 feet, fly 40 feet" alike.
+  en:
+    back-label: "Creature"
+    front-perception-label: "Perception"
+    front-skills-label: "Skills"
+    front-items-label: "Items"
+    front-armor-class-label: "AC"
+    front-hit-points-label: "HP"
+    front-immunities-label: "Immunities"
+    front-resistances-label: "Resistances"
+    front-weaknesses-label: "Weaknesses"
+    front-stride-label: "Speed"
+    front-speed-label: "Speed"
 
 properties:
   image:

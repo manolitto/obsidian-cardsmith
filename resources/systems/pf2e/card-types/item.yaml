@@ -40,6 +40,29 @@ translations:
     activation-trigger-label: "Auslöser"
     activation-requirements-label: "Voraussetzungen"
     activation-effect-label: "Wirkung"
+  # The Core Rulebook's item block and its weapon, armor and shield
+  # tables; a shield's line reads "Hardness 5, HP 20 (BT 10)", so the
+  # two abbreviations are the book's.
+  en:
+    back-label: "Item"
+    front-price-label: "Price"
+    front-damage-label: "Damage"
+    front-range-label: "Range"
+    front-reload-label: "Reload"
+    front-ac-bonus-label: "AC Bonus"
+    front-dex-cap-label: "Dex Cap"
+    front-check-penalty-label: "Check Penalty"
+    front-speed-penalty-label: "Speed Penalty"
+    front-strength-label: "Strength"
+    front-bulk-label: "Bulk"
+    front-hardness-label: "Hardness"
+    front-hit-points-label: "HP"
+    front-broken-threshold-label: "BT"
+    front-usage-label: "Usage"
+    activation-frequency-label: "Frequency"
+    activation-trigger-label: "Trigger"
+    activation-requirements-label: "Requirements"
+    activation-effect-label: "Effect"
 
 properties:
   image:

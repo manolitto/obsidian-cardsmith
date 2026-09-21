@@ -3,9 +3,10 @@ name: "Pathfinder 2nd Edition"
 
 # Modelled on the official German "Monsterkarten": a clean sans-serif stat
 # block on warm cream, a name and a level badge over a red rule, a row of
-# coloured trait pills, bold labels leading each line. Written in German
-# throughout — the aliases and the captions follow the Monsterhandbuch, so
-# a card can be read beside the open page. The sample values are invented:
+# coloured trait pills, bold labels leading each line. German first — the
+# aliases and the captions follow the Monsterhandbuch, so a card can be read
+# beside the open page — and English beside it, with the captions of the
+# Core Rulebook and the Bestiary. The sample values are invented:
 # realistic in shape, but no creature, item, feat, action or hazard of any
 # published book.
 #
@@ -16,7 +17,7 @@ name: "Pathfinder 2nd Edition"
 # and the furniture is partials: the header row, the trait pills, one
 # labelled stat line, the list of attacks or effects, a list of labelled
 # pairs, the footer.
-languages: [de]
+languages: [de, en]
 
 stylesheet: styles/pf2e.css
 
@@ -124,19 +125,25 @@ translations:
     # Inline labels inside an attack or effect entry.
     entry-damage-label: "Schaden"
     entry-effect-label: "Effekt"
+  en:
+    back-label: "Pathfinder 2e"
+    # The footer's English original is hidden on an English card.
+    front-footer-left-label: ""
+    entry-damage-label: "Damage"
+    entry-effect-label: "Effect"
 
 # The trait pills. Every trait prints in the dark maroon of the printed
 # book except a rarity, which the Monsterhandbuch sets apart in terracotta.
-# Matched on the display text, case-insensitively, against the German
-# rarity words; the alignment and size pills of a creature are places of
-# their own and carry a fixed colour, so no pattern has to know the
-# vocabulary of sizes.
+# Matched on the display text, case-insensitively, against the rarity
+# words of both languages; the alignment and size pills of a creature are
+# places of their own and carry a fixed colour, so no pattern has to know
+# the vocabulary of sizes.
 classifiers:
   front-traits:
     match:
-      - { pattern: "^(ungewöhnlich|ungewohnlich)$", token: rarity }
-      - { pattern: "^selten$", token: rarity }
-      - { pattern: "^einzigartig$", token: rarity }
+      - { pattern: "^(ungewöhnlich|ungewohnlich|uncommon)$", token: rarity }
+      - { pattern: "^(selten|rare)$", token: rarity }
+      - { pattern: "^(einzigartig|unique)$", token: rarity }
     default: generic
 
 # The action cost, written the friendly way and printed as the glyph of

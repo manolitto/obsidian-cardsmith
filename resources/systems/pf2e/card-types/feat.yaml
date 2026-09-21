@@ -15,6 +15,14 @@ translations:
     front-trigger-label: "Auslöser"
     front-requirements-label: "Anforderungen"
     front-special-label: "Speziell"
+  # The Core Rulebook's feat block.
+  en:
+    back-label: "Feat"
+    front-prerequisites-label: "Prerequisites"
+    front-frequency-label: "Frequency"
+    front-trigger-label: "Trigger"
+    front-requirements-label: "Requirements"
+    front-special-label: "Special"
 
 properties:
   level:

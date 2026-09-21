@@ -18,6 +18,19 @@ translations:
     front-hardness-label: "Härte"
     front-immunities-label: "Immunitäten"
     front-reset-label: "Rücksetzer"
+  # The Core Rulebook's hazard block. Its first two lines carry no
+  # caption — "Stealth DC 20 (trained)", and "Stealth +12 (trained)" on
+  # a complex hazard — so the value stands alone, as printed.
+  en:
+    back-label: "Hazard"
+    front-notice-label: ""
+    front-initiative-label: ""
+    front-disarm-label: "Disable"
+    front-armor-class-label: "AC"
+    front-hit-points-label: "HP"
+    front-hardness-label: "Hardness"
+    front-immunities-label: "Immunities"
+    front-reset-label: "Reset"
 
 properties:
   level:
