@@ -1,0 +1,15 @@
+Ember-Sparks · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 0.91
+   div.db-front-image-wrap
+     img.db-front-image.cs-front-image.fade-edges
+   div.db-stats-box
+     div.db-stats-row "Rank 2 WP 2 per power …"
+     div.db-stats-row.db-stats-row-wide
+       p.db-trait "Prerequisite Ember Grip"
+     div.db-stats-row.db-stats-row-wide
+       p.db-trait "Requirement Word, gesture"
+     div.db-stats-row "Casting Time Action Range 10 meters …"
+   div.db-effect-block.db-effect-block-bottom
+     p.db-effect-text "A shower of glowing sparks leaps …"
+     p.db-effect-text "Effect For each power level beyond …"
+2. back [cs-layout-default] scale —

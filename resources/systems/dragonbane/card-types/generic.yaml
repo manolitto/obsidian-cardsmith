@@ -43,10 +43,10 @@ properties:
 
   vorderseite:
     slot: front-body
-    aliases: [front-side]
+    aliases: [front, front-side]
     description:
       de: "Der Abschnitt unter einer `## Vorderseite`-Überschrift in der Notiz füllt die Karte, wenn der Block keinen `content` setzt. Voll gerendert – Tabellen, Überschriften, Listen und eingebettete Bilder inklusive."
-      en: "The section under a `## Vorderseite` heading in the note fills the card when the block sets no `content`. Fully rendered — tables, headings, lists and embedded pictures included."
+      en: "The section under a `## Vorderseite` or `## Front` heading in the note fills the card when the block sets no `content`. Fully rendered — tables, headings, lists and embedded pictures included."
 
   # The generic front has no left edge label — the card knows a title
   # and a source, nothing else — so the system-wide binding is undone.

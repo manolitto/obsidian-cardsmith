@@ -1,0 +1,16 @@
+Bog-Creeper · 1 card · 2 faces · clipped: no
+1. front [cs-layout-with-back cs-front-first] scale 0.98
+   p.db-flavor "A flat, mud-coloured body with too …"
+   div.db-stats-box
+     div.db-stats-row "HP 28"
+     div.db-stats-row "Ferocity 2 Size Normal"
+     div.db-stats-row "Movement 8 m, swimming 12 m …"
+     div.db-stats-row.db-stats-row-traits
+       p.db-trait "Bog camouflage In water or reeds, …"
+       p.db-trait "Tough The first hit each round …"
+   div.db-section-heading.cs-keep-with-next "MONSTER ATTACKS"
+   table.db-attack-table (4 rows) "D6 ATTACK 1–2 Tongue Lash Damage …"
+   div.db-gm-note "GM Note Lures prey to the …"
+   div.db-front-image-wrap
+     img.db-front-image.cs-front-image.fade-edges
+2. back [cs-layout-with-back] scale —

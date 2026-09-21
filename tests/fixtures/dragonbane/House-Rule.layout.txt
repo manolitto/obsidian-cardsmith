@@ -1,0 +1,7 @@
+House-Rule · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   div.db-generic-body
+     p "A character who spends a night …"
+     div.cs-keep-together
+       ul (2 items) "First night: a bane Second night: …"
+2. back [cs-layout-default] scale —

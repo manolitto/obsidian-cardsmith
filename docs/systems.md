@@ -27,7 +27,8 @@ smallest complete system, and the one to copy when starting your own.
 ## dragonbane
 
 Cards for *Dragonbane* in the look of the game's own card deck: a parchment
-field, ornament strips and plaques, the stat box. German.
+field, ornament strips and plaques, the stat box. German and English, each
+with the captions of its rulebook.
 
 | | Card type | |
 |---|---|---|
@@ -37,7 +38,7 @@ field, ornament strips and plaques, the stat box. German.
 | <img src="../images/cards/dragonbane/roll-table.webp" alt="dragonbane roll-table card, front and back" width="360"> | `roll-table` | one entry of a dice table, with the roll as a badge |
 | <img src="../images/cards/dragonbane/generic.webp" alt="dragonbane generic card, front and back" width="360"> | `generic` | a free card: a title and Markdown |
 
-Poker unless said otherwise; `de`. Not a Supplement under the game's
+Poker unless said otherwise; `de`, `en`. Not a Supplement under the game's
 third-party licence — the system bundles no Dragonbane text — and anyone
 who publishes one made with it carries that licence's obligations. The
 parchment and the scroll ornaments come through the Dragonbrew template

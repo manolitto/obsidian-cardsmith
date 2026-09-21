@@ -21,6 +21,6 @@ data:
   # Card body as markdown, inline in the cardsmith block. Takes precedence over the note's text. Use the note's text for tables and embedded pictures.
   content: Compiled and designed by **your name here**.
 
-  # The section under a `## Vorderseite` heading in the note fills the card when the block sets no `content`. Fully rendered — tables, headings, lists and embedded pictures included.
+  # The section under a `## Vorderseite` or `## Front` heading in the note fills the card when the block sets no `content`. Fully rendered — tables, headings, lists and embedded pictures included.
   vorderseite: # no sample
 ```

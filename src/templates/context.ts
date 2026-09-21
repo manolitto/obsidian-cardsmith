@@ -38,6 +38,8 @@ export interface RenderState {
   assets: ReadonlyMap<string, Asset>;
   /** Every picture the note refers to that the vault could answer: link target → `data:` URI. */
   images: ReadonlyMap<string, string>;
+  /** The card's language — which glyph a per-language table prints. */
+  language: string;
   /** Per slot, system then card type. */
   glyphs: GlyphTables;
   classifiers: Classifiers;
