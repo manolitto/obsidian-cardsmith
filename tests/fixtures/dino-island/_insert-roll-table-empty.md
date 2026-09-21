@@ -1,6 +1,6 @@
-| Wurf | Gerücht |
-| ---- | ------- |
-|      |         |
+| Roll | Rumor |
+| ---- | ----- |
+|      |       |
 
 ```cardsmith
 card:
@@ -8,10 +8,10 @@ card:
   card-type: roll-table
 table:
   # The entry's roll — the orange die at the top left.
-  roll: Wurf
+  roll: Roll
 
   # The entry's text — the card's text (markdown).
-  description: Gerücht
+  description: Rumor
 data:
   # Source reference — rulebook page or wikilink, small at the foot.
   reference:

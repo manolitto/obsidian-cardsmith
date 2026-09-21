@@ -21,11 +21,22 @@ sample-table:
       - { Wurf: "1", Gerücht: "Kompasse funktionieren auf der Insel nicht so, wie sie sollten." }
       - { Wurf: "2", Gerücht: "Nachts hört man aus dem Komplex Musik — immer dasselbe Lied." }
       - { Wurf: "3", Gerücht: "Die Pterosaurier meiden die Ostklippen. Niemand weiß, warum." }
+  en:
+    columns:
+      roll: Roll
+      description: Rumor
+    rows:
+      - { Roll: "1", Rumor: "Compasses don't work on the island the way they should." }
+      - { Roll: "2", Rumor: "At night there's music from the complex — always the same song." }
+      - { Roll: "3", Rumor: "The pterosaurs avoid the eastern cliffs. Nobody knows why." }
 
 translations:
   de:
     card-type-label: "Tabelle"
     back-label: "Tabelle"
+  en:
+    card-type-label: "Table"
+    back-label: "Table"
 
 properties:
   heading:

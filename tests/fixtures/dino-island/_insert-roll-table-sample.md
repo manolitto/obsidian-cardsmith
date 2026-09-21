@@ -1,8 +1,8 @@
-| Wurf | Gerücht                                                         |
+| Roll | Rumor                                                           |
 | ---- | --------------------------------------------------------------- |
-| 1    | Kompasse funktionieren auf der Insel nicht so, wie sie sollten. |
-| 2    | Nachts hört man aus dem Komplex Musik — immer dasselbe Lied.    |
-| 3    | Die Pterosaurier meiden die Ostklippen. Niemand weiß, warum.    |
+| 1    | Compasses don't work on the island the way they should.         |
+| 2    | At night there's music from the complex — always the same song. |
+| 3    | The pterosaurs avoid the eastern cliffs. Nobody knows why.      |
 
 ```cardsmith
 card:
@@ -10,10 +10,10 @@ card:
   card-type: roll-table
 table:
   # The entry's roll — the orange die at the top left.
-  roll: Wurf
+  roll: Roll
 
   # The entry's text — the card's text (markdown).
-  description: Gerücht
+  description: Rumor
 data:
   # Source reference — rulebook page or wikilink, small at the foot.
   reference: Rulebook p. 29

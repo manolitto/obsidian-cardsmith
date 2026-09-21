@@ -15,6 +15,13 @@ translations:
     front-instinct-label: "Instinkt:"
     front-moves-label: "Spielzüge:"
     front-genera-label: "Gattungen:"
+  # The zine's "Selected Taxonomy" (p. 28): every family's four captions.
+  en:
+    back-label: "Taxonomy"
+    front-occurrence-label: "No. Appearing:"
+    front-instinct-label: "Instinct:"
+    front-moves-label: "Moves:"
+    front-genera-label: "Examples:"
 
 properties:
   name:
