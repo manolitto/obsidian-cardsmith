@@ -1,14 +1,14 @@
 id: dino-island
-name: "Flucht von Dino Island"
+name: "Escape from Dino Island"
 
-# Modelled on the German edition of "Flucht von Dino Island" (Sam Tung &
-# Sam Roberts): a white card face with the book's accents — a yellow
-# banner, an orange die badge, a thin orange rule under a heading in
-# distressed poster capitals — and a gold-and-red wordmark on the back.
-# Nunito Sans for the text, Rubik Distressed for the display. German
-# first, after the edition the design follows, and English beside it with
-# the captions of the original, "Escape from Dino Island" (zine edition
-# v1.0). The sample values are invented.
+# Modelled on the German edition of "Escape from Dino Island" (Sam Tung &
+# Sam Roberts), "Flucht von Dino Island": a white card face with the
+# book's accents — a yellow banner, an orange die badge, a thin orange
+# rule under a heading in distressed poster capitals — and a gold-and-red
+# wordmark on the back. Nunito Sans for the text, Rubik Distressed for the
+# display. German first, after the edition the design follows, and English
+# beside it with the captions of the original (zine edition v1.0). The
+# sample values are invented.
 #
 # Three card types: an entry of one of the book's roll tables, a location
 # on the island with its moves on the back, and a family of the island's
