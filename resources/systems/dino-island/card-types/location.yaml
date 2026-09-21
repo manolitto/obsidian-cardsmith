@@ -12,6 +12,12 @@ translations:
     back-label: "Ort"
     front-contents-label: "Was hier zu finden ist:"
     back-moves-label: "Ortsspielzüge:"
+  # The zine's "Island Sites" (p. 24): each site lists what "They might
+  # find:", then its moves as bullets — the DM's "Location Moves".
+  en:
+    back-label: "Location"
+    front-contents-label: "They might find:"
+    back-moves-label: "Location Moves:"
 
 properties:
   name:

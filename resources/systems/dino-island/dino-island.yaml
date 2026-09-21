@@ -5,13 +5,15 @@ name: "Flucht von Dino Island"
 # Sam Roberts): a white card face with the book's accents — a yellow
 # banner, an orange die badge, a thin orange rule under a heading in
 # distressed poster capitals — and a gold-and-red wordmark on the back.
-# Nunito Sans for the text, Rubik Distressed for the display. The book is
-# German only, and so is this system. The sample values are invented.
+# Nunito Sans for the text, Rubik Distressed for the display. German
+# first, after the edition the design follows, and English beside it with
+# the captions of the original, "Escape from Dino Island" (zine edition
+# v1.0). The sample values are invented.
 #
 # Three card types: an entry of one of the book's roll tables, a location
 # on the island with its moves on the back, and a family of the island's
 # animals with the book's illustration on the back.
-languages: [de]
+languages: [de, en]
 
 stylesheet: styles/dino-island.css
 
@@ -57,6 +59,10 @@ translations:
     back-wordmark-line-1: "Flucht von"
     back-wordmark-line-2: "Dino Island"
     back-label: "Karte"
+  en:
+    back-wordmark-line-1: "Escape from"
+    back-wordmark-line-2: "Dino Island"
+    back-label: "Card"
 
 card-types:
   roll-table: card-types/roll-table.yaml

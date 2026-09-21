@@ -1,0 +1,9 @@
+Armored-Walkers · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   p.dino-tax-desc "Armored herbivores that would rather dig …"
+   p.dino-tax-field "No. Appearing: In pairs, the young …"
+   p.dino-tax-field "Instinct: Dig in and wait"
+   div.dino-moves.dino-tax-moves "Moves: Tail club Bury its head …"
+     ul.dino-move-list (3 items) "Tail club Bury its head in …"
+   p.dino-tax-field.dino-tax-genera "Examples: Saichania, Pinacosaurus"
+2. back [cs-layout-default] scale —

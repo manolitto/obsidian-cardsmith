@@ -100,10 +100,12 @@ and trade goods) and `equipment`. Poker; `de`, `en`. Open Game License —
 
 ## dino-island
 
-Cards for *Flucht von Dino Island*: distressed poster capitals, a yellow banner behind the heading, orange accents on white.
-Card types `location` (a place, with a picture), `taxonomy` (an animal
-family's fields) and `roll-table` (one entry of a table). Poker; `de`.
-Bundled with the authors' permission.
+Cards for *Flucht von Dino Island* — *Escape from Dino Island* in the
+original: distressed poster capitals, a yellow banner behind the heading,
+orange accents on white. Card types `location` (a place, with a
+picture), `taxonomy` (an animal family's fields) and `roll-table` (one
+entry of a table). Poker; `de`, `en`. Bundled with the authors'
+permission.
 
 <img src="../images/cards/dino-island/location.webp" alt="dino-island location card, front and back" width="360"> <img src="../images/cards/dino-island/taxonomy.webp" alt="dino-island taxonomy card, front and back" width="360"> <img src="../images/cards/dino-island/roll-table.webp" alt="dino-island roll-table card, front and back" width="360">
 

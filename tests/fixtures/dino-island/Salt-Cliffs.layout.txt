@@ -1,0 +1,6 @@
+Salt-Cliffs · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   p.dino-atmosphere "The smell of salt, gulls' cries …"
+   div.dino-contents "They might find: An abandoned observation …"
+     ul.dino-contents-list (4 items) "An abandoned observation post Nests in …"
+2. back [cs-layout-default] scale —
