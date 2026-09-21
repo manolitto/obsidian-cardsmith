@@ -9,13 +9,13 @@ import {
 import type { PaperBackground } from "../definitions/deck-settings";
 import { collectDiagnostics } from "../definitions/diagnostics";
 import { layoutCard } from "../layout/engine";
-import { CARD_PRESETS, DEFAULT_CARD_PRESET } from "../model/card-size";
+import { CARD_PRESETS, DEFAULT_CARD_PRESET, type CardSize } from "../model/card-size";
 import { noteSystemId } from "../render/card";
 import { parseNote } from "../render/note";
 import type { CardRenderer, RenderedCard } from "../render/renderer";
 import type { LoadedSystem } from "../systems/loader";
 import { mountPreview, previewFaces } from "./preview-mount";
-import { t } from "./strings";
+import { t, uiLanguage } from "./strings";
 
 /*
  * The `cardsmith` block in reading view and live preview: the note's
@@ -141,6 +141,7 @@ class CardPreview extends MarkdownRenderChild {
     const stylesheet = await system.stylesheet(card.cardTypeId);
     if (this.stale(generation)) return;
 
+    const cardSize = card.settings.cardSize ?? CARD_PRESETS[DEFAULT_CARD_PRESET];
     this.containerEl.empty();
     if (this.cards.length > 1) this.steppingBar();
     mountPreview(
@@ -148,10 +149,11 @@ class CardPreview extends MarkdownRenderChild {
       system.id,
       stylesheet,
       previewFaces(laidOut, card.settings.side),
-      card.settings.cardSize ?? CARD_PRESETS[DEFAULT_CARD_PRESET],
+      cardSize,
       card.settings.displayHeight ?? this.context.previewHeight(),
       this.context.paperBackground()
     );
+    this.printedSize(cardSize);
     if (laidOut.clipped) diagnostics.warn(t("preview.clipped"));
     this.showDiagnostics(diagnostics.messages);
   }
@@ -182,6 +184,19 @@ class CardPreview extends MarkdownRenderChild {
     setIcon(next, "chevron-right");
     next.disabled = this.index === this.cards.length - 1;
     next.addEventListener("click", () => step(1));
+  }
+
+  /**
+   * The printed size under the faces, in millimetres — the preview is
+   * scaled to a display height, so the faces alone do not say whether
+   * this is a poker card or a tarot card.
+   */
+  private printedSize(size: CardSize): void {
+    const mm = (value: number) => value.toLocaleString(uiLanguage());
+    this.containerEl.createDiv({
+      cls: "cs-card-size",
+      text: t("preview.size", { width: mm(size.width), height: mm(size.height) }),
+    });
   }
 
   /**
