@@ -110,3 +110,23 @@ open: *Preview deck*, *Export deck as PDF*, *Export deck as HTML*.
 Whatever the build had to report — a note it overrode, a card cut at the
 type floor, a picture it did not find — is counted in a notice and listed
 in the developer console.
+
+## Printing
+
+**Print at 100 % — never *Fit to page* or *Scale to fit*.** Most print
+dialogs default to shrinking the page a few per cent so that nothing
+lands in the strip an inkjet cannot reach; on macOS and Windows alike
+the option is often on without saying so. A shrunk page keeps its shape,
+so it looks right — but a poker card comes out 61 × 85 mm instead of
+63.5 × 88.9 mm, no longer fits its sleeve, and the fronts and backs of a
+duplex print drift apart from sheet to sheet. Set the scale to *100 %*
+(or *Actual size*), and let `page-margin` handle the unprintable strip:
+the deck already keeps its cards clear of the paper's edge.
+
+Duplex is the printer's job, not the deck's: choose double-sided in the
+dialog, with the flip on the edge `duplex-flip` names — `long-edge` for
+a portrait sheet bound like a book, `short-edge` for one bound like a
+notepad. If a back lands beside its front instead of behind it, the two
+disagree; change either.
+
+Check the first sheet against a ruler before printing the rest.
