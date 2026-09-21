@@ -13,14 +13,21 @@ const parse = (source: string, diagnostics = collectDiagnostics()) =>
 describe("glyphs:", () => {
   it("maps a stored abbreviation to what the card prints, per slot", () => {
     const tables = parse("front-stat-1a: { 1h: einhändig, 2H: zweihändig }");
-    expect(applyGlyph(tables, "front-stat-1a", "1H")).toBe("einhändig");
-    expect(applyGlyph(tables, "front-stat-1a", " 2h ")).toBe("zweihändig");
+    expect(applyGlyph(tables, "front-stat-1a", "1H", "de")).toBe("einhändig");
+    expect(applyGlyph(tables, "front-stat-1a", " 2h ", "de")).toBe("zweihändig");
+  });
+
+  it("prints a glyph written per language in the card's, the first language behind it", () => {
+    const tables = parse("front-stat-1a: { 1h: { de: einhändig, en: one-handed } }");
+    expect(applyGlyph(tables, "front-stat-1a", "1H", "en")).toBe("one-handed");
+    expect(applyGlyph(tables, "front-stat-1a", "1H", "de")).toBe("einhändig");
+    expect(applyGlyph(tables, "front-stat-1a", "1H", "sv")).toBe("einhändig");
   });
 
   it("passes a value the table does not name through, and a slot with no table", () => {
     const tables = parse("front-stat-1a: { 1h: einhändig }");
-    expect(applyGlyph(tables, "front-stat-1a", "3H")).toBe("3H");
-    expect(applyGlyph(tables, "front-stat-2a", "1H")).toBe("1H");
+    expect(applyGlyph(tables, "front-stat-1a", "3H", "de")).toBe("3H");
+    expect(applyGlyph(tables, "front-stat-2a", "1H", "de")).toBe("1H");
   });
 
   it("merges per slot — the card type's table replaces the system's for that slot only", () => {

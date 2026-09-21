@@ -145,7 +145,7 @@ function slotName(name: unknown, helper: string, state: RenderState): string | u
 /** The pipeline's answers for one slot: its glyph table, the note's pictures, the body renderer. */
 function environmentFor(state: RenderState, slot: string): RenderEnvironment {
   return {
-    glyph: (text) => applyGlyph(state.glyphs, slot, text),
+    glyph: (text) => applyGlyph(state.glyphs, slot, text, state.language),
     image: (link) => {
       const uri = state.images.get(linkTarget(link));
       if (uri === undefined) {

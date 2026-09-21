@@ -1,0 +1,11 @@
+Cover · 1 card · 2 faces · clipped: no
+1. front [cs-overflow-active cs-layout-default cs-front-first cs-front-has-next] scale 0.80
+   div.db-generic-body
+     h1 "Cover"
+     p [img]
+     p "Compiled for the Campaign on the …"
+     table (3 rows) "Deck Cards Gear 42 Spells 65"
+2. back-as-front [cs-overflow-back-as-front cs-overflow-active cs-layout-default cs-front-continued] scale 0.80
+   div.db-generic-body
+     h3 "Licence"
+     p "Dragonbane is a trademark of Fria …"

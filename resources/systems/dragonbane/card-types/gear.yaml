@@ -24,8 +24,8 @@ card-size: poker
 # brings its own table, or none.
 glyphs:
   front-stat-1a:
-    1h: "einhändig"
-    2h: "zweihändig"
+    1h: { de: "einhändig", en: "one-handed" }
+    2h: { de: "zweihändig", en: "two-handed" }
 
 translations:
   de:
@@ -47,6 +47,25 @@ translations:
     # apart from a `Reichweite: STÄ`.
     front-stat-6-wide-tail-label: "STÄ"
     front-stat-8-wide-label: "Effekt"
+  # The column heads of the Rules' weapon, armor and goods tables (pp.
+  # 73–75). "Uses" has no column there — the tables count a consumable in
+  # its name ("Bandages (10)") — and "Requirement" is the Rules' word for
+  # the STR a weapon asks for (p. 45), here over the skill as well.
+  en:
+    back-label: "Gear"
+    front-stat-1a-label: "Grip"
+    front-stat-1b-label: "Range"
+    front-stat-2a-label: "Damage"
+    front-stat-2b-label: "Durability"
+    front-stat-2c-label: "Armor Rating"
+    front-stat-3a-label: "Cost"
+    front-stat-3b-label: "Supply"
+    front-stat-4a-label: "Weight"
+    front-stat-4b-label: "Uses"
+    front-stat-5-wide-label: "Features"
+    front-stat-6-wide-label: "Requirement"
+    front-stat-6-wide-tail-label: "STR"
+    front-stat-8-wide-label: "Effect"
 
 properties:
   name:

@@ -31,6 +31,7 @@ interface Options {
   images?: Record<string, string>;
   glyphs?: GlyphTables;
   classifiers?: Classifiers;
+  language?: string;
 }
 
 /** Compile on an isolated instance and render with the state in the data frame. */
@@ -49,6 +50,7 @@ function render(template: string, options: Options = {}) {
     translations: options.translations ?? {},
     assets: new Map(),
     images: new Map(Object.entries(options.images ?? {})),
+    language: options.language ?? "de",
     glyphs: options.glyphs ?? {},
     classifiers: options.classifiers ?? {},
     block: blockMarkdown((target, alt) => `<img src="${target}" alt="${alt}">`),

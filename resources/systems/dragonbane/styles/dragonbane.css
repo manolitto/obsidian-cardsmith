@@ -625,6 +625,10 @@
   content: ":";
   margin-right: 0.35em;
 }
+/* An English card is its own original; the line would only repeat the title. */
+.card-root.dragonbane[lang|="en"] .db-side-english {
+  display: none;
+}
 
 /* ═══ Vertical source reference (right edge) ══════════════════════════
    The original prints "DRAGONBANE GRUNDREGELN" rotated 90° along the right

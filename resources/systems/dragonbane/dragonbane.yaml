@@ -3,12 +3,13 @@ name: Dragonbane
 
 # Modelled on the official German card deck (Fria Ligan / Uhrwerk): poker
 # cards, parchment, two-tone green knotwork, a title plaque, a rotated source
-# reference along the right edge. Written in German throughout — the
-# property aliases and the captions follow the German Regelbuch's
-# terminology, so a card can be read beside the open page. The sample
-# values are invented: realistic in shape, but no item, creature, table or
-# spell of any published book.
-languages: [de]
+# reference along the right edge. German first — the property aliases and
+# the captions follow the German Regelbuch's terminology, so a card can be
+# read beside the open page — and English beside it, with the captions of
+# the English Rules (Free League, 2023), so a note that says `language: en`
+# prints as a card of that book. The sample values are invented: realistic
+# in shape, but no item, creature, table or spell of any published book.
+languages: [de, en]
 
 stylesheet: styles/dragonbane.css
 
@@ -115,6 +116,15 @@ translations:
     # The attack table's two column heads are read with `{{t}}`, not as a
     # place's caption (one place, two columns), so they must exist — empty —
     # for a card type that does not name them.
+    front-table-col-1-label: ""
+    front-table-col-2-label: ""
+  en:
+    back-label: "Dragonbane"
+    side-ref: "Dragonbane"
+    effect-label: "Effect"
+    # The left edge carries the English original of a German name; on an
+    # English card the stylesheet hides the line, so its caption is empty.
+    front-side-left-label: ""
     front-table-col-1-label: ""
     front-table-col-2-label: ""
 

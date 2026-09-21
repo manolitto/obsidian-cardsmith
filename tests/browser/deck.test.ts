@@ -68,7 +68,7 @@ describe("buildDeck over the fixture folders", () => {
     expect(built.cards.every((c) => c.front && c.back)).toBe(true);
   });
 
-  it("dragonbane: grouped as card-type: lists them, every card on the deck's poker", async () => {
+  it("dragonbane: grouped as card-type: lists them, the German cards, every card on the deck's poker", async () => {
     const { built, diagnostics } = await build("dragonbane");
     expect(diagnostics.messages).toEqual([]);
     expect(built.cards.map((c) => `${c.cardTypeId}/${c.name}`)).toEqual([
@@ -79,7 +79,6 @@ describe("buildDeck over the fixture folders", () => {
       "creature/Knochensammler",
       "creature/Moorschleicher",
       "rule/Glutfunken",
-      "rule/language-in-block",
       "roll-table/Fischfang",
       "roll-table/Fischfang",
       "roll-table/Fischfang",

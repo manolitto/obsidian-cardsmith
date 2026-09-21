@@ -55,6 +55,24 @@ translations:
     front-table-col-1-label: "W6"
     front-table-col-2-label: "ANGRIFF"
     front-detail-text-label: "SL-Notiz"
+  # The Rules' monster stat line (Ferocity, Size, Movement, Armor, HP) and
+  # its typical-NPC table (Skills, Damage Bonus, HP, WP); the attack table
+  # is headed "MONSTER ATTACKS" over "D6" and "ATTACK" on every monster.
+  en:
+    back-label: "Creature"
+    front-stat-1a-label: "HP"
+    front-stat-1b-label: "WP"
+    front-stat-1c-label: "Damage Bonus"
+    front-stat-2a-label: "Ferocity"
+    front-stat-2b-label: "Size"
+    front-stat-3a-label: "Movement"
+    front-stat-3b-label: "Armor"
+    front-stat-4-wide-label: "Skills"
+    front-stat-5-wide-label: "Weapons"
+    front-table-label: "MONSTER ATTACKS"
+    front-table-col-1-label: "D6"
+    front-table-col-2-label: "ATTACK"
+    front-detail-text-label: "GM Note"
 
 properties:
   # A card type may set a system property's DEFAULT: that does not

@@ -35,6 +35,20 @@ translations:
     front-stat-5a-label: "Zauberdauer"
     front-stat-5b-label: "Reichweite"
     front-stat-5c-label: "Wirkungsdauer"
+  # The Rules' spell block (Rank, Prerequisite, Requirement, Casting Time,
+  # Range, Duration). The prerequisite row serves the heroic abilities too,
+  # which the Rules head "Requirement" — one place, one caption, and the
+  # spells' word is the one that cannot be confused with the casting row.
+  en:
+    back-label: "Rule"
+    front-stat-1a-label: "Attribute"
+    front-stat-1b-label: "Rank"
+    front-stat-1c-label: "WP"
+    front-stat-2-wide-label: "Prerequisite"
+    front-stat-4-wide-label: "Requirement"
+    front-stat-5a-label: "Casting Time"
+    front-stat-5b-label: "Range"
+    front-stat-5c-label: "Duration"
 
 # German note keys drive the aliases, because that is what the vault
 # writes. The two "requirement" keys the English rules keep apart and

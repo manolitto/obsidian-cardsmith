@@ -1,0 +1,13 @@
+Fishing.1 · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   span.db-fill-top
+   div.db-effect-block.db-effect-block-top
+     p.db-effect-text "A fat perch with milky eyes; …"
+     p.db-effect-text "The catch takes one shift of …"
+   div.db-stats-box
+     div.db-stats-row.db-stats-row-wide
+       p.db-trait "Requirements Rod or net"
+     div.db-stats-row.db-stats-row-wide
+       p.db-trait "Rations D6"
+   span.db-fill-bottom
+2. back [cs-layout-default] scale —

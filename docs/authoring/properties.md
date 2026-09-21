@@ -104,13 +104,14 @@ the system's for that place alone.
 
 **Glyphs** map a stored value to its printed form, read with
 `{{slot "front-stat-1a" glyph=true}}`; a value not in the table prints as
-written:
+written. A glyph that is a word is written once per language, like a
+caption; a symbol once:
 
 ```yaml from=resources/systems/dragonbane/card-types/gear.yaml
 glyphs:
   front-stat-1a:
-    1h: "einhändig"
-    2h: "zweihändig"
+    1h: { de: "einhändig", en: "one-handed" }
+    2h: { de: "zweihändig", en: "two-handed" }
 ```
 
 **Classifiers** turn a value into a class token by pattern, read with

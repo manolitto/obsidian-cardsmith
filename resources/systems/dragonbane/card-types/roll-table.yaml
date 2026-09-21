@@ -37,6 +37,8 @@ sample-table:
 translations:
   de:
     back-label: "Würfeltabelle"
+  en:
+    back-label: "Roll Table"
 
 properties:
   # The row's own name first, the table's name behind it — the order of

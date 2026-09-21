@@ -82,6 +82,7 @@ export class TemplateEngine {
       ),
       assets: templates.assets,
       images,
+      language,
       glyphs: cardType.glyphs,
       classifiers: cardType.classifiers,
       block: blockMarkdown(
