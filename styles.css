@@ -32,6 +32,12 @@
   cursor: default;
 }
 
+.cs-card-size {
+  margin-top: var(--size-4-1);
+  font-size: var(--font-ui-smaller);
+  color: var(--text-faint);
+}
+
 .cs-card-diagnostics {
   margin: var(--size-4-2) 0 0;
   padding-left: var(--size-4-4);

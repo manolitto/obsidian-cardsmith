@@ -31,6 +31,7 @@ const en = {
   "preview.step": "{index} / {count}",
   "preview.previous": "Previous card",
   "preview.next": "Next card",
+  "preview.size": "{width} × {height} mm",
 
   // ── Pickers, the insert commands, the reference ─────────────────
   "picker.system": "Choose a system",
@@ -204,6 +205,7 @@ const de: Strings = {
   "preview.step": "{index} / {count}",
   "preview.previous": "Vorige Karte",
   "preview.next": "Nächste Karte",
+  "preview.size": "{width} × {height} mm",
 
   // ── Pickers, the insert commands, the reference ─────────────────
   "picker.system": "System wählen",

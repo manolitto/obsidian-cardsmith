@@ -185,9 +185,11 @@ the preview, in print order.
 
 ## The preview
 
-The block in reading view shows the card as it will print. A table note
-shows one card at a time with buttons to step through the rows. What the
-render had to report — an unknown key, a picture that was not found, text
+The block in reading view shows the card as it will print, with its
+printed size in millimetres under the faces — the preview is scaled to
+the display height, so the faces alone do not say whether this is a
+poker card or a tarot card. A table note shows one card at a time with
+buttons to step through the rows. What the render had to report — an unknown key, a picture that was not found, text
 that was cut at the floor — is listed under the card, once per note.
 
 Two commands write blocks into the open note, at the cursor: *Insert
