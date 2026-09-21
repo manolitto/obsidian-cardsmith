@@ -205,15 +205,18 @@ function at(grid: Grid, column: number, row: number): { x: number; y: number } {
 
 /**
  * Cut marks for a page: a cross at every corner of every card — four arms
- * along the two cuts that meet there, each `margin` clear of the corner and
- * `length` long. At the block's edge two arms reach into the paper margin
- * and two lie on the faces; inside the block all four lie on the faces,
- * where a corner marks the only place a cut can be found between cards
- * packed without a gap. The document paints the marks over the cards, so
- * what stays on a cut card is a stub of each arm at each corner, the same
- * on every card wherever it printed. A corner shared by several cards is
- * marked once. Positions come from the cells as placed, so a back page's
- * marks mirror with its cards.
+ * along the two cuts that meet there, each `margin` clear of the corner.
+ * An arm on a face is `length` long; an arm that leaves the block runs on
+ * to the paper's edge, so every cut shows where it meets the edge and a
+ * guillotine's gauge can be set against the line itself. At the block's
+ * edge two arms go out and two lie on the faces; inside the block all four
+ * lie on the faces, where a corner marks the only place a cut can be found
+ * between cards packed without a gap. The document paints the marks over
+ * the cards, so what stays on a cut card is a stub of each arm at each
+ * corner, the same on every card wherever it printed. A corner shared by
+ * several cards is marked once. Positions come from the cells as placed,
+ * so a back page's marks mirror with its cards; the block is centred, so
+ * its edges are the same either way round.
  *
  * A grid that holds one card gets no marks: that page is the card, or as
  * good as — a sheet for a screen, not for the guillotine. The rule reads
@@ -239,12 +242,27 @@ export function cutMarks(cells: readonly Cell[], grid: Grid, marks: CutMarks): L
     }
   }
 
+  const block = {
+    left: mm(grid.originX),
+    right: mm(grid.originX + grid.columns * width),
+    top: mm(grid.originY),
+    bottom: mm(grid.originY + grid.rows * height),
+  };
   const out: Line[] = [];
+  const arm = (line: Line) => {
+    // An arm that would start on or past its end — a block flush with the
+    // paper's edge, a gap wider than the margin — is nothing to draw.
+    if (line.x1 === line.x2 ? line.y1 < line.y2 : line.x1 < line.x2) out.push(line);
+  };
   for (const { x, y } of corners.values()) {
-    out.push({ x1: x, y1: y - gap - length, x2: x, y2: y - gap });
-    out.push({ x1: x, y1: y + gap, x2: x, y2: y + gap + length });
-    out.push({ x1: x - gap - length, y1: y, x2: x - gap, y2: y });
-    out.push({ x1: x + gap, y1: y, x2: x + gap + length, y2: y });
+    const up = mm(y) === block.top ? 0 : y - gap - length;
+    const down = mm(y) === block.bottom ? grid.paper.height : y + gap + length;
+    const left = mm(x) === block.left ? 0 : x - gap - length;
+    const right = mm(x) === block.right ? grid.paper.width : x + gap + length;
+    arm({ x1: x, y1: up, x2: x, y2: y - gap });
+    arm({ x1: x, y1: y + gap, x2: x, y2: down });
+    arm({ x1: left, y1: y, x2: x - gap, y2: y });
+    arm({ x1: x + gap, y1: y, x2: right, y2: y });
   }
   return out;
 }

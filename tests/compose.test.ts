@@ -194,15 +194,22 @@ describe("cut marks", () => {
     expect([...new Set(horizontal.map((l) => l.y1))].sort((a, b) => a - b)).toEqual([
       8, 96, 184, 272,
     ]);
-    // The top-left corner: up and left into the margin, down and right on the card.
+    // The top-left corner: up and left out to the paper's edge, down and right on the card.
     const at = (x: number, y: number) =>
       marks.filter((l) => (l.x1 === x && l.x2 === x) || (l.y1 === y && l.y2 === y));
     expect(at(7, 8)).toEqual(
       expect.arrayContaining([
-        { x1: 7, y1: 5, x2: 7, y2: 8 },
+        { x1: 7, y1: 0, x2: 7, y2: 8 },
         { x1: 7, y1: 8, x2: 7, y2: 11 },
-        { x1: 4, y1: 8, x2: 7, y2: 8 },
+        { x1: 0, y1: 8, x2: 7, y2: 8 },
         { x1: 7, y1: 8, x2: 10, y2: 8 },
+      ])
+    );
+    // The bottom-right corner likewise, out to the far edges.
+    expect(at(133, 272)).toEqual(
+      expect.arrayContaining([
+        { x1: 133, y1: 272, x2: 133, y2: 280 },
+        { x1: 133, y1: 272, x2: 140, y2: 272 },
       ])
     );
     // An inner corner, shared by four cards: its four arms once.
@@ -219,8 +226,15 @@ describe("cut marks", () => {
     );
     const front = pages[0]!.marks;
     expect(front).toHaveLength(4 * 4);
-    expect(front.find((l) => l.x1 === 7 && l.y2 === 8 - 1)).toMatchObject({ y1: 8 - 5 });
+    expect(front.find((l) => l.x1 === 7 && l.y2 === 8 - 1)).toMatchObject({ y1: 0 });
     expect(front.find((l) => l.x1 === 7 && l.y1 === 8 + 1)).toMatchObject({ y2: 8 + 5 });
+    // The card's lower corners sit inside the block: their arms are `length` long both ways.
+    expect(front.find((l) => l.x1 === 7 && l.y2 === 96 - 1)).toMatchObject({
+      y1: 96 - 5,
+    });
+    expect(front.find((l) => l.x1 === 7 && l.y1 === 96 + 1)).toMatchObject({
+      y2: 96 + 5,
+    });
     // The one card's back sits in the other column, and its marks with it.
     const back = pages[1]!.marks;
     const xs = [...new Set(back.filter((l) => l.x1 === l.x2).map((l) => l.x1))];
@@ -235,6 +249,20 @@ describe("cut marks", () => {
     const last = composePages(deck({ cards: cards(7) })).pages.at(-1)!;
     expect(last.cells).toHaveLength(1);
     expect(last.marks).toHaveLength(16);
+  });
+
+  it("draw no outward arm where the block is flush with the paper's edge", () => {
+    // Two poker cards side by side on paper exactly their width: nothing lies left or right.
+    const { pages } = composePages(
+      deck({ cards: cards(2), paperSize: paper("126 x 100") })
+    );
+    const marks = pages[0]!.marks;
+    // Six corners, three arms each on the outer ones and four on the shared pair — none off the paper.
+    expect(marks).toHaveLength(4 * 3 + 2 * 4);
+    expect(marks.every((l) => l.x1 >= 0 && l.x2 <= 126)).toBe(true);
+    expect(
+      marks.filter((l) => l.x1 === l.x2 && (l.y1 === 0 || l.y2 === 100))
+    ).toHaveLength(6);
   });
 
   it("are none when switched off", () => {
@@ -258,7 +286,7 @@ describe("cut marks", () => {
     expect(svg).toMatch(
       /^<svg class="cs-cut-marks" width="140mm" height="280mm" viewBox="0 0 140 280" stroke="#ff0000" stroke-width="0.5"/
     );
-    expect(svg).toContain('<line x1="7" y1="5" x2="7" y2="8"/>');
+    expect(svg).toContain('<line x1="7" y1="0" x2="7" y2="8"/>');
     expect(svg).not.toContain("px");
     expect(cutMarksSvg({ ...pages[0]!, marks: [] }, grid, {})).toBe("");
   });

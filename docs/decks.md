@@ -56,7 +56,7 @@ consecutively.
 |---|---|
 | `paper-size` | A sheet (`A3`, `A4`, `A5`, `Letter`, `Legal`), a card size (`poker`, `tarot`, … — one card per page) or `210 x 297 mm`. A preset alone lets the deck pick the orientation that holds more cards; `A4 portrait` fixes it. |
 | `page-margin` | Blank space around the card grid, in millimetres. The margin yields where the paper is too small for it — the card never does. |
-| `cut-marks` | `{enabled: true, length: 3, margin: 0, color: '#aaaaaa', weight: 0.25}` — a cross at every card corner, its arms `length` mm along the cuts and `margin` mm clear of the corner, printed over the cards. The fields merge, so one can change alone. A page that holds a single card gets none. |
+| `cut-marks` | `{enabled: true, length: 3, margin: 0, color: '#aaaaaa', weight: 0.25}` — a cross at every card corner, its arms along the cuts and `margin` mm clear of the corner, printed over the cards. An arm on a card is `length` mm long; an arm that leaves the block of cards runs on to the paper's edge, so a guillotine can be set against it. The fields merge, so one can change alone. A page that holds a single card gets none. |
 | `duplex-flip` | Which edge is the binding when printing duplex, `long-edge` or `short-edge`, so a back lands behind its front. |
 | `paper-background` | `textured` prints the system's background pictures, `plain` leaves them out. Default: the plugin setting. |
 
