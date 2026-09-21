@@ -1,0 +1,16 @@
+Grab-an-Edge · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 0.97
+   div.pf2e-trait-row "Manipulate"
+   div.pf2e-stat-line "Trigger You fall from or past …"
+   div.pf2e-stat-line "Requirements Your hands are not tied."
+   div.pf2e-flavor.pf2e-action-text
+     p "When you fall off an edge, …"
+   div.pf2e-action-outcomes
+     div.pf2e-stat-line "Critical Success You grab the edge …"
+     div.pf2e-stat-line "Success With at least one hand …"
+     div.pf2e-stat-line "Critical Failure You continue to fall …"
+   div.pf2e-action-callout
+     div.pf2e-action-callout-title "Falling Damage"
+     div.pf2e-action-callout-body
+       ul (3 items) "Up to 10 feet no damage …"
+2. back [cs-layout-default] scale —

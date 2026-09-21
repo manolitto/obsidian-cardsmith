@@ -1,0 +1,16 @@
+Spear-Volley · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   div.pf2e-trait-row "Mechanical Trap"
+   div.pf2e-flavor.pf2e-trap-lead
+     p "A pressure plate in the floor …"
+   div.pf2e-stat-line "Stealth DC 18 (trained)"
+   div.pf2e-stat-line "Disable DC 16 Thievery (trained) to …"
+   hr.pf2e-divider
+   div.pf2e-stat-line "AC 16; Fort +9, Ref +5"
+   div.pf2e-stat-line "HP 30 (BT 15); Hardness 8; …"
+   hr.pf2e-divider
+   div.pf2e-entry-list
+     div.pf2e-entry "Spear Volley ⬲ Trigger A creature …"
+     div.pf2e-entry "Ranged spear +11 , Damage 1d8+4 …"
+   div.pf2e-stat-line.pf2e-trap-reset "Reset The spears are reloaded by …"
+2. back [cs-layout-default] scale —

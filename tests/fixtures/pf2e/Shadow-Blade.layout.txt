@@ -1,0 +1,17 @@
+Shadow-Blade · 1 card · 2 faces · clipped: no
+1. front [cs-layout-image-bottom cs-front-first] scale 1.00
+   div.pf2e-trait-row "Rare Magical Shadow"
+   div.pf2e-item-stats-row
+     div.pf2e-item-stats-col
+       div.pf2e-stat-line "Price 240 gp"
+       div.pf2e-stat-line "Damage 1d6 S"
+       div.pf2e-stat-line "Bulk L"
+       div.pf2e-stat-line "Usage held in 1 hand"
+     div.pf2e-item-image-wrap.pf2e-item-image-wrap-side
+       img.pf2e-item-image.fade-edges
+   hr.pf2e-divider
+   div.pf2e-flavor.pf2e-item-flavor
+     p "The blade casts no shadow and …"
+   div.pf2e-item-image-wrap.pf2e-item-image-wrap-bottom
+     img.pf2e-item-image.fade-edges
+2. back [cs-layout-image-none] scale —

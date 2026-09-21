@@ -56,8 +56,9 @@ holds; poker; `de`, `en`.
 
 ## pf2e
 
-Cards for *Pathfinder Second Edition*, German: the trait row, the stat
-lines and the action glyphs of the rulebook.
+Cards for *Pathfinder Second Edition*: the trait row, the stat lines and
+the action glyphs of the rulebook, with the captions of the German or the
+English books.
 
 | | Card type | |
 |---|---|---|
@@ -67,7 +68,7 @@ lines and the action glyphs of the rulebook.
 | <img src="../images/cards/pf2e/action.webp" alt="pf2e action card, front and back" width="360"> | `action` | basic and skill actions, with the outcomes |
 | <img src="../images/cards/pf2e/trap.webp" alt="pf2e trap card, front and back" width="360"> | `trap` | a hazard |
 
-Poker unless said otherwise; `de`. The action glyphs and the "P" mark are
+Poker unless said otherwise; `de`, `en`. The action glyphs and the "P" mark are
 Paizo's, under the Community Use Policy.
 
 ## mini-d20

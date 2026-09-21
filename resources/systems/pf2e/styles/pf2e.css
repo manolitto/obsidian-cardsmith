@@ -255,6 +255,10 @@
   font-weight: 700;
   margin-right: 0.3em;
 }
+/* A line the book prints without a caption — a hazard's Stealth line. */
+.pf2e-stat-label:empty {
+  margin-right: 0;
+}
 
 /* The bold key of a labelled pair — ZÄH, ST, Athletik. */
 .pf2e-pair-key {

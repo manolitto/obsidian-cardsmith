@@ -1,0 +1,11 @@
+Quick-Bandages · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   div.pf2e-trait-row "General Skill Healing Manipulate"
+   div.pf2e-stat-line "Prerequisites trained in Medicine"
+   div.pf2e-stat-line "Frequency once per hour"
+   div.pf2e-stat-line "Requirements You are holding healer's tools, …"
+   div.pf2e-flavor.pf2e-feat-text
+     p "You dress a wound without troubling …"
+     p "Critical Success The target regains 2d8 …"
+   div.pf2e-stat-line.pf2e-feat-special "Special You can select this feat …"
+2. back [cs-layout-default] scale —

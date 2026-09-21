@@ -1,0 +1,24 @@
+Grave-Burrower · 1 card · 2 faces · clipped: no
+1. front [cs-layout-image-none cs-front-first] scale 1.00
+   div.pf2e-trait-row "NE Large Uncommon Undead Mindless"
+   div.pf2e-stat-line "Perception +12; darkvision, lifesense 60 feet"
+   div.pf2e-stat-line.pf2e-creature-skills "Skills Athletics +14, Stealth +9"
+   div.pf2e-creature-attributes "Str +5, Dex 0, Con +4, …"
+   div.pf2e-stat-line "Items rusty grave goods"
+   hr.pf2e-divider
+   div.pf2e-stat-line "AC 20; Fort +14, Ref +8, …"
+   div.pf2e-stat-line "HP 70; Immunities death effects, frightened, …"
+   hr.pf2e-divider
+   div.pf2e-stat-line "Speed 20 feet, burrow 30 feet"
+   div.pf2e-entry-list
+     div.pf2e-entry "Melee ⬻ claw +15 , Damage …"
+     div.pf2e-entry "Melee ⬻ jaws +13 , Damage …"
+     div.pf2e-entry "Grave Grip A creature hit by …"
+     div.pf2e-entry "From the Earth ⬺ Requirements The …"
+     div.pf2e-entry "Grave Dust ⬲ Trigger An adjacent …"
+     div.pf2e-entry "Ferocity ⬲ When reduced to 0 …"
+   div.pf2e-flavor.pf2e-creature-flavor
+     p "What the gravediggers left behind has …"
+   div.pf2e-creature-image-wrap
+     img.pf2e-creature-image.fade-edges
+2. back [cs-layout-image-none] scale —

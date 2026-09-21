@@ -18,6 +18,17 @@ translations:
     front-success-label: "Erfolg"
     front-failure-label: "Fehlschlag"
     front-critical-failure-label: "Kritischer Fehlschlag"
+  # The Core Rulebook's action block: Frequency, Trigger, Requirements,
+  # then the four degrees of success.
+  en:
+    back-label: "Action"
+    front-frequency-label: "Frequency"
+    front-trigger-label: "Trigger"
+    front-requirements-label: "Requirements"
+    front-critical-success-label: "Critical Success"
+    front-success-label: "Success"
+    front-failure-label: "Failure"
+    front-critical-failure-label: "Critical Failure"
 
 properties:
   actions:
