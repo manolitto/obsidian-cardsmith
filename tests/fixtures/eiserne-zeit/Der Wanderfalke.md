@@ -13,19 +13,11 @@ data:
 
 ### Kommandos
 
-- **Steig:** Der Falke kreist über der Gruppe. Bis zum Ende der Phase gelten
-  Proben auf Wahrnehmung im Freien mit Vorteil, und die Gruppe kann nicht
-  überrascht werden.
-- **Schlag:** Der Falke stößt auf ein Ziel bis zur Größe eines Hasen herab.
-  Trifft der Angriff, ist das Ziel für eine Kampfrunde *abgelenkt* und
-  würfelt seinen nächsten Angriff mit Nachteil.
-- **Bring:** Der Falke holt einen leichten Gegenstand in Sichtweite — einen
-  Schlüssel, einen Brief, einen Ring. Bewachte Gegenstände erfordern eine
-  GES-Probe der Falknerin.
-- **Warn:** Der Falke schreit, sobald sich jemand der Gruppe auf hundert
-  Schritt nähert. Hält eine Nacht lang an; danach muss der Vogel ruhen.
-- **Zurück:** Der Falke kehrt auf die Faust zurück. Kein Kommando kann in
-  derselben Kampfrunde noch gegeben werden.
+- **Steig:** Der Falke kreist über der Gruppe. Bis zum Ende der Phase gelten Proben auf Wahrnehmung im Freien mit Vorteil, und die Gruppe kann nicht überrascht werden.
+- **Schlag:** Der Falke stößt auf ein Ziel bis zur Größe eines Hasen herab. Trifft der Angriff, ist das Ziel für eine Kampfrunde *abgelenkt* und würfelt seinen nächsten Angriff mit Nachteil.
+- **Bring:** Der Falke holt einen leichten Gegenstand in Sichtweite — einen Schlüssel, einen Brief, einen Ring. Bewachte Gegenstände erfordern eine GES-Probe der Falknerin.
+- **Warn:** Der Falke schreit, sobald sich jemand der Gruppe auf hundert Schritt nähert. Hält eine Nacht lang an; danach muss der Vogel ruhen.
+- **Zurück:** Der Falke kehrt auf die Faust zurück. Kein Kommando kann in derselben Kampfrunde noch gegeben werden.
 
 ### Aufstieg
 

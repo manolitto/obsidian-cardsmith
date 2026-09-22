@@ -9,24 +9,15 @@ data:
 
 *Stufe 3 · Dauer: eine Stunde je Stufe · Reichweite: Sichtweite*
 
-Die Falknerin hebt die Faust, und der Himmel antwortet. Über dem Zielgebiet
-zieht binnen einer Phase ein Sturm auf, der Regen, Wind und Dunkelheit
-bringt. Fernangriffe würfeln mit Nachteil, Feuer im Freien erlischt, und
-jede Probe auf Wahrnehmung außerhalb des eigenen Lagers misslingt
-automatisch. Der Sturm folgt der Falknerin nicht; er bleibt, wo er gerufen
-wurde, und legt sich, sobald die Dauer verstreicht oder das Ritual ein
-zweites Mal gesprochen wird.
+Die Falknerin hebt die Faust, und der Himmel antwortet. Über dem Zielgebiet zieht binnen einer Phase ein Sturm auf, der Regen, Wind und Dunkelheit bringt. Fernangriffe würfeln mit Nachteil, Feuer im Freien erlischt, und jede Probe auf Wahrnehmung außerhalb des eigenen Lagers misslingt automatisch. Der Sturm folgt der Falknerin nicht; er bleibt, wo er gerufen wurde, und legt sich, sobald die Dauer verstreicht oder das Ritual ein zweites Mal gesprochen wird.
 
-Wer das Ritual spricht, verliert 1w4 TP und kann bis zur nächsten Rast kein
-weiteres Ritual wirken. Ein Falke, der in den Sturm geschickt wird, kehrt
-nicht zurück, bevor der Sturm sich gelegt hat.
+Wer das Ritual spricht, verliert 1w4 TP und kann bis zur nächsten Rast kein weiteres Ritual wirken. Ein Falke, der in den Sturm geschickt wird, kehrt nicht zurück, bevor der Sturm sich gelegt hat.
 
 ---
 
 ### Fehlschlag (1w6)
 
-Misslingt die INT-Probe, würfle auf der folgenden Tabelle. Das Ergebnis
-tritt sofort ein, und der Sturm bleibt aus.
+Misslingt die INT-Probe, würfle auf der folgenden Tabelle. Das Ergebnis tritt sofort ein, und der Sturm bleibt aus.
 
 | 1w6 | Wirkung |
 |---|---|

@@ -11,6 +11,11 @@ import { escapeHtml } from "./inline-markdown";
  * one place `marked` is used — pinned, because a golden fixture is only
  * worth keeping if the same text renders the same way tomorrow.
  *
+ * A newline in a paragraph is a line break, as it is in Obsidian's own
+ * view: an author who splits a paragraph over lines sees the lines on the
+ * card too. CommonMark would fold them into one — the `breaks` option
+ * below is what keeps them.
+ *
  * Four things Obsidian's markdown has that CommonMark does not, each an
  * extension below:
  *
@@ -30,8 +35,8 @@ import { escapeHtml } from "./inline-markdown";
  *
  * Raw HTML in the body is text: a note's `<b>` prints as `<b>`, and a
  * `<img onerror>` never reaches the preview. Two things an author may
- * write stay markup — `<br>`, a line break where markdown would need two
- * trailing spaces (the one tag a value keeps too), and an inline `<svg>`,
+ * write stay markup — `<br>`, a line break inside a value or a table cell
+ * (the one tag a value keeps too), and an inline `<svg>`,
  * a small drawing in the prose: a credit line's icon, a symbol no font
  * has. See `keptHtml` for what of an SVG gets through.
  */
@@ -41,7 +46,7 @@ export type EmbedRenderer = (target: string, alt: string) => string;
 
 /** A renderer of bodies, given what to do with an embedded picture. */
 export function blockMarkdown(embed: EmbedRenderer): (text: string) => string {
-  const marked = new Marked({ gfm: true });
+  const marked = new Marked({ gfm: true, breaks: true });
   marked.use({
     extensions: [imageEmbed(embed), wikilink, cardBreak, bodyMarker],
     renderer: { html: ({ text }) => keptHtml(text) },

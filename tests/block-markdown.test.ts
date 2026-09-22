@@ -66,6 +66,12 @@ describe("block markdown", () => {
     expect(render("%% note to self %%")).toBe("<p>%% note to self %%</p>\n");
   });
 
+  it("breaks a paragraph at every newline, as Obsidian shows it", () => {
+    expect(render("**Attribute:** WIL\n**Skills:** Axes, Crafting\n\nProse.")).toBe(
+      "<p><strong>Attribute:</strong> WIL<br><strong>Skills:</strong> Axes, Crafting</p>\n<p>Prose.</p>\n"
+    );
+  });
+
   it("prints raw HTML as text, inline and as a block, and keeps <br>", () => {
     expect(render("a<br/>b <b>c</b>")).toBe("<p>a<br>b &lt;b&gt;c&lt;/b&gt;</p>\n");
     expect(render("x <img src=x onerror=alert(1)> y")).toBe(

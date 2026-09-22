@@ -99,8 +99,7 @@ A note written as prose:
 ````markdown from=tests/fixtures/dragonbane/Hausregel.md
 ## Vorderseite
 
-Ein Charakter, der eine **Nacht** ohne Rast verbringt, erhält einen
-Nachteil auf alle Proben, bis er wieder geschlafen hat.
+Ein Charakter, der eine **Nacht** ohne Rast verbringt, erhält einen Nachteil auf alle Proben, bis er wieder geschlafen hat.
 
 %% keep-together %%
 - Erste Nacht: Nachteil
@@ -116,8 +115,9 @@ data:
 ```
 ````
 
-Values are Markdown: bold, italic, lists, line breaks, wikilinks. Raw HTML
-prints as text, except `<br>` and a small inline `<svg>`. Three Obsidian
+Values are Markdown: bold, italic, lists, wikilinks. A line break in the
+note is a line break on the card, as Obsidian shows it. Raw HTML prints as
+text, except `<br>` and a small inline `<svg>`. Three Obsidian
 comments steer how a long text breaks across cards:
 `%% card-break %%` starts a new face, `%% keep-together %% … %% /keep-together %%`
 holds a region on one face, and `%% keep-with-next %%` /

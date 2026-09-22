@@ -2,8 +2,7 @@
 
 ## Vorderseite
 
-Ein Charakter, der auf 0 TP fällt, ist nicht tot, sondern **am Boden**:
-er würfelt zu Beginn jedes seiner Züge einen Rettungswurf.
+Ein Charakter, der auf 0 TP fällt, ist nicht tot, sondern **am Boden**: er würfelt zu Beginn jedes seiner Züge einen Rettungswurf.
 
 - Gelingt er, bleibt er bei 0 TP und handelt nicht.
 - Misslingt er dreimal, stirbt er.
@@ -18,9 +17,7 @@ Die Hausregel gilt nur für Spielercharaktere; Monster sterben bei 0 TP.
 
 ## Hinweise
 
-The generic card: a title and a subtitle, an icon and a label in the
-left corner, the body from the note's `## Vorderseite` section, a
-footer; the back a second text face from `## Rückseite`.
+The generic card: a title and a subtitle, an icon and a label in the left corner, the body from the note's `## Vorderseite` section, a footer; the back a second text face from `## Rückseite`.
 
 ```cardsmith
 card:
