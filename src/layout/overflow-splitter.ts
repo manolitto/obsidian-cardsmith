@@ -975,40 +975,120 @@ export function rootHasForcedBreak(root: ParentNode): boolean {
  * and is always exactly 1 here: `applyForcedBodyScale` gives the body a DEFINITE
  * height, and `scrollHeight` never reports less than the client box, so
  * UNDERFILL is invisible that way — `bodyFits` only ever needed the overflow
- * direction. Measure the bottom of the last child against the body's own box
- * instead. Both are `getBoundingClientRect` values, so the FontScaler's
- * transform scales numerator and denominator alike and cancels; mixing a rect
- * with `clientHeight` would not. Body children are `flex-shrink: 0` and do not
- * grow, so the last child's bottom IS the content height. */
+ * direction. Measure the bottom of the last child that RENDERS SOMETHING against
+ * the body's own box instead, and discount the height of every empty child above
+ * it. Both are `getBoundingClientRect` values, so the FontScaler's transform
+ * scales numerator and denominator alike and cancels; mixing a rect with
+ * `clientHeight` would not.
+ *
+ * The discount is what makes the number mean anything. A body is a flex column,
+ * and a template's vertical rhythm is set with empty flex children that absorb
+ * the slack — a spacer between the stat box and the prose, another below it.
+ * They are `flex-grow`, so they stretch to exactly the room the content left
+ * over, and the last child's raw bottom is therefore the bottom of the BOX on
+ * every card that carries one. Measured that way a face holding two stat lines
+ * and nothing else reports 1.00 while it is two thirds air, and `MIN_FACE_FILL`
+ * — whose whole job is to catch that face — never fires. Skipping the empty
+ * children and subtracting the ones the content has already pushed past reports
+ * 0.29 for the same face.
+ *
+ * Margins stay counted: the last rendered bottom is a real position in the box,
+ * so a full body of paragraphs with generous leading still reads ~1. Only the
+ * flex slack is taken out, which is the only thing that was ever spurious. */
 function faceFill(body: HTMLElement): number {
-  const last = body.lastElementChild;
-  if (!last) return 0;
   const box = body.getBoundingClientRect();
   if (!(box.height > 0)) return 1;
-  return (last.getBoundingClientRect().bottom - box.top) / box.height;
+  let slack = 0; // empty children seen so far
+  let contentBottom = -1;
+  let slackAbove = 0; // …of those, the ones above the last rendered child
+  for (let el = body.firstElementChild; el; el = el.nextElementSibling) {
+    const rect = el.getBoundingClientRect();
+    if (rendersContent(el)) {
+      contentBottom = rect.bottom;
+      slackAbove = slack;
+    } else {
+      slack += rect.height;
+    }
+  }
+  if (contentBottom < 0) return 0;
+  return (contentBottom - box.top - slackAbove) / box.height;
+}
+
+/* Whether `el` puts anything on the card — text, or one of the replaced /
+ * structural elements that render without it. The negative is a spacer: a
+ * template's empty flex child, which occupies height without being content.
+ * Same test `hasContentBeforeMarker` applies to a card-break's predecessors. */
+function rendersContent(el: Element): boolean {
+  if (el.textContent && el.textContent.trim() !== "") return true;
+  return (
+    el.matches(CONTENT_BEFORE_SELECTOR) || !!el.querySelector(CONTENT_BEFORE_SELECTOR)
+  );
 }
 
 /* Whether `body`'s laid-out content fits within its own box (no clipping). The
  * single measurement primitive shared by every binary search here. CSS
  * transforms applied by the FontScaler don't affect `scrollHeight`, so this
- * reads the true post-reflow height. */
+ * reads the true post-reflow height.
+ *
+ * A body that still has room in it cannot be overflowing, whatever the height
+ * arithmetic says — and on a body laid out around spacers the arithmetic does
+ * say otherwise. `scrollHeight` and `clientHeight` are integers over a column
+ * of fractional boxes, and a pair of grown spacers puts two more fractions in
+ * it: measured, a stat box and one word between two spacers report 244 against
+ * a box of 242, with the spacers themselves 82.8 and 82.9 tall. Nothing is
+ * clipped — there are 165 px of deliberate blank paper on that face — but every
+ * search built on the predicate reads it as full, so the largest prefix that
+ * "fits" is nothing at all and the block that would have filled the face moves
+ * off it whole. Neither display, overflow, min-height nor font-size on the
+ * spacer changes the reading; it is the free-space distribution, so no system
+ * can write its way out of it.
+ *
+ * `flex-grow` is what makes the test exact rather than a tolerance: flex hands
+ * a spacer height only out of space the content did not take, so a spacer with
+ * height IS proof of free space. A body whose content genuinely overflows has
+ * every spacer at zero (measured on the same card: 0.0 across the board), and
+ * the reading falls through to the height comparison unchanged — as it does on
+ * every body with no spacers in it. */
 function bodyFits(body: HTMLElement): boolean {
-  return body.scrollHeight <= body.clientHeight + 1;
+  if (body.scrollHeight <= body.clientHeight + 1) return true;
+  return hasUntakenSpace(body);
+}
+
+/* Whether any empty, flex-growing child of `body` still has height — i.e. flex
+ * found space the content had not claimed. See `bodyFits`. */
+function hasUntakenSpace(body: HTMLElement): boolean {
+  const win = body.ownerDocument.defaultView;
+  if (!win) return false;
+  for (let el = body.firstElementChild; el; el = el.nextElementSibling) {
+    if (rendersContent(el)) continue;
+    if (!(parseFloat(win.getComputedStyle(el).flexGrow) > 0)) continue;
+    if (el.getBoundingClientRect().height > 0.5) return true;
+  }
+  return false;
+}
+
+/* One rendered line of `el`, in pixels. `line-height: normal` (which `parseFloat`
+ * can't read) falls back to `font-size * 1.2`; 0 when neither can be read. */
+function lineHeightOf(el: Element): number {
+  const win = el.ownerDocument.defaultView;
+  if (!win) return 0;
+  const cs = win.getComputedStyle(el);
+  let lh = parseFloat(cs.lineHeight);
+  if (!isFinite(lh) || lh <= 0) lh = parseFloat(cs.fontSize) * 1.2;
+  return isFinite(lh) && lh > 0 ? lh : 0;
 }
 
 /* Rendered line count of a laid-out block element: its content height (scrollHeight
- * minus vertical padding) divided by the line height. `line-height: normal` (which
- * `parseFloat` can't read) falls back to `font-size * 1.2`. Floored at 1. The
+ * minus vertical padding) divided by the line height. Floored at 1. The
  * FontScaler's CSS transform doesn't affect `scrollHeight` or computed lengths, so
  * this reads true post-reflow lines — same assumption as `bodyFits`. */
 function countBlockLines(el: Element | undefined): number {
   if (!el) return 0;
   const win = el.ownerDocument.defaultView;
   if (!win) return 1;
+  const lh = lineHeightOf(el);
+  if (lh <= 0) return 1;
   const cs = win.getComputedStyle(el);
-  let lh = parseFloat(cs.lineHeight);
-  if (!isFinite(lh) || lh <= 0) lh = parseFloat(cs.fontSize) * 1.2;
-  if (!isFinite(lh) || lh <= 0) return 1;
   let pad = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
   if (!isFinite(pad)) pad = 0;
   const h = el.scrollHeight - pad;
@@ -1371,6 +1451,24 @@ export function moveOverflowChildren(
       // Not even one child fits alongside the prefix — move the whole container
       // (and trailing blocks) to the next face, where it recurses as a sole block.
       fragment = moveWholeBlockToEnd(srcBody, originalHTML, k);
+      // And the fill guard again, because this is the one boundary where a
+      // whole block leaves the face without any cut having been attempted at
+      // all: the child search failed, so the cut the guard compares against
+      // does not exist yet. A container whose FIRST child is already larger
+      // than the room beside the prefix takes this path — a rule card's prose
+      // block beside its stat box — and leaves the face carrying the stat box
+      // and nothing else. Word-cutting into that first child fills it.
+      fragment = fillGuard(
+        srcBody,
+        originalHTML,
+        fragment,
+        prefixWords,
+        boundaryWords,
+        true,
+        function () {
+          return moveWholeBlockToEnd(srcBody, originalHTML, k);
+        }
+      );
     }
     // If still null (k === 0, no child fits even on an empty face) fall through to
     // the word-split path below, which cuts inside the first item.
@@ -1769,7 +1867,10 @@ function applyForcedBodyScale(bodyEl: HTMLElement, scale: number): boolean {
   bodyEl.style.minHeight = inv;
   bodyEl.style.transform = "scale(" + scale + ")";
   if (bodyEl.clientHeight <= 0) return false;
-  return bodyEl.scrollHeight > bodyEl.clientHeight + 1;
+  // The same predicate the cuts were chosen with. A face committed as fitting
+  // must not be re-read as clipped a moment later, or the group warns about
+  // content it did not lose.
+  return !bodyFits(bodyEl);
 }
 
 /* Re-apply the locked group scale to every FRONT body in the root and

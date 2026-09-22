@@ -1,0 +1,19 @@
+Nebelweberei · 2 cards · 4 faces · clipped: no
+1. front [cs-overflow-active cs-layout-default cs-front-first cs-front-has-next] scale 0.99
+   span.db-fill-top
+   div.db-stats-box
+     div.db-stats-row "Attribut INT"
+     div.db-stats-row.db-stats-row-wide
+       p.db-trait "Voraussetzung Beruf Nebelweber oder Magiebegabung"
+   span.db-fill-mid
+   div.db-effect-block.db-effect-block-bottom.cs-split-head
+     p.db-effect-text.cs-split-head "Nebelweber lesen das Wetter wie andere …"
+2. front [cs-overflow-active cs-layout-default cs-front-continued cs-front-has-next] scale 0.99
+   div.db-effect-block.db-effect-block-bottom.cs-split-continuation.cs-split-head
+     p.db-effect-text.cs-split-continuation "ans Wasser wird der Dunst störrisch …"
+     p.db-effect-text.cs-split-head "Effekt Du kannst die Zauber und …"
+3. front [cs-overflow-active cs-layout-default cs-front-continued] scale 0.99
+   div.db-effect-block.db-effect-block-bottom.cs-split-continuation
+     p.db-effect-text.cs-split-continuation "mindestens aber auf 1. Ein Nebelweber …"
+   span.db-fill-bottom
+4. back [cs-layout-default cs-overflow-active] scale —

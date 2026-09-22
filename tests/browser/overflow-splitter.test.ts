@@ -89,6 +89,18 @@ const classes = (el: Element, prefix: string) =>
 const frontMarkers = (r: HTMLElement) => classes(r, "cs-front-");
 const layoutClasses = (r: HTMLElement) => classes(r, "cs-layout-");
 const fits = (el: HTMLElement) => el.scrollHeight <= el.clientHeight + 1;
+/** The blocks of a body that carry something — a spacer carries nothing. */
+const carriers = (body: HTMLElement) =>
+  Array.from(body.children).filter((el) => (el.textContent ?? "").trim() !== "");
+/** How far down its box a body's last carrying block reaches, 0..1. A full face
+ * has no free space left for its spacers, so they collapse to nothing and this
+ * is the content's true reach — which is what makes it a fair read of the fill
+ * even on a body built around `cs-fill-*`. */
+const contentBottomFrac = (body: HTMLElement) => {
+  const box = body.getBoundingClientRect();
+  const last = carriers(body).pop();
+  return last ? (last.getBoundingClientRect().bottom - box.top) / box.height : 0;
+};
 const lines = (el: HTMLElement) =>
   Math.round(el.scrollHeight / parseFloat(getComputedStyle(el).lineHeight));
 
@@ -259,6 +271,12 @@ const LONG = `<p>${Array.from(
   (_, i) => `Sentence ${i + 1} of the long paragraph goes on for a while.`
 ).join(" ")}</p>`;
 
+/** A paragraph half again as long as a face holds, so nothing fits beside it. */
+const HUGE = `<p>${Array.from(
+  { length: 30 },
+  (_, i) => `Sentence ${i + 1} of the long paragraph goes on for a while.`
+).join(" ")}</p>`;
+
 describe("where the cut lands", () => {
   it("keeps the largest prefix of whole blocks and cuts the boundary paragraph", () => {
     // One short line, then a paragraph longer than a face: the line stays,
@@ -333,6 +351,53 @@ describe("where the cut lands", () => {
     expect(
       (head.getBoundingClientRect().bottom - box.top) / box.height
     ).toBeGreaterThanOrEqual(0.75);
+    expect(flowWords(container)).toEqual(wordsOfHtml(body));
+  });
+
+  it("cuts into a container whose first child alone is too big for the room left", () => {
+    // A short block, then a wrapper whose FIRST child already exceeds what is
+    // left beside it. No child boundary fits, so the wrapper would move whole
+    // and leave the face carrying one line — the shape of a stat box above a
+    // block of prose. The cut goes into that first child instead.
+    const body = `<p>Short stat.</p><div class="wrap">${HUGE}${HUGE}</div>`;
+    const { container, result } = split(body, "extra-cards");
+    expect(result.clipped).toBe(false);
+    const [b1] = frontBodies(container) as [HTMLElement];
+    // The short block stayed AND the prose began on this face.
+    expect(b1.children).toHaveLength(2);
+    expect(words(b1.firstElementChild!)).toEqual(["Short", "stat."]);
+    const wrap = b1.lastElementChild!;
+    expect(wrap.classList.contains("cs-split-head")).toBe(true);
+    const head = wrap.firstElementChild!;
+    expect(head.classList.contains("cs-split-head")).toBe(true);
+    expect(words(head).length).toBeGreaterThan(20);
+    expect(contentBottomFrac(b1)).toBeGreaterThanOrEqual(0.75);
+    expect(flowWords(container)).toEqual(wordsOfHtml(body));
+  });
+
+  it("measures the fill past a spacer that grows to the foot of the face", () => {
+    // The same body between the baseline's `cs-fill-*` spacers, which is how a
+    // template parks a stat box a third of the way down. A spacer is
+    // `flex-grow`, so it stretches to exactly the room the content left over
+    // and the last child's bottom IS the foot of the box — on a face holding
+    // one line and two spacers as much as on a full one. Read that way the
+    // face reports itself full and the guard never fires; the spacers have to
+    // come out of the measurement.
+    const body =
+      `<span class="cs-fill-1"></span><p>Short stat.</p><span class="cs-fill-1"></span>` +
+      `<div class="wrap">${HUGE}${HUGE}</div><span class="cs-fill-7"></span>`;
+    const { container, result } = split(body, "extra-cards");
+    expect(result.clipped).toBe(false);
+    const [b1] = frontBodies(container) as [HTMLElement];
+    // Spacers are chrome, so compare the blocks that carry something.
+    const carried = carriers(b1);
+    expect(carried).toHaveLength(2);
+    expect(words(carried[0]!)).toEqual(["Short", "stat."]);
+    expect(carried[1]!.classList.contains("cs-split-head")).toBe(true);
+    const head = carried[1]!.firstElementChild!;
+    expect(head.classList.contains("cs-split-head")).toBe(true);
+    expect(words(head).length).toBeGreaterThan(20);
+    expect(contentBottomFrac(b1)).toBeGreaterThanOrEqual(0.75);
     expect(flowWords(container)).toEqual(wordsOfHtml(body));
   });
 
