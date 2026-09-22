@@ -210,6 +210,19 @@
  *                       candidates are `odd` and `even` styles
  *                       `.cs-layout-even` when no real back is guaranteed.
  *
+ *   .cs-front-continued Every front face after the first — one that received
+ *                       text from an earlier face. Knowable the moment a face
+ *                       is spawned, whatever the group turns out to hold, so
+ *                       it is stamped there and the face is measured wearing
+ *                       it. That is what lets a continuation carry chrome of
+ *                       its own SIZE: from the second face on a repeated
+ *                       title is a locator rather than a headline, and a
+ *                       system that slims the header there has the room it
+ *                       frees counted into the cut. Stamped after the pass it
+ *                       would be handed to the face once the cut was already
+ *                       made, and the face would end that much emptier than
+ *                       the one before it.
+ *
  * Stamped AFTER measurement — chrome only. Their values depend on the
  * committed face count, so by the time they appear the splitter has already
  * decided how much body each face holds; showing or hiding body content on
@@ -223,9 +236,13 @@
  *                               replaced by a copy of the front so the text
  *                               could continue there. No rule ships; a system
  *                               dims or annotates the copy as it likes.
- *   .cs-front-first             The first front face of the group.
- *   .cs-front-continued         Every front face after the first — one that
- *                               received text from an earlier face.
+ *   .cs-front-first             The first front face of the group. Listed
+ *                               here rather than above because a card that
+ *                               fit carries it too, so it lands with the
+ *                               counters; a system needing face-1 chrome
+ *                               sized differently styles the unmarked state,
+ *                               which IS face 1, and overrides it under
+ *                               `.cs-front-continued`.
  *   .cs-front-has-next          Every front face but the last — one whose
  *                               text goes on. CSS cannot compare the two
  *                               counters below, and `:not(:last-child)` fails

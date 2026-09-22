@@ -434,6 +434,30 @@ describe("where the cut lands", () => {
     expect(movedWhole).toBeGreaterThan(0);
   });
 
+  it("leaves no widow when the fill guard cuts inside a wrapper's child", () => {
+    // The same promise on the path the guard's flat cut takes. Everything in
+    // one wrapper, so every cut goes through the sole-block path — where the
+    // word-split path's line guard does not reach — and the flat cut stops at
+    // the last word of the face, which is exactly how a block overhanging it
+    // by a word or two comes to open the next face on its own. Sweeping the
+    // prefix walks the cut through the boundary paragraph a line at a time, so
+    // some length in the range lands on that overhang.
+    const short = "<p>A line.</p>";
+    const long = `<p>${Array.from({ length: 8 }, () => "Lines of prose that the boundary may fall through.").join(" ")}</p>`;
+    for (let n = 4; n <= 12; n++) {
+      const body = `<div class="wrap">${short.repeat(n)}${long}</div>`;
+      const { container, result } = split(body, "extra-cards", ANY, NO_GROWTH);
+      expect(result.clipped).toBe(false);
+      const parts = Array.from(
+        container.querySelectorAll<HTMLElement>(".cs-split-head, .cs-split-continuation")
+      );
+      for (const el of parts) expect(lines(el)).toBeGreaterThanOrEqual(2);
+      expect(flowWords(container)).toEqual(wordsOfHtml(body));
+      mounted!.unmount();
+      mounted = undefined;
+    }
+  });
+
   it("repeats a table's head on its continuation", () => {
     const rows = Array.from(
       { length: 30 },
