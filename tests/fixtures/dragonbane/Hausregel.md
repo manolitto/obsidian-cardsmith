@@ -1,12 +1,10 @@
 # Hausregel
 
-This paragraph is the note's intro. The card type reads a `## Vorderseite`
-section before the intro, so the card shows the section and not this text.
+This paragraph is the note's intro. The card type reads a `## Vorderseite` section before the intro, so the card shows the section and not this text.
 
 ## Vorderseite
 
-Ein Charakter, der eine **Nacht** ohne Rast verbringt, erhält einen
-Nachteil auf alle Proben, bis er wieder geschlafen hat.
+Ein Charakter, der eine **Nacht** ohne Rast verbringt, erhält einen Nachteil auf alle Proben, bis er wieder geschlafen hat.
 
 %% keep-together %%
 - Erste Nacht: Nachteil

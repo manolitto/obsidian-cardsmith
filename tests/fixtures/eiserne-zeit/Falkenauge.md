@@ -12,8 +12,7 @@ data:
 
 *Voraussetzung: Falknerin, Stufe 2*
 
-Die Falknerin sieht, was ihr Vogel sieht. Solange der Falke in der Luft ist,
-gilt für sie und ihre Gefährten:
+Die Falknerin sieht, was ihr Vogel sieht. Solange der Falke in der Luft ist, gilt für sie und ihre Gefährten:
 
 - **Spähen:** Proben auf Wahrnehmung im Freien mit *Vorteil*
 - **Kein Hinterhalt:** die Gruppe kann im Freien nicht überrascht werden
@@ -21,7 +20,4 @@ gilt für sie und ihre Gefährten:
 
 ## Hinweise
 
-This section sits under a `##` heading and never reaches the card: the card
-text is everything before the first heading. The picture above the text comes
-from the block's `image:`, through the same partial every `![[embed]]` in a
-body uses.
+This section sits under a `##` heading and never reaches the card: the card text is everything before the first heading. The picture above the text comes from the block's `image:`, through the same partial every `![[embed]]` in a body uses.

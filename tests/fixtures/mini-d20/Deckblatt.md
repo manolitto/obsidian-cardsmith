@@ -1,12 +1,10 @@
 ### MINI D20
 
-MINI D20 ist ein Rollenspiel von Seba. Dieses Deck ist Fan-Material und
-gibt die Regeln der Kampagne am Fluss wieder.
+MINI D20 ist ein Rollenspiel von Seba. Dieses Deck ist Fan-Material und gibt die Regeln der Kampagne am Fluss wieder.
 
 ### Bildnachweise
 
-- Symbole von [game-icons.net](https://game-icons.net/), CC BY 3.0:
-  Delapouite, Lorc, sbed.
+- Symbole von [game-icons.net](https://game-icons.net/), CC BY 3.0: Delapouite, Lorc, sbed.
 - Die Zeichnungen sind eigene.
 
 ### Schriftarten
@@ -15,10 +13,7 @@ Merriweather und Wellfleet, beide unter der SIL Open Font License.
 
 ## Hinweise
 
-The cover: the deck's title over the wordmark on the front, its
-licences on the back — the note's own text, before the first `##`
-heading, with `###` sub-heads. This section is a property nobody binds
-and stays off the card. Listed first in the deck.
+The cover: the deck's title over the wordmark on the front, its licences on the back — the note's own text, before the first `##` heading, with `###` sub-heads. This section is a property nobody binds and stays off the card. Listed first in the deck.
 
 ```cardsmith
 card:
