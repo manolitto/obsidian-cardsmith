@@ -75,6 +75,7 @@ const en = {
   "deck.card-types": "Card types",
   "deck.all-card-types": "all",
   "deck.folder": "Folder",
+  "deck.folders": "Folders",
   "deck.root-folder": "the vault root",
   "deck.notes": "Notes",
   "deck.notes.count": "{count} notes",
@@ -105,7 +106,7 @@ const en = {
 
   // ── The keys of the deck block, for the template it writes ──────
   "deck-key.folder":
-    'The vault folder whose card notes are the deck. Default: the deck note\'s own folder; "" is the vault root.',
+    'The vault folder whose card notes are the deck — one, or a list of several. Default: the deck note\'s own folder; "" is the vault root.',
   "deck-key.include-tags-all": "A note must carry every one of these tags.",
   "deck-key.include-tags-any": "A note must carry at least one of these tags.",
   "deck-key.exclude-tags-any": "A note carrying any one of these tags is left out.",
@@ -124,7 +125,7 @@ const en = {
     "The cut marks at every card corner; the fields merge, so one can change alone.",
   "deck-key.paper-background":
     "`textured` prints the system's background pictures, `plain` leaves them out. Default: the plugin setting.",
-  "deck-key.folder-recursive": "Include the folder's subfolders.",
+  "deck-key.folder-recursive": "Include the subfolders of every folder.",
   "deck-key.card-copies":
     "Copies per card by note name, winning over a card's own `copies`: `[{ name: Wolf, copies: 3 }]`.",
 
@@ -250,6 +251,7 @@ const de: Strings = {
   "deck.card-types": "Kartentypen",
   "deck.all-card-types": "alle",
   "deck.folder": "Ordner",
+  "deck.folders": "Ordner",
   "deck.root-folder": "die Vault-Wurzel",
   "deck.notes": "Notizen",
   "deck.notes.count": "{count} Notizen",
@@ -280,7 +282,7 @@ const de: Strings = {
 
   // ── The keys of the deck block, for the template it writes ──────
   "deck-key.folder":
-    'Der Vault-Ordner, dessen Kartennotizen das Deck sind. Standard: der Ordner der Deck-Notiz; "" ist die Vault-Wurzel.',
+    'Der Vault-Ordner, dessen Kartennotizen das Deck sind — einer oder eine Liste mehrerer. Standard: der Ordner der Deck-Notiz; "" ist die Vault-Wurzel.',
   "deck-key.include-tags-all": "Eine Notiz muss jedes dieser Tags tragen.",
   "deck-key.include-tags-any": "Eine Notiz muss mindestens eines dieser Tags tragen.",
   "deck-key.exclude-tags-any": "Eine Notiz mit einem dieser Tags bleibt draußen.",
@@ -299,7 +301,7 @@ const de: Strings = {
     "Die Schnittmarken an jeder Kartenecke; die Felder verschmelzen, eines lässt sich allein ändern.",
   "deck-key.paper-background":
     "`textured` druckt die Hintergrundbilder des Systems, `plain` lässt sie weg. Standard: die Plugin-Einstellung.",
-  "deck-key.folder-recursive": "Die Unterordner des Ordners einschließen.",
+  "deck-key.folder-recursive": "Die Unterordner jedes Ordners einschließen.",
   "deck-key.card-copies":
     "Kopien je Karte nach Notizname, vor dem eigenen `copies` der Karte: `[{ name: Wolf, copies: 3 }]`.",
 

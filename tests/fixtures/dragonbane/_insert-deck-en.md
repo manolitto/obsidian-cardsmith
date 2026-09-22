@@ -2,7 +2,7 @@
 system: dragonbane
 card-type: [gear, creature]
 
-# The vault folder whose card notes are the deck. Default: the deck note's own folder; "" is the vault root.
+# The vault folder whose card notes are the deck — one, or a list of several. Default: the deck note's own folder; "" is the vault root.
 # folder:
 
 # A note must carry every one of these tags.
@@ -38,7 +38,7 @@ card-type: [gear, creature]
 # `textured` prints the system's background pictures, `plain` leaves them out. Default: the plugin setting.
 # paper-background:
 
-# Include the folder's subfolders.
+# Include the subfolders of every folder.
 # folder-recursive: true
 
 # Copies per card by note name, winning over a card's own `copies`: `[{ name: Wolf, copies: 3 }]`.

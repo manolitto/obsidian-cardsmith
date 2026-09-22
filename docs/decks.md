@@ -23,8 +23,8 @@ explanation.
 |---|---|
 | `system` | Required. Notes of another system are left out. |
 | `card-type` | One id or a list. Only notes of these card types; the list is also the print order of the groups. Default: every card type. |
-| `folder` | The folder whose card notes are the deck. Default: the deck note's own; `""` is the vault root. |
-| `folder-recursive` | `true` includes the folder's subfolders. |
+| `folder` | The folder whose card notes are the deck — one, or a list: `folder: [Karten/Waffen, Karten/Rüstung]` collects both, and a note under two of them is in the deck once. Default: the deck note's own; `""` is the vault root. |
+| `folder-recursive` | `true` includes the subfolders of every folder named. |
 | `include-tags-all`, `include-tags-any`, `exclude-tags-any`, `exclude-tags-all` | Tag filters on the notes' tags, written as Obsidian shows them (`#Waffe` or `Waffe`, either). |
 | `card-languages` | Only the cards that print in one of these languages. |
 

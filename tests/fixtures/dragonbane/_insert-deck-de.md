@@ -2,7 +2,7 @@
 system: dragonbane
 card-type: [gear, creature]
 
-# Der Vault-Ordner, dessen Kartennotizen das Deck sind. Standard: der Ordner der Deck-Notiz; "" ist die Vault-Wurzel.
+# Der Vault-Ordner, dessen Kartennotizen das Deck sind — einer oder eine Liste mehrerer. Standard: der Ordner der Deck-Notiz; "" ist die Vault-Wurzel.
 # folder:
 
 # Eine Notiz muss jedes dieser Tags tragen.
@@ -38,7 +38,7 @@ card-type: [gear, creature]
 # `textured` druckt die Hintergrundbilder des Systems, `plain` lässt sie weg. Standard: die Plugin-Einstellung.
 # paper-background:
 
-# Die Unterordner des Ordners einschließen.
+# Die Unterordner jedes Ordners einschließen.
 # folder-recursive: true
 
 # Kopien je Karte nach Notizname, vor dem eigenen `copies` der Karte: `[{ name: Wolf, copies: 3 }]`.

@@ -1,7 +1,7 @@
 import { Platform, TFile, type App, type MarkdownPostProcessorContext } from "obsidian";
 import { parseDeckBlock } from "../deck/block";
 import { selectNotes } from "../deck/select";
-import type { DeckSource } from "../deck/source";
+import { listDeckNotes, type DeckSource } from "../deck/source";
 import { collectDiagnostics } from "../definitions/diagnostics";
 import type { BuiltDeck, DeckExporter, ExportFormat } from "../export/exporter";
 import type { PaperSize } from "../model/paper-size";
@@ -15,7 +15,7 @@ import { t, type StringKey } from "./strings";
  * of what the deck will print, and the buttons that print it.
  *
  * The summary is what parsing and filtering yield — the system, the card
- * types, the folder, the notes the selection keeps by card type, the paper
+ * types, the folders, the notes the selection keeps by card type, the paper
  * and the card size — which is cheap enough to run on every render of the
  * block. The number of cards is known only after rendering (rows, roll
  * ranges, copies) and is what the export's notice says. Whatever the block
@@ -72,7 +72,10 @@ export function deckBlockProcessor(context: DeckBlockContext) {
           ? selection.cardTypeIds.join(", ")
           : t("deck.all-card-types")
       );
-      row("deck.folder", selection.folder || t("deck.root-folder"));
+      row(
+        selection.folders.length > 1 ? "deck.folders" : "deck.folder",
+        selection.folders.map((folder) => folder || t("deck.root-folder")).join(", ")
+      );
       const notes = row("deck.notes", "…");
       row("deck.paper", paperText(settings.paperSize));
       const sizes = new Set<string>();
@@ -90,8 +93,9 @@ export function deckBlockProcessor(context: DeckBlockContext) {
       }
 
       if (system) {
-        const listed = await context.source.listNotes(
-          selection.folder,
+        const listed = await listDeckNotes(
+          context.source,
+          selection.folders,
           settings.folderRecursive ?? false,
           diagnostics
         );

@@ -17,7 +17,7 @@ import { BASELINE } from "../systems/baseline";
  * The `cardsmith-deck` block, taken apart.
  *
  * A deck note is a note with such a block. The block says which notes are
- * the deck — a folder, a system, card types, tags, languages — and how the
+ * the deck — folders, a system, card types, tags, languages — and how the
  * deck is printed. Its keys fall into three groups, told apart by name:
  *
  *   - the **selection** keys, read here into `DeckSelection`;
@@ -33,7 +33,7 @@ import { BASELINE } from "../systems/baseline";
  * ```yaml
  * system: dragonbane
  * card-type: [gear, creature]      # also the order the cards are grouped in
- * folder: Karten/Ausrüstung        # default: the deck note's own folder
+ * folder: [Karten/Waffen, Karten/Rüstung]   # one or a list; default: the deck note's own folder
  * include-tags-all: [#Waffe]
  * card-languages: de
  * output-path: Export/Waffen.pdf
@@ -53,8 +53,8 @@ export interface DeckBlock {
 
 /** Which notes are the deck. Every list is empty when the block does not filter by it. */
 export interface DeckSelection {
-  /** Vault folder whose card notes are the candidates; `""` is the vault root. */
-  folder: string;
+  /** Vault folders whose card notes are the candidates, in the order written, never empty; `""` is the vault root. */
+  folders: string[];
   systemId: string;
   /** In the order written — the cards group in this order. Empty: every card type. */
   cardTypeIds: string[];
@@ -150,7 +150,7 @@ export function parseDeckBlock(
 
   const where = prefixDiagnostics(diagnostics, `${path}: `);
   const selection: DeckSelection = {
-    folder: folderOf(selectionRaw["folder"], path),
+    folders: folderList(selectionRaw["folder"], path, where),
     systemId,
     cardTypeIds: stringList(selectionRaw["card-type"], "card-type", where).map((id) =>
       id.toLowerCase()
@@ -177,10 +177,23 @@ export function parseDeckBlock(
 
 // ── The values ─────────────────────────────────────────────────────
 
-/** The block's folder, trailing slashes off; the deck note's own folder when it names none. */
-function folderOf(raw: unknown, deckPath: string): string {
-  const named = typeof raw === "string" ? raw.trim() : "";
-  return named ? named.replace(/\/+$/, "") : parentFolder(deckPath);
+/**
+ * The block's folders — one or a list, trailing slashes off, each once and
+ * in the order written — or the deck note's own folder when it names none.
+ * `""` and `/` are the vault root, so a bare value is not an absent one.
+ */
+function folderList(raw: unknown, deckPath: string, diagnostics: Diagnostics): string[] {
+  const items = raw === undefined || raw === null ? [] : Array.isArray(raw) ? raw : [raw];
+  const out: string[] = [];
+  for (const item of items) {
+    if (typeof item !== "string" && typeof item !== "number") {
+      diagnostics.warn(`folder: ${JSON.stringify(item)} is not a folder; ignoring it`);
+      continue;
+    }
+    const folder = String(item).trim().replace(/\/+$/, "");
+    if (!out.includes(folder)) out.push(folder);
+  }
+  return out.length > 0 ? out : [parentFolder(deckPath)];
 }
 
 /**

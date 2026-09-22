@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { DeckSelection } from "../src/deck/block";
 import { selectNotes, sortCards } from "../src/deck/select";
-import type { TaggedNote } from "../src/deck/source";
+import { listDeckNotes, type DeckSource, type TaggedNote } from "../src/deck/source";
 import { collectDiagnostics } from "../src/definitions/diagnostics";
 import { parseNote } from "../src/render/note";
 
@@ -25,7 +25,7 @@ const system = {
 };
 
 const selection = (over: Partial<DeckSelection> = {}): DeckSelection => ({
-  folder: "",
+  folders: [""],
   systemId: "demo",
   cardTypeIds: [],
   includeTagsAll: [],
@@ -188,5 +188,42 @@ describe("sorting cards", () => {
     const sorted = sortCards(cards, [], []);
     expect(sorted[0]).toBe(first);
     expect(sorted).not.toBe(cards);
+  });
+});
+
+describe("listing the folders", () => {
+  // A source over a fixed tree: a note is under a folder when its path
+  // starts with it, and under the root always.
+  const tree = [
+    note("Waffen/Beil.md", "system: demo"),
+    note("Waffen/Bogen.md", "system: demo"),
+    note("Waffen/Alt/Keule.md", "system: demo"),
+    note("Rüstung/Helm.md", "system: demo"),
+  ];
+  const source: DeckSource = {
+    listNotes: (folder, recursive) =>
+      Promise.resolve(
+        tree.filter(({ note }) => {
+          const parent = note.path.slice(0, note.path.lastIndexOf("/"));
+          if (parent === folder) return true;
+          return recursive && (folder === "" || parent.startsWith(`${folder}/`));
+        })
+      ),
+  };
+  const list = async (folders: string[], recursive = false): Promise<string[]> =>
+    names(await listDeckNotes(source, folders, recursive, collectDiagnostics()));
+
+  it("concatenates the folders in the order named", async () => {
+    expect(await list(["Rüstung", "Waffen"])).toEqual(["Helm", "Beil", "Bogen"]);
+    expect(await list(["Waffen"], true)).toEqual(["Beil", "Bogen", "Keule"]);
+  });
+
+  it("lists a note once when two folders both hold it", async () => {
+    expect(await list(["Waffen/Alt", "Waffen"], true)).toEqual([
+      "Keule",
+      "Beil",
+      "Bogen",
+    ]);
+    expect(await list(["", "Rüstung"], true)).toEqual(["Beil", "Bogen", "Keule", "Helm"]);
   });
 });
