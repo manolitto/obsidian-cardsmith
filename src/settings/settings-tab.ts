@@ -5,10 +5,10 @@ import { copySystemIntoVault } from "../ui/copy-system";
 import { SystemFileSuggest } from "../ui/system-file-suggest";
 import { t } from "../ui/strings";
 import { entriesAfterAdd, entriesAfterToggle } from "./system-registry";
-import type { SystemEntry, UiLanguage } from "./types";
+import type { OpenTarget, SystemEntry, UiLanguage } from "./types";
 
 /*
- * The settings page: the system registry, then three preferences.
+ * The settings page: the system registry, then four preferences.
  *
  * Every registered system is one row — its name as its document says it
  * now, whatever its switch says, where it comes from, its switch, and
@@ -211,6 +211,24 @@ export class CardsmithSettingTab extends PluginSettingTab {
           .setValue(this.plugin.settings.paperBackground)
           .onChange(async (value) => {
             this.plugin.settings.paperBackground = value as PaperBackground;
+            await this.plugin.saveSettings();
+          })
+      );
+
+    new Setting(containerEl)
+      .setName(t("settings.open-in.name"))
+      .setDesc(t("settings.open-in.desc"))
+      .addDropdown((dropdown) =>
+        dropdown
+          .addOptions({
+            tab: t("settings.open-in.tab"),
+            "split-right": t("settings.open-in.split-right"),
+            "split-down": t("settings.open-in.split-down"),
+            window: t("settings.open-in.window"),
+          })
+          .setValue(this.plugin.settings.openIn)
+          .onChange(async (value) => {
+            this.plugin.settings.openIn = value as OpenTarget;
             await this.plugin.saveSettings();
           })
       );

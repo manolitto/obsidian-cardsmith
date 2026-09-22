@@ -74,6 +74,7 @@ export default class CardsmithPlugin extends Plugin {
       this.renderer,
       source,
       () => this.settings.paperBackground,
+      () => this.settings.openIn,
       this.manifest.dir ?? ""
     );
     this.registerMarkdownCodeBlockProcessor(
@@ -83,7 +84,8 @@ export default class CardsmithPlugin extends Plugin {
         systems: this.systems,
         source,
         exporter: this.exporter,
-        openPreview: (file, built) => openDeckView(this.app, file, built),
+        openPreview: (file, built) =>
+          openDeckView(this.app, file, this.settings.openIn, built),
       })
     );
     this.registerView(DECK_VIEW_TYPE, (leaf) => new DeckView(leaf, this.exporter));
@@ -104,7 +106,7 @@ export default class CardsmithPlugin extends Plugin {
       checkCallback: (checking) => {
         const file = this.app.workspace.getActiveFile();
         if (!file || file.extension !== "md") return false;
-        if (!checking) void openDeckView(this.app, file);
+        if (!checking) void openDeckView(this.app, file, this.settings.openIn);
         return true;
       },
     });
