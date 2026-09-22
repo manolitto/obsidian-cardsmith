@@ -2020,6 +2020,229 @@ function applyForcedBodyScale(bodyEl: HTMLElement, scale: number): boolean {
   return !bodyFits(bodyEl);
 }
 
+/* ── Hyphenating the cut ────────────────────────────────────────────────
+ *
+ * A cut through a paragraph is the one line break in a deck the browser did
+ * not get to make. Everywhere else it breaks by the `lang` of the card and
+ * hyphenates German compounds as it goes; at a face boundary the splitter
+ * hands it a paragraph that simply ends, so the last line takes whole words
+ * only and stops short of the point the same text would have reached one line
+ * earlier or later. On a poker-width card it reads as the one ragged line on
+ * the page. Measured over a deck of nine Aventurien skill cards, 8 of 18 cuts
+ * fell exactly where the browser would have hyphenated.
+ *
+ * So the paragraph is put back together in the head's own box, the browser is
+ * asked where it breaks the line the cut landed on, and if it breaks inside a
+ * word the cut is moved there: the head takes the first half and a hyphen, the
+ * continuation opens with the second. The break is the browser's, out of its
+ * dictionary for the card's language — nothing here knows how to hyphenate
+ * anything.
+ *
+ * Runs once, on the committed group, after the faces are at their final scale:
+ * the fragment joins a line that already exists, so no face changes height and
+ * no cut moves. */
+
+/* Every (text node, offset) position inside `el`, in document order — the
+ * coordinate system the line searches below count in. */
+function textPositions(el: Node): { node: Text; i: number }[] {
+  const walker = el.ownerDocument!.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+  const out: { node: Text; i: number }[] = [];
+  for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+    const t = n as Text;
+    for (let i = 0; i < t.data.length; i++) out.push({ node: t, i });
+  }
+  return out;
+}
+
+/* How many RENDERED LINES the first `k` characters of `el` occupy.
+ *
+ * Counts distinct rect tops, not rects. A range's client rects break at every
+ * inline element edge, and — the reason this matters here — a hyphenated line
+ * comes back as two rects, the second holding the single character the browser
+ * hung its hyphen on. Counting rects reads that as an extra line and puts
+ * every break one character late; counting tops reads the line. */
+function linesUpTo(pos: { node: Text; i: number }[], range: Range, k: number): number {
+  if (k <= 0) return 0;
+  range.setStart(pos[0]!.node, pos[0]!.i);
+  range.setEnd(pos[k - 1]!.node, pos[k - 1]!.i + 1);
+  const tops: number[] = [];
+  const rects = range.getClientRects();
+  for (let r = 0; r < rects.length; r++) {
+    const rect = rects[r]!;
+    if (rect.height <= 1) continue;
+    let seen = false;
+    for (let t = 0; t < tops.length; t++) {
+      if (Math.abs(tops[t]! - rect.top) <= 1) {
+        seen = true;
+        break;
+      }
+    }
+    if (!seen) tops.push(rect.top);
+  }
+  return tops.length;
+}
+
+/* The character index at which rendered line `line` (1-based) of `el` starts,
+ * or -1 when `el` has fewer lines. Binary search over `linesUpTo`, which is
+ * monotone in `k`. */
+function lineStartIndex(el: HTMLElement, line: number): number {
+  const pos = textPositions(el);
+  if (pos.length === 0) return -1;
+  const range = el.ownerDocument.createRange();
+  if (linesUpTo(pos, range, pos.length) < line) return -1;
+  let lo = 0,
+    hi = pos.length - 1;
+  while (lo < hi) {
+    const mid = (lo + hi) >> 1;
+    if (linesUpTo(pos, range, mid + 1) >= line) hi = mid;
+    else lo = mid + 1;
+  }
+  return lo;
+}
+
+/* The rendered line count of `el`. */
+function renderedLines(el: HTMLElement): number {
+  const pos = textPositions(el);
+  if (pos.length === 0) return 0;
+  return linesUpTo(pos, el.ownerDocument.createRange(), pos.length);
+}
+
+/* The deepest descendant of `root` carrying `cls` — the one the cut actually
+ * ran through. A straddled wrapper carries the same marker as the paragraph
+ * inside it, and it is the paragraph's text that is at stake. */
+function deepestMarked(root: ParentNode, cls: string): HTMLElement | null {
+  const all = root.querySelectorAll<HTMLElement>("." + cls);
+  for (let i = all.length - 1; i >= 0; i--) {
+    if (!all[i]!.querySelector("." + cls)) return all[i]!;
+  }
+  return null;
+}
+
+/* Whether `el` is a run of text rather than a wrapper around other blocks —
+ * the only thing a word may be carried out of. */
+function isTextRun(el: HTMLElement): boolean {
+  for (let c = el.firstElementChild; c; c = c.nextElementSibling) {
+    if (isBlockLevel(c)) return false;
+  }
+  return (el.textContent ?? "").trim() !== "";
+}
+
+/* Delete the first `m` characters of `el`'s text, leaving its markup standing,
+ * and return what was removed. */
+function takeLeadingChars(el: HTMLElement, m: number): string {
+  let left = m;
+  let taken = "";
+  const walker = el.ownerDocument.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+  for (let n = walker.nextNode(); n && left > 0; n = walker.nextNode()) {
+    const t = n as Text;
+    const cut = Math.min(left, t.data.length);
+    taken += t.data.slice(0, cut);
+    t.data = t.data.slice(cut);
+    left -= cut;
+  }
+  return taken;
+}
+
+/* The hyphen the head ends on. U+002D rather than the U+2010 a browser draws
+ * for an automatic break: every font a card can ship has it, the two are a
+ * pixel apart at card sizes, and a missing glyph on a printed card is not
+ * worth the difference. */
+const HYPHEN = "-";
+
+/* A letter on both sides is what makes a break a word to hyphenate. Keeps the
+ * hyphen off the things `overflow-wrap` breaks for want of anywhere better —
+ * a dice string, a link target, a run of digits. */
+function isLetter(ch: string | undefined): boolean {
+  return ch !== undefined && /\p{L}/u.test(ch);
+}
+
+/* Move the cut between `head` and `tail` onto the browser's own hyphenation
+ * point, if it has one there. Returns true when it did.
+ *
+ * `headBody` is the body `head` sits in; the committed cut filled it, so the
+ * carried fragment has to be given back the moment it does not fit. */
+function hyphenateCut(
+  head: HTMLElement,
+  tail: HTMLElement,
+  headBody: HTMLElement
+): boolean {
+  if (!isTextRun(head) || !isTextRun(tail)) return false;
+  const headText = head.textContent ?? "";
+  const tailText = tail.textContent ?? "";
+  if (headText.trim() === "" || tailText.trim() === "") return false;
+
+  const lines = renderedLines(head);
+  if (lines < 1) return false;
+
+  // The paragraph as it was, in the head's own box: same width, same font,
+  // same `lang`, so the browser breaks it as it would have on this face.
+  const probe = head.cloneNode(true) as HTMLElement;
+  probe.classList.remove(SPLIT_HEAD_CLASS);
+  probe.appendChild(head.ownerDocument.createTextNode(" " + tailText));
+  head.after(probe);
+
+  const joinAt = headText.length; // index of the space that rejoined them
+  let carried = -1;
+  const brk = lineStartIndex(probe, lines + 1);
+  if (brk > joinAt + 1) {
+    const m = brk - (joinAt + 1);
+    if (
+      m < tailText.length &&
+      isLetter(tailText[m - 1]) &&
+      isLetter(tailText[m]) &&
+      !/\s/.test(tailText.slice(0, m))
+    ) {
+      // `overflow-wrap` breaks mid-word too, and a hyphen there would be a
+      // lie. A dictionary break disappears when hyphenation does; a
+      // break-for-want-of-room stays exactly where it was.
+      probe.style.hyphens = "none";
+      probe.style.setProperty("-webkit-hyphens", "none");
+      if (lineStartIndex(probe, lines + 1) !== brk) carried = m;
+    }
+  }
+  probe.remove();
+  if (carried < 0) return false;
+
+  const tailBefore = tail.innerHTML;
+  const moved = takeLeadingChars(tail, carried);
+  // The head may already end in the whitespace the cut left behind; the probe
+  // measured a rendering where it collapses, and the committed text should not
+  // rely on that.
+  const sep = /\s$/.test(head.textContent ?? "") ? "" : " ";
+  const added = head.ownerDocument.createTextNode(sep + moved + HYPHEN);
+  head.appendChild(added);
+  if (bodyFits(headBody)) return true;
+
+  // The fragment did not fit after all — put it back exactly as it was.
+  added.remove();
+  tail.innerHTML = tailBefore;
+  return false;
+}
+
+/* Hyphenate every cut in the committed face sequence.
+ *
+ * `roots` is the print order, which is NOT the order the text flows in: under
+ * `extra-cards` a designed back sits between every pair of fronts, and under
+ * `back-then-cards` the text runs front, back-as-front, front. So a head is
+ * paired with the next body that RECEIVED a tail rather than with its
+ * neighbour. A middle face is both, and is closed before it is opened. */
+function hyphenateCuts(roots: ArrayLike<HTMLElement>): void {
+  let pending: { head: HTMLElement; body: HTMLElement } | null = null;
+  for (let i = 0; i < roots.length; i++) {
+    const body = roots[i]!.querySelector<HTMLElement>(".card-body-scalable");
+    if (!body) continue;
+    if (pending && body.classList.contains(BODY_CONTINUED_CLASS)) {
+      const tail = deepestMarked(body, SPLIT_CONTINUATION_CLASS);
+      if (tail) hyphenateCut(pending.head, tail, pending.body);
+      pending = null;
+    }
+    if (body.classList.contains(BODY_CONTINUES_CLASS)) {
+      const head = deepestMarked(body, SPLIT_HEAD_CLASS);
+      pending = head ? { head, body } : null;
+    }
+  }
+}
+
 /* Re-apply the locked group scale to every FRONT body in the root and
  * re-run title scaling. Used after marker/hint population so titles re-fit
  * their (potentially widened) headers without disturbing the body's
@@ -2481,6 +2704,11 @@ export function scaleAndSplitInDom(
     // for any width the CSS counter adds inside the title.
     if (st.markerTargets.length > 1) {
       if (relayoutGroup(root, scale)) st.clipped = true;
+      // Last, with every face at its committed scale: give the cuts back the
+      // hyphenation the browser would have made if the paragraph had not ended
+      // at the card's edge. Each one joins a line that already exists, so
+      // nothing here moves a face or a cut.
+      hyphenateCuts(allRoots);
     }
   }
 

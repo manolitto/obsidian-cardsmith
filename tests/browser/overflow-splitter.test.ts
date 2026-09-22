@@ -458,6 +458,52 @@ describe("where the cut lands", () => {
     }
   });
 
+  it("hyphenates a cut where the browser would have hyphenated", () => {
+    // German compounds under `hyphens: auto`, which needs a `lang` ancestor to
+    // pick a dictionary — so the host carries one. Sweeping the length walks
+    // the cut through the paragraph; some of those positions are breaks the
+    // browser hyphenates, and the cut has to arrive there with a hyphen rather
+    // than surrendering the whole word.
+    // The floor is pinned, as in the other cut tests: the split is committed
+    // once and the assertions read that one cut, not a fill search over many.
+    const HYPH = `${NO_GROWTH}\n.card-body-scalable p { hyphens: auto; -webkit-hyphens: auto; }`;
+    const sentence =
+      "Die Geschicklichkeitsprobe der Nebelweberinnen verlangt Aufmerksamkeit " +
+      "und Elementarmagie, Befestigungsanlagen und Zaubertricks im Tagesabschnitt.";
+    let hyphenated = 0;
+    for (let n = 6; n <= 13; n++) {
+      const body = `<p>${Array.from({ length: n }, () => sentence).join(" ")}</p>`;
+      const front = faceHtml({ body });
+      mounted = mountHost([front, backHtml()], HYPH);
+      mounted.container.lang = "de";
+      const { container } = mounted;
+      scaleAndSplitInDom(container, {
+        mode: "extra-cards",
+        layout: ANY,
+        frontHtml: front,
+      });
+
+      // Nothing lost, nothing doubled: re-joining the faces — closing a
+      // hyphenated cut without a space, every other one with — reproduces the
+      // paragraph exactly.
+      const parts = frontBodies(container).map((b) => (b.textContent ?? "").trim());
+      let joined = "";
+      parts.forEach((part, i) => {
+        if (i < parts.length - 1 && part.endsWith("-")) {
+          hyphenated++;
+          joined += part.slice(0, -1);
+        } else {
+          joined += part + " ";
+        }
+      });
+      expect(joined.replace(/\s+/g, " ").trim()).toBe(wordsOfHtml(body).join(" "));
+      mounted.unmount();
+      mounted = undefined;
+    }
+    // The sweep has to have exercised the thing, or it proves nothing.
+    expect(hyphenated).toBeGreaterThan(0);
+  });
+
   it("repeats a table's head on its continuation", () => {
     const rows = Array.from(
       { length: 30 },
