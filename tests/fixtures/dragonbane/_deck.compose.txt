@@ -7,8 +7,8 @@
    front #5 at 73.5, 104.5 creature/Knochensammler
    front #6 at 136.5, 104.5 creature/Moorschleicher
    front #7 at 10.5, 192.5 rule/Glutfunken
-   front #8 at 73.5, 192.5 roll-table/Fischfang
-   front #9 at 136.5, 192.5 roll-table/Fischfang
+   front #8 at 73.5, 192.5 rule/Nebelweberei
+   front #9 at 136.5, 192.5 rule/Nebelweberei
 2. back · 64 marks
    back #1 at 136.5, 16.5 generic/Deckblatt
    back #2 at 73.5, 16.5 generic/Hausregel
@@ -17,9 +17,13 @@
    back #5 at 73.5, 104.5 creature/Knochensammler
    back #6 at 10.5, 104.5 creature/Moorschleicher
    back #7 at 136.5, 192.5 rule/Glutfunken
-   back #8 at 73.5, 192.5 roll-table/Fischfang
-   back #9 at 10.5, 192.5 roll-table/Fischfang
-3. front · 16 marks
+   back #8 at 73.5, 192.5 rule/Nebelweberei
+   back #9 at 10.5, 192.5 rule/Nebelweberei
+3. front · 32 marks
    front #10 at 10.5, 16.5 roll-table/Fischfang
-4. back · 16 marks
+   front #11 at 73.5, 16.5 roll-table/Fischfang
+   front #12 at 136.5, 16.5 roll-table/Fischfang
+4. back · 32 marks
    back #10 at 136.5, 16.5 roll-table/Fischfang
+   back #11 at 73.5, 16.5 roll-table/Fischfang
+   back #12 at 10.5, 16.5 roll-table/Fischfang
