@@ -53,7 +53,7 @@ describe("the cardsmith-deck block", () => {
       ].join("\n")
     );
     expect(deck?.selection).toEqual({
-      folder: "Karten/Ausrüstung",
+      folders: ["Karten/Ausrüstung"],
       systemId: "dragonbane",
       cardTypeIds: ["gear", "creature"],
       includeTagsAll: [],
@@ -131,15 +131,28 @@ describe("the cardsmith-deck block", () => {
   });
 });
 
-describe("the folder", () => {
-  it("defaults to the deck note's own, the root being empty", () => {
-    expect(parse("system: s")?.selection.folder).toBe("Karten/Ausrüstung");
-    expect(parse("system: s", undefined, "Deck.md")?.selection.folder).toBe("");
+describe("the folders", () => {
+  it("default to the deck note's own, the root being empty", () => {
+    expect(parse("system: s")?.selection.folders).toEqual(["Karten/Ausrüstung"]);
+    expect(parse("system: s", undefined, "Deck.md")?.selection.folders).toEqual([""]);
+    expect(parse("system: s\nfolder: []")?.selection.folders).toEqual([
+      "Karten/Ausrüstung",
+    ]);
   });
 
-  it("takes the block's when it names one, trailing slashes off, a bare slash as the root", () => {
-    expect(parse("system: s\nfolder: Monster//")?.selection.folder).toBe("Monster");
-    expect(parse("system: s\nfolder: /")?.selection.folder).toBe("");
+  it("take the block's when it names one, trailing slashes off, a bare slash as the root", () => {
+    expect(parse("system: s\nfolder: Monster//")?.selection.folders).toEqual(["Monster"]);
+    expect(parse("system: s\nfolder: /")?.selection.folders).toEqual([""]);
+    expect(parse("system: s\nfolder: ''")?.selection.folders).toEqual([""]);
+  });
+
+  it("take a list in the order written, each folder once, and report what is not a folder", () => {
+    const diagnostics = collectDiagnostics();
+    expect(
+      parse("system: s\nfolder: [Waffen, Rüstung/, Waffen, 2024, { x: 1 }]", diagnostics)
+        ?.selection.folders
+    ).toEqual(["Waffen", "Rüstung", "2024"]);
+    expect(diagnostics.matching("folder: ")).toHaveLength(1);
   });
 });
 

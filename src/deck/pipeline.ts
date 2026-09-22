@@ -7,11 +7,11 @@ import type { LoadedSystem } from "../systems/loader";
 import { parseDeckBlock } from "./block";
 import { applyCopies, type DeckCard, type PhysicalCard } from "./copies";
 import { selectNotes, sortCards } from "./select";
-import type { DeckSource } from "./source";
+import { listDeckNotes, type DeckSource } from "./source";
 
 /**
  * A deck note in, its physical cards out in print order: the block parsed,
- * the folder listed, the notes selected, every note rendered with the
+ * the folders listed, the notes selected, every note rendered with the
  * deck's layer and laid out, the cards sorted, the copies applied. What
  * comes out is everything the export composes from and nothing it has to
  * compute again.
@@ -68,15 +68,19 @@ export async function buildDeck(
   const { selection, settings, cardLayer } = block;
 
   const system = await systems.get(selection.systemId);
-  const listed = await source.listNotes(
-    selection.folder,
+  const listed = await listDeckNotes(
+    source,
+    selection.folders,
     settings.folderRecursive ?? false,
     diagnostics
   );
   const notes = selectNotes(listed, selection, system, diagnostics);
   if (notes.length === 0) {
+    const under = selection.folders
+      .map((folder) => (folder ? `"${folder}"` : "the vault root"))
+      .join(", ");
     throw new Error(
-      `${path}: no cards — no card note under "${selection.folder || "the vault root"}" matches the deck block`
+      `${path}: no cards — no card note under ${under} matches the deck block`
     );
   }
 

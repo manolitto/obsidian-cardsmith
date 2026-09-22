@@ -21,6 +21,30 @@ export interface DeckSource {
   ): Promise<TaggedNote[]>;
 }
 
+/**
+ * A deck's candidate notes: the card notes under each of its folders, in
+ * the order the folders are named and path order within one, each note
+ * once — a folder named beside a parent that is listed recursively would
+ * otherwise contribute its notes twice.
+ */
+export async function listDeckNotes(
+  source: DeckSource,
+  folders: readonly string[],
+  recursive: boolean,
+  diagnostics: Diagnostics
+): Promise<TaggedNote[]> {
+  const seen = new Set<string>();
+  const out: TaggedNote[] = [];
+  for (const folder of folders) {
+    for (const tagged of await source.listNotes(folder, recursive, diagnostics)) {
+      if (seen.has(tagged.note.path)) continue;
+      seen.add(tagged.note.path);
+      out.push(tagged);
+    }
+  }
+  return out;
+}
+
 /** A card note as the vault lists it — with the tags the vault knows it by. */
 export interface TaggedNote {
   note: CardNote;
