@@ -3,6 +3,13 @@ import type { PaperBackground } from "../definitions/deck-settings";
 /** Plugin UI language. `"auto"` follows Obsidian's own setting. */
 export type UiLanguage = "auto" | "en" | "de";
 
+/**
+ * Where the deck preview and an exported PDF open, relative to the note
+ * they were opened from: a new tab in its pane, a split to the right of
+ * it or below it, or a window of their own.
+ */
+export type OpenTarget = "tab" | "split-right" | "split-down" | "window";
+
 /** A system shipped with the plugin. */
 export interface BundledSystemEntry {
   type: "bundled";
@@ -63,6 +70,12 @@ export interface CardsmithSettings {
    * printed is not its call.
    */
   paperBackground: PaperBackground;
+  /**
+   * Where the deck preview and an exported PDF open. A split keeps the
+   * note in sight, which is what one usually wants while editing a deck;
+   * a tab or a window is for a screen that has no room beside it.
+   */
+  openIn: OpenTarget;
 }
 
 export const DEFAULT_SETTINGS: CardsmithSettings = {
@@ -70,4 +83,5 @@ export const DEFAULT_SETTINGS: CardsmithSettings = {
   language: "auto",
   previewHeight: 350,
   paperBackground: "textured",
+  openIn: "split-right",
 };

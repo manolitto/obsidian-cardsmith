@@ -1,7 +1,7 @@
 # Settings
 
 *Settings → Cardsmith* has two parts: the systems your cards can be
-rendered with, and three preferences.
+rendered with, and four preferences.
 
 ## Systems
 
@@ -59,4 +59,5 @@ of the copy, and the price of it.
 |---|---|
 | **Preview height** | Height of a card in the in-note preview, in pixels. A note may override it with `display-height` under `card:`. |
 | **Paper background** | Whether cards show the system's background textures — *Textured* or *Plain* — in the note and in print alike. Plain saves ink on a draft; a deck block may override it with `paper-background`. |
+| **Open preview and PDF in** | Where the deck preview and an exported PDF open, relative to the note: *New tab*, *Split right*, *Split down* or *New window*. A split keeps the note in sight; a tab or a window suits a screen with no room beside it. |
 | **Language** | The language of the plugin's own interface — the buttons, the summaries, the messages: *Follow Obsidian*, *English* or *Deutsch*. The language a card prints in is the card's own setting, not this one. |

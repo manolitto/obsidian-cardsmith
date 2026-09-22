@@ -4,8 +4,10 @@ import type { DeckSource } from "../deck/source";
 import type { PaperBackground } from "../definitions/deck-settings";
 import { collectDiagnostics } from "../definitions/diagnostics";
 import type { CardRenderer } from "../render/renderer";
+import type { OpenTarget } from "../settings/types";
 import type { SystemLibrary } from "../systems/library";
 import { t } from "../ui/strings";
+import { newLeaf } from "../util/open-leaf";
 import { deckDocument, type DeckDocument } from "./document";
 import { printDeckPdf, type TempFile } from "./pdf";
 
@@ -47,8 +49,8 @@ export type ExportProgress = (message: string) => void;
  * a PDF or an HTML file in the vault. Every surface that exports a deck
  * goes through `run`; a surface that only wants to look at one goes
  * through `build`. Progress is drawn by the caller; the PDF is opened
- * beside the deck note, since a printed sheet is what one exports a deck
- * for.
+ * where the *Open in* preference says, since a printed sheet is what one
+ * exports a deck for.
  */
 export class DeckExporter {
   constructor(
@@ -58,6 +60,8 @@ export class DeckExporter {
     private readonly source: DeckSource,
     /** The reader's default for `paper-background` — the layer under a deck's own. */
     private readonly paperBackground: () => PaperBackground,
+    /** Where the written PDF opens. */
+    private readonly openIn: () => OpenTarget,
     /** The plugin's folder, vault-relative, for the print window's temp file. */
     private readonly pluginDir: string
   ) {}
@@ -106,7 +110,7 @@ export class DeckExporter {
         : await this.write(path, doc.html);
     let destination: ExportDestination;
     if (format === "pdf") {
-      await this.app.workspace.getLeaf("split").openFile(written);
+      await newLeaf(this.app.workspace, this.openIn()).openFile(written);
       destination = "pane";
     } else {
       destination = await this.openHtml(written);

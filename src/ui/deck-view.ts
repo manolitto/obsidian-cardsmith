@@ -1,5 +1,7 @@
 import { ItemView, TFile, type App, type WorkspaceLeaf } from "obsidian";
 import type { BuiltDeck, DeckExporter } from "../export/exporter";
+import type { OpenTarget } from "../settings/types";
+import { newLeaf } from "../util/open-leaf";
 import { reportWarnings } from "./export-run";
 import { t } from "./strings";
 
@@ -174,8 +176,8 @@ export class DeckView extends ItemView {
 }
 
 /**
- * Show the deck of `file` in a view beside it: the one already showing it,
- * or a new split. With `built`, the deck was built by the caller — the
+ * Show the deck of `file` in a view: the one already showing it, or a new
+ * leaf where `target` says. With `built`, the deck was built by the caller — the
  * deck block's button, which showed the progress in its own label — and
  * the view presents it; without, the view builds it itself, as the
  * command asks.
@@ -187,6 +189,7 @@ export class DeckView extends ItemView {
 export async function openDeckView(
   app: App,
   file: TFile,
+  target: OpenTarget,
   built?: BuiltDeck
 ): Promise<void> {
   const existing = app.workspace
@@ -195,7 +198,7 @@ export async function openDeckView(
       (leaf) =>
         (leaf.getViewState().state as DeckViewState | undefined)?.path === file.path
     );
-  const leaf = existing ?? app.workspace.getLeaf("split");
+  const leaf = existing ?? newLeaf(app.workspace, target);
   if (!existing) {
     await leaf.setViewState({
       type: DECK_VIEW_TYPE,
