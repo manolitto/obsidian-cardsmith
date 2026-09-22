@@ -62,11 +62,26 @@ export const OVERFLOW_BACK_AS_FRONT_CLASS = "cs-overflow-back-as-front";
 export const OVERFLOW_ACTIVE_CLASS = "cs-overflow-active";
 
 /* Front-face position markers (see `base-card.css`, *What the layout engine
- * stamps*). Stamped on every `.card-front` root once the splitter has committed
- * the final face sequence, so template and system authors can target a front
- * face by its page-number position. Like `.cs-overflow-active`, they are
- * applied AFTER the measure-split-scale pass — a CHROME-ONLY hook that must NOT
- * gate front-body content size. */
+ * stamps*). Stamped on every `.card-front` root so a template or a system can
+ * target a front face by its page-number position. They divide by WHEN the
+ * splitter can know them, and that is what decides what CSS may hang on each.
+ *
+ * `cs-front-continued` is knowable the moment a face is spawned — a face that
+ * receives a tail is a continuation, whatever the group turns out to hold — so
+ * it is stamped there, BEFORE that face is measured, and a system may size a
+ * continuation's chrome differently. A slim repeat-plaque is the obvious use:
+ * from the second face on the title is a locator, not a headline. Measuring
+ * the face against the plaque it will actually print is the only way that face
+ * fills. Stamped afterwards, the head shrinks after the cut has been made and
+ * the face keeps the room the taller plaque had cost it — a page ending
+ * emptier than the one before it, for no reason a reader can see.
+ *
+ * `cs-front-has-next` cannot be known that early: whether a face is the last
+ * one depends on how much the faces after it turn out to hold. It stays a
+ * CHROME-ONLY hook, stamped after the pass, and must NOT gate front-body
+ * content size. `cs-front-first` is not stamped early either, and does not
+ * need to be: the unmarked state IS the first face's, so a system styles the
+ * continuation and leaves face 1 to the cascade. */
 export const FRONT_FIRST_CLASS = "cs-front-first"; // first front page (k === 1)
 export const FRONT_CONTINUED_CLASS = "cs-front-continued"; // front page 2 or higher (k >= 2)
 /* Stamped on every front face that is FOLLOWED BY another front face in the
@@ -305,6 +320,36 @@ function applyFrontFaceMarkers(orderedRoots: ArrayLike<HTMLElement>): void {
  * overflows at the scale floor, so the committed group always has >1 face and
  * the counter always ends up shown. Clones spawned below inherit the class +
  * props via `innerHTML`; the guard skips re-setting an inherited placeholder. */
+/* Make a freshly spawned face into the continuation it will print as, BEFORE
+ * its body is measured.
+ *
+ * Every face the splitter creates receives a tail from the face before it, so
+ * it is a continuation by construction — no face count needed, which is what
+ * lets this run early where the page-number markers cannot. A system that
+ * gives a continuation a shallower head therefore gets the room it frees
+ * counted into the cut, rather than handed to the face after the cut was
+ * already decided.
+ *
+ * The title has to be re-fitted for the class to mean anything geometrically.
+ * The face is cloned from the snapshot, which carries the first face's titles
+ * at the INLINE size the scaler committed for them, and an inline size beats
+ * the cascade — so a continuation rule that sets a smaller title changes
+ * nothing until the title is scaled again. It shows up only on the cards whose
+ * titles were scaled at all, i.e. the long ones, which is why it hides: a
+ * short title sits at its cascade size on both faces and the class bites
+ * immediately, while a two-line title keeps face 1's size through the
+ * measurement, then drops to the continuation size in the final relayout and
+ * takes a line and a half of head with it — after the cut. `scaleFontSize`
+ * clears the inline size and re-fits from the cascade, so one pass over this
+ * face is all it takes, and the group relayout later finds it already there.
+ *
+ * Idempotent; `applyFrontFaceMarkers` re-asserts the whole family on the
+ * committed sequence afterwards. */
+function markContinuationFace(cardRoot: HTMLElement): void {
+  cardRoot.classList.add(FRONT_CONTINUED_CLASS);
+  scaleTitlesInRoot(cardRoot);
+}
+
 function reserveOverflowCounter(cardRoot: HTMLElement): void {
   cardRoot.classList.add(OVERFLOW_ACTIVE_CLASS);
   if (!cardRoot.style.getPropertyValue("--cs-front-index")) {
@@ -1599,6 +1644,36 @@ export function moveOverflowChildren(
   return { moved: 1, remainsClipped: false };
 }
 
+/* How many rendered lines the tail of a cut at word `n` would open the next
+ * face with. Measured, not estimated: the tail is put back into `srcBody`,
+ * which has the width and the committed scale the continuation face will have,
+ * so its leading block breaks into exactly the lines it will break into there.
+ * Line counts do not depend on the box's height, which is the one thing that
+ * differs between the two faces.
+ *
+ * Leaves `srcBody` holding the tail; every caller restores it. */
+function tailLinesAfterCut(
+  srcBody: HTMLElement,
+  originalHTML: string,
+  n: number,
+  respectKeepTogether: boolean
+): number {
+  srcBody.innerHTML = originalHTML;
+  const tail = trimBodyToFirstNWords(srcBody, n, respectKeepTogether, false);
+  if (!tail) return 0;
+  const holder = docOf(srcBody).createElement("div");
+  holder.appendChild(tail);
+  srcBody.innerHTML = holder.innerHTML;
+  // The block the cut ran through, innermost first: the wrapper it straddled
+  // carries the marker too, and it is the paragraph's lines that are at stake.
+  const splits = srcBody.querySelectorAll("." + SPLIT_CONTINUATION_CLASS);
+  for (let i = splits.length - 1; i >= 0; i--) {
+    if (!splits[i]!.querySelector("." + SPLIT_CONTINUATION_CLASS))
+      return countBlockLines(splits[i]!);
+  }
+  return countBlockLines(topLevelBlocks(srcBody)[0]);
+}
+
 /* Keep a committed cut only while it fills enough of the face.
  *
  * A clean boundary is worth a little empty space and not a lot: pushing a whole
@@ -1609,7 +1684,19 @@ export function moveOverflowChildren(
  * restores the original fragment when the flat cut turns out no better, since
  * both attempts leave `srcBody` trimmed.
  *
- * Costs a second binary search only on the faces that actually collapsed. */
+ * The flat cut takes the largest prefix that fits, so by construction it stops
+ * at the last word of the face — and a block that ends a word or two past it
+ * surrenders those two words and nothing else, opening the next face with
+ * "wird." on a line of its own. `MIN_SPLIT_LINES` is the rule against that, and
+ * it lives in the word-split path, which this one bypasses. So the cut is
+ * walked back to the largest word count whose tail still carries a whole
+ * `MIN_SPLIT_LINES` lines. It costs the face at most those lines, and it is
+ * taken only while the face still fills better than the clean boundary it was
+ * chosen over — below that the widow was the lesser evil and the pull-back is
+ * abandoned.
+ *
+ * Costs a second binary search only on the faces that actually collapsed, and a
+ * third only on those that would have widowed. */
 function fillGuard(
   srcBody: HTMLElement,
   originalHTML: string,
@@ -1629,14 +1716,74 @@ function fillGuard(
     respectKeepTogether,
     false
   );
+  const bestJ =
+    flatJ > 0
+      ? widowFreeWords(
+          srcBody,
+          originalHTML,
+          prefixWords,
+          flatJ,
+          respectKeepTogether,
+          wholeFill
+        )
+      : 0;
   srcBody.innerHTML = originalHTML;
   const flat =
-    flatJ > 0
-      ? trimBodyToFirstNWords(srcBody, prefixWords + flatJ, respectKeepTogether, false)
+    bestJ > 0
+      ? trimBodyToFirstNWords(srcBody, prefixWords + bestJ, respectKeepTogether, false)
       : null;
   if (flat && faceFill(srcBody) > wholeFill) return flat;
   srcBody.innerHTML = originalHTML;
   return redo();
+}
+
+/* The largest word count at or below `flatJ` whose tail opens the next face
+ * with `MIN_SPLIT_LINES` whole lines, or `flatJ` unchanged when it already
+ * does — or when no shorter cut both clears the widow and keeps the face
+ * fuller than `wholeFill`, the clean boundary this cut was preferred over.
+ *
+ * The tail only grows as the cut moves back, so the predicate is monotone and
+ * a binary search finds the boundary. Restores nothing: `fillGuard` re-cuts
+ * from pristine after this returns. */
+function widowFreeWords(
+  srcBody: HTMLElement,
+  originalHTML: string,
+  prefixWords: number,
+  flatJ: number,
+  respectKeepTogether: boolean,
+  wholeFill: number
+): number {
+  if (
+    tailLinesAfterCut(srcBody, originalHTML, prefixWords + flatJ, respectKeepTogether) >=
+    MIN_SPLIT_LINES
+  ) {
+    return flatJ;
+  }
+  let lo = 1,
+    hi = flatJ,
+    best = 0;
+  const MAX_ITER = 16;
+  for (let iter = 0; iter < MAX_ITER && lo < hi; iter++) {
+    const mid = Math.floor((lo + hi + 1) / 2);
+    const lines = tailLinesAfterCut(
+      srcBody,
+      originalHTML,
+      prefixWords + mid,
+      respectKeepTogether
+    );
+    if (lines >= MIN_SPLIT_LINES) {
+      best = mid;
+      lo = mid;
+    } else {
+      hi = mid - 1;
+    }
+  }
+  if (best === 0) return flatJ;
+  // The head has to stay worth having: a pull-back that drops the face back
+  // under the boundary it beat has bought a widow's worth of nothing.
+  srcBody.innerHTML = originalHTML;
+  trimBodyToFirstNWords(srcBody, prefixWords + best, respectKeepTogether, false);
+  return faceFill(srcBody) > wholeFill ? best : flatJ;
 }
 
 /* Extract the block at index `k` (recomputed fresh) through end-of-body as one
@@ -2103,6 +2250,7 @@ export function scaleAndSplitInDom(
           fbFront.remove();
           break;
         }
+        markContinuationFace(fbFrontRoot);
         reserveOverflowCounter(fbFrontRoot);
 
         fbFrontBody.innerHTML = "";
@@ -2143,6 +2291,7 @@ export function scaleAndSplitInDom(
     if (mode === "back-then-cards" && (st.clipped || bodyHasForcedBreak(oFrontBody))) {
       const nbRoot = splitIntoBackAsFront(oFrontBody, oBackRoot, frontHtml);
       if (nbRoot) {
+        markContinuationFace(nbRoot);
         reserveOverflowCounter(nbRoot);
         st.clipped = applyForcedBodyScale(oFrontBody, scale);
         const nbBody = nbRoot.querySelector<HTMLElement>(".card-body-scalable");
@@ -2179,6 +2328,7 @@ export function scaleAndSplitInDom(
           ? newFrontRoot.querySelector<HTMLElement>(".card-body-scalable")
           : null;
         if (!newFrontRoot || !newFrontBody) break;
+        markContinuationFace(newFrontRoot);
         reserveOverflowCounter(newFrontRoot);
 
         // Clear the destination body, then run the word-level binary-search
@@ -2226,6 +2376,7 @@ export function scaleAndSplitInDom(
             frontHtml
           );
           if (sbRoot) {
+            markContinuationFace(sbRoot);
             reserveOverflowCounter(sbRoot);
             st.clipped = applyForcedBodyScale(newFrontBody, scale);
             const sbBody = sbRoot.querySelector<HTMLElement>(".card-body-scalable");

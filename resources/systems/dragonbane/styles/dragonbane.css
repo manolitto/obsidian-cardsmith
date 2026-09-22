@@ -492,20 +492,22 @@
    a continuation, and the two are told apart across a fanned hand without
    reading a word.
 
-   SAFE BY CONSTRUCTION, because it only ever SHRINKS the head. `.cs-front-continued`
-   is stamped by the overflow splitter AFTER the whole measure-split-scale
-   pass has run — the marker is a chrome-only hook that must not gate
-   front-body content size. Every continuation face was therefore paginated against the
-   FULL-height plaque, and shrinking it afterwards hands that face more room
-   than the splitter budgeted for. The body slot can only grow:
-   `.db-head` is `flex: 0 0 auto` above a `flex: 1 1 0` content container, so
-   whatever the head gives up goes straight to `.card-body-scalable`. The
-   splitter's re-check after the markers land can only find
-   LESS clipping than before, never more, and the face count is already fixed
-   at that point — so this cannot add a card either. The only cost is that a
-   continuation face ends a little emptier than it strictly had to be; the
-   slack lands in the trailing `.db-fill-*` spacer, i.e. at the bottom, which is
-   where it belongs. Growing anything here would clip instead — don't.
+   MEASURED, not merely safe. `.cs-front-continued` is stamped on a face when
+   the splitter spawns it, before that face's body is measured, so the cut for
+   this face is made against THIS plaque. `.db-head` is `flex: 0 0 auto` above
+   a `flex: 1 1 0` content container, so what the head gives up goes straight
+   to `.card-body-scalable` and the face fills it with text rather than with
+   paper. Growing the head here is allowed for the same reason — it would be
+   measured too — though there is no reason to.
+
+   Getting that order right is what this rule is worth. Stamped after the
+   pass, as the page-number markers still are, every continuation was
+   paginated against the FULL-height plaque and then handed the freed room
+   afterwards, with nothing left to put in it: a face ending a line or two
+   emptier at the foot than the face before it, which reads as a mistake
+   rather than as a margin. Measured at poker the head is 19.08 % -> 13.34 %
+   of the card, and that is between one and two lines of body on every
+   continuation face of every card in the deck.
 
    Why it lands at 58 % rather than a literal 50 %: the plaque is three terms,
    and the biggest single one is not negotiable.

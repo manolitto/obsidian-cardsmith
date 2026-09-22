@@ -14,6 +14,6 @@ Nebelweberei · 2 cards · 4 faces · clipped: no
      p.db-effect-text.cs-split-head "Effekt Du kannst die Zauber und …"
 3. front [cs-overflow-active cs-layout-default cs-front-continued] scale 0.99
    div.db-effect-block.db-effect-block-bottom.cs-split-continuation
-     p.db-effect-text.cs-split-continuation "mindestens aber auf 1. Ein Nebelweber …"
+     p.db-effect-text.cs-split-continuation "an einer Wasserfläche, wie lange sie …"
    span.db-fill-bottom
 4. back [cs-layout-default cs-overflow-active] scale —

@@ -1,13 +1,13 @@
 Der Wanderfalke · 1 card · 2 faces · clipped: no
-1. front [cs-overflow-active cs-layout-default cs-front-first cs-front-has-next] scale 0.79
+1. front [cs-overflow-active cs-layout-default cs-front-first cs-front-has-next] scale 0.81
    div.ez-body.cs-split-head
      p "Art: Wanderfalke, abgetragen"
      p "Werte: KW 4; TP 1w4 (mindestens …"
      h3 "Kommandos"
      ul.cs-split-head (3 items) "Steig: Der Falke kreist über der …"
-2. back-as-front [cs-overflow-back-as-front cs-overflow-active cs-layout-default cs-front-continued] scale 0.79
+2. back-as-front [cs-overflow-back-as-front cs-overflow-active cs-layout-default cs-front-continued] scale 0.81
    div.ez-body.cs-split-continuation
-     ul.cs-split-continuation (3 items) "erfordern eine GES-Probe der Falknerin. Warn: …"
+     ul.cs-split-continuation (3 items) "Brief, einen Ring. Bewachte Gegenstände erfordern …"
      h3 "Aufstieg"
      table (4 rows) "Stufe Boni 1 Klassenbonus auf GES …"
    div.ez-logo-band
