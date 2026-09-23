@@ -504,6 +504,33 @@ describe("where the cut lands", () => {
     expect(hyphenated).toBeGreaterThan(0);
   });
 
+  it("parks a continuing face's trailing section on the foot", () => {
+    // A heading, a short line under it, then a block too big to share the
+    // face and marked so it cannot be cut — so it moves whole and leaves the
+    // face short of full but above the fill guard's floor. That leftover
+    // belongs above the heading, which puts the section that runs over on the
+    // foot edge instead of leaving blank paper under it.
+    let dropped = 0;
+    for (let n = 2; n <= 9; n++) {
+      const body =
+        `${paragraphs(n)}<h3>Fehlschlag</h3><p>Ein kurzer Satz dazu.</p>` +
+        `<div class="cs-keep-together">${paragraphs(6)}</div>`;
+      const { container } = split(body, "extra-cards", ANY, NO_GROWTH);
+      for (const b of frontBodies(container)) {
+        if (!b.classList.contains("cs-body-continues")) continue;
+        const heading = b.querySelector<HTMLElement>("h3");
+        if (!heading || !heading.style.marginTop) continue;
+        dropped++;
+        expect(contentBottomFrac(b)).toBeGreaterThan(0.97);
+        expect(fits(b)).toBe(true);
+      }
+      mounted!.unmount();
+      mounted = undefined;
+    }
+    // A sweep that never met a face with slack to move proves nothing.
+    expect(dropped).toBeGreaterThan(0);
+  });
+
   it("repeats a table's head on its continuation", () => {
     const rows = Array.from(
       { length: 30 },
