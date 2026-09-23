@@ -2243,6 +2243,158 @@ function hyphenateCuts(roots: ArrayLike<HTMLElement>): void {
   }
 }
 
+/* ── The slack on a face that continues ────────────────────────────────
+ *
+ * A face that runs onto the next one can still end short: the splitter fills
+ * what it can, and `MIN_FACE_FILL` only refuses a cut that would leave the
+ * face under three quarters full, so anything above that is committed with the
+ * remainder under the last line. Where the trailing content opens with a
+ * heading, that remainder is in the wrong place. A section that starts three
+ * lines from the foot and runs over reads as a section that runs over; the
+ * same section floating mid-face with three blank lines beneath it reads as a
+ * mistake, and it is the reading the card actually gets, because the eye takes
+ * the blank as the end of the card rather than as the middle of a sentence.
+ *
+ * So the slack is moved above the headings of the trailing content, which
+ * parks that section on the foot edge. It is DIVIDED between them rather than
+ * given to the last: across all twelve bundled systems and a vault deck
+ * besides, no continuing face has ever carried more than one heading, so the
+ * division is a definition for a case that has not come up rather than a
+ * behaviour anyone has seen — and it saves asking which heading is "the"
+ * heading, a question with no good answer once two levels are in play.
+ *
+ * Runs last, on the committed group, once every face is at its final scale and
+ * the cuts are made: it consumes space that is already free, so no face can
+ * grow and no cut can move. Expressed in `em` off the heading's own size, so
+ * it survives being read back at another size the way the rest of the settled
+ * HTML does. */
+
+/* The element whose children are the note's own blocks. A template usually
+ * wraps them in one container of its own (`.ez-body`), and it is that level the
+ * headings sit at; a body that holds its blocks directly is its own wrapper.
+ * Descends only through a lone child that itself holds blocks, so a body whose
+ * single child is one paragraph is not mistaken for a wrapper. */
+function contentWrapper(body: HTMLElement): HTMLElement {
+  let el: HTMLElement = body;
+  for (let depth = 0; depth < 4; depth++) {
+    if (el.children.length !== 1) break;
+    const only = el.firstElementChild as HTMLElement | null;
+    if (!only) break;
+    let holdsBlocks = false;
+    for (let c = only.firstElementChild; c; c = c.nextElementSibling) {
+      if (isBlockLevel(c)) {
+        holdsBlocks = true;
+        break;
+      }
+    }
+    if (!holdsBlocks) break;
+    el = only;
+  }
+  return el;
+}
+
+/* How much slack, as a fraction of a line, is worth moving above the trailing
+ * headings — and equally, how little has to be left for the move to be done.
+ *
+ * A face can never be filled to exactly nothing: whatever does not make a whole
+ * line stays behind, so some remainder is the normal state of every face and
+ * moving it would only write an inline margin onto every heading in the deck.
+ * The question is where a remainder stops being arithmetic and starts being a
+ * hole. Half a line is the answer the cards give: *Blutpakt* ends 0.85 of a
+ * line short and reads as a gap under the section — it was the card that
+ * showed a full line to be too coarse a bar — while *Der Wanderfalke*'s 0.3
+ * is the last line not quite reaching the edge, which nobody sees and nothing
+ * should touch. */
+const MIN_TAIL_GAP = 0.5;
+
+/* Where an element's content really ends: its border box plus the bottom
+ * margin that hangs under it. */
+function contentBottomOf(el: HTMLElement): number {
+  const win = el.ownerDocument.defaultView;
+  const bottom = el.getBoundingClientRect().bottom;
+  if (!win) return bottom;
+  const mb = parseFloat(win.getComputedStyle(el).marginBottom);
+  return bottom + (isFinite(mb) ? mb : 0);
+}
+
+/* Move a continuing face's leftover space above the headings of its trailing
+ * content. A no-op on a face that ends full, holds no heading, or would only
+ * push its own first block down. */
+function dropTailSection(body: HTMLElement): void {
+  const wrap = contentWrapper(body);
+  const kids: HTMLElement[] = [];
+  for (let c = wrap.firstElementChild; c; c = c.nextElementSibling) {
+    kids.push(c as HTMLElement);
+  }
+  let lastRendered: HTMLElement | undefined;
+  for (let i = 0; i < kids.length; i++) {
+    if (rendersContent(kids[i]!)) lastRendered = kids[i]!;
+  }
+  if (!lastRendered) return;
+
+  const box = body.getBoundingClientRect();
+  // The last block's own bottom margin is part of what the face holds, and it
+  // lies BELOW its border box: the body is a flex column, where margins do not
+  // collapse and the trailing one counts towards the content's extent. Measure
+  // to the border box alone and the face looks that much emptier than it is —
+  // measured on the test type, six pixels, which is exactly how far a first
+  // attempt overshot.
+  const free = box.bottom - contentBottomOf(lastRendered);
+  const line = lineHeightOf(body);
+  if (!(line > 0) || free <= line * MIN_TAIL_GAP) return;
+
+  // A heading that OPENS the face has nothing above it to take the space from;
+  // pushing it down would only move the face's own top edge inwards.
+  const heads: HTMLElement[] = [];
+  let seenContent = false;
+  for (let i = 0; i < kids.length; i++) {
+    if (isHeading(kids[i]!) && seenContent) heads.push(kids[i]!);
+    if (rendersContent(kids[i]!)) seenContent = true;
+  }
+  if (heads.length === 0) return;
+
+  // Measure, add, measure again — and keep each round only while the face
+  // still fits.
+  //
+  // A margin set on a heading does not move the foot by its own length: in a
+  // block container a heading's top margin COLLAPSES with the bottom margin of
+  // the block above it, so the first round lands short by whatever the margin
+  // it collapsed into was worth. The second round adds that remainder, and by
+  // then the heading's margin wins the collapse outright, so it applies in
+  // full — which is also how a round can overshoot. Reconstructing that is not
+  // worth it when the face can simply be asked again; what matters is that a
+  // round which overshoots is given back rather than the whole move.
+  for (let pass = 0; pass < 3; pass++) {
+    const gap = box.bottom - contentBottomOf(lastRendered);
+    if (gap <= line * MIN_TAIL_GAP) break;
+    const share = gap / heads.length;
+    const before: string[] = [];
+    for (let i = 0; i < heads.length; i++) {
+      const el = heads[i]!;
+      before.push(el.style.marginTop);
+      const win = el.ownerDocument.defaultView;
+      if (!win) continue;
+      const cs = win.getComputedStyle(el);
+      const size = parseFloat(cs.fontSize);
+      const had = parseFloat(cs.marginTop);
+      if (!(size > 0)) continue;
+      el.style.marginTop = (((isFinite(had) ? had : 0) + share) / size).toFixed(4) + "em";
+    }
+    if (!bodyFits(body)) {
+      for (let i = 0; i < heads.length; i++) heads[i]!.style.marginTop = before[i]!;
+      break;
+    }
+  }
+}
+
+/* Every face in the committed sequence that continues onto another. */
+function dropTailSections(roots: ArrayLike<HTMLElement>): void {
+  for (let i = 0; i < roots.length; i++) {
+    const body = roots[i]!.querySelector<HTMLElement>(".card-body-scalable");
+    if (body && body.classList.contains(BODY_CONTINUES_CLASS)) dropTailSection(body);
+  }
+}
+
 /* Re-apply the locked group scale to every FRONT body in the root and
  * re-run title scaling. Used after marker/hint population so titles re-fit
  * their (potentially widened) headers without disturbing the body's
@@ -2709,6 +2861,10 @@ export function scaleAndSplitInDom(
       // at the card's edge. Each one joins a line that already exists, so
       // nothing here moves a face or a cut.
       hyphenateCuts(allRoots);
+      // And last: a face that continues parks its trailing section on the foot
+      // edge, so the blank it could not fill reads as the section running over
+      // rather than as the end of the card.
+      dropTailSections(allRoots);
     }
   }
 
