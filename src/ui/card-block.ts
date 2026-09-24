@@ -24,9 +24,10 @@ import { t, uiLanguage } from "./strings";
  * The block is the note's declaration, but the card is the whole note —
  * frontmatter, sections, a table — so the processor reads the note back
  * from the vault and renders it whole. A note that yields several cards (a
- * table's rows, a roll range) gets a stepping bar; the arrows lay the next
- * card out on demand, since rendering N cards is templates and fast and
- * layout is per card and the slow part.
+ * table's rows, a roll range) gets a stepping bar; its buttons — first,
+ * previous, next, last — lay the chosen card out on demand, since
+ * rendering N cards is templates and fast and layout is per card and the
+ * slow part.
  *
  * The preview follows its note: an edit to the frontmatter or a section
  * changes the card without touching the block, so the child listens for
@@ -160,30 +161,27 @@ class CardPreview extends MarkdownRenderChild {
 
   private steppingBar(): void {
     const bar = this.containerEl.createDiv({ cls: "cs-card-stepping" });
-    const step = (delta: number): void => {
-      const next = this.index + delta;
-      if (next < 0 || next >= this.cards.length) return;
-      this.index = next;
-      // A step is a new render of the same cards; the note is not re-read.
-      void this.show(++this.generation);
+    const last = this.cards.length - 1;
+    const button = (label: string, icon: string, target: number): void => {
+      const el = bar.createEl("button", {
+        cls: "clickable-icon",
+        attr: { "aria-label": label },
+      });
+      setIcon(el, icon);
+      el.disabled = target === this.index || target < 0 || target > last;
+      el.addEventListener("click", () => {
+        this.index = target;
+        // A step is a new render of the same cards; the note is not re-read.
+        void this.show(++this.generation);
+      });
     };
-    const previous = bar.createEl("button", {
-      cls: "clickable-icon",
-      attr: { "aria-label": t("preview.previous") },
-    });
-    setIcon(previous, "chevron-left");
-    previous.disabled = this.index === 0;
-    previous.addEventListener("click", () => step(-1));
+    button(t("preview.first"), "chevrons-left", 0);
+    button(t("preview.previous"), "chevron-left", this.index - 1);
     bar.createSpan({
       text: t("preview.step", { index: this.index + 1, count: this.cards.length }),
     });
-    const next = bar.createEl("button", {
-      cls: "clickable-icon",
-      attr: { "aria-label": t("preview.next") },
-    });
-    setIcon(next, "chevron-right");
-    next.disabled = this.index === this.cards.length - 1;
-    next.addEventListener("click", () => step(1));
+    button(t("preview.next"), "chevron-right", this.index + 1);
+    button(t("preview.last"), "chevrons-right", last);
   }
 
   /**
