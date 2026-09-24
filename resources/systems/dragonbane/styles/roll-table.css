@@ -11,27 +11,6 @@
    headline, so it hangs off the plaque's lower-right edge as a small die
    rather than sitting as a display numeral in the body. */
 
-/* The die straddles the plaque's lower-right corner, so a wrapped title's
-   second line must stop before it. Padded symmetrically — only the right side
-   needs the room, but matching it on the left is what keeps the title
-   optically centred on the plaque instead of shoved left.
-
-   The die reaches 2.73em in from the plaque's right edge (its own 2.23em plus
-   the 0.5em offset), so 2.95em leaves 0.22em (~0.65mm at poker) of air. It was
-   measured at 2.4em first, and a two-line title then ran up to within a
-   quarter of a pixel of the die's upper-left facet ("… TEIGIGER TEINT",
-   Erscheinungsbild 3) — near-misses that tight read as a collision in print.
-
-   The selector carries the full `.card-root.dragonbane` prefix on purpose:
-   `dragonbane.css` sets the plaque's padding through the `padding:` SHORTHAND
-   on `.card-root.dragonbane .db-title-plaque` (0-3-0), so a bare
-   `.roll-table-card .db-title-plaque` (0-2-0) loses the cascade despite coming
-   later, and the override is silently dead. */
-.card-root.dragonbane.roll-table-card .db-title-plaque {
-  padding-left: 2.95em;
-  padding-right: 2.95em;
-}
-
 /* ── The die ──
    A d20 silhouette: a pointy-top hexagon with the classic inscribed triangle
    through its alternating vertices, which is where the numeral sits (the
@@ -53,7 +32,10 @@
    so the token survives the Skia -> Quartz PDF path. */
 .roll-table-card .roll-table-badge {
   position: absolute;
-  right: 0.5em;
+  /* Far enough in that the banner's notched lower-right corner (the end
+     notches reach 3.3 % of its width) peeks out beside the die, so the die
+     reads as laid on the plaque rather than as capping its end. */
+  right: 0.7em;
   /* Centred ON the plaque's lower edge — half the die overlaps the parchment,
      half hangs onto the body below, which is what makes it read as applied
      rather than printed. */
@@ -93,7 +75,7 @@
 
    The die cannot grow to meet these: its clear interior is ~72 % of its box,
    so holding "11–12" at the full 0.9em would need a ~3.3 x 3.7em token
-   (~10mm tall at poker) that collides with the plaque's title padding and
+   (~10mm tall at poker) that reaches into the title and
    makes those six cards conspicuously different from the rest of the deck.
    Stretching the background SVG instead is not an option either — it is
    painted at `100% 100%`, so a wider box distorts the strokes and the
@@ -130,11 +112,12 @@
    keeps the tag as quiet as the label it is.
 
    WHAT IT MAY NOT DO is reach the title. The die is 2.5em tall and centred on
-   the plaque's edge, so 1.25em of it climbs back up — far past the plaque's
-   0.66em bottom padding, which is exactly why it had to buy horizontal
-   clearance from the title (the 2.95em padding at the top of this file). This
-   tag stays under that padding instead and therefore costs the title no width
-   at all, at one, two or three lines.
+   the plaque's edge, so 1.25em of it climbs back up past the plaque's
+   0.66em bottom padding, and a two-line title whose second line runs to the
+   right end can touch it — the plaque keeps the system's side padding anyway,
+   as the title's width is worth more than that rare near-miss. This tag stays
+   under the bottom padding instead, so it cannot reach the title at one, two
+   or three lines.
 
    The budget is `height x (1 - translateY)` against the plaque's 0.66em bottom
    padding: 1.25em x 0.36 = 0.45em, a third of it spare. Change either number
@@ -143,7 +126,7 @@
    of a three-line title. */
 .roll-table-card .roll-table-category {
   position: absolute;
-  left: 0.5em;                      /* the die's inset, mirrored */
+  left: 0.9em;                      /* clear of the notched lower-left corner */
   bottom: 0;
   /* NOT the die's 50 %. Centring the tag on the plaque's edge — which is what
      the die does, and what this started as — buries 0.63em of it in the
@@ -241,9 +224,8 @@
    that would not fit. Divide it back out: 5 × 1.2 = the same 6em of the
    unscaled body, so the picture keeps exactly the height it had.
 
-   The selector repeats `.card-root.dragonbane` for the same cascade reason
-   as the plaque padding above — the system rule is scoped that way and would
-   otherwise win on specificity. */
+   The selector repeats `.card-root.dragonbane` because the system rule is
+   scoped that way and would otherwise win on specificity. */
 .card-root.dragonbane.roll-table-card .db-front-image-wrap {
   min-height: 5em;
 }
