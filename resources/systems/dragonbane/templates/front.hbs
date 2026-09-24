@@ -28,7 +28,9 @@
   serves a weapon and a roll-table row without a single branch on the card
   type. How a place renders is said here, on the call: the stat cells are
   `markdown=false` (a value shows its link styled and nothing else), the
-  prose is markdown, the two titles are `plain=true` for the FontScaler.
+  prose is markdown, the two titles are `plain=true` for the FontScaler —
+  the front title with `linebreaks=true`, so a name that sets its own break
+  ("Geode / Geodin\n(Variante des Druiden)") keeps it on the plaque.
 
   The stat box is eight rows, each either up to three short cells or one
   wide wrapping value with an optional short tail. What repeats is the
@@ -73,7 +75,7 @@
       {{/unless}}
       {{/if}}
 
-      <div class="card-title"><span class="text-scalable">{{slot "front-header-title" plain=true}}</span></div>
+      <div class="card-title"><span class="text-scalable">{{slot "front-header-title" plain=true linebreaks=true}}</span></div>
       <span class="cs-overflow-counter"></span>
     </div>
     <div class="db-strip db-strip-top"></div>
