@@ -335,10 +335,10 @@
 
 /* ── The parchment plaque ──
    `banner-n.webp` — a purpose-drawn horizontal parchment banner (1200 x 400)
-   whose notched, ink-edged border is part of the artwork. Stretched to the
-   plaque box (`100% 100%`), so the border stays on the border at any card
-   size; the plaque runs flatter than the image's 3:1, which widens the
-   notches slightly, and that reads fine at card scale.
+   whose notched, ink-edged border is part of the artwork. Drawn as a
+   nine-slice `border-image` (see the rule's foot), so the border stays on the
+   border at any card size; the plaque runs flatter than the image's 3:1,
+   which widens the notches slightly, and that reads fine at card scale.
 
    The banner rather than the stats box's `scroll-n.webp`: that image is
    600 x 3364, so on a wide, shallow plaque the aspect-preserving crop the
@@ -350,7 +350,10 @@
 .card-root.dragonbane .db-title-plaque {
   position: relative;
   box-sizing: border-box;
-  min-height: var(--db-plaque-height);
+  /* The height the banner's artwork is proportioned for — a one-line title's
+     plaque. The continuation face halves it, and the lower border follows. */
+  --db-plaque-min: var(--db-plaque-height);
+  min-height: var(--db-plaque-min);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -393,15 +396,31 @@
      tighter of the two, since the body font it scales with is clamped there
      and the band is not. */
   padding: calc(var(--db-plaque-ornament-dip) + 0.42em) 1.6em 0.66em;
-  /* The banner is drawn 7 % taller than the box and anchored at the BOTTOM, so
-     its notched upper border — ink to 3 % of the image height, notch tips to
-     6 % — is pushed past the top of the box and clipped away by the background
-     painting area. What meets the box's upper edge is clean parchment, and
-     that edge sits on the ornament's bar (see --db-plaque-top), which paints
-     over it at z-index 2. The result: no visible top edge, the plaque reads as
-     emerging from behind the ornament. The left, right and bottom notches are
-     untouched. */
-  background: url('assets/banner-n.webp') center bottom / 100% 107% no-repeat;
+  /* The banner as a nine-slice, so a title of any length keeps the border
+     the padding above was tuned against.
+
+     Stretched whole, the notched lower border — 10.25 % of the image — grows
+     with the box while the 0.66em padding does not: a one-line plaque keeps
+     its descenders clear, a six-line one (a long table row) sets its last
+     line straight into the notches. So the bottom slice is drawn at the depth
+     it has on a `--db-plaque-min` plaque and only the parchment above it
+     stretches. A one-line plaque renders exactly as the stretched banner did.
+
+     TOP: the upper border — ink to 3 % of the image, notch tips to 6 % — is
+     sliced off (6.54 %, drawn at width 0). What meets the box's upper edge is
+     clean parchment, and that edge sits on the ornament's bar (see
+     --db-plaque-top), which paints over it at z-index 2: no visible top edge,
+     the plaque reads as emerging from behind the ornament. 6.54 % is 7/107,
+     the crop of a banner drawn 7 % taller than the box and anchored at the
+     bottom, which is how the head is proportioned.
+
+     SIDES: 4 % of the width on both sides (the end notches reach 3.3 %), drawn
+     at 4 % of the box — horizontally the nine-slice is the plain stretch.
+
+     BOTTOM: 12 % of the image (the notches reach 10.25 %), drawn at 12 % of the
+     107 % banner on a `--db-plaque-min` plaque. */
+  border-image: url('assets/banner-n.webp') 6.54% 4% 12% 4% fill /
+                0 4% calc(var(--db-plaque-min) * 1.07 * 0.12) 4% stretch;
 }
 
 /* ── Title ──
@@ -532,8 +551,8 @@
        SMALLER title lost daylight here, because the shorter line box moves the
        ink up inside fixed padding).
      · BOTTOM padding drops 0.66 -> 0.45em, and only where that is safe. The
-       banner's notched lower border scales with the box (10.25 % of the image,
-       drawn at 107 % of the box), so a 58 %-height plaque needs 0.26em of
+       banner's notched lower border scales with `--db-plaque-min` (10.25 % of
+       the image, drawn at 107 % of it), so a 58 %-height plaque needs 0.26em of
        clearance where the full one needed 0.445em. What does NOT scale is the
        roll-table category tag: it hangs a FIXED 0.45em up from the plaque's
        lower edge, and the 0.66em was tuned against a three-line title's
@@ -556,7 +575,7 @@
    across one-, two- and three-line titles: head 19.08 -> 13.34 %,
    19.98 -> 13.34 %, 24.61 -> 19.82 %. */
 .card-root.dragonbane.cs-front-continued .db-title-plaque {
-  min-height: calc(var(--db-plaque-height) * 0.5);
+  --db-plaque-min: calc(var(--db-plaque-height) * 0.5);
   padding: calc(var(--db-plaque-ornament-dip) + 0.45em) 1.6em 0.45em;
 }
 
