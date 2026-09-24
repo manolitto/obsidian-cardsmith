@@ -29,8 +29,10 @@ const en = {
   "preview.clipped":
     "Content was cut at the smallest type size; the card prints as shown.",
   "preview.step": "{index} / {count}",
+  "preview.first": "First card",
   "preview.previous": "Previous card",
   "preview.next": "Next card",
+  "preview.last": "Last card",
   "preview.size": "{width} × {height} mm",
 
   // ── Pickers, the insert commands, the reference ─────────────────
@@ -211,8 +213,10 @@ const de: Strings = {
   "preview.clipped":
     "Der Inhalt wurde bei der kleinsten Schriftgröße abgeschnitten; die Karte wird so gedruckt.",
   "preview.step": "{index} / {count}",
+  "preview.first": "Erste Karte",
   "preview.previous": "Vorige Karte",
   "preview.next": "Nächste Karte",
+  "preview.last": "Letzte Karte",
   "preview.size": "{width} × {height} mm",
 
   // ── Pickers, the insert commands, the reference ─────────────────
