@@ -23,7 +23,8 @@ explanation.
 |---|---|
 | `system` | Required. Notes of another system are left out. |
 | `card-type` | One id or a list. Only notes of these card types; the list is also the print order of the groups. Default: every card type. |
-| `folder` | The folder whose card notes are the deck — one, or a list: `folder: [Karten/Waffen, Karten/Rüstung]` collects both, and a note under two of them is in the deck once. Default: the deck note's own; `""` is the vault root. |
+| `folder` | The folder whose card notes are the deck — one, or a list: `folder: [Karten/Waffen, Karten/Rüstung]` collects both, and a note under two of them is in the deck once. Default: the deck note's own, unless `notes` names the notes; `""` is the vault root. |
+| `notes` | Card notes named one by one — one, or a list. Beside `folder`, they join its notes; without it, they are the deck. |
 | `folder-recursive` | `true` includes the subfolders of every folder named. |
 | `include-tags-all`, `include-tags-any`, `exclude-tags-any`, `exclude-tags-all` | Tag filters on the notes' tags, written as Obsidian shows them (`#Waffe` or `Waffe`, either). |
 | `card-languages` | Only the cards that print in one of these languages. |
@@ -31,6 +32,35 @@ explanation.
 A note is in the deck when its block's `system` is the deck's, its card
 type is listed (or none is), the tag filters agree and its language is
 listed (or none is).
+
+### Naming the notes
+
+A deck that is a handful of cards from several folders names them:
+
+```cardsmith-deck
+system: dragonbane
+notes:
+  - Wolf
+  - Karten/Waffen/Langschwert
+  - [[Heiltrank]]
+```
+
+An entry is a note's name, its path (with or without `.md`) or a
+wikilink, and it finds the note the way a link written in the deck note
+would — a bare name wherever the note sits. A `|alias` or `#heading` in a
+link is ignored: a deck takes whole notes. A note named twice, or named
+and also in a `folder`, is in the deck once. The order of the list is not
+the print order; the cards sort as every deck's do.
+
+A named note is held to the same filters as any other, but a note the
+deck leaves out that it names is reported with the reason — another
+system, a card type not listed, a tag, a language — as is an entry that
+finds no note.
+
+Obsidian does not read links inside a code block, so a note named here
+does not show the deck as a backlink, and renaming the note does not
+update the entry: the deck reports it as not found until the entry is
+changed.
 
 ## Order, and copies
 

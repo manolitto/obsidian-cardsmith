@@ -2,8 +2,11 @@
 system: dragonbane
 card-type: [gear, creature]
 
-# The vault folder whose card notes are the deck — one, or a list of several. Default: the deck note's own folder; "" is the vault root.
+# The vault folder whose card notes are the deck — one, or a list of several. Default: the deck note's own folder, unless `notes` names the notes; "" is the vault root.
 # folder:
+
+# Card notes named one by one — a name, a path or a [[link]] — beside or instead of the folder. A named note the filters drop is reported.
+# notes:
 
 # A note must carry every one of these tags.
 # include-tags-all:

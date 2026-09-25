@@ -26,6 +26,7 @@ const system = {
 
 const selection = (over: Partial<DeckSelection> = {}): DeckSelection => ({
   folders: [""],
+  notes: [],
   systemId: "demo",
   cardTypeIds: [],
   includeTagsAll: [],
@@ -126,6 +127,42 @@ describe("selecting notes", () => {
   });
 });
 
+describe("selecting named notes", () => {
+  const named = (path: string, card: string, tags: string[] = []) => ({
+    ...note(path, card, tags),
+    listed: true,
+  });
+  const beil = named("K/Beil.md", "system: demo\ncard-type: gear", ["waffe"]);
+  const fremd = named("K/Fremd.md", "system: other\ncard-type: gear");
+  const feuerball = named("K/Feuerball.md", "system: demo\ncard-type: spell");
+  const entwurf = named("K/Entwurf.md", "system: demo\ncard-type: gear", ["entwurf"]);
+  const english = named("K/Axe.md", "system: demo\ncard-type: gear\nlanguage: en");
+
+  it("holds them to the filters, and says why it drops each", () => {
+    const diagnostics = collectDiagnostics();
+    expect(
+      select(
+        [beil, fremd, feuerball, entwurf, english],
+        { cardTypeIds: ["gear"], excludeTagsAny: ["entwurf"], languages: ["de"] },
+        diagnostics
+      )
+    ).toEqual(["Beil"]);
+    expect(diagnostics.messages).toEqual([
+      "K/Fremd.md: named under notes:, but its system is other, and the deck is demo; not in the deck",
+      "K/Feuerball.md: named under notes:, but its card type is spell, and the deck takes gear; not in the deck",
+      "K/Entwurf.md: named under notes:, but its tags fail the deck's tag filters; not in the deck",
+      "K/Axe.md: named under notes:, but it prints in en, and the deck takes de; not in the deck",
+    ]);
+  });
+
+  it("drops a folder's note of the same kind silently", () => {
+    const diagnostics = collectDiagnostics();
+    const { listed: _, ...unnamed } = fremd;
+    expect(select([unnamed], {}, diagnostics)).toEqual([]);
+    expect(diagnostics.messages).toEqual([]);
+  });
+});
+
 describe("sorting cards", () => {
   const card = (cardTypeId: string, name: string, rollMin?: number) => ({
     cardTypeId,
@@ -209,9 +246,25 @@ describe("listing the folders", () => {
           return recursive && (folder === "" || parent.startsWith(`${folder}/`));
         })
       ),
+    // By path, with or without `.md`, or by name; `Bild.png` is a file but no note.
+    resolveNote: (target) => {
+      if (target === "Bild.png") return Promise.resolve({ path: "Bild.png" });
+      const found = tree.find(
+        ({ note }) =>
+          note.path === target || note.path === `${target}.md` || note.name === target
+      );
+      return Promise.resolve(found && { path: found.note.path, note: found });
+    },
   };
-  const list = async (folders: string[], recursive = false): Promise<string[]> =>
-    names(await listDeckNotes(source, folders, recursive, collectDiagnostics()));
+  const list = async (
+    folders: string[],
+    recursive = false,
+    notes: string[] = [],
+    diagnostics = collectDiagnostics()
+  ): Promise<string[]> =>
+    names(
+      await listDeckNotes(source, { folders, notes }, "Deck.md", recursive, diagnostics)
+    );
 
   it("concatenates the folders in the order named", async () => {
     expect(await list(["Rüstung", "Waffen"])).toEqual(["Helm", "Beil", "Bogen"]);
@@ -225,5 +278,41 @@ describe("listing the folders", () => {
       "Bogen",
     ]);
     expect(await list(["", "Rüstung"], true)).toEqual(["Beil", "Bogen", "Keule", "Helm"]);
+  });
+
+  it("adds the notes named after the folders' own, each once", async () => {
+    expect(await list([], false, ["Waffen/Alt/Keule", "Helm", "Waffen/Beil.md"])).toEqual(
+      ["Keule", "Helm", "Beil"]
+    );
+    expect(await list(["Waffen"], false, ["Helm", "Beil", "Helm"])).toEqual([
+      "Beil",
+      "Bogen",
+      "Helm",
+    ]);
+  });
+
+  it("marks a named note as named, also when a folder holds it", async () => {
+    const listed = await listDeckNotes(
+      source,
+      { folders: ["Waffen"], notes: ["Beil"] },
+      "Deck.md",
+      false,
+      collectDiagnostics()
+    );
+    expect(listed.map((entry) => [entry.note.name, entry.listed ?? false])).toEqual([
+      ["Beil", true],
+      ["Bogen", false],
+    ]);
+  });
+
+  it("reports a name that reaches no note, and a file that is no card note", async () => {
+    const diagnostics = collectDiagnostics();
+    expect(await list([], false, ["Nirgends", "Bild.png", "Helm"], diagnostics)).toEqual([
+      "Helm",
+    ]);
+    expect(diagnostics.messages).toEqual([
+      'Deck.md: notes: "Nirgends" — no such note',
+      'Deck.md: notes: "Bild.png" — Bild.png is not a card note',
+    ]);
   });
 });

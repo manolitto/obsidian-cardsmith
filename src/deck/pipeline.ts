@@ -4,7 +4,7 @@ import { layoutCard, type LaidOutCard } from "../layout/engine";
 import { CARD_PRESETS, DEFAULT_CARD_PRESET, type CardSize } from "../model/card-size";
 import type { CardRenderer, RenderedCard } from "../render/renderer";
 import type { LoadedSystem } from "../systems/loader";
-import { parseDeckBlock } from "./block";
+import { parseDeckBlock, type DeckSelection } from "./block";
 import { applyCopies, type DeckCard, type PhysicalCard } from "./copies";
 import { selectNotes, sortCards } from "./select";
 import { listDeckNotes, type DeckSource } from "./source";
@@ -70,17 +70,15 @@ export async function buildDeck(
   const system = await systems.get(selection.systemId);
   const listed = await listDeckNotes(
     source,
-    selection.folders,
+    selection,
+    path,
     settings.folderRecursive ?? false,
     diagnostics
   );
   const notes = selectNotes(listed, selection, system, diagnostics);
   if (notes.length === 0) {
-    const under = selection.folders
-      .map((folder) => (folder ? `"${folder}"` : "the vault root"))
-      .join(", ");
     throw new Error(
-      `${path}: no cards — no card note under ${under} matches the deck block`
+      `${path}: no cards — ${candidates(selection)} matches the deck block`
     );
   }
 
@@ -177,4 +175,21 @@ function sizeOf(card: RenderedCard): CardSize {
 
 function mm(size: CardSize): string {
   return `${size.width} × ${size.height} mm`;
+}
+
+/** Where the deck looked, for the message that it found nothing: "no card note under "X" or among the 2 named notes". */
+function candidates({ folders, notes }: DeckSelection): string {
+  const parts: string[] = [];
+  if (folders.length > 0) {
+    const under = folders
+      .map((folder) => (folder ? `"${folder}"` : "the vault root"))
+      .join(", ");
+    parts.push(`under ${under}`);
+  }
+  if (notes.length > 0) {
+    parts.push(
+      `among the ${notes.length} ${notes.length === 1 ? "note" : "notes"} named`
+    );
+  }
+  return `no card note ${parts.join(" or ")}`;
 }

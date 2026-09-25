@@ -139,6 +139,37 @@ describe("buildDeck over the fixture folders", () => {
     );
   });
 
+  it("takes the notes it names instead of its folder, and reports those it cannot take", async () => {
+    const { built, diagnostics } = await build(
+      "simple",
+      [
+        "```cardsmith-deck",
+        "system: simple",
+        "notes:",
+        "  - Rope of Climbing",
+        "  - [[Cloak of the Marsh|the cloak]]",
+        "  - dragonbane/Fischspeer",
+        "  - Nowhere",
+        "```",
+      ].join("\n")
+    );
+    expect(names(built.cards)).toEqual(["Cloak of the Marsh", "Rope of Climbing"]);
+    expect(diagnostics.messages).toEqual([
+      expect.stringMatching(/notes: "Nowhere" — no such note$/),
+      expect.stringMatching(
+        /Fischspeer\.md: named under notes:, but its system is dragonbane, and the deck is simple; not in the deck$/
+      ),
+    ]);
+  });
+
+  it("adds the notes it names to its folder's, each once", async () => {
+    const { built } = await build(
+      "simple",
+      "```cardsmith-deck\nsystem: simple\nfolder: ../../fixtures/simple\nnotes: [Rope of Climbing]\n```"
+    );
+    expect(built.cards).toHaveLength(7);
+  });
+
   it("fails a note without a deck block, and a deck that matches no card", async () => {
     const deck = await deckNote("simple");
     const run = (text: string) =>
@@ -171,6 +202,7 @@ describe("buildDeck over the fixture folders", () => {
             tags: [],
           }))
         ),
+      resolveNote: () => Promise.resolve(undefined),
     };
     const built = await buildDeck(
       "```cardsmith-deck\nsystem: simple\ncopies: 2\n```",

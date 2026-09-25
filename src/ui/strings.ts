@@ -79,6 +79,7 @@ const en = {
   "deck.folder": "Folder",
   "deck.folders": "Folders",
   "deck.root-folder": "the vault root",
+  "deck.named-notes": "Named notes",
   "deck.notes": "Notes",
   "deck.notes.count": "{count} notes",
   "deck.notes.none": "no card note matches",
@@ -108,7 +109,9 @@ const en = {
 
   // ── The keys of the deck block, for the template it writes ──────
   "deck-key.folder":
-    'The vault folder whose card notes are the deck — one, or a list of several. Default: the deck note\'s own folder; "" is the vault root.',
+    'The vault folder whose card notes are the deck — one, or a list of several. Default: the deck note\'s own folder, unless `notes` names the notes; "" is the vault root.',
+  "deck-key.notes":
+    "Card notes named one by one — a name, a path or a [[link]] — beside or instead of the folder. A named note the filters drop is reported.",
   "deck-key.include-tags-all": "A note must carry every one of these tags.",
   "deck-key.include-tags-any": "A note must carry at least one of these tags.",
   "deck-key.exclude-tags-any": "A note carrying any one of these tags is left out.",
@@ -264,6 +267,7 @@ const de: Strings = {
   "deck.folder": "Ordner",
   "deck.folders": "Ordner",
   "deck.root-folder": "die Vault-Wurzel",
+  "deck.named-notes": "Genannte Notizen",
   "deck.notes": "Notizen",
   "deck.notes.count": "{count} Notizen",
   "deck.notes.none": "keine Kartennotiz passt",
@@ -293,7 +297,9 @@ const de: Strings = {
 
   // ── The keys of the deck block, for the template it writes ──────
   "deck-key.folder":
-    'Der Vault-Ordner, dessen Kartennotizen das Deck sind — einer oder eine Liste mehrerer. Standard: der Ordner der Deck-Notiz; "" ist die Vault-Wurzel.',
+    'Der Vault-Ordner, dessen Kartennotizen das Deck sind — einer oder eine Liste mehrerer. Standard: der Ordner der Deck-Notiz, außer `notes` nennt die Notizen; "" ist die Vault-Wurzel.',
+  "deck-key.notes":
+    "Einzeln genannte Kartennotizen — ein Name, ein Pfad oder ein [[Link]] — neben dem Ordner oder statt seiner. Fällt eine genannte Notiz durch einen Filter, wird das gemeldet.",
   "deck-key.include-tags-all": "Eine Notiz muss jedes dieser Tags tragen.",
   "deck-key.include-tags-any": "Eine Notiz muss mindestens eines dieser Tags tragen.",
   "deck-key.exclude-tags-any": "Eine Notiz mit einem dieser Tags bleibt draußen.",
