@@ -8,6 +8,7 @@
   Two places, because the row has two: the wrapping free text (`for`) and
   the short value that stays appended to it instead of getting a row of its
   own (`tail`) — „Voraussetzung: Äxte  STÄ: 7" is ONE line, as in the
-  rulebook's weapon table.
+  rulebook's weapon table. The free text keeps a break its value sets
+  (`linebreaks=true`); the tail is one short value and never breaks.
 --}}
-<p class="db-trait">{{#if (slot-label for)}}<span class="db-trait-name">{{slot-label for}}</span>{{/if}}{{slot for}}{{#if (slot tail)}} <span class="db-stat db-trait-tail">{{#if (slot-label tail)}}<span class="db-stat-label">{{slot-label tail}}</span> {{/if}}{{slot tail markdown=false glyph=true}}</span>{{/if}}</p>
+<p class="db-trait">{{#if (slot-label for)}}<span class="db-trait-name">{{slot-label for}}</span>{{/if}}{{slot for linebreaks=true}}{{#if (slot tail)}} <span class="db-stat db-trait-tail">{{#if (slot-label tail)}}<span class="db-stat-label">{{slot-label tail}}</span> {{/if}}{{slot tail markdown=false glyph=true}}</span>{{/if}}</p>
