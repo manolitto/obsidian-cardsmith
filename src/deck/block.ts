@@ -61,7 +61,7 @@ export interface DeckSelection {
    * folder — otherwise the deck note's own folder stands in.
    */
   folders: string[];
-  /** Notes named one by one, as link targets (`Wolf`, `Karten/Wolf.md`), each once, in the order written. */
+  /** Notes named one by one, as link targets (`Wolf`, `Karten/Wolf.md`), in the order written — a note named twice is printed twice. */
   notes: string[];
   systemId: string;
   /** In the order written — the cards group in this order. Empty: every card type. */
@@ -216,8 +216,8 @@ function folderList(
 /**
  * The notes the block names — one or a list, each a name, a path or a
  * wikilink — as the link targets they stand for: `[[Wolf|the wolf]]` is
- * `Wolf`, a `#heading` is dropped, since a deck takes whole notes. Each
- * once, in the order written.
+ * `Wolf`, a `#heading` is dropped, since a deck takes whole notes. In the
+ * order written, repeats kept: each is one more time the note is printed.
  */
 function noteList(raw: unknown, diagnostics: Diagnostics): string[] {
   const out: string[] = [];
@@ -227,7 +227,7 @@ function noteList(raw: unknown, diagnostics: Diagnostics): string[] {
       diagnostics.warn(`notes: "${entry}" names no note; ignoring it`);
       continue;
     }
-    if (!out.includes(target)) out.push(target);
+    out.push(target);
   }
   return out;
 }

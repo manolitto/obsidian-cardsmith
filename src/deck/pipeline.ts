@@ -83,10 +83,11 @@ export async function buildDeck(
   }
 
   const paint = paintBetween(doc);
-  const rendered: (RenderedCard & { path: string })[] = [];
-  for (const [index, { note }] of notes.entries()) {
+  const rendered: (RenderedCard & { path: string; times: number })[] = [];
+  for (const [index, { note, listed }] of notes.entries()) {
     const cards = await renderer.render(note, system, diagnostics, cardLayer);
-    for (const card of cards) rendered.push({ ...card, path: note.path });
+    for (const card of cards)
+      rendered.push({ ...card, path: note.path, times: listed ?? 1 });
     progress("render", index + 1, notes.length);
     await paint();
   }
@@ -112,7 +113,7 @@ export async function buildDeck(
     }
     const out: LaidOutCard = await layoutCard(card, system, doc, diagnostics);
     if (out.clipped) clipped.push(out.name);
-    laidOut.push({ path: card.path, card: out });
+    laidOut.push({ path: card.path, times: card.times, card: out });
     progress("layout", index + 1, ordered.length);
     await paint();
   }

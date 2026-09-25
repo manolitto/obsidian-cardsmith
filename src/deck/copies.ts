@@ -17,6 +17,8 @@ export interface PhysicalCard {
 /** A laid-out card with the path of the note it came from, which `card-copies` may name. */
 export interface DeckCard {
   path: string;
+  /** How often the deck holds the note — named twice under `notes:`, twice. Default 1. */
+  times?: number;
   card: LaidOutCard;
 }
 
@@ -29,7 +31,9 @@ export interface DeckCard {
  * three faces, printed twice, is six physical cards, the two runs
  * consecutive. How often is the deck's `card-copies` entry for the card if
  * there is one, else the card's own `copies` — the setting the chain
- * resolved through system, card type, deck and note — else once. An entry
+ * resolved through system, card type, deck and note — else once; times
+ * how often the deck holds the note, so a note named twice under `notes:`
+ * with `copies: 3` is six. An entry
  * names a card by vault path, path without `.md`, or note name; one that
  * names no card in the deck is reported, since it is most likely a typo.
  */
@@ -41,11 +45,11 @@ export function applyCopies(
   const matched = new Set<CardCopies>();
   const out: PhysicalCard[] = [];
 
-  for (const { path, card } of cards) {
+  for (const { path, times = 1, card } of cards) {
     const override =
       overrides?.filter((entry) => names(entry.name, path, card.name)) ?? [];
     for (const entry of override) matched.add(entry);
-    const count = override.at(-1)?.copies ?? card.settings.copies ?? 1;
+    const count = times * (override.at(-1)?.copies ?? card.settings.copies ?? 1);
 
     const side = card.settings.side ?? "both";
     for (let i = 0; i < count; i++) {

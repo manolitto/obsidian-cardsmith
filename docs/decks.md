@@ -48,9 +48,11 @@ notes:
 An entry is a note's name, its path (with or without `.md`) or a
 wikilink, quoted or not, and it finds the note the way a link written in
 the deck note would — a bare name wherever the note sits. A `|alias` or `#heading` in a
-link is ignored: a deck takes whole notes. A note named twice, or named
-and also in a `folder`, is in the deck once. The order of the list is not
-the print order; the cards sort as every deck's do.
+link is ignored: a deck takes whole notes. A note named twice — in any
+spelling — is printed twice, and its `copies` apply to each: named twice
+with `copies: 3` is six cards. A note that is named and also in a `folder`
+counts as named, not once more. The order of the list is not the print
+order; the cards sort as every deck's do.
 
 A named note passes the same filters as any other. Where a folder's note
 that fails them simply stays out, a named one is reported, with the
@@ -70,8 +72,8 @@ Cards print grouped by card type — in the order of the block's
 roll range come first, ascending; then by name, numerically aware, so
 `Wolf 2` precedes `Wolf 10`.
 
-A card prints once unless its own `copies` says otherwise, and the deck can
-override that by name:
+A card prints once unless its own `copies` says otherwise — times how
+often `notes` names it — and the deck can override the `copies` by name:
 
 ```yaml
 card-copies:
