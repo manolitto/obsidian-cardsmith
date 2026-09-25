@@ -1095,10 +1095,23 @@
   white-space: nowrap;
 }
 
+/* A cell in a row of cells may wrap after all — but only when it is wider
+   than the whole box ("Rüstungswert: 2 (bei Wuchtschaden: 4)"). The row
+   breaks between cells at their full, unwrapped width, so cells that fit
+   side by side or each on a line of their own still set on one line; a
+   cell alone on its line and still too wide shrinks to the box and wraps
+   its value, instead of running past the torn edge. The label stays whole.
+   Scoped to the row's own cells: the wide row's trailing value is a
+   `.db-stat` too, and it must never break away from its label. */
+.card-root.dragonbane .db-stats-row > .db-stat {
+  white-space: normal;
+}
+
 .card-root.dragonbane .db-stat-label {
   font-family: var(--font-body);
   font-weight: 700;
   color: var(--db-text);
+  white-space: nowrap;
 }
 
 .card-root.dragonbane .db-stat-label::after {

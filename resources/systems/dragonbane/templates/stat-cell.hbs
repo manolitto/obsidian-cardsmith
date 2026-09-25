@@ -14,10 +14,11 @@
   `glyph=true`: a stored abbreviation prints in full when the card type
   declares a table for the cell (`Griff: 1H` → „einhändig"), and passes
   through when it does not. `markdown=false`: a value shows its link styled
-  and nothing else reinterpreted.
+  and nothing else reinterpreted. `linebreaks=true`: a value that sets its
+  own break („2\n(bei Wuchtschaden: 4)") keeps it.
 
   Deliberately one line: the hulls stand with their content on one line and
   are therefore not "standalone" for Handlebars, so the calling line's
   indentation is kept.
 --}}
-{{#if (slot for)}}<span class="db-stat">{{#if (slot-label for)}}<span class="db-stat-label">{{slot-label for}}</span> {{/if}}{{slot for markdown=false glyph=true}}</span>{{/if}}
+{{#if (slot for)}}<span class="db-stat">{{#if (slot-label for)}}<span class="db-stat-label">{{slot-label for}}</span> {{/if}}{{slot for markdown=false glyph=true linebreaks=true}}</span>{{/if}}
