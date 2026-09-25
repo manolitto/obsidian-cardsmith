@@ -1,7 +1,7 @@
 # Decks
 
-A deck is a folder of card notes and a note beside them that carries a
-`cardsmith-deck` block. The block says which notes are in, how they are
+A deck is a set of card notes — a folder of them, or notes named one by
+one — and a note that carries a `cardsmith-deck` block. The block says which notes are in, how they are
 ordered and how they go onto paper; the plugin lays the cards out, puts
 them on pages and writes a PDF or an HTML file.
 
@@ -46,16 +46,17 @@ notes:
 ```
 
 An entry is a note's name, its path (with or without `.md`) or a
-wikilink, and it finds the note the way a link written in the deck note
-would — a bare name wherever the note sits. A `|alias` or `#heading` in a
+wikilink, quoted or not, and it finds the note the way a link written in
+the deck note would — a bare name wherever the note sits. A `|alias` or `#heading` in a
 link is ignored: a deck takes whole notes. A note named twice, or named
 and also in a `folder`, is in the deck once. The order of the list is not
 the print order; the cards sort as every deck's do.
 
-A named note is held to the same filters as any other, but a note the
-deck leaves out that it names is reported with the reason — another
-system, a card type not listed, a tag, a language — as is an entry that
-finds no note.
+A named note passes the same filters as any other. Where a folder's note
+that fails them simply stays out, a named one is reported, with the
+reason — another system, a card type not listed, a tag, a language — and
+so is an entry that finds no note. The reports are listed under the
+deck block's summary.
 
 Obsidian does not read links inside a code block, so a note named here
 does not show the deck as a backlink, and renaming the note does not
@@ -117,8 +118,11 @@ last. A deck without backs prints no blank sheets.
 
 ## The block in reading view
 
-The deck block shows a summary — system, card types, folder, how many
-notes it found and of which types, paper, card size — and three buttons:
+The deck block shows a summary — system, card types, folders and named
+notes, how many notes it found and of which types, paper, card size —
+with whatever the block gets wrong listed beneath it, in the words of the
+report: a key it does not know, a named note it could not find or had to
+leave out. Then three buttons:
 
 - **Preview** builds the deck — the button counts the cards as they
   render and lay out — and opens it in a pane of its own, the pages
