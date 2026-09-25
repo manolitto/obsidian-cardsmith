@@ -1,5 +1,6 @@
 /// <reference types="vite/client" />
 import type { DeckSource, TaggedNote } from "../../../src/deck/source";
+import type { Diagnostics } from "../../../src/definitions/diagnostics";
 import type { ImageSource } from "../../../src/render/images";
 import { parseNote } from "../../../src/render/note";
 import { CardRenderer, type RenderedCard } from "../../../src/render/renderer";
@@ -53,7 +54,9 @@ export async function deckNote(system: string): Promise<{ text: string; path: st
 /**
  * A deck source over the fixture folders: the card notes under a folder,
  * tagged from their frontmatter. What the vault does with its metadata
- * cache, done from the notes alone.
+ * cache, done from the notes alone. A link resolves by path, with or
+ * without `.md`, or by the note's name — the part of Obsidian's link
+ * resolution the fixtures need.
  */
 export const fixtureDeckSource: DeckSource = {
   async listNotes(folder, recursive, diagnostics) {
@@ -64,14 +67,32 @@ export const fixtureDeckSource: DeckSource = {
       if (!recursive && rest.includes("/")) continue;
       // A `_` name is the harness's — the deck note, an insert golden — not a card.
       if (rest.startsWith("_")) continue;
-      const load = notes[path];
-      if (!load) continue;
-      const note = parseNote(await load(), path, diagnostics);
-      if (note) out.push({ note, tags: frontmatterTags(note.frontmatter["tags"]) });
+      const tagged = await readFixtureNote(path, diagnostics);
+      if (tagged) out.push(tagged);
     }
     return out;
   },
+
+  async resolveNote(target, _fromPath, diagnostics) {
+    const file = target.toLowerCase().endsWith(".md") ? target : `${target}.md`;
+    const path = Object.keys(notes)
+      .sort()
+      .find((candidate) => candidate === file || candidate.endsWith(`/${file}`));
+    if (!path) return undefined;
+    const note = await readFixtureNote(path, diagnostics);
+    return note ? { path, note } : { path };
+  },
 };
+
+async function readFixtureNote(
+  path: string,
+  diagnostics: Diagnostics
+): Promise<TaggedNote | undefined> {
+  const load = notes[path];
+  if (!load) return undefined;
+  const note = parseNote(await load(), path, diagnostics);
+  return note ? { note, tags: frontmatterTags(note.frontmatter["tags"]) } : undefined;
+}
 
 function frontmatterTags(raw: unknown): string[] {
   const items = Array.isArray(raw) ? raw : raw === undefined ? [] : [raw];

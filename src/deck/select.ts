@@ -2,7 +2,7 @@ import type { Diagnostics } from "../definitions/diagnostics";
 import { noteCardTypeId } from "../render/card";
 import type { CardNote } from "../render/note";
 import type { DeckSelection } from "./block";
-import type { TaggedNote } from "./source";
+import type { DeckCandidate } from "./source";
 
 /**
  * Which of a folder's card notes are the deck, and in what order its cards
@@ -20,21 +20,32 @@ export interface SelectionSystem {
 
 /**
  * The notes the selection keeps, in the order given. Every filter is a
- * conjunction; an empty list filters nothing. A note of another system, or
- * of a card type the deck does not list, is left out silently — that is
- * what the deck asked for — while a card note that names no system at all
- * is reported: it can be in no deck, and someone should hear it.
+ * conjunction; an empty list filters nothing. A folder's note of another
+ * system, or of a card type the deck does not list, is left out silently —
+ * that is what the deck asked for. A note the deck names under `notes:` is
+ * held to the same filters, but one they drop is reported with the reason:
+ * someone asked for it by name. So is a card note that names no system at
+ * all: it can be in no deck, and someone should hear it.
  */
-export function selectNotes(
-  notes: readonly TaggedNote[],
+export function selectNotes<T extends DeckCandidate>(
+  notes: readonly T[],
   selection: DeckSelection,
   system: SelectionSystem,
   diagnostics: Diagnostics
-): TaggedNote[] {
+): T[] {
   const cardTypeIds = new Set(selection.cardTypeIds);
   const languages = new Set(selection.languages);
 
-  return notes.filter(({ note, tags }) => {
+  return notes.filter(({ note, tags, listed }) => {
+    const drop = (reason: string): false => {
+      if (listed) {
+        diagnostics.warn(
+          `${note.path}: named under notes:, but ${reason}; not in the deck`
+        );
+      }
+      return false;
+    };
+
     const systemId = String(note.card["system"] ?? "")
       .trim()
       .toLowerCase();
@@ -44,23 +55,32 @@ export function selectNotes(
       );
       return false;
     }
-    if (systemId !== system.id) return false;
+    if (systemId !== system.id) {
+      return drop(`its system is ${systemId}, and the deck is ${system.id}`);
+    }
 
     const cardTypeId = noteCardTypeId(note, system);
     if (
       cardTypeIds.size > 0 &&
       (cardTypeId === undefined || !cardTypeIds.has(cardTypeId))
     ) {
-      return false;
+      return drop(
+        `${cardTypeId === undefined ? "it has no card type" : `its card type is ${cardTypeId}`}, and the deck takes ${selection.cardTypeIds.join(", ")}`
+      );
     }
 
-    if (!matchesTags(tags, selection)) return false;
+    if (!matchesTags(tags, selection))
+      return drop("its tags fail the deck's tag filters");
 
     if (languages.size > 0) {
       const language = noteLanguage(note, cardTypeId, system);
       // A card whose chain names no language prints in none; there is
       // nothing to hold the filter against, so it passes.
-      if (language && !languages.has(language)) return false;
+      if (language && !languages.has(language)) {
+        return drop(
+          `it prints in ${language}, and the deck takes ${selection.languages.join(", ")}`
+        );
+      }
     }
     return true;
   });

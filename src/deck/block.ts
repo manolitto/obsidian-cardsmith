@@ -12,12 +12,13 @@ import {
 import { prefixDiagnostics, type Diagnostics } from "../definitions/diagnostics";
 import { loadNoteYaml } from "../render/yaml";
 import { BASELINE } from "../systems/baseline";
+import { linkTarget } from "../templates/inline-markdown";
 
 /**
  * The `cardsmith-deck` block, taken apart.
  *
  * A deck note is a note with such a block. The block says which notes are
- * the deck — folders, a system, card types, tags, languages — and how the
+ * the deck — folders, named notes, a system, card types, tags, languages — and how the
  * deck is printed. Its keys fall into three groups, told apart by name:
  *
  *   - the **selection** keys, read here into `DeckSelection`;
@@ -34,6 +35,7 @@ import { BASELINE } from "../systems/baseline";
  * system: dragonbane
  * card-type: [gear, creature]      # also the order the cards are grouped in
  * folder: [Karten/Waffen, Karten/Rüstung]   # one or a list; default: the deck note's own folder
+ * notes: [Wolf, "[[Heiltrank]]"]   # named notes, beside or instead of the folders
  * include-tags-all: [#Waffe]
  * card-languages: de
  * output-path: Export/Waffen.pdf
@@ -53,8 +55,14 @@ export interface DeckBlock {
 
 /** Which notes are the deck. Every list is empty when the block does not filter by it. */
 export interface DeckSelection {
-  /** Vault folders whose card notes are the candidates, in the order written, never empty; `""` is the vault root. */
+  /**
+   * Vault folders whose card notes are the candidates, in the order written;
+   * `""` is the vault root. Empty only when the block names notes and no
+   * folder — otherwise the deck note's own folder stands in.
+   */
   folders: string[];
+  /** Notes named one by one, as link targets (`Wolf`, `Karten/Wolf.md`), each once, in the order written. */
+  notes: string[];
   systemId: string;
   /** In the order written — the cards group in this order. Empty: every card type. */
   cardTypeIds: string[];
@@ -80,6 +88,7 @@ const TAG_KEYS = [
 /** The keys that say which notes are the deck, in the order the block template writes them. */
 export const SELECTION_KEYS: readonly string[] = [
   "folder",
+  "notes",
   "system",
   "card-type",
   ...TAG_KEYS,
@@ -149,8 +158,10 @@ export function parseDeckBlock(
   }
 
   const where = prefixDiagnostics(diagnostics, `${path}: `);
+  const notes = noteList(selectionRaw["notes"], where);
   const selection: DeckSelection = {
-    folders: folderList(selectionRaw["folder"], path, where),
+    folders: folderList(selectionRaw["folder"], path, notes.length === 0, where),
+    notes,
     systemId,
     cardTypeIds: stringList(selectionRaw["card-type"], "card-type", where).map((id) =>
       id.toLowerCase()
@@ -179,10 +190,16 @@ export function parseDeckBlock(
 
 /**
  * The block's folders — one or a list, trailing slashes off, each once and
- * in the order written — or the deck note's own folder when it names none.
+ * in the order written — or, when it names none, the deck note's own
+ * folder, unless the block names its notes instead (`fallback` false).
  * `""` and `/` are the vault root, so a bare value is not an absent one.
  */
-function folderList(raw: unknown, deckPath: string, diagnostics: Diagnostics): string[] {
+function folderList(
+  raw: unknown,
+  deckPath: string,
+  fallback: boolean,
+  diagnostics: Diagnostics
+): string[] {
   const items = raw === undefined || raw === null ? [] : Array.isArray(raw) ? raw : [raw];
   const out: string[] = [];
   for (const item of items) {
@@ -193,7 +210,26 @@ function folderList(raw: unknown, deckPath: string, diagnostics: Diagnostics): s
     const folder = String(item).trim().replace(/\/+$/, "");
     if (!out.includes(folder)) out.push(folder);
   }
-  return out.length > 0 ? out : [parentFolder(deckPath)];
+  return out.length > 0 || !fallback ? out : [parentFolder(deckPath)];
+}
+
+/**
+ * The notes the block names — one or a list, each a name, a path or a
+ * wikilink — as the link targets they stand for: `[[Wolf|the wolf]]` is
+ * `Wolf`, a `#heading` is dropped, since a deck takes whole notes. Each
+ * once, in the order written.
+ */
+function noteList(raw: unknown, diagnostics: Diagnostics): string[] {
+  const out: string[] = [];
+  for (const entry of stringList(raw, "notes", diagnostics)) {
+    const target = linkTarget(entry).replace(/#.*$/, "").trim();
+    if (!target) {
+      diagnostics.warn(`notes: "${entry}" names no note; ignoring it`);
+      continue;
+    }
+    if (!out.includes(target)) out.push(target);
+  }
+  return out;
 }
 
 /**

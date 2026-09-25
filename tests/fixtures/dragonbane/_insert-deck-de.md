@@ -2,8 +2,11 @@
 system: dragonbane
 card-type: [gear, creature]
 
-# Der Vault-Ordner, dessen Kartennotizen das Deck sind — einer oder eine Liste mehrerer. Standard: der Ordner der Deck-Notiz; "" ist die Vault-Wurzel.
+# Der Vault-Ordner, dessen Kartennotizen das Deck sind — einer oder eine Liste mehrerer. Standard: der Ordner der Deck-Notiz, außer `notes` nennt die Notizen; "" ist die Vault-Wurzel.
 # folder:
+
+# Einzeln genannte Kartennotizen — ein Name, ein Pfad oder ein [[Link]] — neben dem Ordner oder statt seiner. Fällt eine genannte Notiz durch einen Filter, wird das gemeldet.
+# notes:
 
 # Eine Notiz muss jedes dieser Tags tragen.
 # include-tags-all:

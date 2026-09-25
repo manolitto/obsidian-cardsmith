@@ -15,7 +15,7 @@ import { t, type StringKey } from "./strings";
  * of what the deck will print, and the buttons that print it.
  *
  * The summary is what parsing and filtering yield — the system, the card
- * types, the folders, the notes the selection keeps by card type, the paper
+ * types, the folders and the notes named, the notes the selection keeps by card type, the paper
  * and the card size — which is cheap enough to run on every render of the
  * block. The number of cards is known only after rendering (rows, roll
  * ranges, copies) and is what the export's notice says. Whatever the block
@@ -72,10 +72,13 @@ export function deckBlockProcessor(context: DeckBlockContext) {
           ? selection.cardTypeIds.join(", ")
           : t("deck.all-card-types")
       );
-      row(
-        selection.folders.length > 1 ? "deck.folders" : "deck.folder",
-        selection.folders.map((folder) => folder || t("deck.root-folder")).join(", ")
-      );
+      if (selection.folders.length > 0) {
+        row(
+          selection.folders.length > 1 ? "deck.folders" : "deck.folder",
+          selection.folders.map((folder) => folder || t("deck.root-folder")).join(", ")
+        );
+      }
+      if (selection.notes.length > 0) row("deck.named-notes", selection.notes.join(", "));
       const notes = row("deck.notes", "…");
       row("deck.paper", paperText(settings.paperSize));
       const sizes = new Set<string>();
@@ -95,7 +98,8 @@ export function deckBlockProcessor(context: DeckBlockContext) {
       if (system) {
         const listed = await listDeckNotes(
           context.source,
-          selection.folders,
+          selection,
+          ctx.sourcePath,
           settings.folderRecursive ?? false,
           diagnostics
         );

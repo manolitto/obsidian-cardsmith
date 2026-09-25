@@ -54,6 +54,7 @@ describe("the cardsmith-deck block", () => {
     );
     expect(deck?.selection).toEqual({
       folders: ["Karten/Ausrüstung"],
+      notes: [],
       systemId: "dragonbane",
       cardTypeIds: ["gear", "creature"],
       includeTagsAll: [],
@@ -153,6 +154,40 @@ describe("the folders", () => {
         ?.selection.folders
     ).toEqual(["Waffen", "Rüstung", "2024"]);
     expect(diagnostics.matching("folder: ")).toHaveLength(1);
+  });
+});
+
+describe("the named notes", () => {
+  it("take a name, a path or a wikilink, as the note it names, each once", () => {
+    const diagnostics = collectDiagnostics();
+    expect(
+      parse(
+        [
+          "system: s",
+          "notes:",
+          "  - Wolf",
+          "  - Karten/Waffen/Beil.md",
+          "  - [[Heiltrank|der Trank]]",
+          '  - "[[Wolf#Werte]]"',
+          "  - ![[Bär]]",
+          "  - { x: 1 }",
+        ].join("\n"),
+        diagnostics
+      )?.selection.notes
+    ).toEqual(["Wolf", "Karten/Waffen/Beil.md", "Heiltrank", "Bär"]);
+    expect(diagnostics.matching("notes: ")).toHaveLength(1);
+    expect(parse("system: s\nnotes: Wolf")?.selection.notes).toEqual(["Wolf"]);
+    expect(parse("system: s")?.selection.notes).toEqual([]);
+  });
+
+  it("stand instead of the deck note's folder, and beside a folder named", () => {
+    expect(parse("system: s\nnotes: [Wolf]")?.selection.folders).toEqual([]);
+    expect(parse("system: s\nnotes: []")?.selection.folders).toEqual([
+      "Karten/Ausrüstung",
+    ]);
+    expect(parse("system: s\nnotes: [Wolf]\nfolder: Monster")?.selection.folders).toEqual(
+      ["Monster"]
+    );
   });
 });
 
