@@ -104,6 +104,19 @@ describe("copies", () => {
     expect(diagnostics.messages).toEqual([]);
   });
 
+  it("multiplies the copies by how often the deck holds the note", () => {
+    const twice = (card: DeckCard): DeckCard => ({ ...card, times: 2 });
+    const out = applyCopies(
+      [twice(laidOut("K/Beil.md", 1)), twice(laidOut("K/Wolf.md", 1, 3))],
+      [{ name: "Beil", copies: 2 }],
+      collectDiagnostics()
+    );
+    expect(fronts(out)).toEqual([
+      ...Array<string>(4).fill("Beil 1"),
+      ...Array<string>(6).fill("Wolf 1"),
+    ]);
+  });
+
   it("reports an entry that names no card in the deck", () => {
     const diagnostics = collectDiagnostics();
     applyCopies([laidOut("K/Beil.md", 1)], [{ name: "Biel", copies: 2 }], diagnostics);

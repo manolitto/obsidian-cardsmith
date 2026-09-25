@@ -37,18 +37,22 @@ export interface DeckSource {
 
 /** A candidate note of a deck, marked when the block names it under `notes:`. */
 export interface DeckCandidate extends TaggedNote {
-  /** Named under `notes:` — a note someone asked for, so the filter says why it drops one. */
-  listed?: boolean;
+  /**
+   * How often `notes:` names it — each time is the note once more in the
+   * deck. A note someone asked for, so the filter says why it drops one.
+   */
+  listed?: number;
 }
 
 /**
  * A deck's candidate notes: the card notes under each of its folders, in
  * the order the folders are named and path order within one, then the
- * notes it names, in the order written — each note once. A folder named
- * beside a parent listed recursively, or a note named that a folder
- * already holds, would otherwise contribute a note twice; a note that is
- * both is marked as named. A name that reaches no note, or a note that is
- * not a card note, is reported.
+ * notes it names, in the order written — each note once, counting how
+ * often it is named. A folder named beside a parent listed recursively
+ * contributes its notes once; a note named that a folder already holds is
+ * that note, named — so a note in a folder and named once prints once, a
+ * note named twice (by any spelling) twice. A name that reaches no note,
+ * or a note that is not a card note, is reported.
  */
 export async function listDeckNotes(
   source: DeckSource,
@@ -76,8 +80,8 @@ export async function listDeckNotes(
       continue;
     }
     const known = byPath.get(found.path);
-    if (known) known.listed = true;
-    else byPath.set(found.path, { ...found.note, listed: true });
+    if (known) known.listed = (known.listed ?? 0) + 1;
+    else byPath.set(found.path, { ...found.note, listed: 1 });
   }
   return [...byPath.values()];
 }

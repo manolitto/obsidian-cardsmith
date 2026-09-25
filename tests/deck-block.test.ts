@@ -158,7 +158,7 @@ describe("the folders", () => {
 });
 
 describe("the named notes", () => {
-  it("take a name, a path or a wikilink, as the note it names, each once", () => {
+  it("take a name, a path or a wikilink, as the note it names, repeats kept", () => {
     const diagnostics = collectDiagnostics();
     expect(
       parse(
@@ -174,7 +174,7 @@ describe("the named notes", () => {
         ].join("\n"),
         diagnostics
       )?.selection.notes
-    ).toEqual(["Wolf", "Karten/Waffen/Beil.md", "Heiltrank", "Bär"]);
+    ).toEqual(["Wolf", "Karten/Waffen/Beil.md", "Heiltrank", "Wolf", "Bär"]);
     expect(diagnostics.matching("notes: ")).toHaveLength(1);
     expect(parse("system: s\nnotes: Wolf")?.selection.notes).toEqual(["Wolf"]);
     expect(parse("system: s")?.selection.notes).toEqual([]);

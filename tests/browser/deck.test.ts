@@ -162,6 +162,17 @@ describe("buildDeck over the fixture folders", () => {
     ]);
   });
 
+  it("prints a note as often as it is named, times its copies", async () => {
+    const { built } = await build(
+      "simple",
+      '```cardsmith-deck\nsystem: simple\ncopies: 2\nnotes: [Rope of Climbing, Cloak of the Marsh, "[[Rope of Climbing]]"]\n```'
+    );
+    expect(names(built.cards)).toEqual([
+      ...Array<string>(2).fill("Cloak of the Marsh"),
+      ...Array<string>(4).fill("Rope of Climbing"),
+    ]);
+  });
+
   it("adds the notes it names to its folder's, each once", async () => {
     const { built } = await build(
       "simple",

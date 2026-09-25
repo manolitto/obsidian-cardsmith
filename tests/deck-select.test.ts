@@ -130,7 +130,7 @@ describe("selecting notes", () => {
 describe("selecting named notes", () => {
   const named = (path: string, card: string, tags: string[] = []) => ({
     ...note(path, card, tags),
-    listed: true,
+    listed: 1,
   });
   const beil = named("K/Beil.md", "system: demo\ncard-type: gear", ["waffe"]);
   const fremd = named("K/Fremd.md", "system: other\ncard-type: gear");
@@ -280,7 +280,7 @@ describe("listing the folders", () => {
     expect(await list(["", "Rüstung"], true)).toEqual(["Beil", "Bogen", "Keule", "Helm"]);
   });
 
-  it("adds the notes named after the folders' own, each once", async () => {
+  it("adds the notes named after the folders' own, each note once", async () => {
     expect(await list([], false, ["Waffen/Alt/Keule", "Helm", "Waffen/Beil.md"])).toEqual(
       ["Keule", "Helm", "Beil"]
     );
@@ -291,17 +291,18 @@ describe("listing the folders", () => {
     ]);
   });
 
-  it("marks a named note as named, also when a folder holds it", async () => {
+  it("counts how often a note is named, by any spelling, also when a folder holds it", async () => {
     const listed = await listDeckNotes(
       source,
-      { folders: ["Waffen"], notes: ["Beil"] },
+      { folders: ["Waffen"], notes: ["Beil", "Helm", "Waffen/Beil.md", "Beil"] },
       "Deck.md",
       false,
       collectDiagnostics()
     );
-    expect(listed.map((entry) => [entry.note.name, entry.listed ?? false])).toEqual([
-      ["Beil", true],
-      ["Bogen", false],
+    expect(listed.map((entry) => [entry.note.name, entry.listed ?? 0])).toEqual([
+      ["Beil", 3],
+      ["Bogen", 0],
+      ["Helm", 1],
     ]);
   });
 

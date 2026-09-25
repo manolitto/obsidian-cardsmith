@@ -111,7 +111,7 @@ const en = {
   "deck-key.folder":
     'The vault folder whose card notes are the deck — one, or a list of several. Default: the deck note\'s own folder, unless `notes` names the notes; "" is the vault root.',
   "deck-key.notes":
-    "Card notes named one by one — a name, a path or a [[link]] — beside or instead of the folder. A named note the filters drop is reported.",
+    "Card notes named one by one — a name, a path or a [[link]] — beside or instead of the folder. Named twice, printed twice. A named note the filters drop is reported.",
   "deck-key.include-tags-all": "A note must carry every one of these tags.",
   "deck-key.include-tags-any": "A note must carry at least one of these tags.",
   "deck-key.exclude-tags-any": "A note carrying any one of these tags is left out.",
@@ -299,7 +299,7 @@ const de: Strings = {
   "deck-key.folder":
     'Der Vault-Ordner, dessen Kartennotizen das Deck sind — einer oder eine Liste mehrerer. Standard: der Ordner der Deck-Notiz, außer `notes` nennt die Notizen; "" ist die Vault-Wurzel.',
   "deck-key.notes":
-    "Einzeln genannte Kartennotizen — ein Name, ein Pfad oder ein [[Link]] — neben dem Ordner oder statt seiner. Fällt eine genannte Notiz durch einen Filter, wird das gemeldet.",
+    "Einzeln genannte Kartennotizen — ein Name, ein Pfad oder ein [[Link]] — neben dem Ordner oder statt seiner. Zweimal genannt, zweimal gedruckt. Fällt eine genannte Notiz durch einen Filter, wird das gemeldet.",
   "deck-key.include-tags-all": "Eine Notiz muss jedes dieser Tags tragen.",
   "deck-key.include-tags-any": "Eine Notiz muss mindestens eines dieser Tags tragen.",
   "deck-key.exclude-tags-any": "Eine Notiz mit einem dieser Tags bleibt draußen.",
