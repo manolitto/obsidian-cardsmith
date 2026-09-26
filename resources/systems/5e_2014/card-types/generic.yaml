@@ -1,0 +1,86 @@
+# ── generic ─────────────────────────────────────────────────────────
+# The free card: a name, an italic line under it, and the note's own
+# text. A class feature, a racial trait, a feat, a condition, a house
+# rule — whatever the book prints as a heading and a few paragraphs. The
+# body is markdown: paragraphs, lists, tables, `###` sub-headings,
+# embedded pictures.
+#
+# The properties are the shared vocabulary of both fifth-edition
+# systems.
+
+front-template: templates/generic-front.hbs
+back-template: templates/back.hbs
+
+# A long text continues on further cards, each with the d20 back, so a
+# feature that runs long never loses its back.
+overflow-mode: extra-cards
+
+# The back names the kind of card: the note's `back-label` —
+# `Class Feature`, `Racial Trait`, `Feat` / `Klassenmerkmal`,
+# `Volksmerkmal`, `Talent` — else the one word that fits them all.
+translations:
+  en:
+    back-label: "Feature"
+  de:
+    back-label: "Merkmal"
+
+properties:
+  # The back says what the card is and where it comes from — the label
+  # over the origin; the name stays on the front.
+  name:
+    slot: front-title
+    sample:
+      en: "Ember Step"
+      de: "Glutschritt"
+
+  subtitle:
+    slot: front-subtitle
+    aliases: [untertitel]
+    description:
+      en: "The italic line under the name — `Rogue feature, 1st level`, `Feat`, `Elf trait`."
+      de: "Die kursive Zeile unter dem Namen — `Schurkenmerkmal, 1. Stufe`, `Talent`, `Volksmerkmal der Elfen`."
+    sample:
+      en: "Sorcerer feature, 3rd level"
+      de: "Merkmal der Zauberer, 3. Stufe"
+
+  origin:
+    slot: back-title
+    aliases: [herkunft, klasse, volk, hintergrund]
+    description:
+      en: "Where the card comes from, on the back under the label — the class (`Rogue`, `Cleric (Light Domain)`), the race (`Hill Dwarf`), the background (`Soldier`), a feat's prerequisite."
+      de: "Woher die Karte stammt, auf der Rückseite unter der Beschriftung — die Klasse (`Schurke`, `Kleriker (Domäne des Lichts)`), das Volk (`Hügelzwerg`), der Hintergrund (`Soldat`), die Voraussetzung eines Talents."
+    sample:
+      en: "Sorcerer"
+      de: "Zauberer"
+
+  # The body, from three sources in this order — the first the note
+  # actually sets wins: `content` in the block, a `## Front` section,
+  # the note's own text before its first heading. That text is the
+  # baseline's `body`, which is an alias here and not a binding of its
+  # own: a bound `body` would sit first among the place's properties,
+  # being inherited, and win over the other two. A section reached by
+  # an alias (`## Vorderseite`) does not beat the note's text: that
+  # text is the first property's alias, found before the second's.
+  content:
+    slot: front-body
+    aliases: [text, inhalt, kartentext, body]
+    description:
+      en: "The card's text as markdown, inline in the cardsmith block. Takes precedence over the note's text. Use the note's text for tables and embedded pictures."
+      de: "Der Kartentext als Markdown, direkt im cardsmith-Block. Hat Vorrang vor dem Notiztext. Für Tabellen und eingebettete Bilder den Notiztext benutzen."
+    sample:
+      en: "As a bonus action, you can teleport up to 15 feet to an unoccupied space you can see that is within 5 feet of a fire."
+      de: "Als Bonusaktion kannst du dich bis zu 4,5 Meter weit an einen freien Ort teleportieren, den du sehen kannst und der sich im Umkreis von 1,5 Metern um ein Feuer befindet."
+
+  front:
+    slot: front-body
+    aliases: [vorderseite, front-side]
+    description:
+      en: "The section under a `## Front` heading in the note fills the card when the block sets no `content`, in place of the note's text. Fully rendered — tables, headings, lists and embedded pictures included. Under a `## Vorderseite` heading only in a note with no text before its first heading."
+      de: "Der Abschnitt unter einer `## Front`-Überschrift in der Notiz füllt die Karte, wenn der Block keinen `content` setzt, anstelle des Notiztexts. Voll gerendert – Tabellen, Überschriften, Listen und eingebettete Bilder inklusive. Unter einer `## Vorderseite`-Überschrift nur in einer Notiz ohne Text vor der ersten Überschrift."
+
+  image:
+    slot: back-image
+    aliases: [bild]
+    description:
+      en: "A picture — a wikilink to a picture in the vault — on the back. Without one the back shows a d20."
+      de: "Ein Bild – ein Wikilink auf ein Bild im Vault – auf der Rückseite. Ohne Angabe zeigt die Rückseite einen W20."

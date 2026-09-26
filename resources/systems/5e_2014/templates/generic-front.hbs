@@ -1,0 +1,29 @@
+{{!--
+  5E (2014) — the generic front.
+
+    front-title     the name, between the orange bar and a tapered rule
+    front-subtitle  the italic line under the name, where set:
+                    "Rogue feature, 1st level"
+    front-body      the text as markdown: paragraphs, lists, tables,
+                    `###` sub-headings and embedded pictures, as the
+                    note writes them
+
+  The card knows no structure of its own; what the text needs, the note
+  writes. What must stay together goes between `%% keep-together %%`
+  and `%% /keep-together %%`, a hard break is `%% card-break %%`.
+--}}
+<div class="card-root card-front dd generic-card">
+  <div class="dd-bar"></div>
+  <div class="card-header dd-header">
+    <div class="card-title dd-title"><span class="text-scalable">{{slot "front-title" plain=true}}<span class="cs-overflow-counter"></span></span></div>
+  </div>
+  <div class="card-content-container">
+    <div class="card-body-scalable">
+    {{#if (slot "front-subtitle")}}<p class="dd-subtitle">{{slot "front-subtitle"}}</p>{{/if}}
+    {{> rule}}
+
+    <div class="dd-text dd-generic-body">{{slot "front-body" markdown="block"}}</div>
+    </div>
+  </div>
+  <div class="dd-bar"></div>
+</div>

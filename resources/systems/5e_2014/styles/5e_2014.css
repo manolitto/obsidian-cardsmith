@@ -141,7 +141,8 @@
 }
 
 .card-root.dd.spell-card,
-.card-root.dd.item-card {
+.card-root.dd.item-card,
+.card-root.dd.generic-card {
   --dd-font-size-title: clamp(var(--card-font-size-title-min), calc(var(--card-width, 63mm) * 0.075), var(--card-font-size-title-max));
   font-size: clamp(var(--card-font-size-min), calc(var(--card-width, 63mm) * 0.044), var(--card-font-size-max));
 }
@@ -288,6 +289,43 @@
 .dd-text ol {
   margin: 0 0 0.3em;
   padding-left: 1.2em;
+}
+
+/* The free text of a generic card: what the note's markdown writes.
+   A `###` inside it is a section head; a table has a red caption row.
+   `##` never reaches the card — it starts a section of the note. */
+.dd-generic-body > :first-child {
+  margin-top: 0;
+}
+.dd-generic-body h1,
+.dd-generic-body h2,
+.dd-generic-body h3,
+.dd-generic-body h4 {
+  font-family: var(--dd-font-display);
+  font-weight: 500;
+  font-size: 1.15em;
+  color: var(--dd-heading);
+  letter-spacing: 0.02em;
+  border-bottom: 0.08em solid var(--dd-heading);
+  margin: 0.45em 0 0.18em;
+  padding-bottom: 0.04em;
+  line-height: 1.1;
+}
+.dd-generic-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.2em 0 0.4em;
+  line-height: 1.2;
+}
+.dd-generic-body th {
+  font-weight: 700;
+  color: var(--dd-heading);
+  text-align: left;
+  border-bottom: 0.06em solid var(--dd-heading);
+}
+.dd-generic-body th,
+.dd-generic-body td {
+  padding: 0.05em 0.3em;
 }
 
 /* ── The back ──────────────────────────────────────────────────────── */
