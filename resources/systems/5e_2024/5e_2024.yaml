@@ -1,0 +1,56 @@
+id: 5e_2024
+name: "5E (2024)"
+
+# Fifth-edition play under the 2024 rules, on the vocabulary of the
+# SRD 5.2.1: the stat block as those books print it — the name in small
+# capitals, AC and Initiative on one line, the six abilities in a table
+# of two halves with MOD and SAVE, the CR line with XP and PB — on flat
+# cream paper, each card type in a colour of its own: creature wine red,
+# spell indigo, item forest green. Alegreya for the text, Alegreya SC for
+# the name and the heads. English and German, the German captions those
+# of the German SRD 5.2.1. The system carries no publisher's mark or
+# wordmark; the sample values are invented.
+#
+# One of two editions of the same game: 5E (2014) is the other. A card
+# note moves between them by changing `system:` and nothing else — same
+# card types, same properties, same aliases, same value formats
+# (`tests/fifth-edition.test.ts` holds both to that).
+#
+# What the note leaves out and the rules derive, the card derives by
+# table (`classifiers:` in card-types/creature.yaml): an ability's
+# modifier from its score, a saving throw from the modifier, the
+# initiative from Dexterity, the proficiency bonus from the challenge
+# rating. A value the note sets prints as it is.
+#
+# The back is the picture under the label, or a d20 with the label where
+# there is none, in the card type's colour.
+languages: [en, de]
+
+stylesheet: styles/5e_2024.css
+
+partial-templates:
+  entries: templates/entries.hbs
+  line: templates/line.hbs
+  head: templates/head.hbs
+
+card-size: poker
+
+# ── Shared vocabulary ─────────────────────────────────────────────────
+properties:
+  name:
+    slot: [front-title, back-title]
+    description:
+      en: "The card's name. Falls back to the file name."
+      de: "Der Name der Karte. Ohne Angabe der Dateiname."
+
+  back-label:
+    slot: back-heading
+    aliases: [back-caption, rückseite, rueckseite]
+    description:
+      en: "The label on the back — above the picture, or under the d20 — `Bestiary`, `NPC`. Without it the card type's own."
+      de: "Die Beschriftung der Rückseite — über dem Bild oder unter dem W20 — `Bestiarium`, `NSC`. Ohne Angabe die des Kartentyps."
+
+card-types:
+  creature: card-types/creature.yaml
+  spell:    card-types/spell.yaml
+  item:     card-types/item.yaml

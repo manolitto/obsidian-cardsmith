@@ -25,7 +25,8 @@ No glyph, metric or name-table data was altered.
 
 | Font | Systems | Licence | Licence file |
 |---|---|---|---|
-| Bookinsanity, Mr Eaves Small Caps, Nodesto Caps Condensed, Scaly Sans — the *Solbera* fonts, packaged by jonathonf | 5e | CC BY-SA 4.0 | `5e/fonts/solbera-LICENSE.txt` — with the attribution and the stated modification (OpenType → WOFF2, renamed). Share-alike binds the font files; the templates and stylesheets only reference them |
+| Bookinsanity, Mr Eaves Small Caps, Nodesto Caps Condensed, Scaly Sans — the *Solbera* fonts, packaged by jonathonf | 5e_2014 | CC BY-SA 4.0 | `5e_2014/fonts/solbera-LICENSE.txt` — with the attribution and the stated modification (OpenType → WOFF2, renamed). Share-alike binds the font files; the templates and stylesheets only reference them |
+| Alegreya, Alegreya SC (bold) | 5e_2024 | SIL OFL 1.1 | `5e_2024/fonts/alegreya-OFL.txt` — one licence text, the same for both families; the `latin` subsets only |
 | Alegreya Sans | dragonbane | SIL OFL 1.1 | `dragonbane/fonts/alegreya-sans-OFL.txt` |
 | Archivo Black | eiserne-zeit | SIL OFL 1.1 | `eiserne-zeit/fonts/archivo-black-OFL.txt` |
 | Bangers | troubleshooters | SIL OFL 1.1 | `troubleshooters/fonts/bangers-OFL.txt` |
@@ -57,7 +58,7 @@ them must keep it.
 
 | File | System | What it is |
 |---|---|---|
-| `5e/assets/d20-mark.svg` | 5e | A twenty-sided die as a flat silhouette, drawn for this project (MIT). It resembles no publisher's mark. |
+| `5e_2014/assets/d20-mark.svg`, `5e_2024/assets/d20-mark.svg` | 5e_2014, 5e_2024 | A twenty-sided die as a flat silhouette, drawn for this project (MIT). It resembles no publisher's mark. |
 | `eiserne-zeit/assets/eiserne-zeit-logo.png`, and the torn paper edge and the cross fleury drawn as inline SVG in the system's stylesheet | eiserne-zeit | The publisher's logo and two elements of the publisher's own graphic design. **Bundled with the explicit permission of Markus Schauta (Gazer Press, Vienna).** The permission covers their use in this plugin; it does not transfer to anyone extracting them for other use. |
 | `pf2e/assets/p-mark.webp` | pf2e | Paizo's Pathfinder "P" mark, from Paizo's Community Use Package, re-encoded to WebP without any change to colour, typography, design or proportions. Paizo property, used under the Community Use Policy — see the notice below. |
 | `dragonbane/assets/parchment_light.webp`, `tor2e/assets/parchment_light.webp` | dragonbane, tor2e | The parchment behind the cards: *Parchment Paper Background* by Andrea Stöckel, released into the public domain on publicdomainpictures.net, in the lightened version Sibling Dex made for the Dragonbrew template (below); re-encoded to WebP and downscaled for the bundle. |
@@ -81,7 +82,8 @@ trade dress, artwork and proper nouns remain the property of their owners.
 
 | System | Game and rights holder | Terms | Notes |
 |---|---|---|---|
-| **5e** | *System Reference Document 5.1*, Wizards of the Coast LLC | CC BY 4.0 (the SRD 5.1) | Field names and terminology follow the SRD; no SRD text is bundled. The system is named "5E" and carries no publisher's wordmark or logo; the d20 on its back is original. See the SRD attribution below. |
+| **5e_2014** | *System Reference Document 5.1*, Wizards of the Coast LLC | CC BY 4.0 (the SRD 5.1) | Field names and terminology follow the SRD; no SRD text is bundled. The German captions use the terminology of the German Player's Handbook of these rules (*Spielerhandbuch*) — single terms such as "Rüstungsklasse", "Herausforderung", "Auf höheren Graden"; no text of it is bundled. The system is named "5E (2014)" and carries no publisher's wordmark or logo; the d20 on its back is original. See the SRD attribution below. |
+| **5e_2024** | *System Reference Document 5.2.1*, Wizards of the Coast LLC, in English and in its German translation (*Systemreferenzdokument 5.2.1*) | CC BY 4.0 (the SRD 5.2.1) | Field names, the stat block's structure and the terminology follow the SRD 5.2.1; the German captions are those of the German SRD 5.2.1. No SRD text is bundled; the samples are invented. The system is named "5E (2024)" and carries no publisher's wordmark, logo, fonts or trade dress; the colours, the d20 on its back and the typography are this project's. See the SRD attribution below. |
 | **dcc** | *Dungeon Crawl Classics*, Goodman Games | Open Game License v1.0a | `dcc/OGL.txt` carries the notice and the licence: no game text bundled, field names follow the game, samples invented. "Dungeon Crawl Classics" and Goodman Games' Product Identity are not reproduced. |
 | **dftq** | *Descended from the Queen* — the framework *For the Queen* (Alex Roberts) offers for games built on it | The framework's terms | The system is a card design for such games; nothing of *For the Queen* is bundled, and the samples are invented. |
 | **dino-island** | *Escape from Dino Island* (Sam Tung & Sam Roberts, Mythworks); German edition *Flucht von Dino Island* (System Matters) | **Bundled with the explicit permission of the authors, Sam Tung & Sam Roberts** | Layouts and terminology only — no prose, images or logos of the game. |
@@ -94,13 +96,27 @@ trade dress, artwork and proper nouns remain the property of their owners.
 | **tor2e** | *The One Ring*, second edition, Free League Publishing / Sophisticated Games; Middle-earth is the property of Middle-earth Enterprises and the Tolkien Estate | Proprietary — nothing of it is bundled | Layout and field names only. The samples name no Middle-earth place, person or thing, and none may be added to the bundled content. |
 | **troubleshooters** | *The Troubleshooters*, Helmgast AB | Helmgast Fan Content Policy | Compliant Fan Content: the policy permits the game's names, trademarks and mechanics and forbids its text, illustrations and graphic design; the system bundles none of the latter — the game's name on the back is set in Bangers as text — and the plugin is free. See the notice below. |
 
-### SRD 5.1 attribution (5e)
+### SRD 5.1 attribution (5e_2014)
 
 > This work includes material taken from the System Reference Document 5.1
 > ("SRD 5.1") by Wizards of the Coast LLC and available at
 > https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1
 > is licensed under the Creative Commons Attribution 4.0 International
 > License available at https://creativecommons.org/licenses/by/4.0/legalcode.
+
+### SRD 5.2.1 attribution (5e_2024)
+
+> This work includes material from the System Reference Document 5.2.1
+> ("SRD 5.2.1") by Wizards of the Coast LLC, available at
+> https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the
+> Creative Commons Attribution 4.0 International License, available at
+> https://creativecommons.org/licenses/by/4.0/legalcode.
+
+> Dieses Werk enthält Material aus dem Systemreferenzdokument 5.2.1
+> („SRD 5.2.1“) von Wizards of the Coast LLC, verfügbar unter
+> https://www.dndbeyond.com/srd. Das SRD 5.2.1 ist lizenziert gemäß
+> Creative Commons Namensnennung 4.0 International Public License
+> (verfügbar unter https://creativecommons.org/licenses/by/4.0/legalcode.de).
 
 ### Paizo Community Use notice (pf2e)
 

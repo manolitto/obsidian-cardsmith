@@ -1,0 +1,32 @@
+Ashen-Wyrm · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 0.70
+   p.ff-subtitle "Huge Dragon, Neutral Evil"
+   div.ff-block
+     p.ff-line "AC 18 Initiative +4 (14)"
+     p.ff-line "HP 184 (16d12 + 80)"
+     p.ff-line "Speed 40 ft., Burrow 30 ft., …"
+     div.ff-abilities.cs-keep-together
+       table.ff-abilities-physical (4 rows) "MOD SAVE Str 25 +7 +7 …"
+       table.ff-abilities-mental (4 rows) "MOD SAVE Int 14 +2 +2 …"
+     p.ff-line "Skills Perception +11, Stealth +5"
+     p.ff-line "Resistances Bludgeoning"
+     p.ff-line "Immunities Fire; Exhaustion"
+     p.ff-line "Gear Crown of Cinders"
+     p.ff-line "Senses Blindsight 60 ft., Darkvision 120 …"
+     p.ff-line "Languages Common, Draconic"
+     p.ff-line "CR 14 (XP 11,500, or 13,000 …"
+   h3.ff-head.cs-keep-with-next "Traits"
+   p.ff-entry "Legendary Resistance (3/Day, or 4/Day in …"
+   p.ff-entry "Ash Cloak While in ash or …"
+   h3.ff-head.cs-keep-with-next "Actions"
+   p.ff-entry "Multiattack The wyrm makes three Rend …"
+   p.ff-entry "Rend Melee Attack Roll: +12, reach …"
+   p.ff-entry "Ash Breath (Recharge 5–6) Dexterity Saving …"
+   h3.ff-head.cs-keep-with-next "Bonus Actions"
+   p.ff-entry "Smoulder The wyrm's scales flare. Until …"
+   h3.ff-head.cs-keep-with-next "Legendary Actions"
+   p.ff-entry "Legendary Action Uses: 3 (4 in …"
+   p.ff-entry "Tail Sweep Melee Attack Roll: +12, …"
+   p.ff-entry "Smother Constitution Saving Throw: DC 18, …"
+   p.ff-footnote "Habitat Mountain, Underdark Treasure Hoard"
+2. back [cs-layout-default] scale —

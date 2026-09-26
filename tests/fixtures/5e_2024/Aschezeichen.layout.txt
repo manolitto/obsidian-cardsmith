@@ -1,0 +1,12 @@
+Aschezeichen · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   p.ff-subtitle "Erkenntniszauber 1. Grades (Druide, Kleriker, Magier)"
+   div.ff-block.ff-spell-lines
+     p.ff-line "Zeitaufwand: 1 Minute oder Ritual"
+     p.ff-line "Reichweite: Selbst"
+     p.ff-line "Komponenten: V, G, M (eine Prise …"
+     p.ff-line "Wirkungsdauer: Konzentration, bis zu 10 Minuten"
+   div.ff-text
+     p "Du streust Asche in die Luft. …"
+   p.ff-entry "Verwenden von Zauberplätzen höheren Grades Für …"
+2. back [cs-layout-default] scale —

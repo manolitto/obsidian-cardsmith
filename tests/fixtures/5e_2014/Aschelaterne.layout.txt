@@ -1,0 +1,10 @@
+Aschelaterne · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   p.dd-subtitle "Wundersamer Gegenstand, ungewöhnlich (erfordert Einstimmung)"
+   svg.dd-rule
+   p.dd-line "Gewicht 1 kg"
+   p.dd-line "Kosten 400 GM"
+   svg.dd-rule
+   div.dd-text
+     p "Solange sie brennt, verbreitet diese Messinglaterne …"
+2. back [cs-layout-default] scale —

@@ -1,0 +1,43 @@
+{{!--
+  5E (2014) — the spell front.
+
+    front-level, front-school,      the italic line under the name:
+    front-school-cantrip,           "2nd-level evocation", "Evocation
+    front-ritual                    cantrip", "(ritual)" after — the
+                                    two words in the order the language
+                                    puts them
+    front-casting-time, front-range,
+    front-components                a line each
+    front-duration,                 "Concentration, up to 1 minute"
+    front-concentration
+    front-description               the text, under a rule
+    front-higher-levels             led by "At Higher Levels."
+    front-cantrip-upgrade           a paragraph after the text
+--}}
+<div class="card-root card-front dd spell-card">
+  <div class="dd-bar"></div>
+  <div class="card-header dd-header">
+    <div class="card-title dd-title"><span class="text-scalable">{{slot "front-title" plain=true}}<span class="cs-overflow-counter"></span></span></div>
+  </div>
+  <div class="card-content-container">
+    <div class="card-body-scalable">
+    {{#if (or (slot "front-level") (slot "front-school"))}}
+    <p class="dd-subtitle">{{#if (eq (slot "front-level" plain=true) "0")}}{{#if (eq (t "spell-order-cantrip") "school-first")}}{{slot "front-school-cantrip" plain=true glyph=true}} {{slot "front-level" plain=true glyph=true}}{{else}}{{slot "front-level" plain=true glyph=true}} {{slot "front-school-cantrip" plain=true glyph=true}}{{/if}}{{else}}{{#if (eq (t "spell-order-leveled") "level-first")}}{{slot "front-level" plain=true glyph=true}} {{slot "front-school" plain=true glyph=true}}{{else}}{{slot "front-school" plain=true glyph=true}} {{slot "front-level" plain=true glyph=true}}{{/if}}{{/if}}{{#if (eq (slot "front-ritual" plain=true) "true")}} {{t "ritual"}}{{/if}}</p>
+    {{/if}}
+
+    {{> rule}}
+
+    {{#if (slot "front-casting-time")}}<p class="dd-line"><span class="dd-line-label">{{slot-label "front-casting-time"}}</span> {{slot "front-casting-time"}}</p>{{/if}}
+    {{#if (slot "front-range")}}<p class="dd-line"><span class="dd-line-label">{{slot-label "front-range"}}</span> {{slot "front-range"}}</p>{{/if}}
+    {{#if (slot "front-components")}}<p class="dd-line"><span class="dd-line-label">{{slot-label "front-components"}}</span> {{slot "front-components"}}</p>{{/if}}
+    {{#if (slot "front-duration")}}<p class="dd-line"><span class="dd-line-label">{{slot-label "front-duration"}}</span> {{#if (eq (slot "front-concentration" plain=true) "true")}}{{t "concentration"}} {{/if}}{{slot "front-duration"}}</p>{{/if}}
+
+    {{> rule}}
+
+    <div class="dd-text">{{slot "front-description" markdown="block"}}</div>
+    {{#if (slot "front-cantrip-upgrade")}}<p class="dd-entry">{{slot "front-cantrip-upgrade"}}</p>{{/if}}
+    {{#if (slot "front-higher-levels")}}<p class="dd-entry"><span class="dd-entry-name">{{slot-label "front-higher-levels"}}</span>{{slot "front-higher-levels"}}</p>{{/if}}
+    </div>
+  </div>
+  <div class="dd-bar"></div>
+</div>

@@ -1,0 +1,12 @@
+Wardens-Brand · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   p.ff-subtitle "Weapon (Longsword), Rare (Requires Attunement by …"
+   div.ff-block.ff-item-stats
+     p.ff-line "Damage 1d8 Slashing"
+     p.ff-line "Properties Versatile (1d10)"
+     p.ff-line "Mastery Sap"
+     p.ff-line "Weight 3 lb."
+   div.ff-text
+     p "You gain a +1 bonus to …"
+     p "As a Bonus Action, you can …"
+2. back [cs-layout-default] scale —

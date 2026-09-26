@@ -1,0 +1,8 @@
+Aschelaterne · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   p.ff-subtitle "Wundersamer Gegenstand, ungewöhnlich (erfordert Einstimmung)"
+   div.ff-block.ff-item-stats
+     p.ff-line "Gewicht 1 kg Kosten 400 GM"
+   div.ff-text
+     p "Solange sie brennt, verbreitet diese Messinglaterne …"
+2. back [cs-layout-default] scale —

@@ -1,0 +1,40 @@
+{{!--
+  5E (2014) — the item front.
+
+    front-category, front-rarity,   the italic line under the name:
+    front-attunement                "Wondrous item, rare (requires
+                                    attunement by a wizard)"; `true`
+                                    prints the words alone
+    front-damage … front-cost       the statistics, a line each, where
+                                    set, under a rule
+    front-description               the text, under a rule
+--}}
+<div class="card-root card-front dd item-card">
+  <div class="dd-bar"></div>
+  <div class="card-header dd-header">
+    <div class="card-title dd-title"><span class="text-scalable">{{slot "front-title" plain=true}}<span class="cs-overflow-counter"></span></span></div>
+  </div>
+  <div class="card-content-container">
+    <div class="card-body-scalable">
+    {{#if (or (slot "front-category") (slot "front-rarity") (slot "front-attunement"))}}
+    <p class="dd-subtitle">{{slot "front-category" plain=true}}{{#if (slot "front-rarity")}}{{#if (slot "front-category")}}, {{/if}}{{slot "front-rarity" plain=true}}{{/if}}{{#if (slot "front-attunement")}}{{#if (eq (slot "front-attunement" plain=true) "false")}}{{else}} ({{t "attunement"}}{{#if (eq (slot "front-attunement" plain=true) "true")}}{{else}} {{slot "front-attunement" plain=true}}{{/if}}){{/if}}{{/if}}</p>
+    {{/if}}
+
+    {{#if (or (slot "front-damage") (slot "front-properties") (slot "front-ac") (slot "front-strength") (slot "front-stealth") (slot "front-weight") (slot "front-cost"))}}
+    {{> rule}}
+    {{#if (slot "front-damage")}}<p class="dd-line"><span class="dd-line-label">{{slot-label "front-damage"}}</span> {{slot "front-damage"}}</p>{{/if}}
+    {{#if (slot "front-properties")}}<p class="dd-line"><span class="dd-line-label">{{slot-label "front-properties"}}</span> {{slot "front-properties"}}</p>{{/if}}
+    {{#if (slot "front-ac")}}<p class="dd-line"><span class="dd-line-label">{{slot-label "front-ac"}}</span> {{slot "front-ac"}}</p>{{/if}}
+    {{#if (slot "front-strength")}}<p class="dd-line"><span class="dd-line-label">{{slot-label "front-strength"}}</span> {{slot "front-strength"}}</p>{{/if}}
+    {{#if (slot "front-stealth")}}<p class="dd-line"><span class="dd-line-label">{{slot-label "front-stealth"}}</span> {{slot "front-stealth"}}</p>{{/if}}
+    {{#if (slot "front-weight")}}<p class="dd-line"><span class="dd-line-label">{{slot-label "front-weight"}}</span> {{slot "front-weight"}}</p>{{/if}}
+    {{#if (slot "front-cost")}}<p class="dd-line"><span class="dd-line-label">{{slot-label "front-cost"}}</span> {{slot "front-cost"}}</p>{{/if}}
+    {{/if}}
+
+    {{> rule}}
+
+    <div class="dd-text">{{slot "front-description" markdown="block"}}</div>
+    </div>
+  </div>
+  <div class="dd-bar"></div>
+</div>

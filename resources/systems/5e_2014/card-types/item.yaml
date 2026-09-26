@@ -1,0 +1,122 @@
+# ── item ────────────────────────────────────────────────────────────
+# Equipment and magic items as the SRD 5.1 prints them: the category and
+# rarity in italics ("Wondrous item, rare (requires attunement)"), the
+# statistics a weapon or an armour has, the text.
+#
+# The properties are the shared vocabulary of both fifth-edition
+# systems; the weapon mastery, which this edition does not print, is
+# declared without a place.
+
+front-template: templates/item-front.hbs
+back-template: templates/back.hbs
+
+translations:
+  en:
+    back-label: "Item"
+    attunement: "requires attunement"
+    front-damage-label: "Damage"
+    front-properties-label: "Properties"
+    front-ac-label: "Armor Class"
+    front-strength-label: "Strength"
+    front-stealth-label: "Stealth"
+    front-weight-label: "Weight"
+    front-cost-label: "Cost"
+  de:
+    back-label: "Gegenstand"
+    attunement: "erfordert Einstimmung"
+    front-damage-label: "Schaden"
+    front-properties-label: "Eigenschaften"
+    front-ac-label: "Rüstungsklasse (RK)"
+    front-strength-label: "Stärke"
+    front-stealth-label: "Heimlichkeit"
+    front-weight-label: "Gewicht"
+    front-cost-label: "Kosten"
+
+properties:
+  name:
+    sample: "Lantern of Ash"
+
+  category:
+    slot: front-category
+    aliases: [item-type, kategorie, gegenstandsart]
+    description:
+      en: "The category, with the base item in parentheses — `Wondrous item`, `Weapon (longsword)`, `Armor (shield)`."
+    sample: "Wondrous item"
+
+  rarity:
+    slot: front-rarity
+    aliases: [seltenheit]
+    description:
+      en: "The rarity — `common`, `uncommon`, `rare`, `very rare`, `legendary`, `artifact` — after the category."
+    sample: "uncommon"
+
+  attunement:
+    slot: front-attunement
+    aliases: [requires-attunement, einstimmung]
+    description:
+      en: "`true` for an item that requires attunement, or who may attune — `by a wizard` — printed after “requires attunement”."
+    sample: true
+
+  weight:
+    slot: front-weight
+    aliases: [gewicht]
+    description:
+      en: "The weight — `3 lb.`."
+    sample: "2 lb."
+
+  cost:
+    slot: front-cost
+    aliases: [price, preis, kosten]
+    description:
+      en: "The cost — `15 gp`."
+    sample: "400 gp"
+
+  damage:
+    slot: front-damage
+    aliases: [schaden]
+    description:
+      en: "A weapon's damage — `1d8 slashing`."
+
+  properties:
+    slot: front-properties
+    aliases: [weapon-properties, waffeneigenschaften]
+    description:
+      en: "A weapon's properties, comma-separated — `Versatile (1d10)`."
+
+  mastery:
+    aliases: [weapon-mastery, meisterschaft, waffenmeisterschaft]
+    description:
+      en: "A weapon's mastery property. Printed by 5E (2024); this edition leaves it out."
+
+  ac:
+    slot: front-ac
+    aliases: [armor-class, armorclass, rüstungsklasse, ruestungsklasse, rk]
+    description:
+      en: "An armour's Armor Class — `14 + Dex modifier (max 2)`, `+2`."
+
+  strength:
+    slot: front-strength
+    aliases: [strength-requirement, stärke, staerke]
+    description:
+      en: "The Strength an armour needs — `Str 13`."
+
+  stealth:
+    slot: front-stealth
+    aliases: [heimlichkeit]
+    description:
+      en: "What an armour does to Stealth — `Disadvantage`."
+
+  description:
+    slot: front-description
+    description:
+      en: "What the item is and does — markdown, paragraphs and lists."
+    sample: "While lit, this brass lantern sheds dim grey light in a 20-foot radius. Invisible creatures in that light leave faint trails of ash."
+
+  body:
+    slot: front-description
+
+  image:
+    slot: back-image
+    aliases: [bild]
+    description:
+      en: "The item's picture — a wikilink to a picture in the vault — on the back. Without one the back shows a d20."

@@ -1,0 +1,587 @@
+# ── creature ────────────────────────────────────────────────────────
+# Monsters and non-player characters alike: the 2024 stat block, then
+# the legendary sections where they are set. A large card.
+#
+# The properties are the shared vocabulary of both fifth-edition
+# systems. `lair-actions` and `regional-effects` are not in the SRD 5.2
+# stat block; a note that carries them from 5E (2014) prints them under
+# heads of their own.
+
+front-template: templates/creature-front.hbs
+back-template: templates/back.hbs
+
+card-size: large
+
+translations:
+  en:
+    back-label: "Bestiary"
+    front-ac-label: "AC"
+    front-initiative-mod-label: "Initiative"
+    front-hp-label: "HP"
+    front-speed-label: "Speed"
+    mod-label: "MOD"
+    save-label: "SAVE"
+    front-str-score-label: "Str"
+    front-dex-score-label: "Dex"
+    front-con-score-label: "Con"
+    front-int-score-label: "Int"
+    front-wis-score-label: "Wis"
+    front-cha-score-label: "Cha"
+    front-skills-label: "Skills"
+    front-vulnerabilities-label: "Vulnerabilities"
+    front-resistances-label: "Resistances"
+    front-immunities-label: "Immunities"
+    front-gear-label: "Gear"
+    front-senses-label: "Senses"
+    front-languages-label: "Languages"
+    front-cr-label: "CR"
+    front-xp-label: "XP"
+    front-proficiency-bonus-label: "PB"
+    front-habitat-label: "Habitat"
+    front-treasure-label: "Treasure"
+    front-traits-label: "Traits"
+    front-actions-label: "Actions"
+    front-bonus-actions-label: "Bonus Actions"
+    front-reactions-label: "Reactions"
+    front-legendary-actions-label: "Legendary Actions"
+    front-lair-actions-label: "Lair Actions"
+    front-regional-effects-label: "Regional Effects"
+  de:
+    back-label: "Bestiarium"
+    front-ac-label: "RK"
+    front-initiative-mod-label: "Initiative"
+    front-hp-label: "TP"
+    front-speed-label: "Bewegungsrate"
+    mod-label: "MOD"
+    save-label: "RW"
+    front-str-score-label: "Stä"
+    front-dex-score-label: "Ges"
+    front-con-score-label: "Kon"
+    front-int-score-label: "Int"
+    front-wis-score-label: "Wei"
+    front-cha-score-label: "Cha"
+    front-skills-label: "Fertigkeiten"
+    front-vulnerabilities-label: "Anfälligkeiten"
+    front-resistances-label: "Resistenzen"
+    front-immunities-label: "Immunitäten"
+    front-gear-label: "Ausrüstung"
+    front-senses-label: "Sinne"
+    front-languages-label: "Sprachen"
+    front-cr-label: "HG"
+    front-xp-label: "EP"
+    front-proficiency-bonus-label: "ÜB"
+    front-habitat-label: "Lebensraum"
+    front-treasure-label: "Schatz"
+    front-traits-label: "Merkmale"
+    front-actions-label: "Aktionen"
+    front-bonus-actions-label: "Bonusaktionen"
+    front-reactions-label: "Reaktionen"
+    front-legendary-actions-label: "Legendäre Aktionen"
+    front-lair-actions-label: "Hortaktionen"
+    front-regional-effects-label: "Regionale Effekte"
+
+properties:
+  name:
+    sample:
+      en: "Cinder Hound"
+      de: "Glutwolf"
+
+  size:
+    slot: front-size
+    aliases: [größe, groesse]
+    description:
+      en: "The size — Tiny, Small, Medium, Large, Huge, Gargantuan — first in the italic line under the name."
+      de: "Die Größe — Winzig, Klein, Mittelgroß, Groß, Riesig, Gigantisch — vorn in der kursiven Zeile unter dem Namen."
+    sample:
+      en: "Medium"
+      de: "Mittelgroße"
+
+  type:
+    slot: front-type
+    aliases: [art, kreaturentyp]
+    description:
+      en: "The creature type, with its tags in parentheses — `Humanoid (Goblinoid)`, `Beast`, `Undead`."
+      de: "Der Kreaturentyp, Kennzeichnungen in Klammern — `Humanoide (Goblinoide)`, `Bestie`, `Untoter`."
+    sample:
+      en: "Monstrosity"
+      de: "Monstrosität"
+
+  alignment:
+    slot: front-alignment
+    aliases: [gesinnung]
+    description:
+      en: "The alignment — `Neutral Evil`, `Unaligned` — after the type, comma-separated."
+      de: "Die Gesinnung — `neutral böse`, `gesinnungslos` — nach dem Typ, durch Komma getrennt."
+    sample:
+      en: "Unaligned"
+      de: "gesinnungslos"
+
+  ac:
+    slot: front-ac
+    aliases: [armor-class, armorclass, rüstungsklasse, ruestungsklasse, rk]
+    description:
+      en: "Armor Class — `17`, or with its source for 5E (2014) — `15 (leather armor, shield)`."
+      de: "Rüstungsklasse — `17`."
+    sample: 13
+
+  initiative:
+    slot: [front-initiative-mod, front-initiative-passive]
+    aliases: [ini]
+    description:
+      en: "The initiative modifier — `+7`; the passive initiative follows. Without it, the Dexterity modifier."
+      de: "Der Initiativemodifikator — `+7`; die passive Initiative folgt. Ohne Angabe der Geschicklichkeitsmodifikator."
+
+  hp:
+    slot: front-hp
+    aliases: [hit-points, hitpoints, trefferpunkte, tp]
+    description:
+      en: "Hit Points, the average with the dice in parentheses — `22 (4d8 + 4)`."
+      de: "Trefferpunkte, der Durchschnitt mit den Würfeln in Klammern — `22 (4W8+4)`."
+    sample:
+      en: "22 (4d8 + 4)"
+      de: "22 (4W8+4)"
+
+  speed:
+    slot: front-speed
+    aliases: [bewegungsrate, bewegung]
+    description:
+      en: "The speeds, comma-separated — `10 ft., Swim 40 ft.`."
+      de: "Die Bewegungsraten, durch Komma getrennt — `3 m, Schwimmen 12 m`."
+    sample:
+      en: "40 ft."
+      de: "12 m"
+
+  # The six scores: a plain score, or the score with its modifier in
+  # parentheses as 5E (2014) writes it. The table prints the score, the
+  # modifier it derives, and the saving throw.
+  str:
+    slot: [front-str-score, front-str-mod]
+    aliases: [strength, stärke, staerke]
+    description:
+      en: "Strength — the score, `15`; `15 (+2)` reads the same."
+      de: "Stärke — der Wert, `15`; `15 (+2)` gilt genauso."
+    sample: 15
+
+  dex:
+    slot: [front-dex-score, front-dex-mod, front-dex-initiative]
+    aliases: [dexterity, geschicklichkeit, ges]
+    description:
+      en: "Dexterity — the score. Its modifier is the initiative where `initiative` is not set."
+      de: "Geschicklichkeit — der Wert. Sein Modifikator ist die Initiative, wo `initiative` fehlt."
+    sample: 14
+
+  con:
+    slot: [front-con-score, front-con-mod]
+    aliases: [constitution, konstitution, kon]
+    description:
+      en: "Constitution — the score."
+      de: "Konstitution — der Wert."
+    sample: 13
+
+  int:
+    slot: [front-int-score, front-int-mod]
+    aliases: [intelligence, intelligenz]
+    description:
+      en: "Intelligence — the score."
+      de: "Intelligenz — der Wert."
+    sample: 3
+
+  wis:
+    slot: [front-wis-score, front-wis-mod]
+    aliases: [wisdom, weisheit, wei]
+    description:
+      en: "Wisdom — the score."
+      de: "Weisheit — der Wert."
+    sample: 12
+
+  cha:
+    slot: [front-cha-score, front-cha-mod]
+    aliases: [charisma]
+    description:
+      en: "Charisma — the score."
+      de: "Charisma — der Wert."
+    sample: 6
+
+  # A saving throw the creature is proficient in; the others print the
+  # ability's modifier.
+  str-save:
+    slot: front-str-save
+    aliases: [strength-save, stärke-rettungswurf, staerke-rettungswurf]
+    description:
+      en: "The Strength saving throw — `+5`. Without it, the modifier."
+      de: "Der Stärkerettungswurf — `+5`. Ohne Angabe der Modifikator."
+
+  dex-save:
+    slot: front-dex-save
+    aliases: [dexterity-save, geschicklichkeit-rettungswurf, ges-rettungswurf]
+    description:
+      en: "The Dexterity saving throw — `+5`. Without it, the modifier."
+      de: "Der Geschicklichkeitsrettungswurf — `+5`. Ohne Angabe der Modifikator."
+
+  con-save:
+    slot: front-con-save
+    aliases: [constitution-save, konstitution-rettungswurf, kon-rettungswurf]
+    description:
+      en: "The Constitution saving throw — `+5`. Without it, the modifier."
+      de: "Der Konstitutionsrettungswurf — `+5`. Ohne Angabe der Modifikator."
+
+  int-save:
+    slot: front-int-save
+    aliases: [intelligence-save, intelligenz-rettungswurf]
+    description:
+      en: "The Intelligence saving throw — `+5`. Without it, the modifier."
+      de: "Der Intelligenzrettungswurf — `+5`. Ohne Angabe der Modifikator."
+
+  wis-save:
+    slot: front-wis-save
+    aliases: [wisdom-save, weisheit-rettungswurf, wei-rettungswurf]
+    description:
+      en: "The Wisdom saving throw — `+5`. Without it, the modifier."
+      de: "Der Weisheitsrettungswurf — `+5`. Ohne Angabe der Modifikator."
+
+  cha-save:
+    slot: front-cha-save
+    aliases: [charisma-save, charisma-rettungswurf]
+    description:
+      en: "The Charisma saving throw — `+5`. Without it, the modifier."
+      de: "Der Charismarettungswurf — `+5`. Ohne Angabe der Modifikator."
+
+  skills:
+    slot: front-skills
+    aliases: [fertigkeiten]
+    description:
+      en: "Skill bonuses, comma-separated — `Perception +3, Stealth +4`."
+      de: "Fertigkeitsboni, durch Komma getrennt — `Wahrnehmung +3, Heimlichkeit +4`."
+    sample:
+      en: "Perception +3, Stealth +4"
+      de: "Heimlichkeit +4, Wahrnehmung +3"
+
+  vulnerabilities:
+    slot: front-vulnerabilities
+    aliases: [damage-vulnerabilities, schadensanfälligkeiten, schadensanfaelligkeiten]
+    description:
+      en: "Damage vulnerabilities, comma-separated."
+      de: "Schadensanfälligkeiten, durch Komma getrennt."
+
+  resistances:
+    slot: front-resistances
+    aliases: [damage-resistances, schadensresistenzen]
+    description:
+      en: "Damage resistances, comma-separated."
+      de: "Schadensresistenzen, durch Komma getrennt."
+
+  immunities:
+    slot: front-immunities
+    aliases: [damage-immunities, schadensimmunitäten, schadensimmunitaeten]
+    description:
+      en: "Damage immunities, comma-separated — the first half of the Immunities line."
+      de: "Schadensimmunitäten, durch Komma getrennt — die erste Hälfte der Zeile Immunitäten."
+    sample:
+      en: "Fire"
+      de: "Feuer"
+
+  condition-immunities:
+    slot: front-condition-immunities
+    aliases: [conditionimmunities, zustandsimmunitäten, zustandsimmunitaeten]
+    description:
+      en: "Condition immunities, comma-separated — after the damage immunities, behind a semicolon."
+      de: "Zustandsimmunitäten, durch Komma getrennt — nach den Schadensimmunitäten, hinter einem Semikolon."
+
+  gear:
+    slot: front-gear
+    aliases: [equipment, ausrüstung, ausruestung]
+    description:
+      en: "The gear carried, comma-separated — `Longsword, Shield`."
+      de: "Die mitgeführte Ausrüstung, durch Komma getrennt — `Langschwert, Schild`."
+
+  senses:
+    slot: front-senses
+    aliases: [sinne]
+    description:
+      en: "The senses — `Darkvision 60 ft.; Passive Perception 13`."
+      de: "Die Sinne — `Dunkelsicht 18 m; Passive Wahrnehmung 13`."
+    sample:
+      en: "Darkvision 60 ft.; Passive Perception 13"
+      de: "Dunkelsicht 18 m; Passive Wahrnehmung 13"
+
+  languages:
+    slot: front-languages
+    aliases: [sprachen]
+    description:
+      en: "The languages, or `None`."
+      de: "Die Sprachen, oder `Keine`."
+    sample:
+      en: "None"
+      de: "Keine"
+
+  cr:
+    slot: [front-cr, front-cr-pb]
+    aliases: [challenge, challenge-rating, challengerating, herausforderungsgrad, hg]
+    description:
+      en: "The challenge rating — `10`, `1/2`. The proficiency bonus follows from it where `proficiency-bonus` is not set."
+      de: "Der Herausforderungsgrad — `10`, `1/2`. Der Übungsbonus folgt daraus, wo `proficiency-bonus` fehlt."
+    sample: "1"
+
+  xp:
+    slot: front-xp
+    aliases: [experience, exp, ep, erfahrungspunkte]
+    description:
+      en: "The experience points, in the parentheses after the challenge rating — `5,900`, `5,900, or 7,200 in lair`."
+      de: "Die Erfahrungspunkte, in der Klammer nach dem Herausforderungsgrad — `5.900`, `5.900 oder 7.200 im Hort`."
+    sample: 200
+
+  proficiency-bonus:
+    slot: front-proficiency-bonus
+    aliases: [pb, prof, prof-bonus, übungsbonus, uebungsbonus]
+    description:
+      en: "The proficiency bonus — `+4`. Without it, the one of the challenge rating."
+      de: "Der Übungsbonus — `+4`. Ohne Angabe der des Herausforderungsgrads."
+
+  habitat:
+    slot: front-habitat
+    aliases: [environment, lebensraum]
+    description:
+      en: "The habitat — `Forest, Grassland`. A line under the block, where it is set."
+      de: "Der Lebensraum — `Wald, Grasland`. Eine Zeile unter dem Block, wo gesetzt."
+
+  treasure:
+    slot: front-treasure
+    aliases: [hoard, schatz]
+    description:
+      en: "The treasure — `Individual`, `Hoard`, `None`. A line under the block, where it is set."
+      de: "Der Schatz — `Einzeln`, `Hort`, `Keiner`. Eine Zeile unter dem Block, wo gesetzt."
+
+  # The sections: each a list of `name` and `desc`, a paragraph led by
+  # the name in bold italics. An entry with only a `desc` is a plain
+  # paragraph — how a section's preamble is written.
+  traits:
+    slot: front-traits
+    aliases: [merkmale, eigenschaften]
+    description:
+      en: "The traits — a list of `name` and `desc`; the description takes markdown and wikilinks."
+      de: "Die Merkmale — eine Liste aus `name` und `desc`; die Beschreibung darf Markdown und Wikilinks enthalten."
+    sample:
+      en:
+        - name: "Keen Smell"
+          desc: "The hound has Advantage on Wisdom (Perception) checks that rely on smell."
+      de:
+        - name: "Scharfer Geruchssinn"
+          desc: "Der Wolf ist bei Weisheitswürfen (Wahrnehmung), die auf dem Geruchssinn beruhen, im Vorteil."
+
+  actions:
+    slot: front-actions
+    aliases: [aktionen]
+    description:
+      en: "The actions — a list of `name` and `desc`; `*Melee Attack Roll:*` and the like as markdown."
+      de: "Die Aktionen — eine Liste aus `name` und `desc`; `*Nahkampf-Angriffswurf:*` und dergleichen als Markdown."
+    sample:
+      en:
+        - name: "Bite"
+          desc: "*Melee Attack Roll:* +4, reach 5 ft. *Hit:* 7 (2d4 + 2) Piercing damage plus 3 (1d6) Fire damage."
+      de:
+        - name: "Biss"
+          desc: "*Nahkampf-Angriffswurf:* +4, Reichweite 1,5 m. *Treffer:* 7 (2W4+2) Stichschaden plus 3 (1W6) Feuerschaden."
+
+  bonus-actions:
+    slot: front-bonus-actions
+    aliases: [bonusactions, bonusaktionen]
+    description:
+      en: "The bonus actions — the same shape as `actions`."
+      de: "Die Bonusaktionen — so aufgebaut wie `actions`."
+
+  reactions:
+    slot: front-reactions
+    aliases: [reaktionen]
+    description:
+      en: "The reactions — the same shape as `actions`; each states its trigger."
+      de: "Die Reaktionen — so aufgebaut wie `actions`; jede nennt ihren Auslöser."
+
+  legendary-actions:
+    slot: front-legendary-actions
+    aliases: [legendaryactions, legendäre-aktionen, legendaere-aktionen]
+    description:
+      en: "The legendary actions — the same shape as `actions`; the preamble (`Legendary Action Uses: 3`) is a first entry with only a `desc`."
+      de: "Die legendären Aktionen — so aufgebaut wie `actions`; die Einleitung (`Legendäre Aktionen: 3`) ist ein erster Eintrag nur mit `desc`."
+
+  lair-actions:
+    slot: front-lair-actions
+    aliases: [lairactions, hort-aktionen]
+    description:
+      en: "The lair actions of the 2014 rules — the same shape as `legendary-actions`, the preamble first."
+      de: "Die Hortaktionen der Regeln von 2014 — so aufgebaut wie `legendary-actions`, die Einleitung zuerst."
+
+  regional-effects:
+    slot: front-regional-effects
+    aliases: [regionaleffects, regionale-effekte]
+    description:
+      en: "The regional effects of the 2014 rules — the same shape as `legendary-actions`, the preamble first."
+      de: "Die regionalen Effekte der Regeln von 2014 — so aufgebaut wie `legendary-actions`, die Einleitung zuerst."
+
+  image:
+    slot: back-image
+    aliases: [bild]
+    description:
+      en: "The creature's picture — a wikilink to a picture in the vault — on the back under the label. Without one the back shows a d20."
+      de: "Das Bild der Kreatur — ein Wikilink auf ein Bild im Vault — auf der Rückseite unter der Beschriftung. Ohne Bild zeigt die Rückseite einen W20."
+    sample: "[[Cinder-Hound.png]]"
+
+# ── What the card derives ─────────────────────────────────────────────
+classifiers:
+  # The modifier of a score, `15` or `15 (+2)` alike: the score's
+  # leading number, looked up. A missing score prints as a dash.
+  front-str-mod: &modifier
+    match:
+      - { pattern: "^(1)(?!\\d)", token: "−5" }
+      - { pattern: "^(2|3)(?!\\d)", token: "−4" }
+      - { pattern: "^(4|5)(?!\\d)", token: "−3" }
+      - { pattern: "^(6|7)(?!\\d)", token: "−2" }
+      - { pattern: "^(8|9)(?!\\d)", token: "−1" }
+      - { pattern: "^(10|11)(?!\\d)", token: "+0" }
+      - { pattern: "^(12|13)(?!\\d)", token: "+1" }
+      - { pattern: "^(14|15)(?!\\d)", token: "+2" }
+      - { pattern: "^(16|17)(?!\\d)", token: "+3" }
+      - { pattern: "^(18|19)(?!\\d)", token: "+4" }
+      - { pattern: "^(20|21)(?!\\d)", token: "+5" }
+      - { pattern: "^(22|23)(?!\\d)", token: "+6" }
+      - { pattern: "^(24|25)(?!\\d)", token: "+7" }
+      - { pattern: "^(26|27)(?!\\d)", token: "+8" }
+      - { pattern: "^(28|29)(?!\\d)", token: "+9" }
+      - { pattern: "^(30)(?!\\d)", token: "+10" }
+    default: "—"
+  front-dex-mod: *modifier
+  front-con-mod: *modifier
+  front-int-mod: *modifier
+  front-wis-mod: *modifier
+  front-cha-mod: *modifier
+
+  # The score alone, when the note wrote it with its modifier.
+  front-str-score: &score
+    match:
+      - { pattern: "^1(?!\\d)", token: "1" }
+      - { pattern: "^2(?!\\d)", token: "2" }
+      - { pattern: "^3(?!\\d)", token: "3" }
+      - { pattern: "^4(?!\\d)", token: "4" }
+      - { pattern: "^5(?!\\d)", token: "5" }
+      - { pattern: "^6(?!\\d)", token: "6" }
+      - { pattern: "^7(?!\\d)", token: "7" }
+      - { pattern: "^8(?!\\d)", token: "8" }
+      - { pattern: "^9(?!\\d)", token: "9" }
+      - { pattern: "^10(?!\\d)", token: "10" }
+      - { pattern: "^11(?!\\d)", token: "11" }
+      - { pattern: "^12(?!\\d)", token: "12" }
+      - { pattern: "^13(?!\\d)", token: "13" }
+      - { pattern: "^14(?!\\d)", token: "14" }
+      - { pattern: "^15(?!\\d)", token: "15" }
+      - { pattern: "^16(?!\\d)", token: "16" }
+      - { pattern: "^17(?!\\d)", token: "17" }
+      - { pattern: "^18(?!\\d)", token: "18" }
+      - { pattern: "^19(?!\\d)", token: "19" }
+      - { pattern: "^20(?!\\d)", token: "20" }
+      - { pattern: "^21(?!\\d)", token: "21" }
+      - { pattern: "^22(?!\\d)", token: "22" }
+      - { pattern: "^23(?!\\d)", token: "23" }
+      - { pattern: "^24(?!\\d)", token: "24" }
+      - { pattern: "^25(?!\\d)", token: "25" }
+      - { pattern: "^26(?!\\d)", token: "26" }
+      - { pattern: "^27(?!\\d)", token: "27" }
+      - { pattern: "^28(?!\\d)", token: "28" }
+      - { pattern: "^29(?!\\d)", token: "29" }
+      - { pattern: "^30(?!\\d)", token: "30" }
+    default: "—"
+  front-dex-score: *score
+  front-con-score: *score
+  front-int-score: *score
+  front-wis-score: *score
+  front-cha-score: *score
+
+  # The initiative from Dexterity where the note sets none: the
+  # modifier, and the passive initiative, 10 + the modifier.
+  front-dex-initiative:
+    match:
+      - { pattern: "^(1)(?!\\d)", token: "−5 (5)" }
+      - { pattern: "^(2|3)(?!\\d)", token: "−4 (6)" }
+      - { pattern: "^(4|5)(?!\\d)", token: "−3 (7)" }
+      - { pattern: "^(6|7)(?!\\d)", token: "−2 (8)" }
+      - { pattern: "^(8|9)(?!\\d)", token: "−1 (9)" }
+      - { pattern: "^(10|11)(?!\\d)", token: "+0 (10)" }
+      - { pattern: "^(12|13)(?!\\d)", token: "+1 (11)" }
+      - { pattern: "^(14|15)(?!\\d)", token: "+2 (12)" }
+      - { pattern: "^(16|17)(?!\\d)", token: "+3 (13)" }
+      - { pattern: "^(18|19)(?!\\d)", token: "+4 (14)" }
+      - { pattern: "^(20|21)(?!\\d)", token: "+5 (15)" }
+      - { pattern: "^(22|23)(?!\\d)", token: "+6 (16)" }
+      - { pattern: "^(24|25)(?!\\d)", token: "+7 (17)" }
+      - { pattern: "^(26|27)(?!\\d)", token: "+8 (18)" }
+      - { pattern: "^(28|29)(?!\\d)", token: "+9 (19)" }
+      - { pattern: "^(30)(?!\\d)", token: "+10 (20)" }
+
+  # The initiative the note sets, `+7` or `+7 (17)`: the modifier, and
+  # the passive initiative after it.
+  front-initiative-mod:
+    match:
+      - { pattern: "^[-−]5(?!\\d)", token: "−5" }
+      - { pattern: "^[-−]4(?!\\d)", token: "−4" }
+      - { pattern: "^[-−]3(?!\\d)", token: "−3" }
+      - { pattern: "^[-−]2(?!\\d)", token: "−2" }
+      - { pattern: "^[-−]1(?!\\d)", token: "−1" }
+      - { pattern: "^\\+?0(?!\\d)", token: "+0" }
+      - { pattern: "^\\+?1(?!\\d)", token: "+1" }
+      - { pattern: "^\\+?2(?!\\d)", token: "+2" }
+      - { pattern: "^\\+?3(?!\\d)", token: "+3" }
+      - { pattern: "^\\+?4(?!\\d)", token: "+4" }
+      - { pattern: "^\\+?5(?!\\d)", token: "+5" }
+      - { pattern: "^\\+?6(?!\\d)", token: "+6" }
+      - { pattern: "^\\+?7(?!\\d)", token: "+7" }
+      - { pattern: "^\\+?8(?!\\d)", token: "+8" }
+      - { pattern: "^\\+?9(?!\\d)", token: "+9" }
+      - { pattern: "^\\+?10(?!\\d)", token: "+10" }
+      - { pattern: "^\\+?11(?!\\d)", token: "+11" }
+      - { pattern: "^\\+?12(?!\\d)", token: "+12" }
+      - { pattern: "^\\+?13(?!\\d)", token: "+13" }
+      - { pattern: "^\\+?14(?!\\d)", token: "+14" }
+      - { pattern: "^\\+?15(?!\\d)", token: "+15" }
+      - { pattern: "^\\+?16(?!\\d)", token: "+16" }
+      - { pattern: "^\\+?17(?!\\d)", token: "+17" }
+      - { pattern: "^\\+?18(?!\\d)", token: "+18" }
+      - { pattern: "^\\+?19(?!\\d)", token: "+19" }
+      - { pattern: "^\\+?20(?!\\d)", token: "+20" }
+  front-initiative-passive:
+    match:
+      - { pattern: "^[-−]5(?!\\d)", token: "5" }
+      - { pattern: "^[-−]4(?!\\d)", token: "6" }
+      - { pattern: "^[-−]3(?!\\d)", token: "7" }
+      - { pattern: "^[-−]2(?!\\d)", token: "8" }
+      - { pattern: "^[-−]1(?!\\d)", token: "9" }
+      - { pattern: "^\\+?0(?!\\d)", token: "10" }
+      - { pattern: "^\\+?1(?!\\d)", token: "11" }
+      - { pattern: "^\\+?2(?!\\d)", token: "12" }
+      - { pattern: "^\\+?3(?!\\d)", token: "13" }
+      - { pattern: "^\\+?4(?!\\d)", token: "14" }
+      - { pattern: "^\\+?5(?!\\d)", token: "15" }
+      - { pattern: "^\\+?6(?!\\d)", token: "16" }
+      - { pattern: "^\\+?7(?!\\d)", token: "17" }
+      - { pattern: "^\\+?8(?!\\d)", token: "18" }
+      - { pattern: "^\\+?9(?!\\d)", token: "19" }
+      - { pattern: "^\\+?10(?!\\d)", token: "20" }
+      - { pattern: "^\\+?11(?!\\d)", token: "21" }
+      - { pattern: "^\\+?12(?!\\d)", token: "22" }
+      - { pattern: "^\\+?13(?!\\d)", token: "23" }
+      - { pattern: "^\\+?14(?!\\d)", token: "24" }
+      - { pattern: "^\\+?15(?!\\d)", token: "25" }
+      - { pattern: "^\\+?16(?!\\d)", token: "26" }
+      - { pattern: "^\\+?17(?!\\d)", token: "27" }
+      - { pattern: "^\\+?18(?!\\d)", token: "28" }
+      - { pattern: "^\\+?19(?!\\d)", token: "29" }
+      - { pattern: "^\\+?20(?!\\d)", token: "30" }
+
+  # The proficiency bonus by challenge rating, where the note sets none.
+  front-cr-pb:
+    match:
+      - { pattern: "^(0|1/8|1/4|1/2|[1-4])$", token: "+2" }
+      - { pattern: "^[5-8]$", token: "+3" }
+      - { pattern: "^(9|1[0-2])$", token: "+4" }
+      - { pattern: "^1[3-6]$", token: "+5" }
+      - { pattern: "^(1[7-9]|20)$", token: "+6" }
+      - { pattern: "^2[1-4]$", token: "+7" }
+      - { pattern: "^2[5-8]$", token: "+8" }
+      - { pattern: "^(29|30)$", token: "+9" }

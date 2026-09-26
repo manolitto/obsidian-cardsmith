@@ -1,0 +1,13 @@
+Aschezeichen · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   p.dd-subtitle "Erkenntnismagie des 1. Grades (Ritual)"
+   svg.dd-rule
+   p.dd-line "Zeitaufwand: 1 Minute"
+   p.dd-line "Reichweite: Selbst"
+   p.dd-line "Komponenten: V, G, M (eine Prise …"
+   p.dd-line "Wirkungsdauer: Konzentration, bis zu 10 Minuten"
+   svg.dd-rule
+   div.dd-text
+     p "Du streust Asche in die Luft. …"
+   p.dd-entry "Auf höheren Graden Für jeden Zauberplatzgrad …"
+2. back [cs-layout-default] scale —

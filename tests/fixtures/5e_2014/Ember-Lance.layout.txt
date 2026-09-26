@@ -1,0 +1,14 @@
+Ember-Lance · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   p.dd-subtitle "2nd-level evocation"
+   svg.dd-rule
+   p.dd-line "Casting Time: 1 action"
+   p.dd-line "Range: 60 feet"
+   p.dd-line "Components: V, S, M (a pinch …"
+   p.dd-line "Duration: Concentration, up to 1 minute"
+   svg.dd-rule
+   div.dd-text
+     p "A lance of white-hot ash strikes …"
+     p "Until the spell ends, the target …"
+   p.dd-entry "At Higher Levels When you cast …"
+2. back [cs-layout-default] scale —

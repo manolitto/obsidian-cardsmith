@@ -1,0 +1,83 @@
+{{!--
+  5E (2024) — the creature front: the stat block as the 2024 rules
+  print it, then the legendary sections where they are set.
+
+    front-size, front-type, front-alignment   the italic line under the
+                                              name
+    front-ac, front-initiative-*              one line; the initiative
+                                              the note sets, else the
+                                              Dexterity modifier, the
+                                              passive after it
+    front-hp, front-speed                     a line each
+    front-*-score, front-*-mod, front-*-save  the table in two halves,
+                                              STR DEX CON | INT WIS CHA;
+                                              the score and modifier
+                                              from the classifiers, the
+                                              save the note's or the
+                                              modifier
+    front-skills … front-languages            the lines that are set;
+                                              damage and condition
+                                              immunities on one
+    front-cr, front-xp,                       CR 10 (XP 5,900; PB +4);
+    front-proficiency-bonus, front-cr-pb      the bonus the note's or
+                                              the rating's
+    front-habitat, front-treasure             lines under the block
+    front-traits … front-regional-effects     sections under their heads
+--}}
+<div class="card-root card-front ff creature-card">
+  <div class="ff-band"></div>
+  <div class="card-header ff-header">
+    <div class="card-title ff-title"><span class="text-scalable">{{slot "front-title" plain=true}}<span class="cs-overflow-counter"></span></span></div>
+  </div>
+  <div class="card-content-container">
+    <div class="card-body-scalable">
+    {{#if (or (slot "front-size") (slot "front-type") (slot "front-alignment"))}}
+    <p class="ff-subtitle">{{#if (slot "front-size")}}{{slot "front-size" plain=true}}{{/if}}{{#if (slot "front-type")}}{{#if (slot "front-size")}} {{/if}}{{slot "front-type" plain=true}}{{/if}}{{#if (slot "front-alignment")}}, {{slot "front-alignment" plain=true}}{{/if}}</p>
+    {{/if}}
+
+    <div class="ff-block">
+    {{#if (or (slot "front-ac") (slot "front-initiative-mod") (slot "front-dex-initiative"))}}
+    <p class="ff-line">{{#if (slot "front-ac")}}<span class="ff-label">{{slot-label "front-ac"}}</span> {{slot "front-ac"}}{{/if}}{{#if (or (slot "front-initiative-mod") (slot "front-dex-initiative"))}}<span class="ff-gap"></span><span class="ff-label">{{slot-label "front-initiative-mod"}}</span> {{#if (slot "front-initiative-mod")}}{{#if (slot-class "front-initiative-mod")}}{{slot-class "front-initiative-mod"}} ({{slot-class "front-initiative-passive"}}){{else}}{{slot "front-initiative-mod" plain=true signed=true}}{{/if}}{{else}}{{slot-class "front-dex-initiative"}}{{/if}}{{/if}}</p>
+    {{/if}}
+    {{> line for="front-hp"}}
+    {{> line for="front-speed"}}
+
+    <div class="ff-abilities cs-keep-together">
+  <table class="ff-abilities-physical">
+    <tr class="ff-ab-head"><th></th><th></th><th>{{t "mod-label"}}</th><th>{{t "save-label"}}</th></tr>
+    <tr><th class="ff-ab-name">{{slot-label "front-str-score"}}</th><td class="ff-ab-score">{{slot-class "front-str-score"}}</td><td class="ff-ab-mod">{{slot-class "front-str-mod"}}</td><td class="ff-ab-save">{{#if (slot "front-str-save")}}{{slot "front-str-save" plain=true signed=true}}{{else}}{{slot-class "front-str-mod"}}{{/if}}</td></tr>
+    <tr><th class="ff-ab-name">{{slot-label "front-dex-score"}}</th><td class="ff-ab-score">{{slot-class "front-dex-score"}}</td><td class="ff-ab-mod">{{slot-class "front-dex-mod"}}</td><td class="ff-ab-save">{{#if (slot "front-dex-save")}}{{slot "front-dex-save" plain=true signed=true}}{{else}}{{slot-class "front-dex-mod"}}{{/if}}</td></tr>
+    <tr><th class="ff-ab-name">{{slot-label "front-con-score"}}</th><td class="ff-ab-score">{{slot-class "front-con-score"}}</td><td class="ff-ab-mod">{{slot-class "front-con-mod"}}</td><td class="ff-ab-save">{{#if (slot "front-con-save")}}{{slot "front-con-save" plain=true signed=true}}{{else}}{{slot-class "front-con-mod"}}{{/if}}</td></tr>
+  </table>
+  <table class="ff-abilities-mental">
+    <tr class="ff-ab-head"><th></th><th></th><th>{{t "mod-label"}}</th><th>{{t "save-label"}}</th></tr>
+    <tr><th class="ff-ab-name">{{slot-label "front-int-score"}}</th><td class="ff-ab-score">{{slot-class "front-int-score"}}</td><td class="ff-ab-mod">{{slot-class "front-int-mod"}}</td><td class="ff-ab-save">{{#if (slot "front-int-save")}}{{slot "front-int-save" plain=true signed=true}}{{else}}{{slot-class "front-int-mod"}}{{/if}}</td></tr>
+    <tr><th class="ff-ab-name">{{slot-label "front-wis-score"}}</th><td class="ff-ab-score">{{slot-class "front-wis-score"}}</td><td class="ff-ab-mod">{{slot-class "front-wis-mod"}}</td><td class="ff-ab-save">{{#if (slot "front-wis-save")}}{{slot "front-wis-save" plain=true signed=true}}{{else}}{{slot-class "front-wis-mod"}}{{/if}}</td></tr>
+    <tr><th class="ff-ab-name">{{slot-label "front-cha-score"}}</th><td class="ff-ab-score">{{slot-class "front-cha-score"}}</td><td class="ff-ab-mod">{{slot-class "front-cha-mod"}}</td><td class="ff-ab-save">{{#if (slot "front-cha-save")}}{{slot "front-cha-save" plain=true signed=true}}{{else}}{{slot-class "front-cha-mod"}}{{/if}}</td></tr>
+  </table>
+    </div>
+
+    {{> line for="front-skills"}}
+    {{> line for="front-vulnerabilities"}}
+    {{> line for="front-resistances"}}
+    {{#if (or (slot "front-immunities") (slot "front-condition-immunities"))}}<p class="ff-line"><span class="ff-label">{{slot-label "front-immunities"}}</span> {{#if (slot "front-immunities")}}{{slot "front-immunities"}}{{#if (slot "front-condition-immunities")}}; {{/if}}{{/if}}{{slot "front-condition-immunities"}}</p>{{/if}}
+    {{> line for="front-gear"}}
+    {{> line for="front-senses"}}
+    {{> line for="front-languages"}}
+    {{#if (slot "front-cr")}}<p class="ff-line"><span class="ff-label">{{slot-label "front-cr"}}</span> {{slot "front-cr" plain=true}}{{#if (or (slot "front-xp") (slot "front-proficiency-bonus") (slot-class "front-cr-pb"))}} ({{#if (slot "front-xp")}}{{slot-label "front-xp"}} {{slot "front-xp" plain=true}}{{#if (or (slot "front-proficiency-bonus") (slot-class "front-cr-pb"))}}; {{/if}}{{/if}}{{#if (slot "front-proficiency-bonus")}}{{slot-label "front-proficiency-bonus"}} {{slot "front-proficiency-bonus" plain=true signed=true}}{{else if (slot-class "front-cr-pb")}}{{slot-label "front-proficiency-bonus"}} {{slot-class "front-cr-pb"}}{{/if}}){{/if}}</p>{{/if}}
+    </div>
+
+    {{> entries for="front-traits"}}
+    {{> entries for="front-actions"}}
+    {{> entries for="front-bonus-actions"}}
+    {{> entries for="front-reactions"}}
+    {{> entries for="front-legendary-actions"}}
+    {{> entries for="front-lair-actions"}}
+    {{> entries for="front-regional-effects"}}
+
+    {{#if (or (slot "front-habitat") (slot "front-treasure"))}}
+    <p class="ff-footnote">{{#if (slot "front-habitat")}}<span class="ff-label">{{slot-label "front-habitat"}}</span> {{slot "front-habitat"}}{{/if}}{{#if (slot "front-treasure")}}{{#if (slot "front-habitat")}}<span class="ff-gap"></span>{{/if}}<span class="ff-label">{{slot-label "front-treasure"}}</span> {{slot "front-treasure"}}{{/if}}</p>
+    {{/if}}
+    </div>
+  </div>
+</div>

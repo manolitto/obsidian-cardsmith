@@ -153,7 +153,7 @@ range: a row `2–3` becomes two cards, `2` and `3`.
 A picture is a wikilink to an image in the vault, in whichever property
 the system shows one:
 
-```yaml from=tests/fixtures/5e/Cinder-Hound.md
+```yaml from=tests/fixtures/5e_2014/Cinder-Hound.md
   image: "[[Cinder-Hound.png]]"
 ```
 

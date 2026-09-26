@@ -1,0 +1,39 @@
+{{!--
+  5E (2024) — the spell front.
+
+    front-level, front-school,      the italic line under the name:
+    front-school-cantrip,           level and school spelt out by the
+    front-classes                   glyph tables, in the order the
+                                    language puts them, the classes in
+                                    parentheses
+    front-casting-time, -ritual     "Action or Ritual"
+    front-range, front-components   a line each
+    front-duration, -concentration  "Concentration, up to 1 minute"
+    front-description               the text
+    front-higher-levels,            paragraphs led by their captions in
+    front-cantrip-upgrade           bold italics
+--}}
+<div class="card-root card-front ff spell-card">
+  <div class="ff-band"></div>
+  <div class="card-header ff-header">
+    <div class="card-title ff-title"><span class="text-scalable">{{slot "front-title" plain=true}}<span class="cs-overflow-counter"></span></span></div>
+  </div>
+  <div class="card-content-container">
+    <div class="card-body-scalable">
+    {{#if (or (slot "front-level") (slot "front-school"))}}
+    <p class="ff-subtitle">{{#if (eq (slot "front-level" plain=true) "0")}}{{#if (eq (t "spell-order-cantrip") "school-first")}}{{slot "front-school-cantrip" plain=true glyph=true}} {{slot "front-level" plain=true glyph=true}}{{else}}{{slot "front-level" plain=true glyph=true}} {{slot "front-school-cantrip" plain=true glyph=true}}{{/if}}{{else}}{{#if (eq (t "spell-order-leveled") "level-first")}}{{slot "front-level" plain=true glyph=true}} {{slot "front-school" plain=true glyph=true}}{{else}}{{slot "front-school" plain=true glyph=true}} {{slot "front-level" plain=true glyph=true}}{{/if}}{{/if}}{{#if (slot "front-classes")}} ({{slot "front-classes" plain=true}}){{/if}}</p>
+    {{/if}}
+
+    <div class="ff-block ff-spell-lines">
+    {{#if (slot "front-casting-time")}}<p class="ff-line"><span class="ff-label">{{slot-label "front-casting-time"}}</span> {{slot "front-casting-time"}}{{#if (eq (slot "front-ritual" plain=true) "true")}} {{t "ritual"}}{{/if}}</p>{{/if}}
+    {{> line for="front-range"}}
+    {{> line for="front-components"}}
+    {{#if (slot "front-duration")}}<p class="ff-line"><span class="ff-label">{{slot-label "front-duration"}}</span> {{#if (eq (slot "front-concentration" plain=true) "true")}}{{t "concentration"}} {{/if}}{{slot "front-duration"}}</p>{{/if}}
+    </div>
+
+    <div class="ff-text">{{slot "front-description" markdown="block"}}</div>
+    {{#if (slot "front-higher-levels")}}<p class="ff-entry"><span class="ff-entry-name">{{slot-label "front-higher-levels"}}</span>{{slot "front-higher-levels"}}</p>{{/if}}
+    {{#if (slot "front-cantrip-upgrade")}}<p class="ff-entry"><span class="ff-entry-name">{{slot-label "front-cantrip-upgrade"}}</span>{{slot "front-cantrip-upgrade"}}</p>{{/if}}
+    </div>
+  </div>
+</div>
