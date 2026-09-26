@@ -21,11 +21,11 @@ Every bundled font is redistributable under an open licence, and the
 licence text travels beside the font files in its system's `fonts/`
 folder. The files are WOFF2 — the plugin embeds every font in `main.js` —
 and most are the `latin` / `latin-ext` subsets as Google Fonts serves them.
-No glyph, metric or name-table data was altered.
+No glyph, metric or name-table data was altered, except where a row says so.
 
 | Font | Systems | Licence | Licence file |
 |---|---|---|---|
-| Bookinsanity, Mr Eaves Small Caps, Nodesto Caps Condensed, Scaly Sans — the *Solbera* fonts, packaged by jonathonf | 5e_2014 | CC BY-SA 4.0 | `5e_2014/fonts/solbera-LICENSE.txt` — with the attribution and the stated modification (OpenType → WOFF2, renamed). Share-alike binds the font files; the templates and stylesheets only reference them |
+| Bookinsanity, Mr Eaves Small Caps, Nodesto Caps Condensed, Scaly Sans — the *Solbera* fonts, packaged by jonathonf | 5e_2014 | CC BY-SA 4.0 | `5e_2014/fonts/solbera-LICENSE.txt` — with the attribution and the stated modifications (OpenType → WOFF2, renamed; ä ö ü Ä Ö Ü ß added to Nodesto Caps Condensed, composed from its own outlines). Share-alike binds the font files; the templates and stylesheets only reference them |
 | Alegreya, Alegreya SC (bold) | 5e_2024 | SIL OFL 1.1 | `5e_2024/fonts/alegreya-OFL.txt` — one licence text, the same for both families; the `latin` subsets only |
 | Alegreya Sans | dragonbane | SIL OFL 1.1 | `dragonbane/fonts/alegreya-sans-OFL.txt` |
 | Archivo Black | eiserne-zeit | SIL OFL 1.1 | `eiserne-zeit/fonts/archivo-black-OFL.txt` |

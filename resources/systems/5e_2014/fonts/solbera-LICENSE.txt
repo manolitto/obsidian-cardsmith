@@ -23,8 +23,12 @@ Families in this folder and what the card system uses them for:
 Modifications, as CC BY-SA 4.0 section 3(a)(1)(B) asks them to be stated:
 the upstream release ships OpenType (.otf); these files are the same fonts
 recompressed into the WOFF2 container with woff2_compress and renamed to
-the pattern above. No glyph, metric, name-table or hinting data was
-altered. Nothing else has been changed.
+the pattern above. Nodesto Caps Condensed, which has no German letters,
+gained seven glyphs in each of its four styles, composed from its own
+outlines by scripts/fonts/nodesto-umlauts.py in the plugin's repository:
+ä ö ü Ä Ö Ü (the base letter under two scaled copies of the font's full
+stop) and ß (two of the font's s). No other glyph, metric, name-table or
+hinting data was altered. Nothing else has been changed.
 
 Share-alike attaches to derivatives of the fonts. The card system's
 templates and stylesheets are not derivatives of the font files; they
