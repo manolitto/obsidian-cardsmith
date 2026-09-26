@@ -246,7 +246,7 @@ describe.each([
   "tor2e",
   "sw",
   "troubleshooters",
-  "5e",
+  "5e_2014",
   "dftq",
 ])("the %s deck composes", (system) => {
   it("as its composition golden says", async () => {

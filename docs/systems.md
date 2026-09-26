@@ -134,13 +134,20 @@ Cards for *The Troubleshooters*: a comic-book title face and three frames —
 
 <img src="images/cards/troubleshooters/npc.webp" alt="troubleshooters npc card, front and back" width="360"> <img src="images/cards/troubleshooters/mechanic.webp" alt="troubleshooters mechanic card, front and back" width="360"> <img src="images/cards/troubleshooters/gear.webp" alt="troubleshooters gear card, front and back" width="360">
 
-## 5e
+## 5e_2014
 
-Cards for fifth-edition play, on the SRD 5.1 vocabulary: a stat block with
-the classic bar and a d20 on the back. Card types `monster` (the block,
-then the sections a legendary creature adds) and `npc`. Large; `en`.
+Cards for fifth-edition play under the 2014 rules, on the SRD 5.1
+vocabulary: a stat block with the classic bar and a d20 on the back.
+Card type `creature` — monsters and non-player characters alike, the
+sections a legendary creature adds printed where they are set. The label
+on the back is the note's `back-label` (`NPC`, say), else *Bestiary*.
+Large; `en`.
 
-<img src="images/cards/5e/monster.webp" alt="5e monster card, front and back" width="360"> <img src="images/cards/5e/npc.webp" alt="5e npc card, front and back" width="360">
+A card moves to the other edition by changing `system:` and nothing else:
+the edition that does not print a property — the initiative, the habitat,
+the treasure, the gear here — leaves it unprinted, and keeps it.
+
+<img src="images/cards/5e_2014/creature.webp" alt="5e_2014 creature card, front and back" width="360">
 
 ## dftq
 

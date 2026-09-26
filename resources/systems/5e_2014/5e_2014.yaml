@@ -1,0 +1,84 @@
+id: 5e_2014
+name: "5E (2014)"
+
+# The stat block of the fifth-edition SRD 5.1 as it is printed:
+# parchment, dark-red headings, tapered red rules between the sections,
+# an orange bar at the top and the foot, six ability scores in a row.
+# Bookinsanity for the text, Mr Eaves Small Caps for the section heads,
+# Scaly Sans for the scores, Nodesto Caps Condensed for the title.
+# English only. The system carries no publisher's mark or wordmark; the
+# sample values are invented.
+#
+# One of two editions of the same game: 5E (2024) is the other. A card
+# note moves between them by changing `system:` and nothing else — same
+# card types, same properties, same aliases, same value formats
+# (`tests/fifth-edition.test.ts` holds both to that). This edition leaves
+# unprinted what its books do not print: the initiative, the habitat,
+# the treasure, the gear.
+#
+# One creature card type for monsters and non-player characters: the
+# legendary sections print when they are set. It prints on a large card;
+# a dense block shrinks far before it spills. The back is the picture
+# between the orange bars, or a d20 with the back label where there is
+# none.
+languages: [en]
+
+stylesheet: styles/5e_2014.css
+
+partial-templates:
+  statblock: templates/statblock.hbs
+  entries: templates/entries.hbs
+  rule: templates/rule.hbs
+
+card-size: large
+
+# ── Shared vocabulary ─────────────────────────────────────────────────
+properties:
+  name:
+    slot: [front-title, back-title]
+    description:
+      en: "The card's name. Falls back to the file name."
+
+  back-label:
+    slot: back-heading
+    aliases: [back-caption, rückseite, rueckseite]
+    description:
+      en: "The label on the back — above the picture, or under the d20 — `Bestiary`, `NPC`. Without it the card type's own."
+
+translations:
+  en:
+    front-ac-label: "Armor Class"
+    front-hp-label: "Hit Points"
+    front-speed-label: "Speed"
+    front-str-label: "STR"
+    front-dex-label: "DEX"
+    front-con-label: "CON"
+    front-int-label: "INT"
+    front-wis-label: "WIS"
+    front-cha-label: "CHA"
+    front-saves-label: "Saving Throws"
+    front-str-save-label: "Str"
+    front-dex-save-label: "Dex"
+    front-con-save-label: "Con"
+    front-int-save-label: "Int"
+    front-wis-save-label: "Wis"
+    front-cha-save-label: "Cha"
+    front-skills-label: "Skills"
+    front-vulnerabilities-label: "Damage Vulnerabilities"
+    front-resistances-label: "Damage Resistances"
+    front-immunities-label: "Damage Immunities"
+    front-condition-immunities-label: "Condition Immunities"
+    front-senses-label: "Senses"
+    front-languages-label: "Languages"
+    front-cr-label: "Challenge"
+    front-xp-label: "XP"
+    front-proficiency-bonus-label: "Proficiency Bonus"
+    front-actions-label: "Actions"
+    front-bonus-actions-label: "Bonus Actions"
+    front-reactions-label: "Reactions"
+    front-legendary-actions-label: "Legendary Actions"
+    front-lair-actions-label: "Lair Actions"
+    front-regional-effects-label: "Regional Effects"
+
+card-types:
+  creature: card-types/creature.yaml

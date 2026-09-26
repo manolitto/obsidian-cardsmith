@@ -69,7 +69,7 @@ describe.each([
   "tor2e",
   "sw",
   "troubleshooters",
-  "5e",
+  "5e_2014",
   "dftq",
 ])("the %s deck's document", (system) => {
   it("measures as the composition says: paper, pages, every cell in place", async () => {

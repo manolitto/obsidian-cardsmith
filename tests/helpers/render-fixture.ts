@@ -140,7 +140,7 @@ export async function writePreview(
 // ── The pieces ──────────────────────────────────────────────────────
 
 /** Pictures come from the fixture folder, by the link's basename. */
-const fixtureImages: ImageSource = {
+export const fixtureImages: ImageSource = {
   async resolve(link, fromNotePath) {
     const file = join(fromNotePath, "..", basename(link.replace(/#.*$/, "")));
     if (!existsSync(file)) return undefined;

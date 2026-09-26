@@ -34,7 +34,7 @@ describe.each([
   "tor2e",
   "sw",
   "troubleshooters",
-  "5e",
+  "5e_2014",
   "dftq",
 ])("the %s deck prints", (system) => {
   it("to as many pages as it composed, on the paper it said", async () => {
