@@ -250,7 +250,15 @@
 /* The free text of a generic card: what the note's markdown writes.
    A `###` inside it is a section head; a table has a caption row in
    the card type's colour. `##` never reaches the card — it starts a
-   section of the note. */
+   section of the note.
+   Free prose sets narrow: a long word — a German compound above all —
+   hyphenates in the card's language (the renderer stamps `lang=` on
+   `.card-root`), and a word no dictionary can break still wraps
+   rather than running past the edge. */
+.ff-generic-body {
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
 .ff-generic-body > :first-child {
   margin-top: 0;
 }
