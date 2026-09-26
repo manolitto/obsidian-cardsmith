@@ -1,0 +1,38 @@
+{{!--
+  5E (2024) — the item front.
+
+    front-category, front-rarity,   the italic line under the name:
+    front-attunement                "Wondrous Item, Rare (Requires
+                                    Attunement by a Wizard)"; `true`
+                                    prints the caption alone
+    front-damage … front-cost       the statistics, a line each, where
+                                    set, between two rules
+    front-description               the text
+--}}
+<div class="card-root card-front ff item-card">
+  <div class="ff-band"></div>
+  <div class="card-header ff-header">
+    <div class="card-title ff-title"><span class="text-scalable">{{slot "front-title" plain=true}}<span class="cs-overflow-counter"></span></span></div>
+  </div>
+  <div class="card-content-container">
+    <div class="card-body-scalable">
+    {{#if (or (slot "front-category") (slot "front-rarity") (slot "front-attunement"))}}
+    <p class="ff-subtitle">{{slot "front-category" plain=true}}{{#if (slot "front-rarity")}}{{#if (slot "front-category")}}, {{/if}}{{slot "front-rarity" plain=true}}{{/if}}{{#if (slot "front-attunement")}}{{#if (eq (slot "front-attunement" plain=true) "false")}}{{else}} ({{t "attunement"}}{{#if (eq (slot "front-attunement" plain=true) "true")}}{{else}} {{slot "front-attunement" plain=true}}{{/if}}){{/if}}{{/if}}</p>
+    {{/if}}
+
+    {{#if (or (slot "front-damage") (slot "front-properties") (slot "front-mastery") (slot "front-ac") (slot "front-strength") (slot "front-stealth") (slot "front-weight") (slot "front-cost"))}}
+    <div class="ff-block ff-item-stats">
+    {{> line for="front-damage"}}
+    {{> line for="front-properties"}}
+    {{> line for="front-mastery"}}
+    {{> line for="front-ac"}}
+    {{> line for="front-strength"}}
+    {{> line for="front-stealth"}}
+    {{#if (or (slot "front-weight") (slot "front-cost"))}}<p class="ff-line">{{#if (slot "front-weight")}}<span class="ff-label">{{slot-label "front-weight"}}</span> {{slot "front-weight"}}{{/if}}{{#if (slot "front-cost")}}{{#if (slot "front-weight")}}<span class="ff-gap"></span>{{/if}}<span class="ff-label">{{slot-label "front-cost"}}</span> {{slot "front-cost"}}{{/if}}</p>{{/if}}
+    </div>
+    {{/if}}
+
+    <div class="ff-text">{{slot "front-description" markdown="block"}}</div>
+    </div>
+  </div>
+</div>

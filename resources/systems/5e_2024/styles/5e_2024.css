@@ -1,0 +1,314 @@
+/* ── 5E (2024) — the system stylesheet ─────────────────────────────
+   The block as the 2024 books print it, on flat cream paper: the name in
+   small capitals in the card type's colour, a band of that colour on
+   top, captions in bold, the abilities in a table of two tinted halves,
+   section heads in small capitals over a rule. Each card type brings
+   its colour: creature wine red, spell indigo, item forest green.
+   Alegreya for the text, Alegreya SC for the name and the heads. Sizes
+   are `em` and `%` throughout; the plain back sizes its mark in `cqw`. */
+
+/* ── Fonts — Alegreya and Alegreya SC, SIL OFL 1.1, fonts/alegreya-OFL.txt ──
+   The latin subsets only, which hold both languages the system prints —
+   and the bold of Alegreya SC only, the one weight it is set in. A
+   letter outside them falls back to the serif. */
+
+@font-face {
+  font-family: "Alegreya";
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url("fonts/alegreya-normal-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Alegreya";
+  font-style: italic;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url("fonts/alegreya-italic-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Alegreya SC";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("fonts/alegreya-sc-bold-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ── The palette and the type ──────────────────────────────────────── */
+
+.card-root.ff {
+  --ff-paper: #f6efe1;
+  --ff-ink: #2b1d14;
+  /* The card type's colour, and the two tints of the ability table:
+     the physical half warm, the mental half cool. */
+  --ff-accent: #7a2a1f;
+  --ff-tint: #efe2ca;
+  --ff-tint-strong: #e5d2b1;
+  --ff-tint-cool: #e7e5ec;
+  --ff-tint-cool-strong: #d9d6e2;
+
+  --ff-font-body: "Alegreya", serif;
+  --ff-font-display: "Alegreya SC", serif;
+
+  /* A creature with legendary actions shrinks far before it spills. */
+  --card-font-size-min: 1.4mm;
+  --ff-font-size-title: clamp(var(--card-font-size-title-min), calc(var(--card-width, 63mm) * 0.075), var(--card-font-size-title-max));
+
+  font-family: var(--ff-font-body);
+  font-size: clamp(var(--card-font-size-min), calc(var(--card-width, 63mm) * 0.044), var(--card-font-size-max));
+  line-height: 1.25;
+  color: var(--ff-ink);
+  background: var(--ff-paper);
+  border: 0.12em solid var(--ff-accent);
+  border-radius: 0.5em;
+  overflow: hidden;
+  font-variant-numeric: lining-nums;
+}
+
+.card-root.ff.spell-card {
+  --ff-accent: #3b3a78;
+}
+.card-root.ff.item-card {
+  --ff-accent: #3e5a33;
+}
+/* The large creature card sets its type smaller in proportion. */
+.card-root.ff.creature-card {
+  --ff-font-size-title: clamp(var(--card-font-size-title-min), calc(var(--card-width, 88.9mm) * 0.06), var(--card-font-size-title-max));
+  font-size: clamp(var(--card-font-size-min), calc(var(--card-width, 88.9mm) * 0.034), var(--card-font-size-max));
+}
+
+/* On plain paper the cream goes; the colours stay. */
+.cs-paper-plain .card-root.ff {
+  --ff-paper: #ffffff;
+}
+
+/* ── The band, the title, the block ────────────────────────────────── */
+
+.ff-band {
+  flex: 0 0 auto;
+  height: 0.5em;
+  background: var(--ff-accent);
+}
+
+.ff-header {
+  padding: 0.45em 0.75em 0;
+}
+.ff-header .ff-title {
+  font-family: var(--ff-font-display);
+  font-weight: 700;
+  font-size: var(--ff-font-size-title);
+  line-height: 1.05;
+  color: var(--ff-accent);
+  letter-spacing: 0.01em;
+}
+.ff-title .cs-overflow-counter {
+  font-family: var(--ff-font-body);
+  font-weight: 400;
+  font-size: 0.5em;
+  margin-left: 0.5em;
+  vertical-align: middle;
+}
+
+.card-root.ff .card-content-container {
+  padding: 0.15em 0.75em 0.55em;
+}
+
+/* The italic line under the name. */
+.ff-subtitle {
+  font-style: italic;
+  line-height: 1.15;
+  margin: 0 0 0.35em;
+}
+
+/* The top of the block — AC to CR, the four lines of a spell, the
+   statistics of an item — between two thin rules. */
+.ff-block {
+  border-top: 0.08em solid var(--ff-accent);
+  border-bottom: 0.08em solid var(--ff-accent);
+  padding: 0.25em 0;
+  margin: 0 0 0.3em;
+}
+
+.ff-line {
+  margin: 0.04em 0;
+  line-height: 1.22;
+}
+.ff-label {
+  font-weight: 700;
+}
+.ff-gap {
+  display: inline-block;
+  width: 1em;
+}
+
+/* ── The abilities: two halves side by side ────────────────────────── */
+
+.ff-abilities {
+  display: flex;
+  gap: 0.4em;
+  margin: 0.3em 0;
+}
+.ff-abilities table {
+  flex: 1 1 0;
+  border-collapse: separate;
+  border-spacing: 0.08em;
+  text-align: center;
+  line-height: 1.2;
+}
+.ff-ab-head th {
+  font-size: 0.8em;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--ff-accent);
+  padding: 0;
+}
+.ff-ab-name {
+  font-family: var(--ff-font-display);
+  font-weight: 700;
+  text-align: left;
+  padding: 0 0.3em;
+}
+.ff-abilities td {
+  padding: 0.05em 0.2em;
+}
+.ff-abilities-physical .ff-ab-name,
+.ff-abilities-physical .ff-ab-score {
+  background: var(--ff-tint-strong);
+}
+.ff-abilities-physical .ff-ab-mod,
+.ff-abilities-physical .ff-ab-save {
+  background: var(--ff-tint);
+}
+.ff-abilities-mental .ff-ab-name,
+.ff-abilities-mental .ff-ab-score {
+  background: var(--ff-tint-cool-strong);
+}
+.ff-abilities-mental .ff-ab-mod,
+.ff-abilities-mental .ff-ab-save {
+  background: var(--ff-tint-cool);
+}
+.ff-ab-head th:empty {
+  background: none;
+}
+
+/* ── Sections ──────────────────────────────────────────────────────── */
+
+/* A section head: small capitals in the card type's colour over a rule
+   of it. */
+.ff-head {
+  font-family: var(--ff-font-display);
+  font-weight: 700;
+  font-size: 1.15em;
+  color: var(--ff-accent);
+  border-bottom: 0.07em solid var(--ff-accent);
+  margin: 0.45em 0 0.15em;
+  padding-bottom: 0.02em;
+  line-height: 1.1;
+}
+
+/* An entry: the name in bold italics, a full stop in English, a colon
+   in German, the text running on. */
+.ff-entry {
+  margin: 0.18em 0;
+}
+.ff-entry-name {
+  font-style: italic;
+  font-weight: 700;
+}
+.ff-entry-name::after {
+  content: ".";
+  margin-right: 0.3em;
+}
+.card-root.ff:lang(de) .ff-entry-name::after {
+  content: ":";
+}
+
+/* The text of a spell or an item. */
+.ff-text p {
+  margin: 0 0 0.3em;
+}
+.ff-text ul,
+.ff-text ol {
+  margin: 0 0 0.3em;
+  padding-left: 1.2em;
+}
+
+/* Habitat and treasure, under everything. */
+.ff-footnote {
+  margin: 0.4em 0 0;
+  padding-top: 0.2em;
+  border-top: 0.06em solid var(--ff-accent);
+  font-size: 0.9em;
+}
+
+/* ── The back ──────────────────────────────────────────────────────── */
+
+.card-root.ff.card-back {
+  display: flex;
+  flex-direction: column;
+}
+
+/* With a picture: the label, the picture fitted whole, the name. */
+.ff-back-label {
+  flex: 0 0 auto;
+  text-align: center;
+  font-family: var(--ff-font-display);
+  font-weight: 700;
+  font-size: 1.1em;
+  letter-spacing: 0.08em;
+  color: var(--ff-accent);
+  padding: 0.35em 0;
+}
+.ff-back-picture {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 0 0.5em;
+}
+.ff-back-picture img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.ff-back-name {
+  flex: 0 0 auto;
+  text-align: center;
+  font-family: var(--ff-font-display);
+  font-weight: 700;
+  font-size: 1.4em;
+  color: var(--ff-accent);
+  padding: 0.2em 0.4em 0.45em;
+  line-height: 1.05;
+}
+
+/* Without one: the d20 in the card type's colour, the label, the name,
+   centred. */
+.ff-plain-back {
+  align-items: center;
+  justify-content: center;
+  padding: 1em;
+  text-align: center;
+  container-type: inline-size;
+}
+.ff-d20 {
+  width: 40cqw;
+  height: 40cqw;
+  color: var(--ff-accent);
+  margin-bottom: 0.5em;
+}
+.ff-d20 svg {
+  width: 100%;
+  height: 100%;
+}
+.ff-plain-back .ff-back-label {
+  font-size: 8cqw;
+  line-height: 1;
+  padding: 0 0 0.3em;
+}

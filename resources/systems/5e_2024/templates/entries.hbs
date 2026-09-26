@@ -1,0 +1,17 @@
+{{!--
+  5E (2024) — one section of the block.
+
+      {{> entries for="front-actions"}}
+
+  The place's caption as the section head, then its entries as
+  paragraphs, each led by its name in bold italics — a full stop after
+  it in English, a colon in German, from the stylesheet. An entry
+  without a name is a plain paragraph — a preamble. Nothing prints when
+  the place is empty.
+--}}
+{{#if (slot for list=true)}}
+{{> head for=for}}
+{{#each (slot for list=true)}}
+<p class="ff-entry">{{#if name}}<span class="ff-entry-name">{{name}}</span>{{/if}}{{desc}}</p>
+{{/each}}
+{{/if}}

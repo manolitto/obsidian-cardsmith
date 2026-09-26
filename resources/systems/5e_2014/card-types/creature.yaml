@@ -10,6 +10,8 @@
 front-template: templates/creature-front.hbs
 back-template: templates/back.hbs
 
+card-size: large
+
 translations:
   en:
     back-label: "Bestiary"

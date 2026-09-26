@@ -1,0 +1,7 @@
+{{!--
+  5E (2024) — one line of the block: the caption in bold, the value
+  after it. Nothing prints when the place is empty.
+
+      {{> line for="front-skills"}}
+--}}
+{{#if (slot for)}}<p class="ff-line"><span class="ff-label">{{slot-label for}}</span> {{slot for}}</p>{{/if}}

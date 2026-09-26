@@ -1,0 +1,24 @@
+{{!--
+  5E (2024) — the back of every card type.
+
+    back-heading the label the note sets, else the card type's
+    back-image   the picture, fitted whole under the label
+    back-title   the name
+
+  Without a picture: a d20 in the card type's colour, the label, the
+  name.
+--}}
+{{#if (slot "back-image")}}
+<div class="card-root card-back ff {{card-type}}-card {{card-type}}-back">
+  <div class="ff-band"></div>
+  <div class="ff-back-label">{{slot "back-heading" plain=true fallback=(t "back-label")}}</div>
+  <div class="ff-back-picture"><img src="{{slot "back-image" image=true}}" alt="" /></div>
+  <div class="ff-back-name"><span class="text-scalable">{{slot "back-title" plain=true}}</span></div>
+</div>
+{{else}}
+<div class="card-root card-back ff ff-plain-back {{card-type}}-card {{card-type}}-back">
+  <div class="ff-d20">{{asset "assets/d20-mark.svg" inline=true}}</div>
+  <div class="ff-back-label">{{slot "back-heading" plain=true fallback=(t "back-label")}}</div>
+  <div class="ff-back-name"><span class="text-scalable">{{slot "back-title" plain=true}}</span></div>
+</div>
+{{/if}}

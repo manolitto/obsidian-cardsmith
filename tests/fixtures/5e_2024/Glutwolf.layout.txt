@@ -1,0 +1,20 @@
+Glutwolf · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   p.ff-subtitle "Mittelgroße Monstrosität, gesinnungslos"
+   div.ff-block
+     p.ff-line "RK 13 Initiative +2 (12)"
+     p.ff-line "TP 22 (4W8+4)"
+     p.ff-line "Bewegungsrate 12 m"
+     div.ff-abilities.cs-keep-together
+       table.ff-abilities-physical (4 rows) "MOD RW Stä 15 +2 +2 …"
+       table.ff-abilities-mental (4 rows) "MOD RW Int 3 −4 −4 …"
+     p.ff-line "Fertigkeiten Heimlichkeit +4, Wahrnehmung +3"
+     p.ff-line "Immunitäten Feuer"
+     p.ff-line "Sinne Dunkelsicht 18 m; Passive Wahrnehmung …"
+     p.ff-line "Sprachen Keine"
+     p.ff-line "HG 1 (EP 200; ÜB +2)"
+   h3.ff-head.cs-keep-with-next "Merkmale"
+   p.ff-entry "Scharfer Geruchssinn Der Wolf ist bei …"
+   h3.ff-head.cs-keep-with-next "Aktionen"
+   p.ff-entry "Biss Nahkampf-Angriffswurf: +4, Reichweite 1,5 m. …"
+2. back [cs-layout-default] scale —

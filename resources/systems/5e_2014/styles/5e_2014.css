@@ -119,7 +119,8 @@
 
   /* A dense block — a dragon with its legendary actions — shrinks to
      half its size before it spills, so the floor is low. Sizes are
-     set for the large card the two types print on. */
+     set for the large creature card; the poker spell and item cards
+     set theirs larger in proportion, below. */
   --card-font-size-min: 1.5mm;
   --dd-font-size-title: clamp(var(--card-font-size-title-min), calc(var(--card-width, 88.9mm) * 0.066), var(--card-font-size-title-max));
 
@@ -130,6 +131,12 @@
   background: var(--dd-parchment);
   border-radius: 0.4em;
   overflow: hidden;
+}
+
+.card-root.dd.spell-card,
+.card-root.dd.item-card {
+  --dd-font-size-title: clamp(var(--card-font-size-title-min), calc(var(--card-width, 63mm) * 0.075), var(--card-font-size-title-max));
+  font-size: clamp(var(--card-font-size-min), calc(var(--card-width, 63mm) * 0.044), var(--card-font-size-max));
 }
 
 /* On plain paper the parchment goes; the ink stays. */
@@ -252,6 +259,16 @@
   content: ".";
   margin-right: 0.3em;
   font-style: normal;
+}
+
+/* The text of a spell or an item. */
+.dd-text p {
+  margin: 0 0 0.3em;
+}
+.dd-text ul,
+.dd-text ol {
+  margin: 0 0 0.3em;
+  padding-left: 1.2em;
 }
 
 /* ── The back ──────────────────────────────────────────────────────── */

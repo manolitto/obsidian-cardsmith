@@ -1,0 +1,12 @@
+Wardens-Brand · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   p.dd-subtitle "Weapon (longsword), rare (requires attunement by …"
+   svg.dd-rule
+   p.dd-line "Damage 1d8 slashing"
+   p.dd-line "Properties Versatile (1d10)"
+   p.dd-line "Weight 3 lb."
+   svg.dd-rule
+   div.dd-text
+     p "You gain a +1 bonus to …"
+     p "While you hold the sword, you …"
+2. back [cs-layout-default] scale —

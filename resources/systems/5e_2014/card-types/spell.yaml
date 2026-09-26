@@ -1,0 +1,158 @@
+# ── spell ───────────────────────────────────────────────────────────
+# A spell as the SRD 5.1 prints it: the level and school in italics
+# ("2nd-level evocation", "Evocation cantrip", "(ritual)" after), the
+# four lines, the text, "At Higher Levels."
+#
+# The properties are the shared vocabulary of both fifth-edition
+# systems: the level a number, 0 for a cantrip, the school a word in
+# English or German, spelt out by the glyph tables below. The class
+# lists, which this edition does not print, are declared without a place.
+
+front-template: templates/spell-front.hbs
+back-template: templates/back.hbs
+
+translations:
+  en:
+    back-label: "Spell"
+    ritual: "(ritual)"
+    concentration: "Concentration, up to"
+    front-casting-time-label: "Casting Time:"
+    front-range-label: "Range:"
+    front-components-label: "Components:"
+    front-duration-label: "Duration:"
+    front-higher-levels-label: "At Higher Levels"
+
+properties:
+  name:
+    sample: "Ember Lance"
+
+  level:
+    slot: front-level
+    aliases: [spell-level, grad, stufe]
+    description:
+      en: "The spell's level, 0 to 9; 0 is a cantrip."
+    sample: 2
+
+  school:
+    slot: [front-school, front-school-cantrip]
+    aliases: [school-of-magic, schule]
+    description:
+      en: "The school of magic — `Evocation`; the German name reads the same."
+    sample: "Evocation"
+
+  classes:
+    aliases: [spell-lists, klassen]
+    description:
+      en: "The classes whose spell lists hold it. Printed by 5E (2024); this edition leaves it out."
+
+  casting-time:
+    slot: front-casting-time
+    aliases: [castingtime, zeitaufwand]
+    description:
+      en: "The casting time — `1 action`, `1 bonus action`, `1 minute`."
+    sample: "1 action"
+
+  range:
+    slot: front-range
+    aliases: [reichweite]
+    description:
+      en: "The range — `60 feet`, `Self`, `Touch`."
+    sample: "60 feet"
+
+  components:
+    slot: front-components
+    aliases: [komponenten]
+    description:
+      en: "The components — `V, S, M (a pinch of ash)`."
+    sample: "V, S"
+
+  duration:
+    slot: front-duration
+    aliases: [wirkungsdauer, dauer]
+    description:
+      en: "The duration — `Instantaneous`, `1 minute`. With `concentration`, the card prints “Concentration, up to” before it."
+    sample: "Instantaneous"
+
+  ritual:
+    slot: front-ritual
+    description:
+      en: "`true` for a spell that can be cast as a ritual: “(ritual)” after the school."
+
+  concentration:
+    slot: front-concentration
+    aliases: [konzentration]
+    description:
+      en: "`true` for a spell that requires concentration."
+
+  description:
+    slot: front-description
+    description:
+      en: "What the spell does — markdown, paragraphs and lists."
+    sample: "A lance of white-hot ash strikes one creature you can see within range. Make a ranged spell attack. On a hit, the target takes 3d8 fire damage and sheds dim light until the start of your next turn."
+
+  body:
+    slot: front-description
+
+  higher-levels:
+    slot: front-higher-levels
+    aliases: [at-higher-levels, higher-level-slot, höhere-grade, hoehere-grade]
+    description:
+      en: "What a higher spell slot adds, after “At Higher Levels.” in bold italics."
+    sample: "When you cast this spell using a spell slot of 3rd level or higher, the damage increases by 1d8 for each slot level above 2nd."
+
+  cantrip-upgrade:
+    slot: front-cantrip-upgrade
+    aliases: [cantrip-scaling, zaubertrick-verbesserung]
+    description:
+      en: "How a cantrip grows with the caster's level — a paragraph after the text."
+
+  image:
+    slot: back-image
+    aliases: [bild]
+    description:
+      en: "A picture for the back — a wikilink to a picture in the vault. Without one the back shows a d20."
+
+glyphs:
+  front-level:
+    "0": cantrip
+    "1": 1st-level
+    "2": 2nd-level
+    "3": 3rd-level
+    "4": 4th-level
+    "5": 5th-level
+    "6": 6th-level
+    "7": 7th-level
+    "8": 8th-level
+    "9": 9th-level
+  front-school:
+    abjuration: abjuration
+    bannmagie: abjuration
+    conjuration: conjuration
+    beschwörung: conjuration
+    divination: divination
+    erkenntnis: divination
+    enchantment: enchantment
+    verzauberung: enchantment
+    evocation: evocation
+    hervorrufung: evocation
+    illusion: illusion
+    necromancy: necromancy
+    nekromantie: necromancy
+    transmutation: transmutation
+    verwandlung: transmutation
+  front-school-cantrip:
+    abjuration: Abjuration
+    bannmagie: Abjuration
+    conjuration: Conjuration
+    beschwörung: Conjuration
+    divination: Divination
+    erkenntnis: Divination
+    enchantment: Enchantment
+    verzauberung: Enchantment
+    evocation: Evocation
+    hervorrufung: Evocation
+    illusion: Illusion
+    necromancy: Necromancy
+    nekromantie: Necromancy
+    transmutation: Transmutation
+    verwandlung: Transmutation

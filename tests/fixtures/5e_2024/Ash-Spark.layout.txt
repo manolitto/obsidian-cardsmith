@@ -1,0 +1,12 @@
+Ash-Spark · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   p.ff-subtitle "Evocation Cantrip (Druid, Sorcerer, Wizard)"
+   div.ff-block.ff-spell-lines
+     p.ff-line "Casting Time: Action"
+     p.ff-line "Range: 30 feet"
+     p.ff-line "Components: V, S"
+     p.ff-line "Duration: Instantaneous"
+   div.ff-text
+     p "A mote of burning ash leaps …"
+   p.ff-entry "Cantrip Upgrade The damage increases by …"
+2. back [cs-layout-default] scale —

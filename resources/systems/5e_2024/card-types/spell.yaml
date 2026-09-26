@@ -1,0 +1,207 @@
+# ── spell ───────────────────────────────────────────────────────────
+# A spell as the 2024 rules print it: the level and school with the class
+# lists, the four lines, the text, then what a higher slot or a higher
+# character level adds. Indigo.
+#
+# The level is a number, 0 for a cantrip, the school a word in either
+# language: the glyph tables below spell them out the way each language
+# prints them — "Level 3 Evocation" / "Hervorrufungszauber 3. Grades",
+# "Evocation Cantrip" / "Zaubertrick der Hervorrufung". The order of the
+# two words is the caption `spell-order-*`.
+
+front-template: templates/spell-front.hbs
+back-template: templates/back.hbs
+
+translations:
+  en:
+    back-label: "Spell"
+    spell-order-leveled: "level-first"
+    spell-order-cantrip: "school-first"
+    front-casting-time-label: "Casting Time:"
+    front-range-label: "Range:"
+    front-components-label: "Components:"
+    front-duration-label: "Duration:"
+    ritual: "or Ritual"
+    concentration: "Concentration, up to"
+    front-higher-levels-label: "Using a Higher-Level Spell Slot"
+    front-cantrip-upgrade-label: "Cantrip Upgrade"
+  de:
+    back-label: "Zauber"
+    spell-order-leveled: "school-first"
+    spell-order-cantrip: "level-first"
+    front-casting-time-label: "Zeitaufwand:"
+    front-range-label: "Reichweite:"
+    front-components-label: "Komponenten:"
+    front-duration-label: "Wirkungsdauer:"
+    ritual: "oder Ritual"
+    concentration: "Konzentration, bis zu"
+    front-higher-levels-label: "Verwenden von Zauberplätzen höheren Grades"
+    front-cantrip-upgrade-label: "Zaubertrick-Aufwertung"
+
+properties:
+  name:
+    sample:
+      en: "Ember Lance"
+      de: "Glutlanze"
+
+  level:
+    slot: front-level
+    aliases: [spell-level, grad, stufe]
+    description:
+      en: "The spell's level, 0 to 9; 0 is a cantrip."
+      de: "Der Grad des Zaubers, 0 bis 9; 0 ist ein Zaubertrick."
+    sample: 2
+
+  school:
+    slot: [front-school, front-school-cantrip]
+    aliases: [school-of-magic, schule]
+    description:
+      en: "The school of magic — `Evocation`; the German name reads the same."
+      de: "Die Schule der Magie — `Hervorrufung`; der englische Name gilt genauso."
+    sample:
+      en: "Evocation"
+      de: "Hervorrufung"
+
+  classes:
+    slot: front-classes
+    aliases: [spell-lists, klassen]
+    description:
+      en: "The classes whose spell lists hold it — a list, or comma-separated — in parentheses after the school."
+      de: "Die Klassen, auf deren Zauberliste er steht — eine Liste oder durch Komma getrennt — in Klammern nach der Schule."
+    sample:
+      en: [Sorcerer, Wizard]
+      de: [Magier, Zauberer]
+
+  casting-time:
+    slot: front-casting-time
+    aliases: [castingtime, zeitaufwand]
+    description:
+      en: "The casting time — `Action`, `Bonus Action`, `1 minute`."
+      de: "Der Zeitaufwand — `Aktion`, `Bonusaktion`, `1 Minute`."
+    sample:
+      en: "Action"
+      de: "Aktion"
+
+  range:
+    slot: front-range
+    aliases: [reichweite]
+    description:
+      en: "The range — `60 feet`, `Self`, `Touch`."
+      de: "Die Reichweite — `18 Meter`, `Selbst`, `Berührung`."
+    sample:
+      en: "60 feet"
+      de: "18 Meter"
+
+  components:
+    slot: front-components
+    aliases: [komponenten]
+    description:
+      en: "The components — `V, S, M (a pinch of ash)`."
+      de: "Die Komponenten — `V, G, M (eine Prise Asche)`."
+    sample:
+      en: "V, S"
+      de: "V, G"
+
+  duration:
+    slot: front-duration
+    aliases: [wirkungsdauer, dauer]
+    description:
+      en: "The duration — `Instantaneous`, `1 minute`. With `concentration`, the card prints “Concentration, up to” before it."
+      de: "Die Wirkungsdauer — `Unmittelbar`, `1 Minute`. Mit `concentration` steht „Konzentration, bis zu“ davor."
+    sample:
+      en: "Instantaneous"
+      de: "Unmittelbar"
+
+  ritual:
+    slot: front-ritual
+    description:
+      en: "`true` for a spell that can be cast as a ritual: “or Ritual” after the casting time."
+      de: "`true` für einen Zauber, der als Ritual gewirkt werden kann: „oder Ritual“ nach dem Zeitaufwand."
+
+  concentration:
+    slot: front-concentration
+    aliases: [konzentration]
+    description:
+      en: "`true` for a spell that requires concentration."
+      de: "`true` für einen Zauber, der Konzentration erfordert."
+
+  description:
+    slot: front-description
+    description:
+      en: "What the spell does — markdown, paragraphs and lists."
+      de: "Was der Zauber bewirkt — Markdown, Absätze und Listen."
+    sample:
+      en: "A lance of white-hot ash strikes one creature you can see within range. Make a ranged spell attack. *Hit:* 3d8 Fire damage, and the target sheds dim light until the start of your next turn."
+      de: "Eine Lanze aus weißglühender Asche trifft eine Kreatur in Reichweite, die du sehen kannst. Führe einen Fernkampf-Zauberangriff aus. *Treffer:* 3W8 Feuerschaden, und das Ziel spendet bis zum Beginn deines nächsten Zuges dämmriges Licht."
+
+  body:
+    slot: front-description
+
+  higher-levels:
+    slot: front-higher-levels
+    aliases: [at-higher-levels, higher-level-slot, höhere-grade, hoehere-grade]
+    description:
+      en: "What a higher spell slot adds, after its lead in bold italics."
+      de: "Was ein Zauberplatz höheren Grades hinzufügt, nach der fett-kursiven Einleitung."
+    sample:
+      en: "The damage increases by 1d8 for each spell slot level above 2."
+      de: "Für jeden Zauberplatzgrad über dem 2. steigt der Schaden um 1W8."
+
+  cantrip-upgrade:
+    slot: front-cantrip-upgrade
+    aliases: [cantrip-scaling, zaubertrick-verbesserung]
+    description:
+      en: "How a cantrip grows with the caster's level, after its lead in bold italics."
+      de: "Wie ein Zaubertrick mit der Stufe des Wirkers wächst, nach der fett-kursiven Einleitung."
+
+  image:
+    slot: back-image
+    aliases: [bild]
+    description:
+      en: "A picture for the back — a wikilink to a picture in the vault. Without one the back shows a d20."
+      de: "Ein Bild für die Rückseite — ein Wikilink auf ein Bild im Vault. Ohne Bild zeigt die Rückseite einen W20."
+
+glyphs:
+  front-level:
+    "0": { en: "Cantrip", de: "Zaubertrick" }
+    "1": { en: "Level 1", de: "1. Grades" }
+    "2": { en: "Level 2", de: "2. Grades" }
+    "3": { en: "Level 3", de: "3. Grades" }
+    "4": { en: "Level 4", de: "4. Grades" }
+    "5": { en: "Level 5", de: "5. Grades" }
+    "6": { en: "Level 6", de: "6. Grades" }
+    "7": { en: "Level 7", de: "7. Grades" }
+    "8": { en: "Level 8", de: "8. Grades" }
+    "9": { en: "Level 9", de: "9. Grades" }
+  front-school:
+    abjuration: { en: "Abjuration", de: "Bannzauber" }
+    bannmagie: { en: "Abjuration", de: "Bannzauber" }
+    conjuration: { en: "Conjuration", de: "Beschwörungszauber" }
+    beschwörung: { en: "Conjuration", de: "Beschwörungszauber" }
+    divination: { en: "Divination", de: "Erkenntniszauber" }
+    erkenntnis: { en: "Divination", de: "Erkenntniszauber" }
+    enchantment: { en: "Enchantment", de: "Verzauberungszauber" }
+    verzauberung: { en: "Enchantment", de: "Verzauberungszauber" }
+    evocation: { en: "Evocation", de: "Hervorrufungszauber" }
+    hervorrufung: { en: "Evocation", de: "Hervorrufungszauber" }
+    illusion: { en: "Illusion", de: "Illusionszauber" }
+    necromancy: { en: "Necromancy", de: "Nekromantiezauber" }
+    nekromantie: { en: "Necromancy", de: "Nekromantiezauber" }
+    transmutation: { en: "Transmutation", de: "Verwandlungszauber" }
+    verwandlung: { en: "Transmutation", de: "Verwandlungszauber" }
+  front-school-cantrip:
+    abjuration: { en: "Abjuration", de: "des Banns" }
+    bannmagie: { en: "Abjuration", de: "des Banns" }
+    conjuration: { en: "Conjuration", de: "der Beschwörung" }
+    beschwörung: { en: "Conjuration", de: "der Beschwörung" }
+    divination: { en: "Divination", de: "der Erkenntnis" }
+    erkenntnis: { en: "Divination", de: "der Erkenntnis" }
+    enchantment: { en: "Enchantment", de: "der Verzauberung" }
+    verzauberung: { en: "Enchantment", de: "der Verzauberung" }
+    evocation: { en: "Evocation", de: "der Hervorrufung" }
+    hervorrufung: { en: "Evocation", de: "der Hervorrufung" }
+    illusion: { en: "Illusion", de: "der Illusion" }
+    necromancy: { en: "Necromancy", de: "der Nekromantie" }
+    nekromantie: { en: "Necromancy", de: "der Nekromantie" }
+    transmutation: { en: "Transmutation", de: "der Verwandlung" }
+    verwandlung: { en: "Transmutation", de: "der Verwandlung" }

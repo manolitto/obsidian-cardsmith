@@ -1,0 +1,10 @@
+Lantern-of-Ash · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   p.dd-subtitle "Wondrous item, uncommon (requires attunement)"
+   svg.dd-rule
+   p.dd-line "Weight 2 lb."
+   p.dd-line "Cost 400 gp"
+   svg.dd-rule
+   div.dd-text
+     p "While lit, this brass lantern sheds …"
+2. back [cs-layout-default] scale —

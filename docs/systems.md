@@ -1,6 +1,6 @@
 # Bundled systems
 
-A system is a family of cards that share a look and a vocabulary. Twelve
+A system is a family of cards that share a look and a vocabulary. Thirteen
 ship with the plugin; each is a folder under `resources/systems/` that you
 can also [copy into your vault](settings.md#copying-a-bundled-system-into-the-vault)
 and make your own. What every system bundles of its game is a card design
@@ -137,17 +137,49 @@ Cards for *The Troubleshooters*: a comic-book title face and three frames —
 ## 5e_2014
 
 Cards for fifth-edition play under the 2014 rules, on the SRD 5.1
-vocabulary: a stat block with the classic bar and a d20 on the back.
-Card type `creature` — monsters and non-player characters alike, the
-sections a legendary creature adds printed where they are set. The label
-on the back is the note's `back-label` (`NPC`, say), else *Bestiary*.
-Large; `en`.
+vocabulary: the stat block with the classic orange bars, parchment and
+tapered red rules, a d20 on the back.
 
-A card moves to the other edition by changing `system:` and nothing else:
-the edition that does not print a property — the initiative, the habitat,
-the treasure, the gear here — leaves it unprinted, and keeps it.
+| | Card type | |
+|---|---|---|
+| <img src="images/cards/5e_2014/creature.webp" alt="5e_2014 creature card, front and back" width="360"> | `creature` | monsters and non-player characters alike, the sections a legendary creature adds where they are set; large (88.9 × 127 mm) |
+| <img src="images/cards/5e_2014/spell.webp" alt="5e_2014 spell card, front and back" width="360"> | `spell` | "2nd-level evocation (ritual)", the four lines, the text, *At Higher Levels* |
+| <img src="images/cards/5e_2014/item.webp" alt="5e_2014 item card, front and back" width="360"> | `item` | equipment and magic items: category, rarity and attunement, a weapon's or an armour's statistics, the text |
 
-<img src="images/cards/5e_2014/creature.webp" alt="5e_2014 creature card, front and back" width="360">
+Poker unless said otherwise; `en`. The label on the back is the note's
+`back-label` (`NPC`, say), else the card type's — *Bestiary*, *Spell*,
+*Item*.
+
+## 5e_2024
+
+Cards for fifth-edition play under the 2024 rules, on the SRD 5.2.1
+vocabulary: the stat block as those books print it — AC and Initiative
+on one line, the abilities in a table of two halves with MOD and SAVE,
+CR with XP and PB — on cream paper, each card type in a colour of its
+own. English and German, the German captions those of the German SRD.
+
+| | Card type | |
+|---|---|---|
+| <img src="images/cards/5e_2024/creature.webp" alt="5e_2024 creature card, front and back" width="360"> | `creature` | monsters and non-player characters, wine red; large (88.9 × 127 mm) |
+| <img src="images/cards/5e_2024/spell.webp" alt="5e_2024 spell card, front and back" width="360"> | `spell` | "Level 2 Evocation (Sorcerer, Wizard)" — "Hervorrufungszauber 2. Grades" — the four lines, the text, the higher slot and the cantrip upgrade; indigo |
+| <img src="images/cards/5e_2024/item.webp" alt="5e_2024 item card, front and back" width="360"> | `item` | category, rarity and attunement, a weapon's damage, properties and mastery or an armour's statistics, the text; forest green |
+
+Poker unless said otherwise; `en`, `de`. What the note leaves out and the
+rules derive, the card derives: a score's modifier (`15` and `15 (+2)`
+read alike), a saving throw from the modifier, the initiative from
+Dexterity, the proficiency bonus from the challenge rating. A value the
+note sets prints as it is.
+
+### Switching editions
+
+The two fifth-edition systems share one vocabulary: the same card types,
+the same properties, the same aliases, the same value formats. A card
+moves to the other edition by changing `system:` and nothing else. What
+one edition does not print — the initiative, the habitat, the treasure,
+the gear, the class lists and the weapon mastery under the 2014 rules —
+it leaves unprinted and keeps; the wording inside the actions and the
+spell text stays the author's. The ids take an underscore because YAML
+reads `5e-2014` as a number.
 
 ## dftq
 

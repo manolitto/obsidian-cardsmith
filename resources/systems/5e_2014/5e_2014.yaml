@@ -16,11 +16,11 @@ name: "5E (2014)"
 # unprinted what its books do not print: the initiative, the habitat,
 # the treasure, the gear.
 #
-# One creature card type for monsters and non-player characters: the
-# legendary sections print when they are set. It prints on a large card;
-# a dense block shrinks far before it spills. The back is the picture
-# between the orange bars, or a d20 with the back label where there is
-# none.
+# Three card types: `creature`, monsters and non-player characters alike,
+# the legendary sections where they are set, on a large card — a dense
+# block shrinks far before it spills; `spell` and `item` on a poker card.
+# The back is the picture between the orange bars, or a d20 with the back
+# label where there is none.
 languages: [en]
 
 stylesheet: styles/5e_2014.css
@@ -30,7 +30,7 @@ partial-templates:
   entries: templates/entries.hbs
   rule: templates/rule.hbs
 
-card-size: large
+card-size: poker
 
 # ── Shared vocabulary ─────────────────────────────────────────────────
 properties:
@@ -82,3 +82,5 @@ translations:
 
 card-types:
   creature: card-types/creature.yaml
+  spell:    card-types/spell.yaml
+  item:     card-types/item.yaml

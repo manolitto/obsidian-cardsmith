@@ -1,0 +1,21 @@
+Cinder-Hound · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   p.ff-subtitle "Medium Monstrosity, Unaligned"
+   div.ff-block
+     p.ff-line "AC 13 Initiative +2 (12)"
+     p.ff-line "HP 22 (4d8 + 4)"
+     p.ff-line "Speed 40 ft."
+     div.ff-abilities.cs-keep-together
+       table.ff-abilities-physical (4 rows) "MOD SAVE Str 15 +2 +2 …"
+       table.ff-abilities-mental (4 rows) "MOD SAVE Int 3 −4 −4 …"
+     p.ff-line "Skills Perception +3, Stealth +4"
+     p.ff-line "Immunities Fire"
+     p.ff-line "Senses Darkvision 60 ft.; Passive Perception …"
+     p.ff-line "Languages None"
+     p.ff-line "CR 1 (XP 200; PB +2)"
+   h3.ff-head.cs-keep-with-next "Traits"
+   p.ff-entry "Keen Smell The hound has Advantage …"
+   h3.ff-head.cs-keep-with-next "Actions"
+   p.ff-entry "Bite Melee Attack Roll: +4, reach …"
+   p.ff-entry "Ember Breath (Recharge 5–6) Dexterity Saving …"
+2. back [cs-layout-default] scale —
