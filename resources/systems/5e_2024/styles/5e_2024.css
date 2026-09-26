@@ -269,7 +269,8 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  padding: 0 0.5em;
+  /* A frame of paper round the picture, wider at the sides. */
+  padding: 0.5em 2em;
 }
 .ff-back-picture img {
   max-width: 100%;

@@ -300,6 +300,8 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  /* A frame of parchment round the picture, wider at the sides. */
+  padding: 0.5em 2em;
 }
 .dd-back-picture img {
   max-width: 100%;
