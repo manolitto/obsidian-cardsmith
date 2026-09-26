@@ -6,7 +6,8 @@ name: "5E (2024)"
 # capitals, AC and Initiative on one line, the six abilities in a table
 # of two halves with MOD and SAVE, the CR line with XP and PB — on flat
 # cream paper, each card type in a colour of its own: creature wine red,
-# spell indigo, item forest green. Alegreya for the text, Alegreya SC for
+# spell indigo, item forest green, the free text of a generic card
+# slate. Alegreya for the text, Alegreya SC for
 # the name and the heads. English and German, the German captions those
 # of the German SRD 5.2.1. The system carries no publisher's mark or
 # wordmark; the sample values are invented.
@@ -54,3 +55,4 @@ card-types:
   creature: card-types/creature.yaml
   spell:    card-types/spell.yaml
   item:     card-types/item.yaml
+  generic:  card-types/generic.yaml

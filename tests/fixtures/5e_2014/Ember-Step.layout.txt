@@ -1,0 +1,11 @@
+Ember-Step · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   p.dd-subtitle "Pyromancer feature, 2nd level"
+   svg.dd-rule
+   div.dd-text.dd-generic-body
+     p "As a bonus action, you can …"
+     h3 "Kindled Path"
+     p "From 6th level, the fire you …"
+     div.cs-keep-together
+       ul (2 items) "The space you left holds dim …"
+2. back [cs-layout-default] scale —

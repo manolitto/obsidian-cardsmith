@@ -74,6 +74,9 @@
 .card-root.ff.item-card {
   --ff-accent: #3e5a33;
 }
+.card-root.ff.generic-card {
+  --ff-accent: #44505c;
+}
 /* The large creature card sets its type smaller in proportion. */
 .card-root.ff.creature-card {
   --ff-font-size-title: clamp(var(--card-font-size-title-min), calc(var(--card-width, 88.9mm) * 0.06), var(--card-font-size-title-max));
@@ -242,6 +245,43 @@
   padding-top: 0.2em;
   border-top: 0.06em solid var(--ff-accent);
   font-size: 0.9em;
+}
+
+/* The free text of a generic card: what the note's markdown writes.
+   A `###` inside it is a section head; a table has a caption row in
+   the card type's colour. `##` never reaches the card — it starts a
+   section of the note. */
+.ff-generic-body > :first-child {
+  margin-top: 0;
+}
+.ff-generic-body h1,
+.ff-generic-body h2,
+.ff-generic-body h3,
+.ff-generic-body h4 {
+  font-family: var(--ff-font-display);
+  font-weight: 700;
+  font-size: 1.1em;
+  color: var(--ff-accent);
+  border-bottom: 0.07em solid var(--ff-accent);
+  margin: 0.45em 0 0.15em;
+  padding-bottom: 0.02em;
+  line-height: 1.1;
+}
+.ff-generic-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.2em 0 0.4em;
+  line-height: 1.2;
+}
+.ff-generic-body th {
+  font-weight: 700;
+  color: var(--ff-accent);
+  text-align: left;
+  border-bottom: 0.06em solid var(--ff-accent);
+}
+.ff-generic-body th,
+.ff-generic-body td {
+  padding: 0.05em 0.3em;
 }
 
 /* ── The back ──────────────────────────────────────────────────────── */

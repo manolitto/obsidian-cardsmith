@@ -110,6 +110,14 @@ const ITEM = {
   stealth: ["heimlichkeit"],
 };
 
+const GENERIC = {
+  ...BACK,
+  subtitle: ["untertitel"],
+  origin: ["herkunft", "klasse", "volk", "hintergrund"],
+  content: ["text", "inhalt", "kartentext", "body"],
+  front: ["vorderseite", "front-side"],
+};
+
 /**
  * The shared card types and what each declares on top of the baseline
  * (`name`, `description`, `image` and the rest come from there, the same
@@ -120,6 +128,7 @@ const VOCABULARY: Record<string, Record<string, string[]>> = {
   creature: CREATURE,
   spell: SPELL,
   item: ITEM,
+  generic: GENERIC,
 };
 
 describe.each(EDITIONS)("%s", (id) => {

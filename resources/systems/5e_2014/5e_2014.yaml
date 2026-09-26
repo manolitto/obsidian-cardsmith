@@ -21,9 +21,10 @@ name: "5E (2014)"
 # unprinted what its books do not print: the initiative, the habitat,
 # the treasure, the gear.
 #
-# Three card types: `creature`, monsters and non-player characters alike,
+# Four card types: `creature`, monsters and non-player characters alike,
 # the legendary sections where they are set, on a large card — a dense
-# block shrinks far before it spills; `spell` and `item` on a poker card.
+# block shrinks far before it spills; `spell` and `item` on a poker card;
+# `generic`, a name and free text — a class feature, a trait, a feat.
 # The back is the picture between the orange bars, or a d20 with the back
 # label where there is none.
 languages: [en, de]
@@ -122,3 +123,4 @@ card-types:
   creature: card-types/creature.yaml
   spell:    card-types/spell.yaml
   item:     card-types/item.yaml
+  generic:  card-types/generic.yaml

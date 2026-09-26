@@ -145,12 +145,13 @@ tapered red rules, a d20 on the back.
 | <img src="images/cards/5e_2014/creature.webp" alt="5e_2014 creature card, front and back" width="360"> | `creature` | monsters and non-player characters alike, the sections a legendary creature adds where they are set; large (88.9 × 127 mm) |
 | <img src="images/cards/5e_2014/spell.webp" alt="5e_2014 spell card, front and back" width="360"> | `spell` | "2nd-level evocation (ritual)", the four lines, the text, *At Higher Levels* |
 | <img src="images/cards/5e_2014/item.webp" alt="5e_2014 item card, front and back" width="360"> | `item` | equipment and magic items: category, rarity and attunement, a weapon's or an armour's statistics, the text |
+| <img src="images/cards/5e_2014/generic.webp" alt="5e_2014 generic card, front and back" width="360"> | `generic` | a free card: a name, an italic line under it, Markdown — a class feature, a trait, a feat |
 
 Poker unless said otherwise; `en`, `de`, the German captions those of
 the German Player's Handbook (*Spielerhandbuch*) of these rules — "Hervorrufung
 des 3. Grades", *Auf höheren Graden*, "Herausforderung 1 (200 EP)".
 The label on the back is the note's `back-label` (`NPC`, say), else the
-card type's — *Bestiary*, *Spell*, *Item*.
+card type's — *Bestiary*, *Spell*, *Item*, *Feature*.
 
 ## 5e_2024
 
@@ -165,6 +166,7 @@ own. English and German, the German captions those of the German SRD.
 | <img src="images/cards/5e_2024/creature.webp" alt="5e_2024 creature card, front and back" width="360"> | `creature` | monsters and non-player characters, wine red; large (88.9 × 127 mm) |
 | <img src="images/cards/5e_2024/spell.webp" alt="5e_2024 spell card, front and back" width="360"> | `spell` | "Level 2 Evocation (Sorcerer, Wizard)" — "Hervorrufungszauber 2. Grades" — the four lines, the text, the higher slot and the cantrip upgrade; indigo |
 | <img src="images/cards/5e_2024/item.webp" alt="5e_2024 item card, front and back" width="360"> | `item` | category, rarity and attunement, a weapon's damage, properties and mastery or an armour's statistics, the text; forest green |
+| <img src="images/cards/5e_2024/generic.webp" alt="5e_2024 generic card, front and back" width="360"> | `generic` | a free card: a name, an italic line under it, Markdown — a class feature, a trait, a feat; slate |
 
 Poker unless said otherwise; `en`, `de`. What the note leaves out and the
 rules derive, the card derives: a score's modifier (`15` and `15 (+2)`

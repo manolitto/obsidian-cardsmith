@@ -1,0 +1,8 @@
+Glutschritt · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   p.dd-subtitle "Merkmal der Pyromanten, 2. Stufe"
+   svg.dd-rule
+   div.dd-text.dd-generic-body
+     p "Als Bonusaktion kannst du dich bis …"
+     table (4 rows) "Stufe Reichweite 1 4,5 m 6 …"
+2. back [cs-layout-default] scale —
