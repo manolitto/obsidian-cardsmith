@@ -18,7 +18,7 @@
     <polyline points="50,73 8,73" />
   </g>
   <text x="50" y="64" text-anchor="middle"
-        font-family="Nodesto Caps Condensed, serif"
+        font-family="Grenze, serif"
         font-weight="700" font-size="22" font-style="italic"
         fill="rgba(253,241,220,0.92)">20</text>
 </svg>
