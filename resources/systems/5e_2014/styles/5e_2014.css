@@ -245,7 +245,7 @@
   padding-bottom: 0.04em;
 }
 
-/* An entry: the name in bold italics, a full stop, the text running
+/* An entry: the name in bold italics, a full stop (a colon in German), the text running
    on. */
 .dd-entry {
   margin: 0.2em 0;
@@ -259,6 +259,10 @@
   content: ".";
   margin-right: 0.3em;
   font-style: normal;
+}
+/* The German books end the name with a colon. */
+.card-root.dd:lang(de) .dd-entry-name::after {
+  content: ":";
 }
 
 /* The text of a spell or an item. */

@@ -146,9 +146,11 @@ tapered red rules, a d20 on the back.
 | <img src="images/cards/5e_2014/spell.webp" alt="5e_2014 spell card, front and back" width="360"> | `spell` | "2nd-level evocation (ritual)", the four lines, the text, *At Higher Levels* |
 | <img src="images/cards/5e_2014/item.webp" alt="5e_2014 item card, front and back" width="360"> | `item` | equipment and magic items: category, rarity and attunement, a weapon's or an armour's statistics, the text |
 
-Poker unless said otherwise; `en`. The label on the back is the note's
-`back-label` (`NPC`, say), else the card type's — *Bestiary*, *Spell*,
-*Item*.
+Poker unless said otherwise; `en`, `de`, the German captions those of
+the German Player's Handbook (*Spielerhandbuch*) of these rules — "Hervorrufung
+des 3. Grades", *Auf höheren Graden*, "Herausforderung 1 (200 EP)".
+The label on the back is the note's `back-label` (`NPC`, say), else the
+card type's — *Bestiary*, *Spell*, *Item*.
 
 ## 5e_2024
 

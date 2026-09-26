@@ -21,6 +21,16 @@ translations:
     front-stealth-label: "Stealth"
     front-weight-label: "Weight"
     front-cost-label: "Cost"
+  de:
+    back-label: "Gegenstand"
+    attunement: "erfordert Einstimmung"
+    front-damage-label: "Schaden"
+    front-properties-label: "Eigenschaften"
+    front-ac-label: "Rüstungsklasse (RK)"
+    front-strength-label: "Stärke"
+    front-stealth-label: "Heimlichkeit"
+    front-weight-label: "Gewicht"
+    front-cost-label: "Kosten"
 
 properties:
   name:

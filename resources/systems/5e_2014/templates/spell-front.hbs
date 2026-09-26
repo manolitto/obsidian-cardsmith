@@ -3,7 +3,9 @@
 
     front-level, front-school,      the italic line under the name:
     front-school-cantrip,           "2nd-level evocation", "Evocation
-    front-ritual                    cantrip", "(ritual)" after
+    front-ritual                    cantrip", "(ritual)" after — the
+                                    two words in the order the language
+                                    puts them
     front-casting-time, front-range,
     front-components                a line each
     front-duration,                 "Concentration, up to 1 minute"
@@ -20,7 +22,7 @@
   <div class="card-content-container">
     <div class="card-body-scalable">
     {{#if (or (slot "front-level") (slot "front-school"))}}
-    <p class="dd-subtitle">{{#if (eq (slot "front-level" plain=true) "0")}}{{slot "front-school-cantrip" plain=true glyph=true}} {{slot "front-level" plain=true glyph=true}}{{else}}{{slot "front-level" plain=true glyph=true}} {{slot "front-school" plain=true glyph=true}}{{/if}}{{#if (eq (slot "front-ritual" plain=true) "true")}} {{t "ritual"}}{{/if}}</p>
+    <p class="dd-subtitle">{{#if (eq (slot "front-level" plain=true) "0")}}{{#if (eq (t "spell-order-cantrip") "school-first")}}{{slot "front-school-cantrip" plain=true glyph=true}} {{slot "front-level" plain=true glyph=true}}{{else}}{{slot "front-level" plain=true glyph=true}} {{slot "front-school-cantrip" plain=true glyph=true}}{{/if}}{{else}}{{#if (eq (t "spell-order-leveled") "level-first")}}{{slot "front-level" plain=true glyph=true}} {{slot "front-school" plain=true glyph=true}}{{else}}{{slot "front-school" plain=true glyph=true}} {{slot "front-level" plain=true glyph=true}}{{/if}}{{/if}}{{#if (eq (slot "front-ritual" plain=true) "true")}} {{t "ritual"}}{{/if}}</p>
     {{/if}}
 
     {{> rule}}

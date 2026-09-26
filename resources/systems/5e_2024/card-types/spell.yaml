@@ -180,6 +180,7 @@ glyphs:
     beschwörung: { en: "Conjuration", de: "Beschwörungszauber" }
     divination: { en: "Divination", de: "Erkenntniszauber" }
     erkenntnis: { en: "Divination", de: "Erkenntniszauber" }
+    erkenntnismagie: { en: "Divination", de: "Erkenntniszauber" }
     enchantment: { en: "Enchantment", de: "Verzauberungszauber" }
     verzauberung: { en: "Enchantment", de: "Verzauberungszauber" }
     evocation: { en: "Evocation", de: "Hervorrufungszauber" }
@@ -196,6 +197,7 @@ glyphs:
     beschwörung: { en: "Conjuration", de: "der Beschwörung" }
     divination: { en: "Divination", de: "der Erkenntnis" }
     erkenntnis: { en: "Divination", de: "der Erkenntnis" }
+    erkenntnismagie: { en: "Divination", de: "der Erkenntnis" }
     enchantment: { en: "Enchantment", de: "der Verzauberung" }
     verzauberung: { en: "Enchantment", de: "der Verzauberung" }
     evocation: { en: "Evocation", de: "der Hervorrufung" }

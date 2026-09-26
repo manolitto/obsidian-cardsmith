@@ -1,0 +1,38 @@
+Glutwolf · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   p.dd-subtitle "Mittelgroße Monstrosität, gesinnungslos"
+   svg.dd-rule
+   p.dd-line "Rüstungsklasse 13"
+   p.dd-line "Trefferpunkte 22 (4W8+4)"
+   p.dd-line "Bewegungsrate 12 m"
+   svg.dd-rule
+   div.dd-abilities.cs-keep-together
+     div
+       div.dd-ability-label "STR"
+       div.dd-ability-value "15"
+     div
+       div.dd-ability-label "GES"
+       div.dd-ability-value "14"
+     div
+       div.dd-ability-label "KON"
+       div.dd-ability-value "13"
+     div
+       div.dd-ability-label "INT"
+       div.dd-ability-value "3"
+     div
+       div.dd-ability-label "WEI"
+       div.dd-ability-value "12"
+     div
+       div.dd-ability-label "CHA"
+       div.dd-ability-value "6"
+   svg.dd-rule
+   p.dd-line "Fertigkeiten Heimlichkeit +4, Wahrnehmung +3"
+   p.dd-line "Schadensimmunitäten Feuer"
+   p.dd-line "Sinne Dunkelsicht 18 m; Passive Wahrnehmung …"
+   p.dd-line "Sprachen Keine"
+   p.dd-line "Herausforderung 1 (200 EP)"
+   svg.dd-rule
+   p.dd-entry "Scharfer Geruchssinn Der Wolf ist bei …"
+   h3.dd-section-head.cs-keep-with-next "Aktionen"
+   p.dd-entry "Biss Nahkampf-Angriffswurf: +4, Reichweite 1,5 m. …"
+2. back [cs-layout-default] scale —

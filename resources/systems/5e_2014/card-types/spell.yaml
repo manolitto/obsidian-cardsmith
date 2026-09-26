@@ -5,7 +5,10 @@
 #
 # The properties are the shared vocabulary of both fifth-edition
 # systems: the level a number, 0 for a cantrip, the school a word in
-# English or German, spelt out by the glyph tables below. The class
+# English or German, spelt out per language by the glyph tables below —
+# "2nd-level evocation" / "Hervorrufung des 2. Grades", "Evocation
+# cantrip" / "Zaubertrick der Hervorrufung"; the order of the two words
+# is the caption `spell-order-*`. The class
 # lists, which this edition does not print, are declared without a place.
 
 front-template: templates/spell-front.hbs
@@ -21,6 +24,19 @@ translations:
     front-components-label: "Components:"
     front-duration-label: "Duration:"
     front-higher-levels-label: "At Higher Levels"
+    spell-order-leveled: "level-first"
+    spell-order-cantrip: "school-first"
+  de:
+    back-label: "Zauber"
+    ritual: "(Ritual)"
+    concentration: "Konzentration, bis zu"
+    front-casting-time-label: "Zeitaufwand:"
+    front-range-label: "Reichweite:"
+    front-components-label: "Komponenten:"
+    front-duration-label: "Wirkungsdauer:"
+    front-higher-levels-label: "Auf höheren Graden"
+    spell-order-leveled: "school-first"
+    spell-order-cantrip: "level-first"
 
 properties:
   name:
@@ -114,45 +130,47 @@ properties:
 
 glyphs:
   front-level:
-    "0": cantrip
-    "1": 1st-level
-    "2": 2nd-level
-    "3": 3rd-level
-    "4": 4th-level
-    "5": 5th-level
-    "6": 6th-level
-    "7": 7th-level
-    "8": 8th-level
-    "9": 9th-level
+    "0": { en: cantrip, de: Zaubertrick }
+    "1": { en: 1st-level, de: "des 1. Grades" }
+    "2": { en: 2nd-level, de: "des 2. Grades" }
+    "3": { en: 3rd-level, de: "des 3. Grades" }
+    "4": { en: 4th-level, de: "des 4. Grades" }
+    "5": { en: 5th-level, de: "des 5. Grades" }
+    "6": { en: 6th-level, de: "des 6. Grades" }
+    "7": { en: 7th-level, de: "des 7. Grades" }
+    "8": { en: 8th-level, de: "des 8. Grades" }
+    "9": { en: 9th-level, de: "des 9. Grades" }
   front-school:
-    abjuration: abjuration
-    bannmagie: abjuration
-    conjuration: conjuration
-    beschwörung: conjuration
-    divination: divination
-    erkenntnis: divination
-    enchantment: enchantment
-    verzauberung: enchantment
-    evocation: evocation
-    hervorrufung: evocation
-    illusion: illusion
-    necromancy: necromancy
-    nekromantie: necromancy
-    transmutation: transmutation
-    verwandlung: transmutation
+    abjuration: { en: abjuration, de: Bannmagie }
+    bannmagie: { en: abjuration, de: Bannmagie }
+    conjuration: { en: conjuration, de: Beschwörung }
+    beschwörung: { en: conjuration, de: Beschwörung }
+    divination: { en: divination, de: Erkenntnismagie }
+    erkenntnis: { en: divination, de: Erkenntnismagie }
+    erkenntnismagie: { en: divination, de: Erkenntnismagie }
+    enchantment: { en: enchantment, de: Verzauberung }
+    verzauberung: { en: enchantment, de: Verzauberung }
+    evocation: { en: evocation, de: Hervorrufung }
+    hervorrufung: { en: evocation, de: Hervorrufung }
+    illusion: { en: illusion, de: Illusion }
+    necromancy: { en: necromancy, de: Nekromantie }
+    nekromantie: { en: necromancy, de: Nekromantie }
+    transmutation: { en: transmutation, de: Verwandlung }
+    verwandlung: { en: transmutation, de: Verwandlung }
   front-school-cantrip:
-    abjuration: Abjuration
-    bannmagie: Abjuration
-    conjuration: Conjuration
-    beschwörung: Conjuration
-    divination: Divination
-    erkenntnis: Divination
-    enchantment: Enchantment
-    verzauberung: Enchantment
-    evocation: Evocation
-    hervorrufung: Evocation
-    illusion: Illusion
-    necromancy: Necromancy
-    nekromantie: Necromancy
-    transmutation: Transmutation
-    verwandlung: Transmutation
+    abjuration: { en: Abjuration, de: "der Bannmagie" }
+    bannmagie: { en: Abjuration, de: "der Bannmagie" }
+    conjuration: { en: Conjuration, de: "der Beschwörung" }
+    beschwörung: { en: Conjuration, de: "der Beschwörung" }
+    divination: { en: Divination, de: "der Erkenntnismagie" }
+    erkenntnis: { en: Divination, de: "der Erkenntnismagie" }
+    erkenntnismagie: { en: Divination, de: "der Erkenntnismagie" }
+    enchantment: { en: Enchantment, de: "der Verzauberung" }
+    verzauberung: { en: Enchantment, de: "der Verzauberung" }
+    evocation: { en: Evocation, de: "der Hervorrufung" }
+    hervorrufung: { en: Evocation, de: "der Hervorrufung" }
+    illusion: { en: Illusion, de: "der Illusion" }
+    necromancy: { en: Necromancy, de: "der Nekromantie" }
+    nekromantie: { en: Necromancy, de: "der Nekromantie" }
+    transmutation: { en: Transmutation, de: "der Verwandlung" }
+    verwandlung: { en: Transmutation, de: "der Verwandlung" }
