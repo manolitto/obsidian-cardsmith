@@ -2,7 +2,8 @@
   5E (2014) — the back.
 
     back-image   the picture, fitted whole between the orange bars, the
-                 label above it and the name below
+                 label above it and the name below, its edges faded
+                 into the parchment
     back-heading the label the note sets, else the card type's
     back-title   the name
 
@@ -12,7 +13,7 @@
 <div class="card-root card-back dd {{card-type}}-card {{card-type}}-back">
   <div class="dd-bar"></div>
   <div class="dd-back-label">{{slot "back-heading" plain=true fallback=(t "back-label")}}</div>
-  <div class="dd-back-picture"><img src="{{slot "back-image" image=true}}" alt="" /></div>
+  <div class="dd-back-picture"><img class="fade-edges" src="{{slot "back-image" image=true}}" alt="" /></div>
   <div class="dd-back-name"><span class="text-scalable">{{slot "back-title" plain=true}}</span></div>
   <div class="dd-bar"></div>
 </div>
