@@ -21,13 +21,13 @@ Every bundled font is redistributable under an open licence, and the
 licence text travels beside the font files in its system's `fonts/`
 folder. The files are WOFF2 — the plugin embeds every font in `main.js` —
 and most are the `latin` / `latin-ext` subsets as Google Fonts serves them.
-No glyph, metric or name-table data was altered, except where a row says so.
+No glyph, metric or name-table data was altered.
 
 | Font | Systems | Licence | Licence file |
 |---|---|---|---|
-| Bookinsanity, Mr Eaves Small Caps, Nodesto Caps Condensed, Scaly Sans — the *Solbera* fonts, packaged by jonathonf | 5e_2014 | CC BY-SA 4.0 | `5e_2014/fonts/solbera-LICENSE.txt` — with the attribution and the stated modifications (OpenType → WOFF2, renamed; ä ö ü Ä Ö Ü ß added to Nodesto Caps Condensed, composed from its own outlines). Share-alike binds the font files; the templates and stylesheets only reference them |
 | Alegreya, Alegreya SC (bold) | 5e_2024 | SIL OFL 1.1 | `5e_2024/fonts/alegreya-OFL.txt` — one licence text, the same for both families; the `latin` subsets only |
-| Alegreya Sans | dragonbane | SIL OFL 1.1 | `dragonbane/fonts/alegreya-sans-OFL.txt` |
+| Alegreya Sans | dragonbane, 5e_2014 | SIL OFL 1.1 | `*/fonts/alegreya-sans-OFL.txt` |
+| Alegreya Sans SC | 5e_2014 | SIL OFL 1.1 | `5e_2014/fonts/alegreya-sans-sc-OFL.txt` |
 | Archivo Black | eiserne-zeit | SIL OFL 1.1 | `eiserne-zeit/fonts/archivo-black-OFL.txt` |
 | Bangers | troubleshooters | SIL OFL 1.1 | `troubleshooters/fonts/bangers-OFL.txt` |
 | Barlow Condensed | pf2e | SIL OFL 1.1 | `pf2e/fonts/barlow-OFL.txt` |
@@ -35,12 +35,14 @@ No glyph, metric or name-table data was altered, except where a row says so.
 | Colus | dragonbane | SIL OFL 1.1 | `dragonbane/fonts/colus-OFL.txt` |
 | Cormorant Garamond | dftq | SIL OFL 1.1 | `dftq/fonts/cormorant-garamond-OFL.txt` |
 | EB Garamond | eiserne-zeit, sw, tor2e | SIL OFL 1.1 | `*/fonts/eb-garamond-OFL.txt` |
+| Grenze | 5e_2014 | SIL OFL 1.1 | `5e_2014/fonts/grenze-OFL.txt` |
 | Lora | troubleshooters | SIL OFL 1.1 | `troubleshooters/fonts/lora-OFL.txt` |
 | Merriweather | mini-d20 | SIL OFL 1.1 | `mini-d20/fonts/merriweather-OFL.txt` |
 | Nunito Sans | dino-island | SIL OFL 1.1 | `dino-island/fonts/nunito-sans-OFL.txt` |
 | Pathfinder 2e action glyphs (five symbols) | pf2e | Paizo Community Use Policy | `pf2e/fonts/pathfinder-2e-actions-LICENSE.txt` — see the Paizo notice below |
 | Rubik Distressed | dino-island | SIL OFL 1.1 | `dino-island/fonts/rubik-distressed-OFL.txt` |
 | Source Sans 3 | pf2e, simple, tor2e | SIL OFL 1.1 | `*/fonts/source-sans-3-OFL.txt` |
+| TeX Gyre Bonum | 5e_2014 | GUST Font License | `5e_2014/fonts/tex-gyre-bonum-LICENSE.txt` — the whole font, recompressed into WOFF2 |
 | TeX Gyre Pagella | dcc | GUST Font License | `dcc/fonts/pagella-LICENSE.txt` |
 | Wellfleet | mini-d20 | SIL OFL 1.1 | `mini-d20/fonts/wellfleet-OFL.txt` |
 

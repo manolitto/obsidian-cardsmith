@@ -1,106 +1,113 @@
 /* ── 5E (2014) — the system stylesheet ─────────────────────────────────────
    The stat block as the rulebook prints it: parchment, dark-red
    headings, a tapered red rule between the sections, an orange bar at
-   the top and the foot, the six scores in a row. Bookinsanity for the
-   text, Mr Eaves Small Caps for the section heads, Scaly Sans for the
-   scores, Nodesto Caps Condensed for the title. Sizes are `em` and `%`
-   throughout; the plain back sizes its mark in `cqw`. */
+   the top and the foot, the six scores in a row. TeX Gyre Bonum, a
+   Bookman, for the text; Alegreya Sans SC for the section heads;
+   Alegreya Sans for the scores; Grenze Bold in small capitals for the
+   title. Each covers the Latin alphabets of Western and Central Europe,
+   so a card in another such language prints in its own face. Sizes are
+   `em` and `%` throughout; the plain back sizes its mark in `cqw`. */
 
-/* ── Fonts — the Solbera fonts, CC BY-SA 4.0, fonts/solbera-LICENSE.txt ── */
+/* ── Fonts ──────────────────────────────────────────────────────────
+   TeX Gyre Bonum, GUST Font License (LPPL 1.3c), fonts/tex-gyre-bonum-*.txt
+   — the whole font, recompressed into WOFF2. Grenze, Alegreya Sans SC and
+   Alegreya Sans, SIL OFL 1.1, fonts/*-OFL.txt — the latin and latin-ext
+   subsets as Google Fonts serves them. */
 
 @font-face {
-  font-family: "Bookinsanity";
+  font-family: "TeX Gyre Bonum";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("fonts/solbera-bookinsanity-regular.woff2") format("woff2");
+  src: url("fonts/tex-gyre-bonum-regular.woff2") format("woff2");
 }
 @font-face {
-  font-family: "Bookinsanity";
+  font-family: "TeX Gyre Bonum";
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url("fonts/solbera-bookinsanity-bold.woff2") format("woff2");
+  src: url("fonts/tex-gyre-bonum-bold.woff2") format("woff2");
 }
 @font-face {
-  font-family: "Bookinsanity";
+  font-family: "TeX Gyre Bonum";
   font-style: italic;
   font-weight: 400;
   font-display: swap;
-  src: url("fonts/solbera-bookinsanity-italic.woff2") format("woff2");
+  src: url("fonts/tex-gyre-bonum-italic.woff2") format("woff2");
 }
 @font-face {
-  font-family: "Bookinsanity";
+  font-family: "TeX Gyre Bonum";
   font-style: italic;
   font-weight: 700;
   font-display: swap;
-  src: url("fonts/solbera-bookinsanity-bold-italic.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: "Mr Eaves Small Caps";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("fonts/solbera-mr-eaves-small-caps.woff2") format("woff2");
+  src: url("fonts/tex-gyre-bonum-bold-italic.woff2") format("woff2");
 }
 
 @font-face {
-  font-family: "Scaly Sans";
+  font-family: "Alegreya Sans SC";
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   font-display: swap;
-  src: url("fonts/solbera-scaly-sans-regular.woff2") format("woff2");
+  src: url("fonts/alegreya-sans-sc-medium-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
-  font-family: "Scaly Sans";
+  font-family: "Alegreya Sans SC";
   font-style: normal;
-  font-weight: 700;
+  font-weight: 500;
   font-display: swap;
-  src: url("fonts/solbera-scaly-sans-bold.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Scaly Sans";
-  font-style: italic;
-  font-weight: 400;
-  font-display: swap;
-  src: url("fonts/solbera-scaly-sans-italic.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Scaly Sans";
-  font-style: italic;
-  font-weight: 700;
-  font-display: swap;
-  src: url("fonts/solbera-scaly-sans-bold-italic.woff2") format("woff2");
+  src: url("fonts/alegreya-sans-sc-medium-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
 @font-face {
-  font-family: "Nodesto Caps Condensed";
+  font-family: "Alegreya Sans";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("fonts/solbera-nodesto-caps-condensed-regular.woff2") format("woff2");
+  src: url("fonts/alegreya-sans-normal-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
-  font-family: "Nodesto Caps Condensed";
+  font-family: "Alegreya Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("fonts/alegreya-sans-normal-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Alegreya Sans";
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url("fonts/solbera-nodesto-caps-condensed-bold.woff2") format("woff2");
+  src: url("fonts/alegreya-sans-bold-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
-  font-family: "Nodesto Caps Condensed";
-  font-style: italic;
-  font-weight: 400;
-  font-display: swap;
-  src: url("fonts/solbera-nodesto-caps-condensed-italic.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Nodesto Caps Condensed";
-  font-style: italic;
+  font-family: "Alegreya Sans";
+  font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url("fonts/solbera-nodesto-caps-condensed-bold-italic.woff2") format("woff2");
+  src: url("fonts/alegreya-sans-bold-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Grenze";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("fonts/grenze-bold-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Grenze";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("fonts/grenze-bold-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
 /* ── The palette and the type ──────────────────────────────────────── */
@@ -112,10 +119,10 @@
   --dd-bar: #e69a28;
   --dd-ink: #1f1a17;
 
-  --dd-font-body: "Bookinsanity", serif;
-  --dd-font-display: "Mr Eaves Small Caps", serif;
-  --dd-font-scores: "Scaly Sans", sans-serif;
-  --dd-font-title: "Nodesto Caps Condensed", serif;
+  --dd-font-body: "TeX Gyre Bonum", serif;
+  --dd-font-display: "Alegreya Sans SC", sans-serif;
+  --dd-font-scores: "Alegreya Sans", sans-serif;
+  --dd-font-title: "Grenze", serif;
 
   /* A dense block — a dragon with its legendary actions — shrinks to
      half its size before it spills, so the floor is low. Sizes are
@@ -163,6 +170,14 @@
 .dd-header {
   padding: 0.5em 0.75em 0;
 }
+/* The title face in small capitals: Grenze has none of its own, so the
+   browser draws them from its capitals. */
+.dd-header .dd-title,
+.dd-back-name,
+.dd-wordmark {
+  font-variant-caps: small-caps;
+}
+
 .dd-header .dd-title {
   font-family: var(--dd-font-title);
   font-weight: 700;
@@ -236,7 +251,7 @@
    small capitals by design, so a lower-case word prints as one. */
 .dd-section-head {
   font-family: var(--dd-font-display);
-  font-weight: 400;
+  font-weight: 500;
   font-size: 1.25em;
   color: var(--dd-heading);
   letter-spacing: 0.02em;
@@ -288,6 +303,7 @@
   flex: 0 0 auto;
   text-align: center;
   font-family: var(--dd-font-display);
+  font-weight: 500;
   font-size: 1.1em;
   letter-spacing: 0.06em;
   color: var(--dd-heading);

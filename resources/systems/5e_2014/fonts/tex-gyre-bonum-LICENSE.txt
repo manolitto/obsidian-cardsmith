@@ -1,0 +1,52 @@
+TeX Gyre Bonum — attribution and licence
+========================================
+
+Font:     TeX Gyre Bonum, version 2.004
+Authors:  Bogusław Jackowski and Janusz M. Nowacki (GUST e-foundry)
+Source:   https://www.gust.org.pl/projects/e-foundry/tex-gyre/bonum
+          (the OpenType files as CTAN distributes them,
+          https://ctan.org/pkg/tex-gyre)
+Licence:  the GUST Font License (GFL), reproduced below — an addendum
+          to the LaTeX Project Public License v1.3c
+          (https://www.latex-project.org/lppl.txt). It permits free use,
+          distribution and modification.
+
+The files in this folder, tex-gyre-bonum-regular.woff2, -bold.woff2,
+-italic.woff2 and -bold-italic.woff2, are texgyrebonum-regular.otf,
+-bold.otf, -italic.otf and -bolditalic.otf recompressed into the WOFF2
+container (fontTools) and renamed. Modifications, as the LPPL asks them
+to be identified: the container only. No glyph, metric, name-table or
+hinting data was altered; the fonts are TeX Gyre Bonum as released.
+
+The card system's templates and stylesheets only reference these files.
+
+------------------------------------------------------------------------
+
+% This is version 1.0, dated 22 June 2009, of the GUST Font License.
+% (GUST is the Polish TeX Users Group, https://www.gust.org.pl)
+%
+% For the most recent version of this license see
+% https://www.gust.org.pl/fonts/licenses/GUST-FONT-LICENSE.txt
+% or
+% https://tug.org/fonts/licenses/GUST-FONT-LICENSE.txt
+%
+% This work may be distributed and/or modified under the conditions
+% of the LaTeX Project Public License, either version 1.3c of this
+% license or (at your option) any later version.
+% 
+% Please also observe the following clause:
+% 1) it is requested, but not legally required, that derived works be
+%    distributed only after changing the names of the fonts comprising this
+%    work and given in an accompanying "manifest", and that the
+%    files comprising the Work, as listed in the manifest, also be given
+%    new names. Any exceptions to this request are also given in the
+%    manifest.
+%    
+%    We recommend the manifest be given in a separate file named
+%    MANIFEST-<fontid>.txt, where <fontid> is some unique identification
+%    of the font family. If a separate "readme" file accompanies the Work, 
+%    we recommend a name of the form README-<fontid>.txt.
+%
+% The latest version of the LaTeX Project Public License is in
+% https://www.latex-project.org/lppl.txt and version 1.3c or later
+% is part of all distributions of LaTeX version 2006/05/20 or later.

@@ -4,8 +4,10 @@ name: "5E (2014)"
 # The stat block of the fifth-edition SRD 5.1 as it is printed:
 # parchment, dark-red headings, tapered red rules between the sections,
 # an orange bar at the top and the foot, six ability scores in a row.
-# Bookinsanity for the text, Mr Eaves Small Caps for the section heads,
-# Scaly Sans for the scores, Nodesto Caps Condensed for the title.
+# TeX Gyre Bonum for the text, Alegreya Sans SC for the section heads,
+# Alegreya Sans for the scores, Grenze Bold in small capitals for the
+# title — faces that cover the Latin alphabets of Western and Central
+# Europe.
 # English and German, the German captions those of the German Player's
 # Handbook of these rules (Spielerhandbuch, 2nd printing) — and, for the
 # regional effects it does not name, of the German Monster Manual. The
