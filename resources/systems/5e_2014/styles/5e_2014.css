@@ -128,7 +128,7 @@
      half its size before it spills, so the floor is low. Sizes are
      set for the large creature card; the poker spell and item cards
      set theirs larger in proportion, below. */
-  --card-font-size-min: 1.5mm;
+  --card-font-size-min: 1.4mm;
   --dd-font-size-title: clamp(var(--card-font-size-title-min), calc(var(--card-width, 88.9mm) * 0.066), var(--card-font-size-title-max));
 
   font-family: var(--dd-font-body);
