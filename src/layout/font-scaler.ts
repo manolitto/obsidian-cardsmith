@@ -164,7 +164,14 @@ export function scaleFontSize(el: HTMLElement): void {
     const mid = (lo + hi) / 2;
     el.style.fontSize = mid + "px";
     const fitsW = el.scrollWidth <= containerW + 1;
-    const fitsH = el.scrollHeight <= containerH + 1;
+    // The height is the title's own box — its line boxes — not its
+    // `scrollHeight`. A display face's glyphs reach a pixel or two above
+    // and below the line they sit on, and `scrollHeight` counts that ink:
+    // a title that fits would read as overflowing and shrink for nothing,
+    // and in a box that grows with its content — a label free to wrap —
+    // it would shrink until it fit on one line, so its size would follow
+    // the length of its text.
+    const fitsH = el.offsetHeight <= containerH + 1;
     if (fitsW && fitsH) {
       best = mid;
       lo = mid;
