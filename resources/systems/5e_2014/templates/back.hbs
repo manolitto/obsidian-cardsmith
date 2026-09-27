@@ -13,7 +13,7 @@
 --}}
 <div class="card-root card-back dd {{card-type}}-card {{card-type}}-back">
   <div class="dd-bar"></div>
-  <div class="dd-back-label"><span class="text-scalable">{{slot "back-heading" plain=true fallback=(t "back-label")}}{{#if (slot "back-origin")}}{{#if (slot "back-heading" plain=true fallback=(t "back-label"))}} /{{/if}} <span class="dd-back-origin">{{slot "back-origin" plain=true}}</span>{{/if}}</span></div>
+  <div class="dd-back-label">{{slot "back-heading" plain=true fallback=(t "back-label")}}{{#if (slot "back-origin")}}{{#if (slot "back-heading" plain=true fallback=(t "back-label"))}} /{{/if}} <span class="dd-back-origin">{{slot "back-origin" plain=true}}</span>{{/if}}</div>
   <div class="dd-back-picture">
     {{#if (slot "back-image")}}
     <img class="fade-edges" src="{{slot "back-image" image=true}}" alt="" />
@@ -21,6 +21,6 @@
     <div class="dd-d20">{{asset "assets/d20-mark.svg" inline=true}}</div>
     {{/if}}
   </div>
-  <div class="dd-back-name"><span class="text-scalable">{{slot "back-title" plain=true}}</span></div>
+  <div class="dd-back-name">{{slot "back-title" plain=true}}</div>
   <div class="dd-bar"></div>
 </div>

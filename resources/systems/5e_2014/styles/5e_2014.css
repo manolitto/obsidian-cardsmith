@@ -374,6 +374,14 @@
 .dd-back-origin {
   display: inline-block;
 }
+/* The label and the name keep their size on every card and wrap instead
+   of shrinking, so two cards of a deck read alike however long their
+   labels are; the picture gives up the height a second line takes. A
+   word wider than the line breaks rather than running off the card. */
+.dd-back-label,
+.dd-back-name {
+  overflow-wrap: break-word;
+}
 .dd-back-picture {
   flex: 1 1 auto;
   min-height: 0;
