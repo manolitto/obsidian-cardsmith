@@ -9,7 +9,7 @@ data:
   # A picture — a wikilink to a picture in the vault — on the back. Without one the back shows a d20.
   image:
 
-  # The label on the back — above the picture, or under the d20 — `Bestiary`, `NPC`. Without it the card type's own.
+  # The label on the back — above the picture or the d20 — `Bestiary`, `NPC`. Without it the card type's own.
   back-label:
 
   # The italic line under the name — `Rogue feature, 1st level`, `Feat`, `Elf trait`.

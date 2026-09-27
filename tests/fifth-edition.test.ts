@@ -19,7 +19,7 @@ import type { LoadedSystem } from "../src/systems/loader";
 
 const EDITIONS = ["5e_2014", "5e_2024"] as const;
 
-/** On every card type: the label above the picture, or the word under the d20. */
+/** On every card type: the label above the picture or the d20. */
 const BACK = {
   "back-label": ["back-caption", "rückseite", "rueckseite"],
 };

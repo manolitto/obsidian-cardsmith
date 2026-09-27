@@ -6,7 +6,7 @@
    Alegreya Sans for the scores; Grenze Bold in small capitals for the
    title. Each covers the Latin alphabets of Western and Central Europe,
    so a card in another such language prints in its own face. Sizes are
-   `em` and `%` throughout; the plain back sizes its mark in `cqw`. */
+   `em` and `%` throughout. */
 
 /* ── Fonts ──────────────────────────────────────────────────────────
    TeX Gyre Bonum, GUST Font License (LPPL 1.3c), fonts/tex-gyre-bonum-*.txt
@@ -174,8 +174,7 @@
 /* The title face in small capitals: Grenze has none of its own, so the
    browser draws them from its capitals. */
 .dd-header .dd-title,
-.dd-back-name,
-.dd-wordmark {
+.dd-back-name {
   font-variant-caps: small-caps;
 }
 
@@ -343,8 +342,7 @@
   flex-direction: column;
 }
 
-/* With a picture: the label, the picture fitted whole, the name, all
-   between the bars. */
+/* The label, the picture fitted whole, the name, all between the bars. */
 .dd-back-label {
   flex: 0 0 auto;
   text-align: center;
@@ -382,31 +380,16 @@
   line-height: 1.05;
 }
 
-/* Without one: the d20 in the heading red, the wordmark, the name,
-   centred on the parchment. */
-.dd-plain-back {
-  align-items: center;
-  justify-content: center;
-  padding: 1em;
-  text-align: center;
-  container-type: inline-size;
-}
+/* Without one, a d20 in the heading red stands in its place. */
 .dd-d20 {
-  width: 38cqw;
-  height: 38cqw;
+  width: 50%;
+  max-height: 100%;
+  aspect-ratio: 1;
   color: var(--dd-heading);
   opacity: 0.85;
-  margin-bottom: 0.6em;
 }
 .dd-d20 svg {
+  display: block;
   width: 100%;
   height: 100%;
-}
-.dd-wordmark {
-  font-family: var(--dd-font-title);
-  font-weight: 700;
-  font-size: 9cqw;
-  letter-spacing: 0.08em;
-  color: var(--dd-heading);
-  line-height: 1;
 }

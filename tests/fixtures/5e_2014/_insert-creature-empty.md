@@ -9,7 +9,7 @@ data:
   # The creature's picture — a wikilink to a picture in the vault — large on the back between the orange bars. Without one the back shows a d20 and the back label.
   image:
 
-  # The label on the back — above the picture, or under the d20 — `Bestiary`, `NPC`. Without it the card type's own.
+  # The label on the back — above the picture or the d20 — `Bestiary`, `NPC`. Without it the card type's own.
   back-label:
 
   # The size category — Tiny, Small, Medium, Large, Huge, Gargantuan — first in the italic line under the name.
