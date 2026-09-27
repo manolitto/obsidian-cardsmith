@@ -15,7 +15,7 @@ data:
   # The note's text before the first `##` heading, as markdown. Not written in the block — it is the note itself; a card type binds it to a place on the card.
   body:
 
-  # The label on the back — above the picture, or under the d20 — `Bestiary`, `NPC`. Without it the card type's own.
+  # The label on the back — above the picture or the d20 — `Bestiary`, `NPC`. Without it the card type's own.
   back-label:
 
   # The spell's level, 0 to 9; 0 is a cantrip.

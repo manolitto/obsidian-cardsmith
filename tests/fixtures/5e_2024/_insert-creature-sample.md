@@ -9,7 +9,7 @@ data:
   # The creature's picture — a wikilink to a picture in the vault — on the back under the label. Without one the back shows a d20.
   image: '[[Cinder-Hound.png]]'
 
-  # The label on the back — above the picture, or under the d20 — `Bestiary`, `NPC`. Without it the card type's own.
+  # The label on the back — above the picture or the d20 — `Bestiary`, `NPC`. Without it the card type's own.
   back-label: # no sample
 
   # The size — Tiny, Small, Medium, Large, Huge, Gargantuan — first in the italic line under the name.

@@ -23,8 +23,8 @@ name: "5E (2024)"
 # initiative from Dexterity, the proficiency bonus from the challenge
 # rating. A value the note sets prints as it is.
 #
-# The back is the picture under the label, or a d20 with the label where
-# there is none, in the card type's colour.
+# The back is the label, the picture and the name, in the card type's
+# colour; a d20 stands in for a picture the note does not set.
 languages: [en, de]
 
 stylesheet: styles/5e_2024.css
@@ -48,8 +48,8 @@ properties:
     slot: back-heading
     aliases: [back-caption, rückseite, rueckseite]
     description:
-      en: "The label on the back — above the picture, or under the d20 — `Bestiary`, `NPC`. Without it the card type's own."
-      de: "Die Beschriftung der Rückseite — über dem Bild oder unter dem W20 — `Bestiarium`, `NSC`. Ohne Angabe die des Kartentyps."
+      en: "The label on the back — above the picture or the d20 — `Bestiary`, `NPC`. Without it the card type's own."
+      de: "Die Beschriftung der Rückseite — über dem Bild oder dem W20 — `Bestiarium`, `NSC`. Ohne Angabe die des Kartentyps."
 
 card-types:
   creature: card-types/creature.yaml

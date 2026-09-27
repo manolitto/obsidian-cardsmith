@@ -5,7 +5,7 @@
    section heads in small capitals over a rule. Each card type brings
    its colour: creature wine red, spell indigo, item forest green.
    Alegreya for the text, Alegreya SC for the name and the heads. Sizes
-   are `em` and `%` throughout; the plain back sizes its mark in `cqw`. */
+   are `em` and `%` throughout. */
 
 /* ── Fonts — Alegreya and Alegreya SC, SIL OFL 1.1, fonts/alegreya-OFL.txt ──
    The latin subsets only, which hold both languages the system prints —
@@ -299,7 +299,7 @@
   flex-direction: column;
 }
 
-/* With a picture: the label, the picture fitted whole, the name. */
+/* The label, the picture fitted whole, the name. */
 .ff-back-label {
   flex: 0 0 auto;
   text-align: center;
@@ -337,27 +337,15 @@
   line-height: 1.05;
 }
 
-/* Without one: the d20 in the card type's colour, the label, the name,
-   centred. */
-.ff-plain-back {
-  align-items: center;
-  justify-content: center;
-  padding: 1em;
-  text-align: center;
-  container-type: inline-size;
-}
+/* Without one, a d20 in the card type's colour stands in its place. */
 .ff-d20 {
-  width: 40cqw;
-  height: 40cqw;
+  width: 50%;
+  max-height: 100%;
+  aspect-ratio: 1;
   color: var(--ff-accent);
-  margin-bottom: 0.5em;
 }
 .ff-d20 svg {
+  display: block;
   width: 100%;
   height: 100%;
-}
-.ff-plain-back .ff-back-label {
-  font-size: 8cqw;
-  line-height: 1;
-  padding: 0 0 0.3em;
 }
