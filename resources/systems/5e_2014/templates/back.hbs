@@ -9,7 +9,7 @@
 --}}
 <div class="card-root card-back dd {{card-type}}-card {{card-type}}-back">
   <div class="dd-bar"></div>
-  <div class="dd-back-label">{{slot "back-heading" plain=true fallback=(t "back-label")}}</div>
+  <div class="dd-back-label"><span class="text-scalable">{{slot "back-heading" plain=true fallback=(t "back-label")}}</span></div>
   <div class="dd-back-picture">
     {{#if (slot "back-image")}}
     <img class="fade-edges" src="{{slot "back-image" image=true}}" alt="" />
