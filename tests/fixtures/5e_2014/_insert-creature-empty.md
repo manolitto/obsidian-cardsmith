@@ -9,7 +9,7 @@ data:
   # The creature's picture — a wikilink to a picture in the vault — large on the back between the orange bars. Without one the back shows a d20 and the back label.
   image:
 
-  # The label on the back — above the picture or the d20 — `Background`, `Feat`, `NPC`. Without it a creature's type, else the card type's own. A feature's origin or a spell's school follows it.
+  # The label on the back — above the picture or the d20 — `Background`, `Feat`, `NPC`. Without it a creature's type or an item's category, else the card type's own. A feature's origin or a spell's school follows it.
   back-label:
 
   # The size category — Tiny, Small, Medium, Large, Huge, Gargantuan — first in the italic line under the name.
