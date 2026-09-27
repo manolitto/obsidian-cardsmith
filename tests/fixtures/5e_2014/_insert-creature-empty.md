@@ -9,13 +9,13 @@ data:
   # The creature's picture — a wikilink to a picture in the vault — large on the back between the orange bars. Without one the back shows a d20 and the back label.
   image:
 
-  # The label on the back — above the picture or the d20 — `Bestiary`, `NPC`. Without it the card type's own.
+  # The label on the back — above the picture or the d20 — `Background`, `Feat`, `NPC`. Without it a creature's type, else the card type's own. A feature's origin or a spell's school follows it.
   back-label:
 
   # The size category — Tiny, Small, Medium, Large, Huge, Gargantuan — first in the italic line under the name.
   size:
 
-  # The creature type, with its tags in parentheses — `humanoid (goblinoid)`, `beast`, `undead`.
+  # The creature type, with its tags in parentheses — `humanoid (goblinoid)`, `beast`, `undead`. Also the label on the back, unless the note sets `back-label`.
   type:
 
   # The alignment — `neutral evil`, `chaotic good`, `unaligned` — after the type, comma-separated.

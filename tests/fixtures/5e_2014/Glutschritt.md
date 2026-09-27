@@ -21,5 +21,5 @@ data:
   name: Glutschritt
   untertitel: Merkmal der Pyromanten, 2. Stufe
   klasse: Pyromant
-  rückseite: Klassenmerkmal
+  rückseite: Merkmal
 ```

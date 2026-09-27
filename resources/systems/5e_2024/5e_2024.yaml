@@ -48,8 +48,8 @@ properties:
     slot: back-heading
     aliases: [back-caption, rückseite, rueckseite]
     description:
-      en: "The label on the back — above the picture or the d20 — `Bestiary`, `NPC`. Without it the card type's own."
-      de: "Die Beschriftung der Rückseite — über dem Bild oder dem W20 — `Bestiarium`, `NSC`. Ohne Angabe die des Kartentyps."
+      en: "The label on the back — above the picture or the d20 — `Background`, `Feat`, `NPC`. Without it a creature's type, else the card type's own. A feature's origin or a spell's school follows it."
+      de: "Die Beschriftung der Rückseite — über dem Bild oder dem W20 — `Hintergrund`, `Talent`, `NSC`. Ohne Angabe der Typ einer Kreatur, sonst die des Kartentyps. Die Herkunft eines Merkmals oder die Schule eines Zaubers folgt ihr."
 
 card-types:
   creature: card-types/creature.yaml

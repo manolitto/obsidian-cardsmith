@@ -24,5 +24,4 @@ data:
   name: Ember Step
   subtitle: Pyromancer feature, 2nd level
   origin: Pyromancer
-  back-label: Class Feature
 ```
