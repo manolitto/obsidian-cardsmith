@@ -10,6 +10,9 @@
 # cantrip" / "Zaubertrick der Hervorrufung"; the order of the two words
 # is the caption `spell-order-*`. The class
 # lists, which this edition does not print, are declared without a place.
+#
+# The back names the school, not the spell: a deck of spells read from
+# behind sorts by school. It stands as the note writes it.
 
 front-template: templates/spell-front.hbs
 back-template: templates/back.hbs
@@ -40,6 +43,7 @@ translations:
 
 properties:
   name:
+    slot: front-title
     sample: "Ember Lance"
 
   level:
@@ -50,7 +54,7 @@ properties:
     sample: 2
 
   school:
-    slot: [front-school, front-school-cantrip]
+    slot: [front-school, front-school-cantrip, back-title]
     aliases: [school-of-magic, schule]
     description:
       en: "The school of magic — `Evocation`; the German name reads the same."
