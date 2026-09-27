@@ -21,7 +21,7 @@ interface FakeTitle {
   parentElement: FakeContainer | null;
   readonly clientWidth: number;
   readonly scrollWidth: number;
-  readonly clientHeight: number;
+  readonly offsetHeight: number;
   readonly scrollHeight: number;
 }
 
@@ -50,13 +50,16 @@ function model(opts: {
   cascadePx: number;
   wordRatio: number;
   titleMinPx: number;
+  /** How far the glyphs reach past the line box, in px. */
+  inkPx?: number;
+  containerH?: number;
 }): Model {
   const contentW = opts.cardWidth - 2 * opts.paddingPx;
 
   // Generous height so only the width can bind the search.
   const container: FakeContainer = {
     clientWidth: Math.round(opts.cardWidth),
-    clientHeight: 1000,
+    clientHeight: opts.containerH ?? 1000,
   };
   const style = { fontSize: "" };
   const fontPx = () => (style.fontSize ? parseFloat(style.fontSize) : opts.cascadePx);
@@ -69,11 +72,11 @@ function model(opts: {
     get scrollWidth() {
       return this.clientWidth;
     },
-    get clientHeight() {
+    get offsetHeight() {
       return Math.round(fontPx() * 1.05);
     },
     get scrollHeight() {
-      return this.clientHeight;
+      return this.offsetHeight + (opts.inkPx ?? 0);
     },
   };
 
@@ -146,6 +149,25 @@ describe("scaleFontSize", () => {
       cascadePx,
       wordRatio: 5, // 100 px at cascade — well inside the 219 px content box
       titleMinPx: 2.4 * PX_PER_MM,
+    });
+
+    scale(el);
+
+    expect(parseFloat(el.style.fontSize)).toBeCloseTo(cascadePx, 1);
+  });
+
+  it("leaves a title whose glyphs reach past its line box at its cascade size", () => {
+    const cardWidth = 63 * PX_PER_MM;
+    const cascadePx = 20;
+    const { el } = model({
+      cardWidth,
+      paddingPx: 0,
+      cascadePx,
+      wordRatio: 5,
+      titleMinPx: 2.4 * PX_PER_MM,
+      // A box exactly as tall as the line, and ink two pixels past it.
+      containerH: Math.round(cascadePx * 1.05),
+      inkPx: 2,
     });
 
     scale(el);
