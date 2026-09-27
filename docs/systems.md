@@ -152,7 +152,8 @@ the German Player's Handbook (*Spielerhandbuch*) of these rules — "Hervorrufun
 des 3. Grades", *Auf höheren Graden*, "Herausforderung 1 (200 EP)".
 The back reads the kind of card above the picture and its name below.
 The kind is the note's `back-label` (`Background`, `Feat`), else a
-creature's type, else the card type's — *Spell*, *Item*, *Feature* —
+creature's type or an item's category (*Wondrous item*), else the card
+type's — *Spell*, *Item*, *Feature* —
 then a slash and where the card comes from: a feature's `origin`
 (*Feature / Rogue*), a spell's school (*Spell /
 Evocation*). The same holds for 5e_2024.

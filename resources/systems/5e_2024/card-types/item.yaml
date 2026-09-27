@@ -37,11 +37,11 @@ properties:
       de: "Aschelaterne"
 
   category:
-    slot: front-category
+    slot: [front-category, back-heading]
     aliases: [item-type, kategorie, gegenstandsart]
     description:
-      en: "The category, with the base item in parentheses — `Wondrous Item`, `Weapon (Longsword)`, `Armor (Shield)`."
-      de: "Die Kategorie, der Grundgegenstand in Klammern — `Wundersamer Gegenstand`, `Waffe (Langschwert)`, `Rüstung (Schild)`."
+      en: "The category, with the base item in parentheses — `Wondrous Item`, `Weapon (Longsword)`, `Armor (Shield)`. Also the label on the back, unless the note sets `back-label`."
+      de: "Die Kategorie, der Grundgegenstand in Klammern — `Wundersamer Gegenstand`, `Waffe (Langschwert)`, `Rüstung (Schild)`. Auch die Beschriftung der Rückseite, wenn die Notiz kein `back-label` setzt."
     sample:
       en: "Wondrous Item"
       de: "Wundersamer Gegenstand"

@@ -37,10 +37,10 @@ properties:
     sample: "Lantern of Ash"
 
   category:
-    slot: front-category
+    slot: [front-category, back-heading]
     aliases: [item-type, kategorie, gegenstandsart]
     description:
-      en: "The category, with the base item in parentheses — `Wondrous item`, `Weapon (longsword)`, `Armor (shield)`."
+      en: "The category, with the base item in parentheses — `Wondrous item`, `Weapon (longsword)`, `Armor (shield)`. Also the label on the back, unless the note sets `back-label`."
     sample: "Wondrous item"
 
   rarity:

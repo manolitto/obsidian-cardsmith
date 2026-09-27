@@ -9,7 +9,7 @@ data:
   # A picture — a wikilink to a picture in the vault — on the back. Without one the back shows a d20.
   image:
 
-  # The label on the back — above the picture or the d20 — `Background`, `Feat`, `NPC`. Without it a creature's type, else the card type's own. A feature's origin or a spell's school follows it.
+  # The label on the back — above the picture or the d20 — `Background`, `Feat`, `NPC`. Without it a creature's type or an item's category, else the card type's own. A feature's origin or a spell's school follows it.
   back-label:
 
   # The italic line under the name — `Rogue feature, 1st level`, `Feat`, `Elf trait`.
