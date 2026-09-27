@@ -2,14 +2,18 @@
   5E (2014) — the back. One face whatever the note sets: the label, the
   picture, the name, between the orange bars.
 
-    back-heading the label the note sets, else the card type's
+    back-heading the label the note sets, else the card type's; a
+                 creature's type
+    back-origin  where the card comes from, after the label and a slash
+                 when both show — a feature's class, race or background,
+                 a spell's school
     back-image   the picture, fitted whole, its edges faded into the
                  parchment; without one, a d20 in the heading red
-    back-title   the name; a spell's school, as the note writes it
+    back-title   the name
 --}}
 <div class="card-root card-back dd {{card-type}}-card {{card-type}}-back">
   <div class="dd-bar"></div>
-  <div class="dd-back-label"><span class="text-scalable">{{slot "back-heading" plain=true fallback=(t "back-label")}}</span></div>
+  <div class="dd-back-label"><span class="text-scalable">{{slot "back-heading" plain=true fallback=(t "back-label")}}{{#if (slot "back-origin")}}{{#if (slot "back-heading" plain=true fallback=(t "back-label"))}} /{{/if}} <span class="dd-back-origin">{{slot "back-origin" plain=true}}</span>{{/if}}</span></div>
   <div class="dd-back-picture">
     {{#if (slot "back-image")}}
     <img class="fade-edges" src="{{slot "back-image" image=true}}" alt="" />

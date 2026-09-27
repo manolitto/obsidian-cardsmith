@@ -97,11 +97,11 @@ properties:
       de: "Mittelgroße"
 
   type:
-    slot: front-type
+    slot: [front-type, back-heading]
     aliases: [art, kreaturentyp]
     description:
-      en: "The creature type, with its tags in parentheses — `Humanoid (Goblinoid)`, `Beast`, `Undead`."
-      de: "Der Kreaturentyp, Kennzeichnungen in Klammern — `Humanoide (Goblinoide)`, `Bestie`, `Untoter`."
+      en: "The creature type, with its tags in parentheses — `Humanoid (Goblinoid)`, `Beast`, `Undead`. Also the label on the back, unless the note sets `back-label`."
+      de: "Der Kreaturentyp, Kennzeichnungen in Klammern — `Humanoide (Goblinoide)`, `Bestie`, `Untoter`. Auch die Beschriftung der Rückseite, wenn die Notiz kein `back-label` setzt."
     sample:
       en: "Monstrosity"
       de: "Monstrosität"

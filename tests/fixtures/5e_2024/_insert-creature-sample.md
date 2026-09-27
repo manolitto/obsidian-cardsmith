@@ -9,13 +9,13 @@ data:
   # The creature's picture — a wikilink to a picture in the vault — on the back under the label. Without one the back shows a d20.
   image: '[[Cinder-Hound.png]]'
 
-  # The label on the back — above the picture or the d20 — `Bestiary`, `NPC`. Without it the card type's own.
+  # The label on the back — above the picture or the d20 — `Background`, `Feat`, `NPC`. Without it a creature's type, else the card type's own. A feature's origin or a spell's school follows it.
   back-label: # no sample
 
   # The size — Tiny, Small, Medium, Large, Huge, Gargantuan — first in the italic line under the name.
   size: Medium
 
-  # The creature type, with its tags in parentheses — `Humanoid (Goblinoid)`, `Beast`, `Undead`.
+  # The creature type, with its tags in parentheses — `Humanoid (Goblinoid)`, `Beast`, `Undead`. Also the label on the back, unless the note sets `back-label`.
   type: Monstrosity
 
   # The alignment — `Neutral Evil`, `Unaligned` — after the type, comma-separated.

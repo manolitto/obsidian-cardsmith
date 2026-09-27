@@ -30,10 +30,10 @@ properties:
     sample: "Medium"
 
   type:
-    slot: front-type
+    slot: [front-type, back-heading]
     aliases: [art, kreaturentyp]
     description:
-      en: "The creature type, with its tags in parentheses — `humanoid (goblinoid)`, `beast`, `undead`."
+      en: "The creature type, with its tags in parentheses — `humanoid (goblinoid)`, `beast`, `undead`. Also the label on the back, unless the note sets `back-label`."
     sample: "beast"
 
   alignment:

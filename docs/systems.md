@@ -150,8 +150,12 @@ tapered red rules, a d20 on the back.
 Poker unless said otherwise; `en`, `de`, the German captions those of
 the German Player's Handbook (*Spielerhandbuch*) of these rules — "Hervorrufung
 des 3. Grades", *Auf höheren Graden*, "Herausforderung 1 (200 EP)".
-The label on the back is the note's `back-label` (`NPC`, say), else the
-card type's — *Bestiary*, *Spell*, *Item*, *Feature*.
+The back reads the kind of card above the picture and its name below.
+The kind is the note's `back-label` (`Background`, `Feat`), else a
+creature's type, else the card type's — *Spell*, *Item*, *Feature* —
+then a slash and where the card comes from: a feature's `origin`
+(*Feature / Rogue*), a spell's school (*Spell /
+Evocation*). The same holds for 5e_2024.
 
 ## 5e_2024
 

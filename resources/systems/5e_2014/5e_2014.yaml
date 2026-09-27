@@ -49,7 +49,7 @@ properties:
     slot: back-heading
     aliases: [back-caption, rückseite, rueckseite]
     description:
-      en: "The label on the back — above the picture or the d20 — `Bestiary`, `NPC`. Without it the card type's own."
+      en: "The label on the back — above the picture or the d20 — `Background`, `Feat`, `NPC`. Without it a creature's type, else the card type's own. A feature's origin or a spell's school follows it."
 
 translations:
   en:

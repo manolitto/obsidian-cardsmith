@@ -11,8 +11,9 @@
 # is the caption `spell-order-*`. The class
 # lists, which this edition does not print, are declared without a place.
 #
-# The back names the school, not the spell: a deck of spells read from
-# behind sorts by school. It stands as the note writes it.
+# The back's top line names the school after the label — `Zauber /
+# Hervorrufung` — as the note writes it, so a deck of spells read
+# from behind sorts by school; the name stands below the picture.
 
 front-template: templates/spell-front.hbs
 back-template: templates/back.hbs
@@ -43,7 +44,6 @@ translations:
 
 properties:
   name:
-    slot: front-title
     sample: "Ember Lance"
 
   level:
@@ -54,7 +54,7 @@ properties:
     sample: 2
 
   school:
-    slot: [front-school, front-school-cantrip, back-title]
+    slot: [front-school, front-school-cantrip, back-origin]
     aliases: [school-of-magic, schule]
     description:
       en: "The school of magic — `Evocation`; the German name reads the same."

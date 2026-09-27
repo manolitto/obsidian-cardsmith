@@ -15,9 +15,11 @@ back-template: templates/back.hbs
 # feature that runs long never loses its back.
 overflow-mode: extra-cards
 
-# The back names the kind of card: the note's `back-label` —
-# `Class Feature`, `Racial Trait`, `Feat` / `Klassenmerkmal`,
-# `Volksmerkmal`, `Talent` — else the one word that fits them all.
+# The back's top line is the kind of card and where it comes from, one
+# after the other: the note's `back-label` — `Background`, `Feat` /
+# `Hintergrund`, `Talent` — else the word for a feature, then the
+# origin: `Merkmal Barbar`, `Hintergrund Volksheld`. The name stands
+# below the picture.
 translations:
   en:
     back-label: "Feature"
@@ -25,10 +27,7 @@ translations:
     back-label: "Merkmal"
 
 properties:
-  # The back says what the card is and where it comes from — the label
-  # over the origin; the name stays on the front.
   name:
-    slot: front-title
     sample:
       en: "Ember Step"
       de: "Glutschritt"
@@ -44,11 +43,11 @@ properties:
       de: "Merkmal der Zauberer, 3. Stufe"
 
   origin:
-    slot: back-title
+    slot: back-origin
     aliases: [herkunft, klasse, volk, hintergrund]
     description:
-      en: "Where the card comes from, on the back under the label — the class (`Rogue`, `Cleric (Light Domain)`), the race (`Hill Dwarf`), the background (`Soldier`), a feat's prerequisite."
-      de: "Woher die Karte stammt, auf der Rückseite unter der Beschriftung — die Klasse (`Schurke`, `Kleriker (Domäne des Lichts)`), das Volk (`Hügelzwerg`), der Hintergrund (`Soldat`), die Voraussetzung eines Talents."
+      en: "Where the card comes from, on the back after the label — the class (`Rogue`, `Cleric (Light Domain)`), the race (`Hill Dwarf`), the background (`Soldier`), a feat's prerequisite."
+      de: "Woher die Karte stammt, auf der Rückseite nach der Beschriftung — die Klasse (`Schurke`, `Kleriker (Domäne des Lichts)`), das Volk (`Hügelzwerg`), der Hintergrund (`Soldat`), die Voraussetzung eines Talents."
     sample:
       en: "Sorcerer"
       de: "Zauberer"
