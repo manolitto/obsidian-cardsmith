@@ -297,18 +297,27 @@
 .card-root.ff.card-back {
   display: flex;
   flex-direction: column;
+  /* The back's type grows with the card, the same share of its width
+     on every size, so a large card's back reads like a poker card's. */
+  font-size: calc(var(--card-width, 63mm) * 0.044);
 }
 
-/* The label, the picture fitted whole, the name. */
+/* The label, the picture, the name. The label and the name keep their
+   place on every card; the picture is fitted whole into the box between
+   them. Each line sits centred in a band of a fixed share of the card's
+   height — 9 % for the label, 7 % for the name — so on a taller card
+   the lines move in from the edges with the picture, not with the type;
+   a picture of the full height sits centred between them. */
 .ff-back-label {
   flex: 0 0 auto;
   text-align: center;
   font-family: var(--ff-font-display);
   font-weight: 700;
-  font-size: 1.1em;
+  font-size: 1.6em;
+  line-height: 1.05;
   letter-spacing: 0.08em;
   color: var(--ff-accent);
-  padding: 0.35em 0;
+  padding: max(0em, (var(--card-height, 88mm) * 0.09 - 1.05em) / 2) 0.4em;
 }
 .ff-back-picture {
   flex: 1 1 auto;
@@ -318,7 +327,7 @@
   justify-content: center;
   overflow: hidden;
   /* A frame of paper round the picture, wider at the sides. */
-  padding: 0.5em 2em;
+  padding: 0.1em 2em;
 }
 .ff-back-picture img {
   max-width: 100%;
@@ -331,13 +340,15 @@
   text-align: center;
   font-family: var(--ff-font-display);
   font-weight: 700;
-  font-size: 1.4em;
+  font-size: 1.25em;
   color: var(--ff-accent);
-  padding: 0.2em 0.4em 0.45em;
+  /* A touch above the middle of its band, clear of the foot. */
+  padding: max(0em, (var(--card-height, 88mm) * 0.07 - 1.05em) / 2) 0.4em
+    calc(max(0em, (var(--card-height, 88mm) * 0.07 - 1.05em) / 2) + var(--card-height, 88mm) * 0.012);
   line-height: 1.05;
 }
 
-/* Without one, a d20 in the card type's colour stands in its place. */
+/* Without a picture, a d20 in the card type's colour stands in its place. */
 .ff-d20 {
   width: 50%;
   max-height: 100%;
