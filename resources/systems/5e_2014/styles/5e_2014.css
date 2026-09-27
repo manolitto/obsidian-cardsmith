@@ -282,6 +282,17 @@
   content: ":";
 }
 
+/* Prose sets narrow: a long word — a German compound above all —
+   hyphenates in the card's language (the renderer stamps `lang=` on
+   `.card-root`), and a word no dictionary can break still wraps
+   rather than running past the edge. The text of a spell, an item or
+   a generic card is `.dd-text`; an entry runs on the same way. */
+.dd-text,
+.dd-entry {
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
 /* The text of a spell or an item. */
 .dd-text p {
   margin: 0 0 0.3em;
@@ -294,15 +305,7 @@
 
 /* The free text of a generic card: what the note's markdown writes.
    A `###` inside it is a section head; a table has a red caption row.
-   `##` never reaches the card — it starts a section of the note.
-   Free prose sets narrow: a long word — a German compound above all —
-   hyphenates in the card's language (the renderer stamps `lang=` on
-   `.card-root`), and a word no dictionary can break still wraps
-   rather than running past the edge. */
-.dd-generic-body {
-  overflow-wrap: break-word;
-  hyphens: auto;
-}
+   `##` never reaches the card — it starts a section of the note. */
 .dd-generic-body > :first-child {
   margin-top: 0;
 }
