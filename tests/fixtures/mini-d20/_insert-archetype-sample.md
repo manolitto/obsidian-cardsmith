@@ -17,7 +17,7 @@ data:
   tracker: # no sample
 
   # Source reference — rulebook page or wikilink, small under the red line at the foot.
-  reference: Rules p. 16
+  reference: House Rules p. 16
 
   # The card type's icon, top left and large on the back — a path under the system. Preset.
   icon: assets/icons/character.svg

@@ -20,7 +20,7 @@ data:
     - Duration: until dawn
 
   # Source reference. Runs rotated along the right edge, in caps. Convention: book title, comma, page — "The Dog Handler, p. 8".
-  reference: Core Rules, p. 64
+  reference: House Rules, p. 12
 
   # Label of the black foot band, in white caps on every face of the card (e.g. "SPELL", "GEAR", "COMPANION"). Falls back to the card type's own label when unset.
   card-type-label: Spell

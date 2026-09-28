@@ -17,7 +17,7 @@ data:
   content: Describe the rule here …
 
   # The front's footer, under the red line.
-  footer: Rules p. 12
+  footer: House Rules p. 12
 
   # The top-left icon — a path under the system, e.g. `assets/icons/skills.svg`.
   icon-left: assets/icons/skills.svg

@@ -90,8 +90,8 @@ properties:
       de: "Quellenangabe. Läuft gedreht die rechte Kante entlang, in Versalien. Konvention: Buchtitel, Komma, Seite — „Der Hundeführer, S. 8“."
       en: "Source reference. Runs rotated along the right edge, in caps. Convention: book title, comma, page — \"The Dog Handler, p. 8\"."
     sample:
-      de: "Grundregeln, S. 64"
-      en: "Core Rules, p. 64"
+      de: "Hausregeln, S. 12"
+      en: "House Rules, p. 12"
 
   card-type-label:
     slot: foot-label
