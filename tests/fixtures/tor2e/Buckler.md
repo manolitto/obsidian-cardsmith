@@ -1,4 +1,5 @@
 ---
+image: "[[Buckler.jpg]]"
 tags:
   - Shield
 parry-modifier: "+1"

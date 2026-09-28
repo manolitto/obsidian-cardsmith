@@ -10,6 +10,7 @@ card:
   card-type: feat
   language: en
 data:
+  image: "[[Alchemie.jpg]]"
   name: Quick Bandages
   level: Feat 2
   action-cost: 1

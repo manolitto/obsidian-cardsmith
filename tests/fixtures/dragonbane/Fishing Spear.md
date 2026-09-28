@@ -1,4 +1,6 @@
 ---
+back-image: "[[Drachensiegel.png]]"
+front-image: "[[Fishing-Spear.jpg]]"
 grip: 2H
 range: 2
 damage: D8

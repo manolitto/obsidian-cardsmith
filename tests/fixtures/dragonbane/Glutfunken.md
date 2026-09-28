@@ -20,7 +20,7 @@ data:
   Zauberdauer: Aktion
   Reichweite: 10 Meter
   Wirkungsdauer: Sofort
-  Bild: "[[Glutfunken.png]]"
+  Bild: "[[Glutfunken.jpg]]"
   Beschreibung: "Ein Schauer glühender Funken springt von deinen Fingern auf ein Ziel über und setzt alles Trockene daran in Brand. Das Ziel erleidet *W8 Schaden*."
   Effekt: "Je Kraftstufe über der ersten: ein weiteres Ziel in Reichweite."
 ```

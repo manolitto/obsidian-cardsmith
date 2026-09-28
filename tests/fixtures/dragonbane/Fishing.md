@@ -26,5 +26,7 @@ table:
   stats: [Requirements, Rations]
   description: Description
 data:
+  back-image: "[[Drachensiegel.png]]"
+  front-image: "[[Nebelbarsch.jpg]]"
   note: "The catch takes one shift of time."
 ```

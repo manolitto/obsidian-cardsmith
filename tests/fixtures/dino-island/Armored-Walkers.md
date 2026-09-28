@@ -20,6 +20,6 @@ data:
     - Bury its head in the sand
     - Refuse to be moved
   genera: Saichania, Pinacosaurus
-  image: "[[Panzerlaeufer.png]]"
+  image: "[[Panzerlaeufer.jpg]]"
   reference: Zine p. 28
 ```

@@ -3,5 +3,6 @@ Quirk-07 · 1 card · 2 faces · clipped: no
    span.cs-fill-1.cs-keep-with-next
    div.mini-d20-prose.mini-d20-quirk-text
      p "You always speak of yourself in …"
-   span.cs-fill-2
+   span.cs-fill-1.cs-keep-with-next
+   img.mini-d20-image.cs-keep-with-next
 2. back [cs-layout-default] scale —

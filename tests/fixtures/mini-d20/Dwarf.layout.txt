@@ -21,5 +21,7 @@ Dwarf · 1 card · 2 faces · clipped: no
      div.mini-d20-heritage-name-v "Thora"
      div.mini-d20-heritage-name-v "Stonebeard"
    span.cs-fill-1.cs-keep-with-next
+   img.mini-d20-image.cs-keep-with-next
+   span.cs-fill-1.cs-keep-with-next
    p.mini-d20-flavour "Tough, stubborn, at home in stone."
 2. back [cs-layout-default] scale —

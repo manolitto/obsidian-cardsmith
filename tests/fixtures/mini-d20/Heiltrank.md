@@ -16,6 +16,6 @@ data:
   price: 25 GM
   effect: "Heilt 10 TP. Wirkt sofort, auch bei 0 TP."
   notes: "Ein Trank je Kampf."
-  image: "[[Heiltrank.png]]"
+  image: "[[Heiltrank.jpg]]"
   reference: Regelwerk S. 17
 ```

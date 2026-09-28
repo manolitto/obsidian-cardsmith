@@ -1,8 +1,8 @@
 # Night Porter
 
-The same character in English: the logo back with the name under the
-label, the captions from the `en` table. The deck prints `de` and leaves
-it out. Invented for this deck.
+The same character in English, with a picture on the back where the
+German one has the logo, and the captions from the `en` table. The deck
+prints `de` and leaves it out. Invented for this deck.
 
 ```cardsmith
 card:
@@ -10,6 +10,7 @@ card:
   card-type: npc
   language: en
 data:
+  image: "[[Night-Porter.jpg]]"
   name: Night Porter
   initiative: 3
   vitality: 3

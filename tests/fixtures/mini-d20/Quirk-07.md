@@ -10,6 +10,7 @@ card:
   card-type: quirk
   language: en
 data:
+  image: "[[Eigenart.jpg]]"
   name: Memory for Names
   roll: "7"
   roll-min: 7

@@ -10,6 +10,7 @@ card:
   card-type: ability
   language: en
 data:
+  image: "[[Mehrfachschuss.jpg]]"
   name: Triple Shot
   archetype: "[[Rogue]]"
   tags: [Active, Ranged Combat]

@@ -11,6 +11,7 @@ card:
   card-type: trap
   language: en
 data:
+  image: "[[Speerfalle.jpg]]"
   name: Spear Volley
   level: Hazard 2
   traits:

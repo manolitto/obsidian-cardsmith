@@ -165,7 +165,7 @@ A picture is a wikilink to an image in the vault, in whichever property
 the system shows one:
 
 ```yaml from=tests/fixtures/5e_2014/Cinder-Hound.md
-  image: "[[Cinder-Hound.png]]"
+  image: "[[Cinder-Hound.jpg]]"
 ```
 
 An `![[embed]]` in the note's text is a picture too. The picture travels

@@ -1,6 +1,7 @@
 Fishing Spear · 1 card · 2 faces · clipped: no
 1. front [cs-layout-default cs-front-first] scale 1.00
-   span.db-fill-top
+   div.db-front-image-wrap
+     img.db-front-image.cs-front-image.fade-edges
    div.db-stats-box
      div.db-stats-row "Grip two-handed Range 2"
      div.db-stats-row "Damage D8 Durability 7"
@@ -10,5 +11,4 @@ Fishing Spear · 1 card · 2 faces · clipped: no
        p.db-trait "Features Piercing, Long"
      div.db-stats-row.db-stats-row-wide
        p.db-trait "Requirement Spears STR 9"
-   span.db-fill-bottom
 2. back [cs-layout-default] scale —

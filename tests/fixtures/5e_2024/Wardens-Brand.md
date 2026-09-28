@@ -8,6 +8,7 @@ card:
   system: 5e_2024
   card-type: item
 data:
+  image: "[[Wardens-Brand.jpg]]"
   name: Warden's Brand
   category: Weapon (Longsword)
   rarity: Rare

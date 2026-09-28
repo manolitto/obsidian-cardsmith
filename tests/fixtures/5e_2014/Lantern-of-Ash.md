@@ -8,6 +8,7 @@ card:
   system: 5e_2014
   card-type: item
 data:
+  image: "[[Lantern-of-Ash.jpg]]"
   name: Lantern of Ash
   category: Wondrous item
   rarity: uncommon

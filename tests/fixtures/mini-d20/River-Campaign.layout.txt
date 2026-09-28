@@ -1,6 +1,6 @@
 River-Campaign · 1 card · 2 faces · clipped: no
 1. front [cs-layout-default cs-front-first] scale 1.00
-   div.mini-d20-wordmark.mini-d20-cover-wordmark "MiNI D20"
+   img.mini-d20-image.mini-d20-cover-art
 2. back [cs-layout-default] scale 1.00
    div.mini-d20-cover-licence
      h3 "MINI D20"

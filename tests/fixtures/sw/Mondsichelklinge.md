@@ -11,7 +11,7 @@ data:
   name: Mondsichelklinge
   item-type: Magische Nahkampfwaffe
   description: Eine schlanke Klinge, deren Stahl im Fackelschein kühl und bläulich schimmert.
-  image: "[[Mondsichelklinge.png]]"
+  image: "[[Mondsichelklinge.jpg]]"
   table-roll: 4 auf Tab. 89, dann 21–25 auf Tab. 93
   class-restriction: K Z (Schwerter führend)
   bonus: "+1"

@@ -22,6 +22,6 @@ data:
   bulk: L
   usage: In 1 Hand gehalten
   description: "Die Klinge wirft keinen Schatten und macht beim Ziehen kein Geräusch. Im Dämmerlicht erhält ihr Träger einen Gegenstandsbonus von +1 auf Heimlichkeit."
-  image: "[[Schattenklinge.png]]"
+  image: "[[Schattenklinge.jpg]]"
   source: "Kampagnenbuch S. 61"
 ```

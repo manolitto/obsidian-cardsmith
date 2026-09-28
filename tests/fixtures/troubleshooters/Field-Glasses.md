@@ -11,7 +11,7 @@ card:
   language: en
 data:
   name: Field Glasses
-  image: "[[Feldstecher.png]]"
+  image: "[[Feldstecher.jpg]]"
   content: 8×30 binoculars in a leather case, strap, cleaning cloth
   traits:
     - name: Observation

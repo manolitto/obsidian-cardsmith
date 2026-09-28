@@ -57,6 +57,6 @@ data:
     - name: __Ferocity__ ⬲
       desc: When reduced to 0 HP, the grave burrower stays at 1 HP and becomes wounded 1.
   description: "What the gravediggers left behind has gathered itself into a body beneath the churchyard. It burrows under fresh graves and drags the mourners down."
-  image: "[[Sumpfschleicher.png]]"
+  image: "[[Sumpfschleicher.jpg]]"
   source: "Campaign Book p. 44"
 ```

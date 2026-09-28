@@ -14,6 +14,6 @@ data:
   price: 25 GP
   effect: "Heals 10 HP. Works at once, even at 0 HP."
   notes: "One potion per fight."
-  image: "[[Heiltrank.png]]"
+  image: "[[Heiltrank.jpg]]"
   reference: Rules p. 17
 ```

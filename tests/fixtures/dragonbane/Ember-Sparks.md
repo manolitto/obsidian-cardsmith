@@ -11,6 +11,7 @@ card:
   card-type: rule
   language: en
 data:
+  back-image: "[[Drachensiegel.png]]"
   name: Ember Sparks
   category: Spell
   subcategory: Spell
@@ -21,7 +22,7 @@ data:
   casting-time: Action
   range: 10 meters
   duration: Instant
-  front-image: "[[Glutfunken.png]]"
+  front-image: "[[Glutfunken.jpg]]"
   description: "A shower of glowing sparks leaps from your fingers to a target and sets everything dry on it alight. The target takes *D8 damage*."
   effect: "For each power level beyond the first: one more target within range."
 ```

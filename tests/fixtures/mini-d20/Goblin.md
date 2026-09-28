@@ -22,6 +22,6 @@ data:
     - Im Sonnenlicht Angriffswurf minus 1.
     - Greift nur in Überzahl an und flieht bei halben TP.
   description: "Klein, gemein und immer in der Überzahl."
-  image: "[[Goblin.png]]"
+  image: "[[Goblin.jpg]]"
   reference: Regelwerk S. 19
 ```

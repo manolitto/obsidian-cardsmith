@@ -21,6 +21,7 @@ card:
   system: 5e_2024
   card-type: generic
 data:
+  image: "[[Ember-Step.jpg]]"
   name: Ember Step
   subtitle: Pyromancer feature, 2nd level
   origin: Pyromancer

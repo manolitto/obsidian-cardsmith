@@ -17,5 +17,6 @@ card:
   card-type: generic
   language: en
 data:
+  back-image: "[[Drachensiegel.png]]"
   name: Sleep Deprivation
 ```

@@ -9,7 +9,7 @@ card:
   card-type: npc
 data:
   name: Zollbeamtin
-  image: "[[Zollbeamtin.png]]"
+  image: "[[Zollbeamtin.jpg]]"
   initiative: 5
   vitality: 4
   defense: 30 %

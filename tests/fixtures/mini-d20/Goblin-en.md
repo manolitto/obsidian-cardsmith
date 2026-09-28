@@ -23,6 +23,6 @@ data:
     - In sunlight the attack roll is reduced by 1.
     - Attacks only when outnumbering and flees at half HP.
   description: "Small, mean and always in the majority."
-  image: "[[Goblin.png]]"
+  image: "[[Goblin.jpg]]"
   reference: Rules p. 19
 ```
