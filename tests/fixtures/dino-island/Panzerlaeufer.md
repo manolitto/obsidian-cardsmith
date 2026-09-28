@@ -19,6 +19,6 @@ data:
     - Steck den Kopf in den Sand
     - Lass dich nicht vom Fleck bewegen
   genera: Saichania, Pinacosaurus
-  image: "[[Panzerlaeufer.png]]"
+  image: "[[Panzerlaeufer.jpg]]"
   reference: Regelwerk S. 47
 ```

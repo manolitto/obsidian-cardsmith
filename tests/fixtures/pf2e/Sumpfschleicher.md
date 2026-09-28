@@ -51,6 +51,6 @@ data:
     - name: __Sumpftarnung__
       desc: Im Schilf oder unter Wasser erhält der Sumpfschleicher +2 auf Heimlichkeit.
   description: "Ein flacher, schlammfarbener Leib mit zu vielen Augen, der erst auffällt, wenn das Wasser sich bewegt."
-  image: "[[Sumpfschleicher.png]]"
+  image: "[[Sumpfschleicher.jpg]]"
   source: "[[Kampagnenbuch S. 40]]"
 ```

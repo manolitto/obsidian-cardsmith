@@ -8,6 +8,7 @@ card:
   system: 5e_2024
   card-type: spell
 data:
+  image: "[[Ash-Spark.jpg]]"
   name: Ash Spark
   level: 0
   school: evocation

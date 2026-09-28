@@ -9,6 +9,7 @@ card:
   card-type: item
   language: en
 data:
+  image: "[[Vial-of-Mist.jpg]]"
   name: Vial of Mist
   item-type: Potion
   description: A vial of green glass in which a grey haze circles lazily.

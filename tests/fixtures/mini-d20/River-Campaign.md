@@ -21,6 +21,7 @@ card:
   card-type: cover
   language: en
 data:
+  image: "[[Deckblatt.jpg]]"
   name: Campaign on the River
   subtitle: A card deck for MINI D20
   footer: Edition 1 · 2026

@@ -11,6 +11,7 @@ card:
   card-type: action
   language: en
 data:
+  image: "[[Kantengriff.jpg]]"
   name: Ledge Catch
   actions: r
   skill: Athletics

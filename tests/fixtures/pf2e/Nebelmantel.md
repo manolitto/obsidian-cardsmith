@@ -45,6 +45,6 @@ data:
       trigger: Du wirst zum Ziel eines Angriffs, den du sehen kannst.
       requirements: Du stehst im Nebel, im Rauch oder im Regen.
       effect: Du wirst bis zum Ende des Zuges des Angreifers unsichtbar; der auslösende Angriff wird gegen dich mit dem Zustand Verborgen abgehandelt.
-  image: "[[Schattenklinge.png]]"
+  image: "[[Schattenklinge.jpg]]"
   source: "Kampagnenbuch S. 63"
 ```

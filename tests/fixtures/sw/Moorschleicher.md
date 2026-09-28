@@ -10,7 +10,7 @@ card:
 data:
   name: Moorschleicher
   description: Ein sehniger Lurch in der Farbe des Torfs, in dem er lauert.
-  image: "[[Moorschleicher.png]]"
+  image: "[[Moorschleicher.jpg]]"
   hit-dice: 3 + 1
   armor-class: 6 [13]
   attacks: Biss (1W6)

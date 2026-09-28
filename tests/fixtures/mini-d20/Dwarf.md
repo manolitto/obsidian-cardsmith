@@ -10,6 +10,7 @@ card:
   card-type: heritage
   language: en
 data:
+  image: "[[Zwerg.jpg]]"
   name: Dwarf
   tags: [Passive]
   effect: "+ 1 base damage in melee."

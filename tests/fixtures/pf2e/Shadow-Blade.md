@@ -21,6 +21,6 @@ data:
   bulk: L
   usage: held in 1 hand
   description: "The blade casts no shadow and makes no sound when drawn. In dim light its wielder gains a +1 item bonus to Stealth."
-  image: "[[Schattenklinge.png]]"
+  image: "[[Schattenklinge.jpg]]"
   source: "Campaign Book p. 61"
 ```

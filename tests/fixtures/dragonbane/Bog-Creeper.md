@@ -14,7 +14,7 @@ data:
   name: Bog Creeper
   category: Monster
   description: "A flat, mud-coloured body with too many eyes, noticed only once the water moves."
-  artwork: "[[Moorschleicher.png]]"
+  artwork: "[[Moorschleicher.jpg]]"
   hit-points: 28
   ferocity: 2
   size: Normal

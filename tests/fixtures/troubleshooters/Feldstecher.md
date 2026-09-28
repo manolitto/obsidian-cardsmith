@@ -9,7 +9,7 @@ card:
   card-type: gear
 data:
   name: Feldstecher
-  image: "[[Feldstecher.png]]"
+  image: "[[Feldstecher.jpg]]"
   content: Fernglas 8×30 im Lederetui, Trageriemen, Putztuch
   traits:
     - name: Beobachten

@@ -11,6 +11,7 @@ card:
   system: 5e_2014
   card-type: creature
 data:
+  image: "[[Ashen-Wyrm.jpg]]"
   name: Ashen Wyrm
   size: Huge
   type: dragon

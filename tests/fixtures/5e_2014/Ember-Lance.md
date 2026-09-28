@@ -9,6 +9,7 @@ card:
   system: 5e_2014
   card-type: spell
 data:
+  image: "[[Ember-Lance.jpg]]"
   name: Ember Lance
   level: 2
   school: evocation

@@ -29,7 +29,7 @@ data:
   languages: None
   cr: "1"
   xp: 200
-  image: "[[Cinder-Hound.png]]"
+  image: "[[Cinder-Hound.jpg]]"
   traits:
     - name: Keen Smell
       desc: The hound has Advantage on Wisdom (Perception) checks that rely on smell.

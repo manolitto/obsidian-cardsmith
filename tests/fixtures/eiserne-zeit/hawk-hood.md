@@ -3,6 +3,7 @@ card:
   system: eiserne-zeit
   language: en
 data:
+  image: "[[hawk-hood.png]]"
   name: Hawk Hood
   reference: "The Falconer, p. 6"
 ```

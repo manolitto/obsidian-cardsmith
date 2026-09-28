@@ -1,6 +1,8 @@
 Vial-of-Mist · 1 card · 2 faces · clipped: no
 1. front [cs-layout-default cs-front-first] scale 1.00
    p.sw-flavour "A vial of green glass in …"
+   div.sw-plate
+     img.sw-plate-image
    div.sw-stats
      p.sw-stat "Class: Any"
      p.sw-stat "Duration: 1d6 + 6 turns"

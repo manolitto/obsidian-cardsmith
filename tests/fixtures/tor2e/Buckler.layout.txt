@@ -1,5 +1,5 @@
 Buckler · 1 card · 2 faces · clipped: no
-1. front [cs-layout-default cs-front-first] scale 1.00
+1. front [cs-layout-default cs-front-first] scale 0.94
    div.tor-stats-row
      div.tor-stat
        div.tor-stat-label "Parry modifier"
@@ -13,6 +13,8 @@ Buckler · 1 card · 2 faces · clipped: no
    p.tor-line "Notes: Can be carried together with …"
    span.cs-fill-1
    div.tor-separator
+   div.tor-gear-image-wrap
+     img.tor-gear-image
    span.cs-fill-2
    div.tor-separator
    div.tor-reference "(Core Rules p. 76)"

@@ -11,7 +11,7 @@ card:
 data:
   name: Bog Lurker
   description: A sinewy newt the colour of the peat it lurks in.
-  image: "[[Moorschleicher.png]]"
+  image: "[[Moorschleicher.jpg]]"
   hit-dice: 3 + 1
   armor-class: 6 [13]
   attacks: Bite (1d6)

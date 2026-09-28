@@ -13,7 +13,7 @@ data:
   name: Moorschleicher
   Kategorie: Monster
   Beschreibung: "Ein flacher, schlammfarbener Leib mit zu vielen Augen, der erst auffällt, wenn das Wasser sich bewegt."
-  Bild: "[[Moorschleicher.png]]"
+  Bild: "[[Moorschleicher.jpg]]"
   TP: 28
   Grimmigkeit: 2
   Größe: normal

@@ -60,6 +60,6 @@ data:
     - name: __Wildheit__ ⬲
       desc: Wird der Grabwühler auf 0 TP reduziert, bleibt er bei 1 TP; er erhält Verwundet 1.
   description: "Was die Totengräber liegen ließen, hat sich unter dem Friedhof zu einem Leib zusammengefunden. Er gräbt sich unter frischen Gräbern hindurch und zieht die Trauernden hinab."
-  image: "[[Sumpfschleicher.png]]"
+  image: "[[Sumpfschleicher.jpg]]"
   source: "Kampagnenbuch S. 44"
 ```

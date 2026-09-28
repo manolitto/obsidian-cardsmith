@@ -9,7 +9,7 @@ load: 2
 combat-proficiency: "[[Speere]]"
 minimum-standard-of-living: Bescheiden
 notes: Kann ein- oder beidhändig geführt und geworfen werden.
-image: "[[Jagdspeer.png]]"
+image: "[[Jagdspeer.jpg]]"
 reference: Regelbuch S. 74
 ---
 
