@@ -99,8 +99,8 @@ properties:
       de: "Liste der Merkmale — Magieschule, Tradition, Kategorie, Schadensart, Seltenheit. Jeder Eintrag wird eine Pille; die Seltenheiten `ungewöhnlich`, `selten` und `einzigartig` erhalten die Seltenheitsfarbe."
       en: "List of traits — school, tradition, category, damage type, rarity. Each entry becomes a pill; the rarities `ungewöhnlich`, `selten` and `einzigartig` take the rarity colour."
     sample:
-      de: ["Bannmagie", "Magisch"]
-      en: ["Abjuration", "Magical"]
+      de: ["Bannmagie", "Magisch", "Flexibel"]
+      en: ["Abjuration", "Magical", "Flexible"]
 
   price:
     slot: front-price
@@ -118,9 +118,7 @@ properties:
     description:
       de: "Waffenschaden als Würfelausdruck mit Schadensart: `1W8 S` (Stich), `1W6 W` (Wucht), `1W6 H` (Hieb)."
       en: "Weapon damage as a dice expression with its type: `1d8 P` (piercing), `1d6 B` (bludgeoning), `1d6 S` (slashing)."
-    sample:
-      de: "1W8 S"
-      en: "1d8 P"
+    sample: ~
 
   range:
     slot: front-range
@@ -128,9 +126,7 @@ properties:
     description:
       de: "Reichweite einer Fernkampfwaffe als Freitext (z. B. `36 m`)."
       en: "Range of a ranged weapon as free text (e.g. `120 ft.`)."
-    sample:
-      de: "36 m"
-      en: "120 ft."
+    sample: ~
 
   reload:
     slot: front-reload
@@ -138,7 +134,7 @@ properties:
     description:
       de: "Nachladewert einer Fernkampfwaffe (`0`, `1`, `2`, `1+`, `—`)."
       en: "Reload value of a ranged weapon (`0`, `1`, `2`, `1+`, `—`)."
-    sample: "1"
+    sample: ~
 
   ac-bonus:
     slot: front-ac-bonus
@@ -146,7 +142,7 @@ properties:
     description:
       de: "RK-Bonus einer Rüstung als Freitext (`+0`, `+1`, `+2`, …)."
       en: "Armor's AC bonus as free text (`+0`, `+1`, `+2`, …)."
-    sample: "+2"
+    sample: "+3"
 
   dex-cap:
     slot: front-dex-cap
@@ -154,7 +150,7 @@ properties:
     description:
       de: "GE-Limit der Rüstung als Freitext (`+5`, `+3`, `+0`, `—`)."
       en: "Armor's Dex cap as free text (`+5`, `+3`, `+0`, `—`)."
-    sample: "+3"
+    sample: "+2"
 
   check-penalty:
     slot: front-check-penalty
@@ -162,7 +158,7 @@ properties:
     description:
       de: "Rüstungsmalus auf Fertigkeitswürfe als Freitext (`—`, `–1`, `–2`, `–3`)."
       en: "Armor's check penalty as free text (`—`, `–1`, `–2`, `–3`)."
-    sample: "–1"
+    sample: "–2"
 
   speed-penalty:
     slot: front-speed-penalty
@@ -180,7 +176,7 @@ properties:
     description:
       de: "Stärkeschwelle der Rüstung (`10`, `12`, `14`, `16`, `18`, `—`). Ab diesem Wert entfällt der Rüstungsmalus."
       en: "Armor's strength threshold (`10`, `12`, `14`, `16`, `18`, `—`). At or above it the check penalty no longer applies."
-    sample: "12"
+    sample: "14"
 
   bulk:
     slot: front-bulk
@@ -188,21 +184,21 @@ properties:
     description:
       de: "Last als Freitext (`L` für leicht, `1`, `2`, `—`)."
       en: "Bulk as free text (`L` for light, `1`, `2`, `—`)."
-    sample: "L"
+    sample: "2"
 
   hardness:
     slot: front-hardness
     description:
       de: "Härte eines Schildes oder Gegenstands (`3`, `5`, …). Schaden am Gegenstand wird um diesen Wert verringert."
       en: "Hardness of a shield or item (`3`, `5`, …). Damage the item takes is reduced by it."
-    sample: "5"
+    sample: ~
 
   hit-points:
     slot: front-hit-points
     description:
       de: "Trefferpunkte eines Schildes oder Gegenstands als Zahl (`20`)."
       en: "Hit points of a shield or item as a number (`20`)."
-    sample: "20"
+    sample: ~
 
   broken-threshold:
     slot: front-broken-threshold
@@ -210,7 +206,7 @@ properties:
     description:
       de: "Beschädigtwert eines Schildes oder Gegenstands als Zahl (`10`). Bei diesem TP-Wert gilt er als beschädigt."
       en: "Broken threshold of a shield or item as a number (`10`). At this HP value it counts as broken."
-    sample: "10"
+    sample: ~
 
   usage:
     slot: front-usage
@@ -219,8 +215,8 @@ properties:
       de: "Nutzung (`In 1 Hand gehalten`, `In 2 Händen gehalten`, `Getragen`, `Getragen (Gürtel)`)."
       en: "Usage (`Held in 1 hand`, `Held in 2 hands`, `Worn`, `Worn (belt)`)."
     sample:
-      de: "In 1 Hand gehalten"
-      en: "Held in 1 hand"
+      de: "Getragen (Rüstung)"
+      en: "Worn armor"
 
   description:
     slot: front-text
@@ -242,11 +238,11 @@ properties:
         Explanations of the traits as a list of objects with `name` (set bold) and `desc` (markdown). Printed after the description as its own list, each entry led by `*`.
     sample:
       de:
-        - name: "Bollwerk"
-          desc: "Auf Reflexwürfe gegen Schadenseffekte addierst du +3 statt deines Geschicklichkeitsmodifikators."
+        - name: "Flexibel"
+          desc: "Der Rüstungsmalus gilt nicht für Akrobatik- und Athletikwürfe."
       en:
-        - name: "Bulwark"
-          desc: "On Reflex saves against damaging effects you add +3 instead of your Dexterity modifier."
+        - name: "Flexible"
+          desc: "The check penalty doesn't apply to Acrobatics and Athletics checks."
 
   activations:
     slot: front-activations
@@ -284,10 +280,10 @@ properties:
           actions: "1"
           components: "Konzentration"
           frequency: "einmal pro Stunde"
-          effect: "Bis zum Ende deines Zuges verursacht die Rüstung 1W6 Kälteschaden an jedem, der dich trifft."
+          effect: "Die Runen hüllen dich in Nebel. Bis zum Beginn deines nächsten Zuges bist du verborgen."
       en:
         - name: "Activate"
           actions: "1"
           components: "concentrate"
           frequency: "once per hour"
-          effect: "Until the end of your turn the armor deals 1d6 cold damage to anyone who hits you."
+          effect: "The runes wrap you in mist. You're concealed until the start of your next turn."

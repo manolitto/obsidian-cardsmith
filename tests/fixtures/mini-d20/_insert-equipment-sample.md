@@ -26,23 +26,23 @@ data:
   equipment-type: Weapon
 
   # Subtype per the table — Light, Medium, Heavy for armor; the weapon's style for weapons.
-  style: Medium
+  style: Light
 
   # The weapon's base damage as a number — MINI D20 does not roll damage.
-  damage: 4
+  damage: 3
 
   # Reach — Close, Medium, Far, or "Close+Medium".
   reach: Close
 
   # AC modification — the bonus to Armor Class from this armor.
-  ac-modifier: + 4
+  ac-modifier: # no sample
 
   # Price in gold pieces, e.g. "15 GP"; "—" if free.
-  price: 15 GP
+  price: 8 GP
 
   # The mechanical effect — for general gear and magical artefacts (markdown).
-  effect: Heals 10 HP.
+  effect: # no sample
 
   # Additional notes or conditions.
-  notes: # no sample
+  notes: Fits under a cloak without drawing an eye.
 ```
