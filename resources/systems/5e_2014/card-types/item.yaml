@@ -43,6 +43,7 @@ properties:
     aliases: [item-type, kategorie, gegenstandsart]
     description:
       en: "The category, with the base item in parentheses — `Wondrous item`, `Weapon (longsword)`, `Armor (shield)`. Also the label on the back, unless the note sets `back-label`."
+      de: "Die Kategorie, der Grundgegenstand in Klammern — `Wundersamer Gegenstand`, `Waffe (Langschwert)`, `Rüstung (Schild)`. Auch die Beschriftung der Rückseite, wenn die Notiz kein `back-label` setzt."
     sample:
       en: "Wondrous item"
       de: "Wundersamer Gegenstand"
@@ -52,6 +53,7 @@ properties:
     aliases: [seltenheit]
     description:
       en: "The rarity — `common`, `uncommon`, `rare`, `very rare`, `legendary`, `artifact` — after the category."
+      de: "Die Seltenheit — `gewöhnlich`, `ungewöhnlich`, `selten`, `sehr selten`, `legendär`, `Artefakt` — nach der Kategorie."
     sample:
       en: "uncommon"
       de: "ungewöhnlich"
@@ -61,6 +63,7 @@ properties:
     aliases: [requires-attunement, einstimmung]
     description:
       en: "`true` for an item that requires attunement, or who may attune — `by a wizard` — printed after “requires attunement”."
+      de: "`true` für einen Gegenstand, der Einstimmung erfordert, oder wer sich einstimmen kann — `durch einen Magier` — nach „erfordert Einstimmung“."
     sample: true
 
   weight:
@@ -68,6 +71,7 @@ properties:
     aliases: [gewicht]
     description:
       en: "The weight — `3 lb.`."
+      de: "Das Gewicht — `1,5 kg`."
     sample:
       en: "2 lb."
       de: "1 kg"
@@ -77,6 +81,7 @@ properties:
     aliases: [price, preis, kosten]
     description:
       en: "The cost — `15 gp`."
+      de: "Die Kosten — `15 GM`."
     sample:
       en: "400 gp"
       de: "400 GM"
@@ -86,40 +91,47 @@ properties:
     aliases: [schaden]
     description:
       en: "A weapon's damage — `1d8 slashing`."
+      de: "Der Schaden einer Waffe — `1W8 Hieb`."
 
   properties:
     slot: front-properties
     aliases: [weapon-properties, waffeneigenschaften]
     description:
       en: "A weapon's properties, comma-separated — `Versatile (1d10)`."
+      de: "Die Eigenschaften einer Waffe, durch Komma getrennt — `Vielseitig (1W10)`."
 
   mastery:
     aliases: [weapon-mastery, meisterschaft, waffenmeisterschaft]
     description:
       en: "A weapon's mastery property. Printed by 5E (2024); this edition leaves it out."
+      de: "Die Meisterschaftseigenschaft einer Waffe. Nur 5E (2024) druckt sie; diese Ausgabe lässt sie weg."
 
   ac:
     slot: front-ac
     aliases: [armor-class, armorclass, rüstungsklasse, ruestungsklasse, rk]
     description:
       en: "An armour's Armor Class — `14 + Dex modifier (max 2)`, `+2`."
+      de: "Die Rüstungsklasse einer Rüstung — `14 + GES-Modifikator (max. 2)`, `+2`."
 
   strength:
     slot: front-strength
     aliases: [strength-requirement, stärke, staerke]
     description:
       en: "The Strength an armour needs — `Str 13`."
+      de: "Die Stärke, die eine Rüstung erfordert — `Stärke 13`."
 
   stealth:
     slot: front-stealth
     aliases: [heimlichkeit]
     description:
       en: "What an armour does to Stealth — `Disadvantage`."
+      de: "Was eine Rüstung mit Heimlichkeit macht — `Nachteil`."
 
   description:
     slot: front-description
     description:
       en: "What the item is and does — markdown, paragraphs and lists."
+      de: "Was der Gegenstand ist und bewirkt — Markdown, Absätze und Listen."
     sample:
       en: "While lit, this brass lantern sheds dim grey light in a 20-foot radius. Invisible creatures in that light leave faint trails of ash."
       de: "Solange sie brennt, verbreitet diese Messinglaterne in einem Radius von sechs Metern dämmriges graues Licht. Unsichtbare Kreaturen in diesem Licht hinterlassen feine Aschespuren."
@@ -139,4 +151,5 @@ properties:
     aliases: [bild]
     description:
       en: "The item's picture — a wikilink to a picture in the vault — on the back. Without one the back shows a d20."
+      de: "Das Bild des Gegenstands — ein Wikilink auf ein Bild im Vault — auf der Rückseite. Ohne Bild zeigt die Rückseite einen W20."
     sample: "[[Lantern-of-Ash.png]]"

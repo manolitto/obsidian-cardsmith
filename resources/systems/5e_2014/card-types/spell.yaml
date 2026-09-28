@@ -53,6 +53,7 @@ properties:
     aliases: [spell-level, grad, stufe]
     description:
       en: "The spell's level, 0 to 9; 0 is a cantrip."
+      de: "Der Grad des Zaubers, 0 bis 9; 0 ist ein Zaubertrick."
     sample: 2
 
   school:
@@ -60,6 +61,7 @@ properties:
     aliases: [school-of-magic, schule]
     description:
       en: "The school of magic — `Evocation`; the German name reads the same."
+      de: "Die Schule der Magie — `Hervorrufung`; der englische Name gilt genauso."
     sample:
       en: "Evocation"
       de: "Hervorrufung"
@@ -68,12 +70,14 @@ properties:
     aliases: [spell-lists, klassen]
     description:
       en: "The classes whose spell lists hold it. Printed by 5E (2024); this edition leaves it out."
+      de: "Die Klassen, auf deren Zauberliste er steht. Nur 5E (2024) druckt sie; diese Ausgabe lässt sie weg."
 
   casting-time:
     slot: front-casting-time
     aliases: [castingtime, zeitaufwand]
     description:
       en: "The casting time — `1 action`, `1 bonus action`, `1 minute`."
+      de: "Der Zeitaufwand — `1 Aktion`, `1 Bonusaktion`, `1 Minute`."
     sample:
       en: "1 action"
       de: "1 Aktion"
@@ -83,6 +87,7 @@ properties:
     aliases: [reichweite]
     description:
       en: "The range — `60 feet`, `Self`, `Touch`."
+      de: "Die Reichweite — `18 Meter`, `Selbst`, `Berührung`."
     sample:
       en: "60 feet"
       de: "18 Meter"
@@ -92,6 +97,7 @@ properties:
     aliases: [komponenten]
     description:
       en: "The components — `V, S, M (a pinch of ash)`."
+      de: "Die Komponenten — `V, G, M (eine Prise Asche)`."
     sample:
       en: "V, S"
       de: "V, G"
@@ -101,6 +107,7 @@ properties:
     aliases: [wirkungsdauer, dauer]
     description:
       en: "The duration — `Instantaneous`, `1 minute`. With `concentration`, the card prints “Concentration, up to” before it."
+      de: "Die Wirkungsdauer — `Unmittelbar`, `1 Minute`. Mit `concentration` steht „Konzentration, bis zu“ davor."
     sample:
       en: "Instantaneous"
       de: "Unmittelbar"
@@ -109,17 +116,20 @@ properties:
     slot: front-ritual
     description:
       en: "`true` for a spell that can be cast as a ritual: “(ritual)” after the school."
+      de: "`true` für einen Zauber, der als Ritual gewirkt werden kann: „(Ritual)“ nach der Schule."
 
   concentration:
     slot: front-concentration
     aliases: [konzentration]
     description:
       en: "`true` for a spell that requires concentration."
+      de: "`true` für einen Zauber, der Konzentration erfordert."
 
   description:
     slot: front-description
     description:
       en: "What the spell does — markdown, paragraphs and lists."
+      de: "Was der Zauber bewirkt — Markdown, Absätze und Listen."
     sample:
       en: "A lance of white-hot ash strikes one creature you can see within range. Make a ranged spell attack. On a hit, the target takes 3d8 fire damage and sheds dim light until the start of your next turn."
       de: "Eine Lanze aus weißglühender Asche trifft eine Kreatur in Reichweite, die du sehen kannst. Führe einen Fernkampf-Zauberangriff aus. Bei einem Treffer erleidet das Ziel 3W8 Feuerschaden und spendet bis zum Beginn deines nächsten Zuges dämmriges Licht."
@@ -132,6 +142,7 @@ properties:
     aliases: [at-higher-levels, higher-level-slot, höhere-grade, hoehere-grade]
     description:
       en: "What a higher spell slot adds, after “At Higher Levels.” in bold italics."
+      de: "Was ein Zauberplatz höheren Grades hinzufügt, nach „Auf höheren Graden.“ fett-kursiv."
     sample:
       en: "When you cast this spell using a spell slot of 3rd level or higher, the damage increases by 1d8 for each slot level above 2nd."
       de: "Wenn du diesen Zauber mit einem Zauberplatz des 3. Grades oder höher wirkst, steigt der Schaden für jeden Grad über dem 2. um 1W8."
@@ -141,12 +152,14 @@ properties:
     aliases: [cantrip-scaling, zaubertrick-verbesserung]
     description:
       en: "How a cantrip grows with the caster's level — a paragraph after the text."
+      de: "Wie ein Zaubertrick mit der Stufe des Wirkers wächst — ein Absatz nach dem Text."
 
   image:
     slot: back-image
     aliases: [bild]
     description:
       en: "A picture for the back — a wikilink to a picture in the vault. Without one the back shows a d20."
+      de: "Ein Bild für die Rückseite — ein Wikilink auf ein Bild im Vault. Ohne Bild zeigt die Rückseite einen W20."
     sample: "[[Ember-Lance.png]]"
 
 glyphs:
