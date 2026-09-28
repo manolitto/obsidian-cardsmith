@@ -31,6 +31,11 @@ languages: [en, de]
 
 stylesheet: styles/5e_2014.css
 
+# The pictures the samples link, written beside a note by *Insert sample
+# card block* when the vault has none of that name.
+sample-pictures:
+  - assets/samples/Cinder-Hound.png
+
 partial-templates:
   statblock: templates/statblock.hbs
   entries: templates/entries.hbs

@@ -17,6 +17,11 @@ languages: [de, en]
 
 stylesheet: styles/sw.css
 
+# The pictures the samples link, written beside a note by *Insert sample
+# card block* when the vault has none of that name.
+sample-pictures:
+  - assets/samples/Mondsichelklinge.png
+
 partial-templates:
   header: templates/header.hbs
   banner: templates/banner.hbs

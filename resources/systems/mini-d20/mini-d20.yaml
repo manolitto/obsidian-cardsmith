@@ -26,6 +26,12 @@ languages: [de, en]
 
 stylesheet: styles/mini-d20.css
 
+# The pictures the samples link, written beside a note by *Insert sample
+# card block* when the vault has none of that name.
+sample-pictures:
+  - assets/samples/Deckblatt.png
+  - assets/samples/Gegenstand.png
+
 partial-templates:
   header: templates/header.hbs
   footer: templates/footer.hbs

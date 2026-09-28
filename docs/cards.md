@@ -243,6 +243,8 @@ at cursor* fills them in with sample values — for a card type that is one
 row of a table, as a table note with a few rows. Both write in
 Obsidian's language when the system has it, else in the system's first
 language, and set `language:` to match, so the card's captions are in
-the language of its descriptions and samples. *Show property
+the language of its descriptions and samples. A sample that shows a picture
+comes with it: the picture is written where Obsidian puts the note's
+attachments, unless the vault already has one of that name. *Show property
 reference* opens the same list as a table, with each property's aliases
 and description.

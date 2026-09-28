@@ -21,6 +21,11 @@ languages: [de, en]
 
 stylesheet: styles/pf2e.css
 
+# The pictures the samples link, written beside a note by *Insert sample
+# card block* when the vault has none of that name.
+sample-pictures:
+  - assets/samples/Sumpfschleicher.png
+
 partial-templates:
   header: templates/header.hbs
   trait-row: templates/trait-row.hbs

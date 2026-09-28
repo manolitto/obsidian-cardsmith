@@ -18,6 +18,11 @@ stylesheet: styles/eiserne-zeit.css
 # The one illustration partial. The front renders its picture through it,
 # and every `![[picture]]` in a note's text goes through the same partial, so
 # a picture in the text and a picture in the slot cannot drift apart.
+# The pictures the samples link, written beside a note by *Insert sample
+# card block* when the vault has none of that name.
+sample-pictures:
+  - assets/samples/wolfsfalle.png
+
 partial-templates:
   card-image: templates/card-image.hbs
 markdown-image-partial: card-image

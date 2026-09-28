@@ -17,6 +17,12 @@ languages: [de, en]
 
 stylesheet: styles/troubleshooters.css
 
+# The pictures the samples link, written beside a note by *Insert sample
+# card block* when the vault has none of that name.
+sample-pictures:
+  - assets/samples/Feldstecher.png
+  - assets/samples/Zollbeamtin.png
+
 partial-templates:
   logo: templates/logo.hbs
   # The mechanic's back, and the character's when there is no picture.

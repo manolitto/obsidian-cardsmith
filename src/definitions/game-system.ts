@@ -85,6 +85,16 @@ export interface SystemDeclaration {
   markdownImagePartial?: string;
 
   /**
+   * The pictures the samples link, as files of the system. A sample value
+   * names a picture of the reader's vault — `image: "[[Medaillon.png]]"` —
+   * which the reader does not have; *Insert sample card block* writes the
+   * file declared here whose name the link gives into the vault beside the
+   * note, so a sample shows its picture wherever it is inserted. Matched by
+   * file name, since that is all a link says.
+   */
+  samplePictures: SystemPath[];
+
+  /**
    * The system layer of the definition cascade. Absent when it declares none.
    *
    * A constant the design needs — a logo path, a wordmark line, a layout
@@ -173,6 +183,7 @@ const SYSTEM_KEYS: readonly string[] = [
   "classifiers",
   "partial-templates",
   "markdown-image-partial",
+  "sample-pictures",
   "properties",
   "card-types",
 ];
@@ -235,6 +246,11 @@ export function parseSystemDeclaration(
     partialTemplates: parsePathMap(
       raw["partial-templates"],
       `${id}.partial-templates`,
+      diagnostics
+    ),
+    samplePictures: parsePathList(
+      raw["sample-pictures"],
+      `${id}.sample-pictures`,
       diagnostics
     ),
     cardSettings: parseCardSettings(everythingBut(raw, SYSTEM_KEYS), diagnostics),
@@ -488,6 +504,19 @@ function parsePathMap(
     const path = parseSystemPath(value, `${context}.${key}`, diagnostics);
     if (path) out[key.trim().toLowerCase()] = path;
   }
+  return out;
+}
+
+function parsePathList(
+  raw: unknown,
+  context: string,
+  diagnostics: Diagnostics
+): SystemPath[] {
+  const out: SystemPath[] = [];
+  asList(raw, context, diagnostics).forEach((item, i) => {
+    const path = parseSystemPath(item, `${context}[${i}]`, diagnostics);
+    if (path && !out.includes(path)) out.push(path);
+  });
   return out;
 }
 

@@ -29,7 +29,7 @@ data:
   english-original: Boat hook
 
   # Picture of the creature as a wikilink. Rendered on the back, and at the foot of the front when there is room for it.
-  artwork: '[[Nebelkrähe.png]]'
+  artwork: '[[Nebelkraehe.png]]'
 
   # Hit Points (HP) — the creature is taken out at 0.
   hit-points: 9

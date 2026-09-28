@@ -17,6 +17,11 @@ languages: [de, en]
 
 stylesheet: styles/dino-island.css
 
+# The pictures the samples link, written beside a note by *Insert sample
+# card block* when the vault has none of that name.
+sample-pictures:
+  - assets/samples/Panzerlaeufer.png
+
 partial-templates:
   footer: templates/footer.hbs
   wordmark: templates/wordmark.hbs
