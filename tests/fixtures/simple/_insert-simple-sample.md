@@ -18,7 +18,7 @@ data:
     - Duration: 1 minute
 
   # A small source reference shown in the front footer — a rulebook page or a wikilink.
-  reference: Core Rules, p. 152
+  reference: House Rules, p. 15
 
   # The name of the game this card belongs to — displayed prominently on the card back.
   game-name: Chronicles of the Ember Coast

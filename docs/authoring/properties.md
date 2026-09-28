@@ -16,8 +16,8 @@ block at cursor* are built from it.
       en: "A small source reference shown in the front footer — a rulebook page or a wikilink."
       de: "Kleine Quellenangabe im Fuß der Vorderseite — eine Regelbuchseite oder ein Wikilink."
     sample:
-      en: "Core Rules, p. 152"
-      de: "Grundregeln, S. 152"
+      en: "House Rules, p. 15"
+      de: "Hausregeln, S. 15"
 ```
 
 | Key | |

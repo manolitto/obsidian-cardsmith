@@ -63,8 +63,8 @@ properties:
       de: "Fußzeile der Vorderseite, unter der roten Linie."
       en: "The front's footer, under the red line."
     sample:
-      de: "Regelwerk S. 12"
-      en: "Rules p. 12"
+      de: "Hausregeln S. 12"
+      en: "House Rules p. 12"
 
   icon-left:
     slot: front-icon-left

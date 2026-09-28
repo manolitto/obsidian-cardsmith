@@ -79,8 +79,8 @@ properties:
       de: "Quellenangabe — Regelwerkseite oder Wikilink, klein unter der roten Linie am Fuß."
       en: "Source reference — rulebook page or wikilink, small under the red line at the foot."
     sample:
-      de: "Regelwerk S. 16"
-      en: "Rules p. 16"
+      de: "Hausregeln S. 16"
+      en: "House Rules p. 16"
 
 # The strings the shared faces read that are not a place's caption.
 translations:
