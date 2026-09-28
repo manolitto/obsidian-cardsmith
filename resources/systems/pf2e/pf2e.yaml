@@ -95,11 +95,16 @@ properties:
     aliases: [rettungswürfe, rettungswuerfe, rettung]
     description:
       de: "Rettungswürfe als Liste einzelner Schlüssel-Wert-Paare, in der Reihenfolge des Monsterhandbuchs: `ZÄH` (Zähigkeit), `REF` (Reflex), `WIL` (Willen). Das Vorzeichen wird beim Drucken ergänzt."
-      en: "Saves as a list of single-key pairs, in the Monsterhandbuch's order: `ZÄH` (Fortitude), `REF` (Reflex), `WIL` (Will). The sign is added when printed."
+      en: "Saves as a list of single-key pairs, in the Bestiary's order: `Fort`, `Ref`, `Will`. The sign is added when printed."
     sample:
-      - { ZÄH: 14 }
-      - { REF: 8 }
-      - { WIL: 11 }
+      de:
+        - { ZÄH: 14 }
+        - { REF: 8 }
+        - { WIL: 11 }
+      en:
+        - { Fort: 14 }
+        - { Ref: 8 }
+        - { Will: 11 }
 
   immunities:
     aliases: [immunitäten, immunitaeten]
