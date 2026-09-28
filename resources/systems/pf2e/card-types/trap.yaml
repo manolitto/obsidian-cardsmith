@@ -33,6 +33,9 @@ translations:
     front-reset-label: "Reset"
 
 properties:
+  image:
+    sample: "[[Speerfalle.png]]"
+
   level:
     slot: front-badge
     aliases: [stufe, gefahr]

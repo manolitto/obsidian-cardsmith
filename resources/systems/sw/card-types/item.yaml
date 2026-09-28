@@ -28,6 +28,9 @@ translations:
     front-notes-label: "Notes"
 
 properties:
+  image:
+    sample: "[[Mondsichelklinge.png]]"
+
   name:
     sample:
       de: "Mondsichelklinge"

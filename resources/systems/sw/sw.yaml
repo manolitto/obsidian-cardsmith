@@ -21,6 +21,7 @@ stylesheet: styles/sw.css
 # card block* when the vault has none of that name.
 sample-pictures:
   - assets/samples/Mondsichelklinge.png
+  - assets/samples/Moorschleicher.png
 
 partial-templates:
   header: templates/header.hbs
@@ -53,7 +54,6 @@ properties:
     description:
       de: "Bild der Karte — ein Wikilink auf ein Bild im Vault, als Tafel unter dem Stimmungstext."
       en: "The card's picture — a wikilink to a picture in the vault, a plate under the flavour."
-    sample: "[[Mondsichelklinge.png]]"
 
   reference:
     slot: front-footer

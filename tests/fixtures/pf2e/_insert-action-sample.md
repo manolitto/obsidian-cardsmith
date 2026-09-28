@@ -11,7 +11,7 @@ data:
   description: When you fall off an edge, you can try to grab it. You must succeed at a Reflex save, usually at the Climb DC.
 
   # The card's picture as a wikilink (`[[Basilisk.png]]`), embed (`![[Basilisk.png]]`) or file name. Shown large on the card back; creatures and items also show it on the front when there is room.
-  image: '[[Sumpfschleicher.png]]'
+  image: '[[Kantengriff.png]]'
 
   # Empty boxes to tick off with a pen. A number (`20`), a labelled row (`{ count: 20, label: Arrows }`) or a list of such rows. `group` (default 5) sets how many boxes stand together.
   tracker: # no sample

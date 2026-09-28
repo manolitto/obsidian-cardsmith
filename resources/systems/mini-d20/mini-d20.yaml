@@ -30,7 +30,12 @@ stylesheet: styles/mini-d20.css
 # card block* when the vault has none of that name.
 sample-pictures:
   - assets/samples/Deckblatt.png
-  - assets/samples/Gegenstand.png
+  - assets/samples/Eigenart.png
+  - assets/samples/Goblin.png
+  - assets/samples/Kurzschwert.png
+  - assets/samples/Mehrfachschuss.png
+  - assets/samples/Schurke.png
+  - assets/samples/Zwerg.png
 
 partial-templates:
   header: templates/header.hbs
@@ -69,7 +74,6 @@ properties:
     description:
       de: "Bild der Karte als Wikilink (`[[Bild.png]]`), Embed (`![[Bild.png]]`) oder Dateiname. Steht zwischen den Werten und dem Stimmungstext und nimmt den Platz, der bleibt."
       en: "The card's picture as a wikilink (`[[image.png]]`), embed (`![[image.png]]`) or file name. Sits between the stats and the flavour and takes the room that is left."
-    sample: "[[Gegenstand.png]]"
 
   reference:
     slot: front-footer

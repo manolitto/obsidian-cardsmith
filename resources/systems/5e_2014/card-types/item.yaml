@@ -127,3 +127,4 @@ properties:
     aliases: [bild]
     description:
       en: "The item's picture — a wikilink to a picture in the vault — on the back. Without one the back shows a d20."
+    sample: "[[Lantern-of-Ash.png]]"
