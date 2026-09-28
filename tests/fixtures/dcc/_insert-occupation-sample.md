@@ -17,7 +17,7 @@ data:
   roll: '07'
 
   # Source reference — rulebook page or wikilink, small at the foot's right.
-  reference: Core Rulebook p. 22
+  reference: House Rules p. 5
 
   # English original name, small at the foot's left, prefixed "engl."; hidden on English cards.
   original-name: Stargazer

@@ -65,8 +65,8 @@ properties:
 
   book-reference:
     sample:
-      de: "Regelbuch S. 49"
-      en: "Rules p. 49"
+      de: "Hausregeln S. 15"
+      en: "House Rules p. 15"
 
   english-original:
     sample: "Fishing"
