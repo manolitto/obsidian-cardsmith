@@ -2,6 +2,7 @@
 card:
   system: tor2e
   card-type: npc
+  language: en
 data:
   # The card's name. Falls back to the file name.
   name:

@@ -11,7 +11,8 @@ import { t } from "./strings";
 
 /*
  * The `cardsmith` block the insert commands write: `card:` naming the
- * system and the card type, `data:` with every property the card type
+ * system, the card type and the language the block is written in, `data:`
+ * with every property the card type
  * puts on the card — its description as a comment above, its sample as
  * the value or nothing. Pure; the goldens under `tests/fixtures/` hold it
  * per card type and mode.
@@ -22,8 +23,10 @@ export type InsertMode = "empty" | "sample";
 /**
  * The block for one card type. Only a property bound to a slot is written:
  * one that reaches no place on the card has nothing to show for a value.
- * Canonical keys only, never an alias; descriptions and samples in
- * `language`, falling back to the first the system documents. A card type
+ * Canonical keys only, never an alias. The block is written in one
+ * language — `language` when the system has it, else the system's primary
+ * one — and says so under `card:`, so the card prints its captions in the
+ * language its descriptions and samples are in. A card type
  * that declares a sample table gets a table note instead: the table, then
  * the block with the columns under `table:` and the shared values under
  * `data:`.
@@ -34,6 +37,9 @@ export function buildCardBlock(
   language: string,
   mode: InsertMode
 ): string {
+  const languages = system.declaration.languages;
+  const written = languages.includes(language) ? language : languages[0];
+  if (written !== undefined) language = written;
   const table = sampleTableFor(system, cardType, language);
   const columns = new Set(Object.keys(table?.columns ?? {}));
   const lines: string[] = [];
@@ -45,6 +51,7 @@ export function buildCardBlock(
     `  system: ${system.id}`,
     `  card-type: ${cardType.declaration.id}`
   );
+  if (written !== undefined) lines.push(`  language: ${written}`);
 
   const bound = Object.entries(cardType.properties).filter(
     ([, def]) => (def.slot?.length ?? 0) > 0

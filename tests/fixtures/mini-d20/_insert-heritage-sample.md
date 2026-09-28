@@ -2,6 +2,7 @@
 card:
   system: mini-d20
   card-type: heritage
+  language: en
 data:
   # The people's name — Dwarf, Elf, Halfling, Gnome, Orc, Human. Picks the right icon as well.
   name: Dwarf

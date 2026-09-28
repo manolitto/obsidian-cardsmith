@@ -2,6 +2,7 @@
 card:
   system: dragonbane
   card-type: rule
+  language: en
 data:
   # Name of the skill, ability or spell.
   name: Ember Grip

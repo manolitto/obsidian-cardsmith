@@ -2,6 +2,7 @@
 card:
   system: mini-d20
   card-type: archetype
+  language: en
 data:
   # The archetype's name — Rogue, Fighter, Cleric, Mage. Picks the right icon as well.
   name: Rogue

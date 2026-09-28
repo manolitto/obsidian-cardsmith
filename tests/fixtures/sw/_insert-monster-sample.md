@@ -2,6 +2,7 @@
 card:
   system: sw
   card-type: monster
+  language: en
 data:
   # The card's name. Falls back to the file name.
   name: Bog Creeper

@@ -2,6 +2,7 @@
 card:
   system: dragonbane
   card-type: generic
+  language: en
 data:
   # Title on the parchment plaque at the head of the card. Falls back to the note's file name.
   name:

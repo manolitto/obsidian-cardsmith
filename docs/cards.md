@@ -239,6 +239,9 @@ Two commands write blocks into the open note, at the cursor: *Insert
 empty card block at cursor* puts a block with every property of the
 chosen system and card type as a comment, and *Insert sample card block
 at cursor* fills them in with sample values — for a card type that is one
-row of a table, as a table note with a few rows. *Show property
+row of a table, as a table note with a few rows. Both write in
+Obsidian's language when the system has it, else in the system's first
+language, and set `language:` to match, so the card's captions are in
+the language of its descriptions and samples. *Show property
 reference* opens the same list as a table, with each property's aliases
 and description.

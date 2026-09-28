@@ -2,6 +2,7 @@
 card:
   system: simple
   card-type: simple
+  language: en
 data:
   # The card's title, shown in the header of the front. Falls back to the note's file name when unset.
   name:

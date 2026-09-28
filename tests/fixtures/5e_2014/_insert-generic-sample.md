@@ -2,6 +2,7 @@
 card:
   system: 5e_2014
   card-type: generic
+  language: en
 data:
   # The card's name. Falls back to the file name.
   name: Ember Step

@@ -2,6 +2,7 @@
 card:
   system: mini-d20
   card-type: ability
+  language: en
 data:
   # The card's name. Falls back to the file name.
   name: # no sample

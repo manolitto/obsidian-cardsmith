@@ -2,6 +2,7 @@
 card:
   system: dragonbane
   card-type: gear
+  language: en
 data:
   # Item's name.
   name: Boat hook

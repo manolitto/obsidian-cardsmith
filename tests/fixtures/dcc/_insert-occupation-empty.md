@@ -2,6 +2,7 @@
 card:
   system: dcc
   card-type: occupation
+  language: en
 data:
   # The card's name. Falls back to the file name.
   name:

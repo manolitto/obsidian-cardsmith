@@ -6,6 +6,7 @@
 card:
   system: dino-island
   card-type: roll-table
+  language: en
 table:
   # The entry's roll — the orange die at the top left.
   roll: Roll
