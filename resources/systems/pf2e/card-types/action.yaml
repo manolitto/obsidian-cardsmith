@@ -53,7 +53,7 @@ properties:
     description:
       de: "Aktionskosten, neben dem Namen als Symbol gedruckt: `1`, `2`, `3`, `r` (Reaktion), `f` (frei) oder das Symbol selbst."
       en: "Action cost, printed as a glyph beside the name: `1`, `2`, `3`, `r` (reaction), `f` (free) or the glyph itself."
-    sample: "1"
+    sample: "r"
 
   skill:
     slot: front-badge
@@ -82,8 +82,8 @@ properties:
       de: "Liste der Merkmale der Aktion (`Bewegung`, `Offensiv`, `Handhaben`, `Konzentration`, `Verdeckt`, `Erkundung`, …). Jeder Eintrag wird eine dunkelrote Pille unter dem Titel."
       en: "List of the action's traits (`Bewegung`, `Offensiv`, `Handhaben`, `Konzentration`, `Verdeckt`, `Erkundung`, …). Each entry becomes a dark-red pill under the title."
     sample:
-      de: ["Offensiv"]
-      en: ["Attack"]
+      de: ["Bewegung"]
+      en: ["Move"]
 
   frequency:
     slot: front-frequency
@@ -120,8 +120,8 @@ properties:
       de: "Wirkung der Aktion als Markdown — der Hauptteil der Karte."
       en: "The action's effect as markdown — the main body of the card."
     sample:
-      de: "Wenn du von einer Kante abstürzt, kannst du versuchen, sie zu ergreifen. Dazu muss dir ein Reflexwurf gelingen, üblicherweise gegen den Klettern-SG."
-      en: "When you fall off an edge, you can try to grab it. You must succeed at a Reflex save, usually at the Climb DC."
+      de: "Wenn du von einer Kante abstürzt, kannst du versuchen, sie zu ergreifen. Dazu legst du einen Akrobatikwurf ab, üblicherweise gegen den Klettern-SG."
+      en: "When you fall off an edge, you can try to grab it. Attempt an Acrobatics check, usually against the Climb DC."
 
   critical-success:
     slot: front-critical-success

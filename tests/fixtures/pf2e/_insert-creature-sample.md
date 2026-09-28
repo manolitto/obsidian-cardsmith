@@ -72,7 +72,7 @@ data:
     - Cha: 1
 
   # Carried equipment as free text, comma-separated. Beasts and mindless creatures usually have none — omit the field then.
-  items: spear, leather armor
+  items: # no sample
 
   # Resistances as free text in the form `damage-type value`, comma-separated (e.g. `fire 5, cold 5`).
   resistances: fire 5, cold 5
@@ -81,7 +81,7 @@ data:
   weaknesses: holy 5
 
   # Simple movement as free text (e.g. `20 feet`, `25 ft.`). The card puts the ⬻ action glyph in front — do not write it into the value. For several movement modes use `speed` instead.
-  stride: 25 feet
+  stride: # no sample
 
   # Full movement line as free text when the creature has several movement modes (e.g. `30 ft., climb 20 ft., fly 40 ft.`). No action glyph; use only when `stride` is not set.
   speed: 30 ft., climb 20 ft.

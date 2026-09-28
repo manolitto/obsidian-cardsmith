@@ -8,7 +8,7 @@ data:
   name: Grab an Edge
 
   # The action's effect as markdown — the main body of the card.
-  description: When you fall off an edge, you can try to grab it. You must succeed at a Reflex save, usually at the Climb DC.
+  description: When you fall off an edge, you can try to grab it. Attempt an Acrobatics check, usually against the Climb DC.
 
   # The card's picture as a wikilink (`[[Basilisk.png]]`), embed (`![[Basilisk.png]]`) or file name. Shown large on the card back; creatures and items also show it on the front when there is room.
   image: '[[Kantengriff.png]]'
@@ -23,7 +23,7 @@ data:
   original-name: Grab an Edge
 
   # Action cost, printed as a glyph beside the name: `1`, `2`, `3`, `r` (reaction), `f` (free) or the glyph itself.
-  actions: '1'
+  actions: r
 
   # Skill the action belongs to (e.g. `Akrobatik`, `Athletik`). Shown as the badge at the right of the header; a list for several skills, joined with "/". Basic actions omit it.
   skill: Acrobatics
@@ -33,7 +33,7 @@ data:
 
   # List of the action's traits (`Bewegung`, `Offensiv`, `Handhaben`, `Konzentration`, `Verdeckt`, `Erkundung`, …). Each entry becomes a dark-red pill under the title.
   categories:
-    - Attack
+    - Move
 
   # Frequency (e.g. `1/day`, `once per hour`).
   frequency: ''
