@@ -5,7 +5,7 @@ card:
   language: en
 data:
   # The card's name — creature, item, feat, action or hazard. Falls back to the note's file name.
-  name: Snap Antidote
+  name: Hasty Antidote
 
   # The feat's rule as markdown — the main body of the card. Degrees of success may stand bold inside the text (`**Success** You notice …`).
   description: With a few deft motions you mix an antidote and pour it down your ally's throat. The ally gains resistance 5 to the triggering damage type until the start of your next turn.
@@ -17,10 +17,10 @@ data:
   tracker: # no sample
 
   # Source reference — book title and page number, optionally a wikilink (`[[…]]`). Set small at the bottom right of the card.
-  source: Core Rulebook p. 258
+  source: House Rules p. 14
 
   # English original name. Set small at the bottom left of the card, prefixed "engl."; hidden on English cards.
-  original-name: Snap Antidote
+  original-name: Hasty Antidote
 
   # Feat level as free text, conventionally `Feat N` (e.g. `Feat 1`). Shown as the badge at the right of the header.
   level: Feat 2

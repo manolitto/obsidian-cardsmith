@@ -38,16 +38,16 @@ properties:
 
   name:
     sample:
-      de: "Speerfalle"
-      en: "Spear Trap"
+      de: "Speerwand"
+      en: "Spear Wall"
 
   original-name:
-    sample: "Spear Trap"
+    sample: "Spear Wall"
 
   source:
     sample:
-      de: "Grundregelwerk S. 524"
-      en: "Core Rulebook p. 522"
+      de: "Hausregeln S. 33"
+      en: "House Rules p. 33"
 
   level:
     slot: front-badge

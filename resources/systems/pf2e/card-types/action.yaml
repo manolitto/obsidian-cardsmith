@@ -36,16 +36,16 @@ properties:
 
   name:
     sample:
-      de: "Kante ergreifen"
-      en: "Grab an Edge"
+      de: "Kantengriff"
+      en: "Ledge Catch"
 
   original-name:
-    sample: "Grab an Edge"
+    sample: "Ledge Catch"
 
   source:
     sample:
-      de: "Grundregelwerk S. 476"
-      en: "Core Rulebook p. 472"
+      de: "Hausregeln S. 8"
+      en: "House Rules p. 8"
 
   actions:
     slot: front-title-glyph
@@ -100,8 +100,8 @@ properties:
       de: "Auslöser der Aktion, bei Reaktionen und freien Aktionen."
       en: "Trigger of the action, for reactions and free actions."
     sample:
-      de: "Du stürzt von einer Kante oder einem Haltegriff ab oder daran vorbei."
-      en: "You fall from or past an edge or handhold."
+      de: "Du stürzt an einem Rand in deiner Reichweite vorbei."
+      en: "You fall past a ledge within your reach."
 
   requirements:
     slot: front-requirements
@@ -110,8 +110,8 @@ properties:
       de: "Anforderungen für die Ausführung der Aktion."
       en: "Requirements for performing the action."
     sample:
-      de: "Deine Hände sind nicht gefesselt."
-      en: "Your hands are not tied."
+      de: "Mindestens eine deiner Hände ist nicht gebunden."
+      en: "At least one of your hands is not bound."
 
   description:
     slot: front-text
@@ -120,8 +120,8 @@ properties:
       de: "Wirkung der Aktion als Markdown — der Hauptteil der Karte."
       en: "The action's effect as markdown — the main body of the card."
     sample:
-      de: "Wenn du von einer Kante abstürzt, kannst du versuchen, sie zu ergreifen. Dazu legst du einen Akrobatikwurf ab, üblicherweise gegen den Klettern-SG."
-      en: "When you fall off an edge, you can try to grab it. Attempt an Acrobatics check, usually against the Climb DC."
+      de: "Im Fallen schnappst du nach dem Rand, an dem du vorbeistürzt. Lege einen Akrobatikwurf ab, meist gegen den Klettern-SG."
+      en: "As you fall, you snatch at the rim you are dropping past. Attempt an Acrobatics check, usually against the Climb DC."
 
   critical-success:
     slot: front-critical-success
@@ -130,8 +130,8 @@ properties:
       de: "Ergebnis bei kritischem Erfolg."
       en: "Outcome on a critical success."
     sample:
-      de: "Du ergreifst den Halt, ob du eine Hand frei hast oder nicht, und behandelst den Sturz als 9 m kürzer."
-      en: "You grab the edge whether or not you have a hand free, and treat the fall as 30 feet shorter."
+      de: "Du bekommst den Rand selbst mit vollen Händen zu fassen und ziehst dich hinauf."
+      en: "You catch the ledge even with your hands full and haul yourself up onto it."
 
   success:
     slot: front-success
@@ -140,8 +140,8 @@ properties:
       de: "Ergebnis bei Erfolg."
       en: "Outcome on a success."
     sample:
-      de: "Mit mindestens einer freien Hand ergreifst du den Halt und behandelst den Sturz als 6 m kürzer."
-      en: "With at least one hand free you grab the edge and treat the fall as 20 feet shorter."
+      de: "Mit einer freien Hand bekommst du den Rand zu fassen und hängst daran; du nimmst keinen Fallschaden."
+      en: "With a free hand you catch the ledge and hang from it; you take no falling damage."
 
   failure:
     slot: front-failure
@@ -158,8 +158,8 @@ properties:
       de: "Ergebnis bei kritischem Fehlschlag."
       en: "Outcome on a critical failure."
     sample:
-      de: "Du fällst weiter und nimmst zusätzlich 10 Wuchtschaden je 6 m, die du bereits gestürzt bist."
-      en: "You continue to fall and take an additional 10 bludgeoning damage for every 20 feet already fallen."
+      de: "Du greifst ins Leere, stürzt weiter und landest liegend."
+      en: "You clutch at nothing, keep falling and land prone."
 
   callout:
     slot: front-callout
@@ -179,8 +179,8 @@ properties:
         Box at the end of the card — an example list or a named sub-rule. An object with `title` (optional) and `body` (markdown); without `title` the text stands alone in the tinted box.
     sample:
       de:
-        title: "Erzwungene Bewegung"
-        body: "Wird eine Kreatur durch einen Effekt bewegt, bestimmt der Effekt die Entfernung, nicht ihre Bewegungsrate; die Bewegung löst keine Reaktionen aus."
+        title: "Am Rand hängen"
+        body: "Solange du am Rand hängst, kannst du nur klettern oder loslassen."
       en:
-        title: "Forced Movement"
-        body: "When an effect moves a creature, the effect sets the distance, not its Speed; the movement triggers no reactions."
+        title: "Hanging On"
+        body: "While you hang from the ledge, all you can do is climb or let go."

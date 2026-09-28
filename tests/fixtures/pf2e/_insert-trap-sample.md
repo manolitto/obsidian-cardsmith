@@ -5,7 +5,7 @@ card:
   language: en
 data:
   # The card's name — creature, item, feat, action or hazard. Falls back to the note's file name.
-  name: Spear Trap
+  name: Spear Wall
 
   # Introductory text — trigger, surroundings, how it works — in italics before the stats.
   description: A pressure plate in the floor triggers a volley of spears from the west wall.
@@ -17,10 +17,10 @@ data:
   tracker: # no sample
 
   # Source reference — book title and page number, optionally a wikilink (`[[…]]`). Set small at the bottom right of the card.
-  source: Core Rulebook p. 522
+  source: House Rules p. 33
 
   # English original name. Set small at the bottom left of the card, prefixed "engl."; hidden on English cards.
-  original-name: Spear Trap
+  original-name: Spear Wall
 
   # Hit points as free text (e.g. `15` or `15 (per corner mechanism)`).
   hit-points: '15'
