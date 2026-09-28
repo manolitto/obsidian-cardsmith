@@ -12,6 +12,9 @@ data:
   # The card's picture as a wikilink (`[[image.png]]`), embed (`![[image.png]]`) or file name. Sits between the stats and the flavour and takes the room that is left.
   image:
 
+  # Empty boxes to tick off with a pen. A number (`20`), a labelled row (`{ count: 20, label: Arrows }`) or a list of such rows. `group` (default 5) sets how many boxes stand together.
+  tracker:
+
   # Source reference — rulebook page or wikilink, small under the red line at the foot.
   reference:
 

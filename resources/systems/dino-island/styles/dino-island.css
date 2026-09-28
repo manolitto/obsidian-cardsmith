@@ -272,3 +272,11 @@
   margin-top: 0.06em;
   color: var(--dino-red);
 }
+
+/* ── The tracker ──────────────────────────────────────────────────── */
+
+/* The boxes to tick, under the orange rule the headings stand on. */
+.card-root.dino-island .cs-tracker {
+  border-top: 0.14em solid var(--dino-orange);
+  padding-top: 0.45em;
+}

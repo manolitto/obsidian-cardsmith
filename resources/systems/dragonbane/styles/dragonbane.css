@@ -1468,3 +1468,11 @@
 .card-root.dragonbane .db-fill-bottom {
   flex: 0 1 0;
 }
+
+/* ── The tracker ──────────────────────────────────────────────────── */
+
+/* The boxes to tick, under a brown rule like those in the stats box. */
+.card-root.dragonbane .cs-tracker {
+  border-top: 0.08em solid var(--db-brown);
+  padding-top: 0.45em;
+}

@@ -25,6 +25,39 @@ A face is a column: header, content, footer, each a direct child of
 A design styles these and its own classes; it does not change their
 geometry.
 
+## The tracker
+
+The `tracker` property renders as a block the base stylesheet draws:
+
+```html
+<div class="cs-tracker cs-keep-together">
+  <div class="cs-tracker-row">
+    <span class="cs-tracker-label">Arrows</span>
+    <span class="cs-tracker-boxes">
+      <span class="cs-tracker-group"><span class="cs-tracker-box"></span>…</span>
+      …
+    </span>
+  </div>
+</div>
+```
+
+The boxes stand beside the label when they fit there and below it when
+they do not; a group moves to the next line whole. The base draws no
+separator — a design puts its own rule over `.cs-tracker`, as a border
+or a `::before`. Four variables retune the boxes, set on the design's
+root or any ancestor:
+
+| Variable | Default | |
+|---|---|---|
+| `--cs-tracker-box-size` | `clamp(3.5mm, 1.3em, 4mm)` | the side of a box |
+| `--cs-tracker-stroke` | `0.08em` | the width of its line |
+| `--cs-tracker-radius` | a tenth of the box | the rounding of its corners |
+| `--cs-tracker-color` | `currentColor` | the line's colour |
+
+The box size is the one other absolute a design meets: a pen needs room
+whatever the card's size. It shrinks with the body when a dense card is
+scaled down, as the text does.
+
 ## Sizes are relative
 
 Cards print at several sizes — mini to large — from one stylesheet, so

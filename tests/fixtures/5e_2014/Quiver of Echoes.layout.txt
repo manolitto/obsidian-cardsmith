@@ -1,0 +1,26 @@
+Quiver of Echoes · 2 cards · 4 faces · clipped: no
+1. front [cs-overflow-active cs-layout-default cs-front-first cs-front-has-next] scale 0.53
+   p.dd-subtitle "Wondrous item, rare"
+   svg.dd-rule
+   div.dd-text.dd-generic-body.cs-split-head
+     p "The quiver answers every arrow that …"
+     p "The quiver answers every arrow that …"
+     p "The quiver answers every arrow that …"
+     p "The quiver answers every arrow that …"
+     p "The quiver answers every arrow that …"
+     p "The quiver answers every arrow that …"
+     p "The quiver answers every arrow that …"
+2. back [cs-layout-default cs-overflow-active] scale —
+3. front [cs-overflow-active cs-layout-default cs-front-continued] scale 0.53
+   div.dd-text.dd-generic-body.cs-split-continuation
+     p "The quiver answers every arrow that …"
+     p "The quiver answers every arrow that …"
+     p "The quiver answers every arrow that …"
+     p "The quiver answers every arrow that …"
+     p "The quiver answers every arrow that …"
+     p "The quiver answers every arrow that …"
+     p "The quiver answers every arrow that …"
+   div.cs-keep-together.dd-tracker "Echoes"
+     div.cs-tracker.cs-keep-together
+       div.cs-tracker-row "Echoes"
+4. back [cs-layout-default cs-overflow-active] scale —

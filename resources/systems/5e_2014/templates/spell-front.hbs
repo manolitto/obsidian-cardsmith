@@ -13,6 +13,7 @@
     front-description               the text, under a rule
     front-higher-levels             led by "At Higher Levels."
     front-cantrip-upgrade           a paragraph after the text
+    front-tracker                   the boxes to tick, under a rule, last
 --}}
 <div class="card-root card-front dd spell-card">
   <div class="dd-bar"></div>
@@ -37,6 +38,7 @@
     <div class="dd-text">{{slot "front-description" markdown="block"}}</div>
     {{#if (slot "front-cantrip-upgrade")}}<p class="dd-entry">{{slot "front-cantrip-upgrade"}}</p>{{/if}}
     {{#if (slot "front-higher-levels")}}<p class="dd-entry"><span class="dd-entry-name">{{slot-label "front-higher-levels"}}</span>{{slot "front-higher-levels"}}</p>{{/if}}
+    {{> tracker}}
     </div>
   </div>
   <div class="dd-bar"></div>

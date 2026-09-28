@@ -1,0 +1,8 @@
+{{!-- 5E — the boxes to tick, under the tapered red rule. One block, so the
+     rule never ends a face with its boxes on the next. --}}
+{{#if (slot "front-tracker" tracker=true)}}
+<div class="cs-keep-together dd-tracker">
+{{> rule}}
+{{slot "front-tracker" tracker=true}}
+</div>
+{{/if}}

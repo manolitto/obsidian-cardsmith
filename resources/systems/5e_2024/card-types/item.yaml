@@ -138,6 +138,13 @@ properties:
   body:
     slot: front-description
 
+  # The boxes every card may print, shown on the sample: a flask of oil
+  # keeps a lantern lit for six hours.
+  tracker:
+    sample:
+      en: { count: 6, label: "Hours of oil" }
+      de: { count: 6, label: "Stunden Öl" }
+
   image:
     slot: back-image
     aliases: [bild]

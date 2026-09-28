@@ -546,3 +546,11 @@
 .mini-d20-wordmark-line-2 {
   margin-left: 0.55em;
 }
+
+/* ── The tracker ──────────────────────────────────────────────────── */
+
+/* The boxes to tick, under the book's brick-red rule. */
+.card-root.mini-d20 .cs-tracker {
+  border-top: 0.08em solid var(--mini-d20-rule);
+  padding-top: 0.45em;
+}

@@ -12,6 +12,9 @@ data:
   # The card's picture as a wikilink (`[[Basilisk.png]]`), embed (`![[Basilisk.png]]`) or file name. Shown large on the card back; creatures and items also show it on the front when there is room.
   image: '[[Sumpfschleicher.png]]'
 
+  # Empty boxes to tick off with a pen. A number (`20`), a labelled row (`{ count: 20, label: Arrows }`) or a list of such rows. `group` (default 5) sets how many boxes stand together.
+  tracker: # no sample
+
   # Source reference — book title and page number, optionally a wikilink (`[[…]]`). Set small at the bottom right of the card.
   source: Bestiary p. 38
 

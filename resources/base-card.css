@@ -176,6 +176,65 @@
 }
 
 /*
+ * A tracker — the `tracker` property: rows of empty boxes to tick off with
+ * a pen. A row is its label and its boxes: the boxes beside the label when
+ * they all fit there, below it when they do not. The boxes stand in
+ * groups, a wider gap between two; a group that does not fit moves to the
+ * next line whole, and only a group wider than the line breaks.
+ *
+ * The box is the second deliberate absolute beside the type budget: a pen
+ * needs room whatever the card's size, so the box follows the type between
+ * a floor and a ceiling in millimetres. Like the text around it, it shrinks
+ * with the body when the layout engine scales a dense card down. The gaps
+ * are fractions of the box. A system retunes the variables on its own
+ * selector and draws a separator above the tracker in its own manner:
+ *
+ *   --cs-tracker-box-size   the side of a box
+ *   --cs-tracker-stroke     the width of its line
+ *   --cs-tracker-radius     the rounding of its corners
+ *   --cs-tracker-color      the line's colour; the text colour by default
+ *
+ * `.cs-tracker-label { flex-basis: 100%; }` puts a label above its boxes
+ * always.
+ */
+.cs-tracker {
+  --cs-tracker-box: var(--cs-tracker-box-size, clamp(3.5mm, 1.3em, 4mm));
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--cs-tracker-box) * 0.45);
+  margin-top: 0.5em;
+}
+
+.cs-tracker-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: calc(var(--cs-tracker-box) * 0.3) calc(var(--cs-tracker-box) * 0.8);
+}
+
+.cs-tracker-boxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--cs-tracker-box) * 0.45) calc(var(--cs-tracker-box) * 0.8);
+  max-width: 100%;
+}
+
+.cs-tracker-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--cs-tracker-box) * 0.3);
+}
+
+.cs-tracker-box {
+  flex: none;
+  box-sizing: border-box;
+  width: var(--cs-tracker-box);
+  height: var(--cs-tracker-box);
+  border: var(--cs-tracker-stroke, 0.08em) solid var(--cs-tracker-color, currentColor);
+  border-radius: var(--cs-tracker-radius, calc(var(--cs-tracker-box) * 0.1));
+}
+
+/*
  * A `%% card-break %%` line in the note's text. An invisible block the
  * overflow splitter treats as a hard breakpoint: what precedes it stays on
  * the current face, what follows flows onto a continuation face, even when

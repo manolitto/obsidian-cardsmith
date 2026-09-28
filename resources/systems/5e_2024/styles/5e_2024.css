@@ -376,3 +376,15 @@
   width: 100%;
   height: 100%;
 }
+
+/* ── The tracker ──────────────────────────────────────────────────── */
+
+/* The boxes to tick, under a thin rule in the card type's colour, as
+   the statistics stand between two; the label a caption like a line's. */
+.card-root.ff .cs-tracker {
+  border-top: 0.07em solid var(--ff-accent);
+  padding-top: 0.4em;
+}
+.card-root.ff .cs-tracker-label {
+  font-weight: 700;
+}

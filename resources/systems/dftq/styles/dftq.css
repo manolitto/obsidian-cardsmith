@@ -166,3 +166,13 @@
   letter-spacing: 0.01em;
   max-width: 100%;
 }
+
+/* ── The tracker ──────────────────────────────────────────────────── */
+
+/* The boxes to tick, under a short rule like the heading's. */
+.card-root.dftq .cs-tracker::before {
+  content: "";
+  width: 32%;
+  border-top: 0.08em solid var(--dftq-ink-soft);
+  opacity: 0.65;
+}

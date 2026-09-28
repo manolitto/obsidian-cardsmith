@@ -475,7 +475,8 @@
    An inline SVG rather than a text character: no bundled face carries a
    cross fleury, and a fallback to a system font lands in Skia as a Type 3
    font. */
-.card-root.eiserne-zeit .ez-body hr {
+.card-root.eiserne-zeit .ez-body hr,
+.card-root.eiserne-zeit .cs-tracker::before {
   border: 0;
   height: 1.15em;
   margin: 0.55em auto 0.5em;
@@ -785,4 +786,17 @@
   .card-root.eiserne-zeit .ez-logo {
     display: none;
   }
+}
+
+/* ── The tracker ──────────────────────────────────────────────────── */
+
+/* The boxes to tick, under the cross fleury the `---` divider draws —
+   the rule above lists this pseudo-element beside the `hr`. */
+.card-root.eiserne-zeit .cs-tracker {
+  margin-top: 0;
+}
+.card-root.eiserne-zeit .cs-tracker::before {
+  content: "";
+  display: block;
+  width: 100%;
 }

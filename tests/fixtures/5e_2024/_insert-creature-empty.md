@@ -9,6 +9,9 @@ data:
   # The creature's picture — a wikilink to a picture in the vault — on the back under the label. Without one the back shows a d20.
   image:
 
+  # Empty boxes to tick off with a pen. A number (`20`), a labelled row (`{ count: 20, label: Arrows }`) or a list of such rows. `group` (default 5) sets how many boxes stand together.
+  tracker:
+
   # The label on the back — above the picture or the d20 — `Background`, `Feat`, `NPC`. Without it a creature's type or an item's category, else the card type's own. A feature's origin or a spell's school follows it.
   back-label:
 

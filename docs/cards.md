@@ -161,6 +161,49 @@ An `![[embed]]` in the note's text is a picture too. The picture travels
 inside the exported file, so an HTML export is one self-contained page. A
 link that resolves to no image is reported under the card.
 
+## Boxes to tick
+
+Every system has a `tracker` property: a row of empty boxes printed at the
+end of the front, to be ticked off with a pen — arrows, charges, uses per
+rest. A number is that many boxes:
+
+```yaml
+data:
+  tracker: 20
+```
+
+A mapping gives the row a label, and a list gives several rows:
+
+```yaml
+data:
+  tracker: { count: 20, label: Arrows }
+```
+
+```yaml from=tests/fixtures/simple/Wand of Embers.md
+data:
+  tracker:
+    - { count: 7, label: Charges }
+    - { count: 3, label: Per long rest, group: 3 }
+```
+
+| Field | |
+|---|---|
+| `count` | How many boxes, 0 to 100. |
+| `label` | Printed before the boxes, or above them when they do not fit beside it. Inline Markdown. |
+| `group` | How many boxes stand together before a wider gap; 5 unless set. |
+
+The property also answers to `boxes`, `checkboxes`, `tick-boxes`,
+`kästchen`, `kaestchen`, `ankreuzkästchen`, `ankreuzfelder` and
+`abstreichen`, and like any property it may come from the frontmatter, an
+inline field (`Kästchen:: 12`) or a table column — a cell holds the count.
+
+The boxes are drawn by the stylesheet, so they print in any typeface, in
+the colour of the text and at a size a pen can use. They stay together:
+when a long text continues on further cards, the boxes go whole to the
+end of the last one. Where exactly they sit, and what sets them off from
+the text above, is the system's design — the fifth-edition systems put a
+rule over them.
+
 ## Card settings
 
 Under `card:`, beside `system` and `card-type`, a note may set how it

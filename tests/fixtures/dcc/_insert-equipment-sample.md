@@ -9,6 +9,9 @@ data:
   # Flavour or a short description, in italics.
   description: # no sample
 
+  # Empty boxes to tick off with a pen. A number (`20`), a labelled row (`{ count: 20, label: Arrows }`) or a list of such rows. `group` (default 5) sets how many boxes stand together.
+  tracker: # no sample
+
   # The roll the entry is listed under in its table — a badge beside the title. `roll-min` and `roll-max` beside it are the numbers.
   roll: '07'
 

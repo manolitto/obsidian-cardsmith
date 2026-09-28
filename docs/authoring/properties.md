@@ -36,7 +36,7 @@ card (a wordmark, a logo path) that a note may still override.
 ## Layers
 
 Properties fold **baseline → system → card type**. The baseline gives every
-system eight properties and their aliases:
+system nine properties and their aliases:
 
 | Property | Aliases | |
 |---|---|---|
@@ -45,6 +45,7 @@ system eight properties and their aliases:
 | `image` | `picture`, `portrait`, `img`, `photo` | |
 | `tags` | `tag` | |
 | `body` | — | the note's text before its first `##` heading |
+| `tracker` | `boxes`, `kästchen`, `abstreichen`, … | boxes to tick off, bound to `front-tracker` — see [Templates](templates.md#the-tracker) |
 | `roll` | `dice-roll`, `würfelwurf`, `wurf`, … | the roll as printed — `"01"`, `"23–24"` |
 | `roll-min`, `roll-max` | `roll-from`, `roll-to`, `wurf-von`, `wurf-bis`, … | the range as integers, for sorting and for one card per value |
 

@@ -35,6 +35,7 @@ partial-templates:
   statblock: templates/statblock.hbs
   entries: templates/entries.hbs
   rule: templates/rule.hbs
+  tracker: templates/tracker.hbs
 
 card-size: poker
 

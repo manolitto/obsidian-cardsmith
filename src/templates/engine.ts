@@ -5,12 +5,13 @@ import { resolveTranslations } from "../definitions/translations";
 import type { CardSize } from "../model/card-size";
 import { readAsset, type Asset } from "../systems/assets";
 import type { LoadedSystem } from "../systems/loader";
-import { templateAssetReferences } from "../systems/references";
+import { templateAssetReferences, templateStringLiterals } from "../systems/references";
 import { MissingFileError } from "../systems/source";
 import { blockMarkdown } from "./block-markdown";
 import { STATE_KEY, type RenderState, type TemplateContext } from "./context";
 import { registerHelpers } from "./helpers";
 import { escapeHtml } from "./inline-markdown";
+import { TRACKER_SLOT, trackerHtml } from "./tracker";
 
 /** One face of one card, to render. */
 export interface FaceRequest {
@@ -108,6 +109,9 @@ export class TemplateEngine {
     } catch (error) {
       throw new Error(`${system.id}/${path}: ${describe(error)}`, { cause: error });
     }
+    if (face === "front" && !templates.mentions(path, TRACKER_SLOT)) {
+      html = withTracker(html, props[TRACKER_SLOT], where, diagnostics);
+    }
     return stampRoot(html, cardSize, language, `${system.id}/${path}`, diagnostics);
   }
 
@@ -137,6 +141,8 @@ type Compiled = Handlebars.TemplateDelegate<TemplateContext>;
  */
 class SystemTemplates {
   private readonly faces = new Map<string, Promise<Compiled>>();
+  /** Every template compiled so far: the string literals in its mustaches. */
+  private readonly literals = new Map<string, Set<string>>();
   private declaredPartials?: Promise<Record<string, Compiled>>;
   private readonly assetReads = new Map<string, Promise<void>>();
   private documentAssets?: Promise<void>;
@@ -171,8 +177,21 @@ class SystemTemplates {
     return this.declaredPartials;
   }
 
+  /**
+   * Whether a face, or any partial of the system, names a slot. Asked
+   * after both are compiled; a partial is any face's, so its literals
+   * count for every one — the loader's slot check reads them the same way.
+   */
+  mentions(path: SystemPath, slot: string): boolean {
+    if (this.literals.get(path)?.has(slot)) return true;
+    return Object.values(this.system.declaration.partialTemplates).some((partial) =>
+      this.literals.get(partial)?.has(slot)
+    );
+  }
+
   private async compile(path: SystemPath): Promise<Compiled> {
     const text = await this.system.source.readText(path);
+    this.literals.set(path, templateStringLiterals(text));
     await this.readAssets(text);
     await this.readDocumentAssets();
     try {
@@ -251,6 +270,57 @@ function embedRenderer(
     }
     return `<img class="cs-body-image" src="${escapeHtml(url)}" alt="${escapeHtml(alt)}">`;
   };
+}
+
+/**
+ * A front whose templates do not place the tracker gets it at the end of
+ * its body — under the text, the last block the overflow splitter meets —
+ * so a card type that never heard of the tracker still prints the boxes a
+ * note asks for. A card type that places it itself, or unbinds it with
+ * `slot: ~`, is left alone.
+ */
+function withTracker(
+  html: string,
+  value: unknown,
+  where: string,
+  diagnostics: Diagnostics
+): string {
+  const tracker = trackerHtml(value, (message) => {
+    diagnostics.warn(`tracker in ${where}: ${message}`);
+  });
+  if (tracker === "") return html;
+  const at = bodyEnd(html);
+  if (at === undefined) {
+    diagnostics.warn(
+      `tracker in ${where}: the front has no element with class="card-body-scalable" to put it in; leaving it out`
+    );
+    return html;
+  }
+  return html.slice(0, at) + tracker + html.slice(at);
+}
+
+const BODY_OPEN =
+  /<([a-zA-Z][\w-]*)\b[^>]*\bclass="(?:[^"]*\s)?card-body-scalable(?=[\s"])[^"]*"[^>]*>/;
+
+/**
+ * Where the first `.card-body-scalable` closes: the offset of its end tag,
+ * found by counting the tags of its own name that open and close after it.
+ * The markup is the template's, so it is well formed; a body that never
+ * closes has no end.
+ */
+function bodyEnd(html: string): number | undefined {
+  const open = BODY_OPEN.exec(html);
+  if (!open) return undefined;
+  const name = (open[1] as string).toLowerCase();
+  const tags = new RegExp(`<(/?)${name}\\b[^>]*>`, "gi");
+  tags.lastIndex = open.index + open[0].length;
+  let depth = 1;
+  for (let tag = tags.exec(html); tag; tag = tags.exec(html)) {
+    if (tag[1]) depth--;
+    else if (!tag[0].endsWith("/>")) depth++;
+    if (depth === 0) return tag.index;
+  }
+  return undefined;
 }
 
 /** The element every face starts with. */

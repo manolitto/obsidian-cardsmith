@@ -4,6 +4,7 @@ import {
   wikilinkDisplayText,
   wikilinkInline,
 } from "./inline-markdown";
+import { trackerHtml } from "./tracker";
 
 /**
  * How a slot's value becomes the HTML at its place on the card.
@@ -38,6 +39,12 @@ export interface RenderSpec {
   image: boolean;
   /** Display text only — a link as its text, no span, no markdown, escaped. For comparisons. */
   plain: boolean;
+  /**
+   * The value is a tracker — a count of boxes to tick, or rows of them —
+   * and renders as the boxes. It is a shape, not a text, so no other
+   * switch applies to it.
+   */
+  tracker: boolean;
   /** What renders, through the same switches, when the value is empty. Not a switch: a value. */
   fallback?: unknown;
 }
@@ -50,6 +57,7 @@ export const DEFAULT_SPEC: RenderSpec = {
   join: ", ",
   image: false,
   plain: false,
+  tracker: false,
 };
 
 /** What `{{slot}}` accepts as a hash key, and the field each one sets. */
@@ -61,6 +69,7 @@ export const RENDER_SWITCHES: readonly (keyof RenderSpec)[] = [
   "join",
   "image",
   "plain",
+  "tracker",
 ];
 
 /**
@@ -102,12 +111,17 @@ export const BARE_ENVIRONMENT: RenderEnvironment = {
  * `.cs-wikilink` span, before either switch — nothing on a printed card can
  * be clicked, and the span is the hook a system styles a reference by —
  * unless `plain` asks for the text alone.
+ *
+ * `tracker` stands outside the pipeline: the value is rows of boxes, read
+ * by its own rules, and nothing a text goes through applies.
  */
 export function renderValue(
   value: unknown,
   spec: RenderSpec,
   env: RenderEnvironment = BARE_ENVIRONMENT
 ): string {
+  if (spec.tracker) return trackerHtml(value, (message) => env.report(message));
+
   const scalar = scalarStep(spec, env);
   let text = scalarText(value, scalar, spec.join);
   if (text === "") {

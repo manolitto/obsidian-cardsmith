@@ -328,3 +328,11 @@
   letter-spacing: 0.25em;
   text-align: center;
 }
+
+/* ── The tracker ──────────────────────────────────────────────────── */
+
+/* The boxes to tick, under an ink-blue rule, the colour of every rule. */
+.card-root.sw .cs-tracker {
+  border-top: 0.08em solid var(--sw-blue);
+  padding-top: 0.45em;
+}
