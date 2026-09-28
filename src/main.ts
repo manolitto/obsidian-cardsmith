@@ -20,7 +20,12 @@ import { deckBlockProcessor } from "./ui/deck-block";
 import { DECK_VIEW_TYPE, DeckView, openDeckView } from "./ui/deck-view";
 import { notice, runExport } from "./ui/export-run";
 import { buildDeckBlock } from "./ui/insert-deck";
-import { buildCardBlock, insertAtCursor, type InsertMode } from "./ui/insert-card";
+import {
+  buildCardBlock,
+  insertAtCursor,
+  writeSamplePictures,
+  type InsertMode,
+} from "./ui/insert-card";
 import { pickSystemAndCardType } from "./ui/pickers";
 import { PropertyReferenceModal } from "./ui/property-reference";
 import { resolveUiLanguage, setUiLanguage, t, uiLanguage } from "./ui/strings";
@@ -113,12 +118,14 @@ export default class CardsmithPlugin extends Plugin {
     this.addCommand({
       id: "insert-empty-card",
       name: t("command.insert-empty"),
-      editorCallback: (editor) => void this.insertCard(editor, "empty"),
+      editorCallback: (editor, view) =>
+        void this.insertCard(editor, "empty", view.file?.path),
     });
     this.addCommand({
       id: "insert-sample-card",
       name: t("command.insert-sample"),
-      editorCallback: (editor) => void this.insertCard(editor, "sample"),
+      editorCallback: (editor, view) =>
+        void this.insertCard(editor, "sample", view.file?.path),
     });
     this.addCommand({
       id: "insert-deck-block",
@@ -134,17 +141,22 @@ export default class CardsmithPlugin extends Plugin {
     this.addSettingTab(new CardsmithSettingTab(this.app, this));
   }
 
-  private async insertCard(editor: Editor, mode: InsertMode): Promise<void> {
+  private async insertCard(
+    editor: Editor,
+    mode: InsertMode,
+    notePath: string | undefined
+  ): Promise<void> {
     const picked = await pickSystemAndCardType(
       this.app,
       this.systems,
       this.settings.systems
     );
     if (!picked) return;
-    insertAtCursor(
-      editor,
-      buildCardBlock(picked.system, picked.cardType, uiLanguage(), mode)
-    );
+    const block = buildCardBlock(picked.system, picked.cardType, uiLanguage(), mode);
+    insertAtCursor(editor, block);
+    if (mode === "sample" && notePath !== undefined) {
+      await writeSamplePictures(this.app, picked.system, block, notePath);
+    }
   }
 
   private async showReference(): Promise<void> {

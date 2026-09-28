@@ -1,6 +1,6 @@
 import { dump } from "js-yaml";
-import type { Editor } from "obsidian";
-import type { SampleTable } from "../definitions/game-system";
+import type { App, Editor } from "obsidian";
+import type { SampleTable, SystemPath } from "../definitions/game-system";
 import {
   propertyDescription,
   propertySample,
@@ -183,4 +183,57 @@ export function blankLineBefore(before: string, firstLine: boolean): string {
   if (firstLine) return "";
   const above = lines[lines.length - 2] ?? "";
   return above.trim() === "" ? "" : "\n";
+}
+
+// ── The pictures a sample links ──────────────────────────────────
+
+const PICTURE_LINK = /!?\[\[([^\]|#]+)(?:[#|][^\]]*)?\]\]/g;
+
+/**
+ * The declared sample pictures a written block links: every `[[name]]` in
+ * it — a value, a table cell — whose name is the file name of one of the
+ * system's `sample-pictures:`. A description comment's example is not a
+ * link, so comment lines are skipped.
+ */
+export function linkedSamplePictures(
+  system: LoadedSystem,
+  block: string
+): { link: string; path: SystemPath }[] {
+  const byName = new Map<string, SystemPath>();
+  for (const path of system.declaration.samplePictures) {
+    byName.set(path.slice(path.lastIndexOf("/") + 1), path);
+  }
+  const out: { link: string; path: SystemPath }[] = [];
+  for (const line of block.split("\n")) {
+    if (/^\s*#/.test(line)) continue;
+    for (const match of line.matchAll(PICTURE_LINK)) {
+      const link = (match[1] as string).trim();
+      const path = byName.get(link);
+      if (path && !out.some((p) => p.link === link)) out.push({ link, path });
+    }
+  }
+  return out;
+}
+
+/**
+ * Write the sample pictures a block links into the vault, where Obsidian
+ * puts an attachment of the note, unless the link already resolves: a
+ * picture of that name anywhere the note can reach is the one it means,
+ * and is never replaced. Returns the paths written.
+ */
+export async function writeSamplePictures(
+  app: App,
+  system: LoadedSystem,
+  block: string,
+  notePath: string
+): Promise<string[]> {
+  const written: string[] = [];
+  for (const { link, path } of linkedSamplePictures(system, block)) {
+    if (app.metadataCache.getFirstLinkpathDest(link, notePath)) continue;
+    const bytes = await system.source.readBinary(path);
+    const target = await app.fileManager.getAvailablePathForAttachment(link, notePath);
+    await app.vault.createBinary(target, bytes.slice().buffer);
+    written.push(target);
+  }
+  return written;
 }

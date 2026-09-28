@@ -18,6 +18,15 @@ stylesheet: styles/dragonbane.css
 # which of its properties fills which place, with `slot:` on the property.
 # See front.hbs for the vocabulary and stat-cell.hbs / stat-wide.hbs for the
 # two repeated pieces of the stat box.
+# The pictures the samples link, written beside a note by *Insert sample
+# card block* when the vault has none of that name.
+sample-pictures:
+  - assets/samples/Bootshaken.png
+  - assets/samples/Glutgriff.png
+  - assets/samples/Medaillon.png
+  - assets/samples/Nebelbarsch.png
+  - assets/samples/Nebelkraehe.png
+
 partial-templates:
   stat-cell: templates/stat-cell.hbs
   stat-wide: templates/stat-wide.hbs

@@ -112,7 +112,7 @@ properties:
     description:
       de: "Bild der Kreatur als Wikilink. Erscheint auf der Rückseite und – wenn der Platz reicht – auch unten auf der Vorderseite."
       en: "Picture of the creature as a wikilink. Rendered on the back, and at the foot of the front when there is room for it."
-    sample: "[[Nebelkrähe.png]]"
+    sample: "[[Nebelkraehe.png]]"
 
   hit-points:
     slot: front-stat-1a

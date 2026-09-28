@@ -3,7 +3,12 @@ import { Modal, Notice, type App, type MarkdownView } from "obsidian";
 import { CARD_SETTING_KEYS } from "../definitions/card-settings";
 import { propertyDescription, propertySample } from "../definitions/property-defs";
 import type { LoadedCardType, LoadedSystem } from "../systems/loader";
-import { buildCardBlock, insertAtCursor, type InsertMode } from "./insert-card";
+import {
+  buildCardBlock,
+  insertAtCursor,
+  writeSamplePictures,
+  type InsertMode,
+} from "./insert-card";
 import { t, type StringKey } from "./strings";
 
 /*
@@ -99,7 +104,12 @@ export class PropertyReferenceModal extends Modal {
       new Notice(`Cardsmith: ${t("reference.no-editor")}`);
       return;
     }
-    insertAtCursor(this.target.editor, this.block(mode));
+    const block = this.block(mode);
+    insertAtCursor(this.target.editor, block);
+    const notePath = this.target.file?.path;
+    if (mode === "sample" && notePath !== undefined) {
+      void writeSamplePictures(this.app, this.system, block, notePath);
+    }
     this.close();
     this.app.workspace.setActiveLeaf(this.target.leaf, { focus: true });
   }

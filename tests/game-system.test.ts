@@ -84,6 +84,21 @@ card-types:
     expect(diagnostics.matching("card-imgae")).toHaveLength(1);
   });
 
+  it("reads the sample pictures as paths, a lone one as a list of one", () => {
+    const diagnostics = collectDiagnostics();
+    expect(
+      parse(`${MINIMAL}\nsample-pictures: [assets/a.png, assets/b.png, assets/a.png]`)
+        ?.samplePictures
+    ).toEqual(["assets/a.png", "assets/b.png"]);
+    expect(parse(`${MINIMAL}\nsample-pictures: assets/a.png`)?.samplePictures).toEqual([
+      "assets/a.png",
+    ]);
+    expect(parse(MINIMAL)?.samplePictures).toEqual([]);
+    const outside = parse(`${MINIMAL}\nsample-pictures: [../a.png]`, diagnostics);
+    expect(outside?.samplePictures).toEqual([]);
+    expect(diagnostics.matching("leaves the system folder")).toHaveLength(1);
+  });
+
   it("says so when a system declares no languages, and when it declares no card types", () => {
     const diagnostics = collectDiagnostics();
     parse("id: simple", diagnostics);

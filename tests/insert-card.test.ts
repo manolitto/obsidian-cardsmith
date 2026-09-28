@@ -6,11 +6,13 @@ import { BUNDLED_SYSTEMS } from "../src/generated/bundled-systems";
 import { parseNote } from "../src/render/note";
 import { resolveCards } from "../src/render/card";
 import type { LoadedCardType, LoadedSystem } from "../src/systems/loader";
-import type { Editor, EditorPosition } from "obsidian";
+import type { App, Editor, EditorPosition } from "obsidian";
 import {
   blankLineBefore,
   buildCardBlock,
   insertAtCursor,
+  linkedSamplePictures,
+  writeSamplePictures,
   type InsertMode,
 } from "../src/ui/insert-card";
 import { FIXTURES_DIR } from "./helpers/render-fixture";
@@ -222,5 +224,73 @@ describe("inserting a block", () => {
     expect(target.text()).toBe(expected);
     const lines = expected.split("\n");
     expect(target.cursor()).toEqual({ line: lines.length - 1, ch: "BLOCK".length });
+  });
+});
+
+describe("the pictures a sample links", () => {
+  const PICTURE = /\[\[([^\]|#]+\.(?:png|jpe?g|webp|gif|svg))(?:[#|][^\]]*)?\]\]/gi;
+
+  it("are all declared by the system, so an inserted sample never links a picture it cannot write", async () => {
+    for (const bundled of BUNDLED_SYSTEMS) {
+      const system: LoadedSystem = await loadedSystem(bundled.id);
+      for (const language of system.declaration.languages) {
+        for (const cardType of Object.values(system.cardTypes)) {
+          const block = buildCardBlock(system, cardType, language, "sample");
+          const values = block
+            .split("\n")
+            .filter((line) => !/^\s*#/.test(line))
+            .join("\n");
+          const links = [...values.matchAll(PICTURE)].map((m) => m[1]);
+          const declared = linkedSamplePictures(system, block).map((p) => p.link);
+          expect(
+            declared,
+            `${bundled.id}/${cardType.declaration.id} (${language})`
+          ).toEqual([...new Set(links)]);
+        }
+      }
+    }
+  });
+
+  it("are matched by file name, and a description's example is not one", async () => {
+    const system = await loadedSystem("dragonbane");
+    const block = [
+      "```cardsmith",
+      "data:",
+      "  # A picture, e.g. `[[Medaillon.png]]`.",
+      "  artwork: '[[Nebelkraehe.png]]'",
+      "  back-image: '[[Medaillon.png|the seal]]'",
+      "  other: '[[Medaillon.png]] [[Unknown.png]]'",
+      "```",
+    ].join("\n");
+    expect(linkedSamplePictures(system, block)).toEqual([
+      { link: "Nebelkraehe.png", path: "assets/samples/Nebelkraehe.png" },
+      { link: "Medaillon.png", path: "assets/samples/Medaillon.png" },
+    ]);
+  });
+
+  it("are written where the note's attachments go, unless the link already resolves", async () => {
+    const system = await loadedSystem("dragonbane");
+    const block = "  artwork: '[[Nebelkraehe.png]]'\n  back-image: '[[Medaillon.png]]'";
+    const created: [string, number][] = [];
+    const app = {
+      metadataCache: {
+        getFirstLinkpathDest: (link: string) => (link === "Medaillon.png" ? {} : null),
+      },
+      fileManager: {
+        getAvailablePathForAttachment: async (name: string, from: string) =>
+          `${from.slice(0, from.lastIndexOf("/"))}/attachments/${name}`,
+      },
+      vault: {
+        createBinary: async (path: string, data: ArrayBuffer) => {
+          created.push([path, data.byteLength]);
+        },
+      },
+    } as unknown as App;
+    const written = await writeSamplePictures(app, system, block, "Cards/Crow.md");
+    expect(written).toEqual(["Cards/attachments/Nebelkraehe.png"]);
+    const bytes = await system.source.readBinary(
+      system.declaration.samplePictures.find((p) => p.endsWith("Nebelkraehe.png"))!
+    );
+    expect(created).toEqual([["Cards/attachments/Nebelkraehe.png", bytes.byteLength]]);
   });
 });

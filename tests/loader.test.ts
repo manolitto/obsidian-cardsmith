@@ -184,6 +184,25 @@ describe("what exists but nothing names", () => {
   });
 });
 
+describe("the sample pictures", () => {
+  it("are files of the system: used when they exist, reported when they do not", async () => {
+    const files = completeSystem();
+    files["assets/samples/Medaillon.png"] = new Uint8Array([137, 80, 78, 71]);
+    files["game-system.yaml"] =
+      files["game-system.yaml"]!.toString() +
+      "\nsample-pictures: [assets/samples/Medaillon.png, assets/samples/Gone.png]\n";
+    const { system, diagnostics } = await load(files);
+    expect(system!.declaration.samplePictures).toEqual([
+      "assets/samples/Medaillon.png",
+      "assets/samples/Gone.png",
+    ]);
+    expect(system!.unusedFiles).not.toContain("assets/samples/Medaillon.png");
+    expect(
+      diagnostics.matching('"assets/samples/Gone.png", which does not exist')
+    ).toHaveLength(1);
+  });
+});
+
 describe("the slot check", () => {
   it("catches a typo in a template's read through the binding it orphans", async () => {
     // The templates are the declaration: a place exists because one reads
