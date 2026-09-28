@@ -36,6 +36,19 @@ properties:
   image:
     sample: "[[Speerfalle.png]]"
 
+  name:
+    sample:
+      de: "Speerfalle"
+      en: "Spear Trap"
+
+  original-name:
+    sample: "Spear Trap"
+
+  source:
+    sample:
+      de: "Grundregelwerk S. 524"
+      en: "Core Rulebook p. 522"
+
   level:
     slot: front-badge
     aliases: [stufe, gefahr]

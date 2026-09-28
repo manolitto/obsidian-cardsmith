@@ -69,6 +69,19 @@ properties:
     slot: [front-image, back-image]
     sample: "[[Nebelruestung.png]]"
 
+  name:
+    sample:
+      de: "Nebelrüstung"
+      en: "Mistward Armor"
+
+  original-name:
+    sample: "Mistward Armor"
+
+  source:
+    sample:
+      de: "Grundregelwerk S. 560"
+      en: "Core Rulebook p. 556"
+
   level:
     slot: front-badge
     aliases: [stufe]

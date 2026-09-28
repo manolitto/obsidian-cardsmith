@@ -5,7 +5,7 @@ card:
   language: en
 data:
   # The card's name. Falls back to the file name.
-  name: # no sample
+  name: Third Person
 
   # The quirk — the card's text (markdown).
   description: You always speak of yourself in the third person and never forget a name.

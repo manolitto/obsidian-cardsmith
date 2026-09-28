@@ -34,6 +34,19 @@ properties:
   image:
     sample: "[[Kantengriff.png]]"
 
+  name:
+    sample:
+      de: "Kante ergreifen"
+      en: "Grab an Edge"
+
+  original-name:
+    sample: "Grab an Edge"
+
+  source:
+    sample:
+      de: "Grundregelwerk S. 476"
+      en: "Core Rulebook p. 472"
+
   actions:
     slot: front-title-glyph
     aliases: [aktionen, kosten, action-cost]

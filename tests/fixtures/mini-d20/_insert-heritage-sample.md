@@ -8,7 +8,7 @@ data:
   name: Dwarf
 
   # Flavour or a short description — an italic line at the foot of the card.
-  description: A slender, one-handed blade of forged steel.
+  description: Broad-shouldered and bearded, with a memory as long as a mine shaft.
 
   # The card's picture as a wikilink (`[[image.png]]`), embed (`![[image.png]]`) or file name. Sits between the stats and the flavour and takes the room that is left.
   image: '[[Zwerg.png]]'

@@ -5,7 +5,7 @@ card:
   language: en
 data:
   # The card's name. Falls back to the file name.
-  name: # no sample
+  name: Short Sword
 
   # Flavour or a short description — an italic line at the foot of the card.
   description: A slender, one-handed blade of forged steel.

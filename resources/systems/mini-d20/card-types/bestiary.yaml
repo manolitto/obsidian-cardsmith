@@ -42,6 +42,16 @@ properties:
   image:
     sample: "[[Goblin.png]]"
 
+  name:
+    sample:
+      de: "Goblin"
+      en: "Goblin"
+
+  description:
+    sample:
+      de: "Klein, gemein und lichtscheu — im Dunkeln am gefährlichsten."
+      en: "Small, mean and shy of daylight — most dangerous in the dark."
+
   icon:
     slot: [front-icon-left, back-icon-top]
     default: assets/icons/claw-slashes.svg

@@ -47,6 +47,11 @@ properties:
   image:
     sample: "[[Schurke.png]]"
 
+  description:
+    sample:
+      de: "Leise Schritte, flinke Finger und immer ein Ausweg."
+      en: "Quiet feet, quick fingers and always a way out."
+
   icon:
     slot: [front-icon-left, back-icon-top]
     default: assets/icons/character.svg
