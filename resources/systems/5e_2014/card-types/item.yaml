@@ -34,21 +34,27 @@ translations:
 
 properties:
   name:
-    sample: "Lantern of Ash"
+    sample:
+      en: "Lantern of Ash"
+      de: "Aschelaterne"
 
   category:
     slot: [front-category, back-heading]
     aliases: [item-type, kategorie, gegenstandsart]
     description:
       en: "The category, with the base item in parentheses — `Wondrous item`, `Weapon (longsword)`, `Armor (shield)`. Also the label on the back, unless the note sets `back-label`."
-    sample: "Wondrous item"
+    sample:
+      en: "Wondrous item"
+      de: "Wundersamer Gegenstand"
 
   rarity:
     slot: front-rarity
     aliases: [seltenheit]
     description:
       en: "The rarity — `common`, `uncommon`, `rare`, `very rare`, `legendary`, `artifact` — after the category."
-    sample: "uncommon"
+    sample:
+      en: "uncommon"
+      de: "ungewöhnlich"
 
   attunement:
     slot: front-attunement
@@ -62,14 +68,18 @@ properties:
     aliases: [gewicht]
     description:
       en: "The weight — `3 lb.`."
-    sample: "2 lb."
+    sample:
+      en: "2 lb."
+      de: "1 kg"
 
   cost:
     slot: front-cost
     aliases: [price, preis, kosten]
     description:
       en: "The cost — `15 gp`."
-    sample: "400 gp"
+    sample:
+      en: "400 gp"
+      de: "400 GM"
 
   damage:
     slot: front-damage
@@ -110,7 +120,9 @@ properties:
     slot: front-description
     description:
       en: "What the item is and does — markdown, paragraphs and lists."
-    sample: "While lit, this brass lantern sheds dim grey light in a 20-foot radius. Invisible creatures in that light leave faint trails of ash."
+    sample:
+      en: "While lit, this brass lantern sheds dim grey light in a 20-foot radius. Invisible creatures in that light leave faint trails of ash."
+      de: "Solange sie brennt, verbreitet diese Messinglaterne in einem Radius von sechs Metern dämmriges graues Licht. Unsichtbare Kreaturen in diesem Licht hinterlassen feine Aschespuren."
 
   body:
     slot: front-description

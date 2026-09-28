@@ -44,7 +44,9 @@ translations:
 
 properties:
   name:
-    sample: "Ember Lance"
+    sample:
+      en: "Ember Lance"
+      de: "Glutlanze"
 
   level:
     slot: front-level
@@ -58,7 +60,9 @@ properties:
     aliases: [school-of-magic, schule]
     description:
       en: "The school of magic — `Evocation`; the German name reads the same."
-    sample: "Evocation"
+    sample:
+      en: "Evocation"
+      de: "Hervorrufung"
 
   classes:
     aliases: [spell-lists, klassen]
@@ -70,28 +74,36 @@ properties:
     aliases: [castingtime, zeitaufwand]
     description:
       en: "The casting time — `1 action`, `1 bonus action`, `1 minute`."
-    sample: "1 action"
+    sample:
+      en: "1 action"
+      de: "1 Aktion"
 
   range:
     slot: front-range
     aliases: [reichweite]
     description:
       en: "The range — `60 feet`, `Self`, `Touch`."
-    sample: "60 feet"
+    sample:
+      en: "60 feet"
+      de: "18 Meter"
 
   components:
     slot: front-components
     aliases: [komponenten]
     description:
       en: "The components — `V, S, M (a pinch of ash)`."
-    sample: "V, S"
+    sample:
+      en: "V, S"
+      de: "V, G"
 
   duration:
     slot: front-duration
     aliases: [wirkungsdauer, dauer]
     description:
       en: "The duration — `Instantaneous`, `1 minute`. With `concentration`, the card prints “Concentration, up to” before it."
-    sample: "Instantaneous"
+    sample:
+      en: "Instantaneous"
+      de: "Unmittelbar"
 
   ritual:
     slot: front-ritual
@@ -108,7 +120,9 @@ properties:
     slot: front-description
     description:
       en: "What the spell does — markdown, paragraphs and lists."
-    sample: "A lance of white-hot ash strikes one creature you can see within range. Make a ranged spell attack. On a hit, the target takes 3d8 fire damage and sheds dim light until the start of your next turn."
+    sample:
+      en: "A lance of white-hot ash strikes one creature you can see within range. Make a ranged spell attack. On a hit, the target takes 3d8 fire damage and sheds dim light until the start of your next turn."
+      de: "Eine Lanze aus weißglühender Asche trifft eine Kreatur in Reichweite, die du sehen kannst. Führe einen Fernkampf-Zauberangriff aus. Bei einem Treffer erleidet das Ziel 3W8 Feuerschaden und spendet bis zum Beginn deines nächsten Zuges dämmriges Licht."
 
   body:
     slot: front-description
@@ -118,7 +132,9 @@ properties:
     aliases: [at-higher-levels, higher-level-slot, höhere-grade, hoehere-grade]
     description:
       en: "What a higher spell slot adds, after “At Higher Levels.” in bold italics."
-    sample: "When you cast this spell using a spell slot of 3rd level or higher, the damage increases by 1d8 for each slot level above 2nd."
+    sample:
+      en: "When you cast this spell using a spell slot of 3rd level or higher, the damage increases by 1d8 for each slot level above 2nd."
+      de: "Wenn du diesen Zauber mit einem Zauberplatz des 3. Grades oder höher wirkst, steigt der Schaden für jeden Grad über dem 2. um 1W8."
 
   cantrip-upgrade:
     slot: front-cantrip-upgrade
