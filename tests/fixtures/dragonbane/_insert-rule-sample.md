@@ -23,7 +23,7 @@ data:
   subcategory: Elementalism
 
   # Source reference — book title with page number, or a wikilink into the vault. Set upright along the card's right edge; falls back to "DRAGONBANE".
-  book-reference: Rules p. 58
+  book-reference: House Rules p. 9
 
   # English original name, set small and upright along the card's left edge — the counterpart to the source reference on the right. Omitted when unset.
   english-original: Ember Grip

@@ -80,8 +80,8 @@ properties:
 
   book-reference:
     sample:
-      de: "Regelbuch S. 73"
-      en: "Rules p. 73"
+      de: "Hausregeln S. 3"
+      en: "House Rules p. 3"
 
   english-original:
     sample: "Boat hook"

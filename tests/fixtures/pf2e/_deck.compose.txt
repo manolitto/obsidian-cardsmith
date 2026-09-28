@@ -8,7 +8,7 @@
    front #6 at 136.5, 104.5 item/Nebelmantel
    front #7 at 10.5, 192.5 item/Schattenklinge
    front #8 at 73.5, 192.5 feat/Rasche-Verbaende
-   front #9 at 136.5, 192.5 action/Kante-ergreifen
+   front #9 at 136.5, 192.5 action/Kantengriff
 2. back · 64 marks
    back #1 at 136.5, 16.5 creature/Grabwuehler
    back #2 at 73.5, 16.5 creature/Grabwuehler
@@ -18,7 +18,7 @@
    back #6 at 10.5, 104.5 item/Nebelmantel
    back #7 at 136.5, 192.5 item/Schattenklinge
    back #8 at 73.5, 192.5 feat/Rasche-Verbaende
-   back #9 at 10.5, 192.5 action/Kante-ergreifen
+   back #9 at 10.5, 192.5 action/Kantengriff
 3. front · 16 marks
    front #10 at 10.5, 16.5 trap/Speerhagel
 4. back · 16 marks

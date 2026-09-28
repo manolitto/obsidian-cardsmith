@@ -1,0 +1,16 @@
+Kantengriff · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 0.92
+   div.pf2e-trait-row "Handhaben"
+   div.pf2e-stat-line "Auslöser Du stürzt an einem Rand …"
+   div.pf2e-stat-line "Anforderungen Mindestens eine deiner Hände ist …"
+   div.pf2e-flavor.pf2e-action-text
+     p "Im Fallen schnappst du nach dem …"
+   div.pf2e-action-outcomes
+     div.pf2e-stat-line "Kritischer Erfolg Du bekommst den Rand …"
+     div.pf2e-stat-line "Erfolg Mit einer freien Hand bekommst …"
+     div.pf2e-stat-line "Kritischer Fehlschlag Du greifst ins Leere, …"
+   div.pf2e-action-callout
+     div.pf2e-action-callout-title "Sturzschaden"
+     div.pf2e-action-callout-body
+       ul (3 items) "Bis 3 m kein Schaden Je …"
+2. back [cs-layout-default] scale —

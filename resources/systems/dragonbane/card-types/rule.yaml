@@ -68,8 +68,8 @@ properties:
 
   book-reference:
     sample:
-      de: "Regelbuch S. 58"
-      en: "Rules p. 58"
+      de: "Hausregeln S. 9"
+      en: "House Rules p. 9"
 
   english-original:
     sample: "Ember Grip"

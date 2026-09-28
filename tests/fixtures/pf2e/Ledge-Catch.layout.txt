@@ -1,0 +1,16 @@
+Ledge-Catch · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   div.pf2e-trait-row "Manipulate"
+   div.pf2e-stat-line "Trigger You fall past a ledge …"
+   div.pf2e-stat-line "Requirements At least one of your …"
+   div.pf2e-flavor.pf2e-action-text
+     p "As you fall, you snatch at …"
+   div.pf2e-action-outcomes
+     div.pf2e-stat-line "Critical Success You catch the ledge …"
+     div.pf2e-stat-line "Success With a free hand you …"
+     div.pf2e-stat-line "Critical Failure You clutch at nothing, …"
+   div.pf2e-action-callout
+     div.pf2e-action-callout-title "Falling Damage"
+     div.pf2e-action-callout-body
+       ul (3 items) "Up to 10 feet no damage …"
+2. back [cs-layout-default] scale —

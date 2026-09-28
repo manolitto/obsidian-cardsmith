@@ -17,7 +17,7 @@ data:
   roll: '09'
 
   # Source reference — rulebook page or wikilink, small at the foot's right.
-  reference: Core Rulebook p. 73
+  reference: House Rules p. 11
 
   # English original name, small at the foot's left, prefixed "engl."; hidden on English cards.
   original-name: Grappling hook

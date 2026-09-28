@@ -43,7 +43,7 @@ data:
   subcategory: Wilderness
 
   # Source reference — book title with page number, or a wikilink into the vault. Set upright along the card's right edge; falls back to "DRAGONBANE".
-  book-reference: Rules p. 49
+  book-reference: House Rules p. 15
 
   # English original name, set small and upright along the card's left edge — the counterpart to the source reference on the right. Omitted when unset.
   english-original: Fishing
