@@ -148,9 +148,17 @@ function yamlLines(key: string, value: unknown): string[] {
     .map((line) => `  ${line}`);
 }
 
-/** Put `text` at the cursor and leave the cursor after it. */
-export function insertAtCursor(editor: Editor, text: string): void {
+/**
+ * Put a block at the cursor, after a blank line, and leave the cursor
+ * after it. A fence glued to the line above reads as part of that
+ * paragraph in the source, and a table needs the blank line to be a table
+ * at all; so the block always stands after one — added only where it is
+ * missing.
+ */
+export function insertAtCursor(editor: Editor, block: string): void {
   const from = editor.getCursor();
+  const before = editor.getRange({ line: Math.max(0, from.line - 1), ch: 0 }, from);
+  const text = blankLineBefore(before, from.line === 0) + block;
   editor.replaceRange(text, from);
   const lines = text.split("\n");
   const last = lines[lines.length - 1] ?? "";
@@ -158,4 +166,21 @@ export function insertAtCursor(editor: Editor, text: string): void {
     line: from.line + lines.length - 1,
     ch: lines.length === 1 ? from.ch + last.length : last.length,
   });
+}
+
+/**
+ * What goes before a block so that it follows a blank line, given the
+ * note's text from the start of the line above the cursor up to the
+ * cursor. After text on the cursor's own line, two line breaks; on an
+ * empty line under text, one; after a blank line, or on the note's first
+ * line with nothing before the cursor, none. A line of spaces counts as
+ * empty.
+ */
+export function blankLineBefore(before: string, firstLine: boolean): string {
+  const lines = before.split("\n");
+  const current = lines[lines.length - 1] ?? "";
+  if (current.trim() !== "") return "\n\n";
+  if (firstLine) return "";
+  const above = lines[lines.length - 2] ?? "";
+  return above.trim() === "" ? "" : "\n";
 }

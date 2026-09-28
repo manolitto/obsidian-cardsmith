@@ -6,7 +6,13 @@ import { BUNDLED_SYSTEMS } from "../src/generated/bundled-systems";
 import { parseNote } from "../src/render/note";
 import { resolveCards } from "../src/render/card";
 import type { LoadedCardType, LoadedSystem } from "../src/systems/loader";
-import { buildCardBlock, type InsertMode } from "../src/ui/insert-card";
+import type { Editor, EditorPosition } from "obsidian";
+import {
+  blankLineBefore,
+  buildCardBlock,
+  insertAtCursor,
+  type InsertMode,
+} from "../src/ui/insert-card";
 import { FIXTURES_DIR } from "./helpers/render-fixture";
 import { loadedSystem } from "./helpers/render";
 
@@ -158,5 +164,63 @@ describe("a sample table", () => {
         'demo: card-types.gear.sample-table.en names the column "nosuch", which is not a property of the card type'
       )
     ).toHaveLength(1);
+  });
+});
+
+describe("inserting a block", () => {
+  it("puts it after a blank line, adding only what is missing", () => {
+    expect(blankLineBefore("Intro\nSome text", false)).toBe("\n\n");
+    expect(blankLineBefore("Some text\n", false)).toBe("\n");
+    expect(blankLineBefore("Some text\n   ", false)).toBe("\n");
+    expect(blankLineBefore("\n", false)).toBe("");
+    expect(blankLineBefore("  \n", false)).toBe("");
+    expect(blankLineBefore("", true)).toBe("");
+    expect(blankLineBefore("Title", true)).toBe("\n\n");
+  });
+
+  /** A note as a string, behind the four editor calls the insert makes. */
+  function editorOn(note: string, cursor: EditorPosition) {
+    let text = note;
+    let at = cursor;
+    const offset = (p: EditorPosition) =>
+      text
+        .split("\n")
+        .slice(0, p.line)
+        .reduce((n, l) => n + l.length + 1, 0) + p.ch;
+    const editor = {
+      getCursor: () => at,
+      getRange: (a: EditorPosition, b: EditorPosition) =>
+        text.slice(offset(a), offset(b)),
+      replaceRange: (insert: string, p: EditorPosition) => {
+        text = text.slice(0, offset(p)) + insert + text.slice(offset(p));
+      },
+      setCursor: (p: EditorPosition) => {
+        at = p;
+      },
+    } as unknown as Editor;
+    return { editor, text: () => text, cursor: () => at };
+  }
+
+  it.each([
+    [
+      "after text on the cursor's line",
+      "Buch:: PHB",
+      { line: 0, ch: 10 },
+      "Buch:: PHB\n\nBLOCK",
+    ],
+    [
+      "on an empty line under text",
+      "Buch:: PHB\n",
+      { line: 1, ch: 0 },
+      "Buch:: PHB\n\nBLOCK",
+    ],
+    ["after a blank line", "Buch:: PHB\n\n", { line: 2, ch: 0 }, "Buch:: PHB\n\nBLOCK"],
+    ["at the start of an empty note", "", { line: 0, ch: 0 }, "BLOCK"],
+  ])("%s", (_case, note, cursor, expected) => {
+    const target = editorOn(note, cursor);
+    insertAtCursor(target.editor, "BLOCK");
+    expect(target.text()).toBe(expected);
+    const lines = expected.split("\n");
+    expect(target.cursor()).toEqual({ line: lines.length - 1, ch: "BLOCK".length });
   });
 });
