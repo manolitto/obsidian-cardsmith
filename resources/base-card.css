@@ -203,6 +203,14 @@
   flex-direction: column;
   gap: calc(var(--cs-tracker-box) * 0.45);
   margin-top: 0.5em;
+  /*
+   * Room under the last row. The layout engine counts a body as fitting
+   * when it overflows by a pixel at most — below a last line of text that
+   * pixel is leading, but a box's border sits on the block's very edge
+   * and would be the pixel cut off. The padding is inside the block, so
+   * the engine measures it, and the pixel it allows falls on blank paper.
+   */
+  padding-bottom: 0.2em;
 }
 
 .cs-tracker-row {

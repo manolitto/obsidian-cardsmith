@@ -45,6 +45,33 @@ function rootOf(html: string | undefined): HTMLElement {
   return el.firstElementChild as HTMLElement;
 }
 
+/**
+ * Whether a settled front shows its last box whole: the box's bottom edge
+ * inside the part of the body the card does not clip. Measured in a
+ * shadow root under the card's stylesheet alone, out of the page's flow,
+ * as the layout engine measures — placed in the page, the card is
+ * squeezed by it and a line moves.
+ */
+async function lastBoxShows(front: string | undefined): Promise<boolean> {
+  const host = document.createElement("div");
+  host.style.position = "absolute";
+  host.style.left = "-99999px";
+  host.style.top = "0";
+  document.body.append(host);
+  try {
+    const root = host.attachShadow({ mode: "open" });
+    root.innerHTML = `<style>${TYPE}</style>${front ?? ""}`;
+    await document.fonts.ready;
+    const body = root.querySelector<HTMLElement>(".card-body-scalable")!;
+    const boxes = root.querySelectorAll<HTMLElement>(".cs-tracker-box");
+    const last = boxes[boxes.length - 1];
+    if (!last) return true;
+    return last.getBoundingClientRect().bottom <= body.getBoundingClientRect().bottom;
+  } finally {
+    host.remove();
+  }
+}
+
 async function laidOut(body: string, overflowMode: "none" | "extra-cards") {
   const diagnostics = collectDiagnostics();
   const out = await layoutCard(card(body, overflowMode), system, document, diagnostics);
@@ -129,6 +156,10 @@ describe("a tracker on a card that overflows", () => {
       expect(holding[0]!.querySelectorAll(".cs-tracker-box")).toHaveLength(20);
       const body = holding[0]!.querySelector(".card-body-scalable")!;
       expect(body.lastElementChild?.classList.contains("cs-tracker")).toBe(true);
+      expect(
+        await lastBoxShows(out.cards[fronts.indexOf(holding[0]!)]!.front),
+        `${n} paragraphs`
+      ).toBe(true);
       if (fronts.length > 1) spilled++;
     }
     // The run crosses the point where the text no longer fits one card.
@@ -158,6 +189,7 @@ describe("a tracker on a dense card", () => {
       front.querySelector<HTMLElement>(".card-body-scalable")!
     );
     expect(scale).toBeLessThan(without);
+    expect(await lastBoxShows(out.cards[0]!.front)).toBe(true);
     expect(front.querySelectorAll(".cs-tracker-box")).toHaveLength(20);
   });
 });
