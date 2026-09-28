@@ -76,7 +76,7 @@ export function parseNote(
   const source = text.replace(/\r\n?/g, "\n");
   const { frontmatter: frontmatterText, rest } = splitFrontmatter(source);
 
-  const blocks = [...rest.matchAll(CARD_FORGE_BLOCK)];
+  const blocks = cardBlocks(source);
   const first = blocks[0];
   if (!first) return undefined;
   if (blocks.length > 1) {
@@ -85,7 +85,7 @@ export function parseNote(
     );
   }
 
-  const block = parseBlock(first[1] ?? "", path, diagnostics);
+  const block = parseBlock(first.source, path, diagnostics);
   if (!block) return undefined;
 
   const { fields, text: stripped } = takeInlineFields(rest.replace(FENCED_CODE, ""));
@@ -102,6 +102,30 @@ export function parseNote(
 }
 
 // ── The block ──────────────────────────────────────────────────────
+
+/** A `cardsmith` block of a note: where its opening fence stands, and what it holds. */
+export interface CardBlock {
+  /** The zero-based line of the opening fence in the note's text. */
+  line: number;
+  /** The YAML between the fences. */
+  source: string;
+}
+
+/**
+ * The note's `cardsmith` blocks, in order. Only the first is the card: the
+ * note's frontmatter, sections, statblock and table are all note-wide, so a
+ * second block would have nothing of its own to read. The preview uses the
+ * list to tell the first block from the others.
+ */
+export function cardBlocks(text: string): CardBlock[] {
+  const source = text.replace(/\r\n?/g, "\n");
+  const { rest } = splitFrontmatter(source);
+  const offset = source.split("\n").length - rest.split("\n").length;
+  return [...rest.matchAll(CARD_FORGE_BLOCK)].map((match) => ({
+    line: offset + rest.slice(0, match.index).split("\n").length - 1,
+    source: match[1] ?? "",
+  }));
+}
 
 const BLOCK_KEYS: readonly string[] = ["card", "data", "table"];
 

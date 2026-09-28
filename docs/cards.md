@@ -29,7 +29,14 @@ The block has three top-level keys, and only these:
 | `table:` | in a table note, which column feeds which property |
 
 `system` is required. `card-type` is required unless the system has exactly
-one card type. A note holds one block; a second is reported and ignored.
+one card type.
+
+A note holds one block. The note is the card: its frontmatter, its
+sections and its table belong to the whole note, so a second block would
+have nothing of its own to read. A second block shows a notice in place
+of a card, and the first reports it. For several cards from one note, use
+a table (below) or a roll range; for several cards on one subject, write a
+note per card and gather them in a [deck](decks.md).
 
 ## Where a property's value comes from
 
