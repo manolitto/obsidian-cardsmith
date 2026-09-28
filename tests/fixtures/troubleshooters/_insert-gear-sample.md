@@ -14,7 +14,7 @@ data:
   tracker: # no sample
 
   # Source reference — rulebook page or wikilink, small at the foot.
-  reference: Rulebook p. 130
+  reference: House Rules p. 10
 
   # What the kit holds — a sentence or a comma-separated list.
   content: 8×30 binoculars in a leather case, strap, cleaning cloth

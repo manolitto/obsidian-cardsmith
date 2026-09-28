@@ -56,8 +56,8 @@ properties:
       de: "Quellenangabe — Regelwerkseite oder Wikilink, klein am Fuß."
       en: "Source reference — rulebook page or wikilink, small at the foot."
     sample:
-      de: "Regelwerk S. 29"
-      en: "Rulebook p. 29"
+      de: "Hausregeln S. 9"
+      en: "House Rules p. 9"
 
 translations:
   de:

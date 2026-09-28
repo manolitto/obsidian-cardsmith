@@ -14,7 +14,7 @@ data:
   tracker: # no sample
 
   # Source reference — rulebook page or wikilink.
-  reference: Rulebook p. 74
+  reference: House Rules p. 7
 
   # The weapon's damage — the value a hit takes off Endurance.
   damage: 4

@@ -17,7 +17,7 @@ data:
   tracker: # no sample
 
   # Source reference — rulebook page or wikilink, small at the foot.
-  reference: Rulebook p. 46
+  reference: House Rules p. 12
 
   # "Occurrence (number)" — how and in what numbers the animals appear.
   occurrence: In pairs, the young between them
