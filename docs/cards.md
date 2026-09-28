@@ -235,7 +235,8 @@ poker card or a tarot card. A table note shows one card at a time with
 buttons to step through the rows. What the render had to report — an unknown key, a picture that was not found, text
 that was cut at the floor — is listed under the card, once per note.
 
-Two commands write blocks into the open note, at the cursor: *Insert
+Two commands write blocks into the open note, at the cursor and after a
+blank line, which they add where it is missing: *Insert
 empty card block at cursor* puts a block with every property of the
 chosen system and card type as a comment, and *Insert sample card block
 at cursor* fills them in with sample values — for a card type that is one
