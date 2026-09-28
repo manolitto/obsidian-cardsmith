@@ -50,6 +50,16 @@ properties:
   image:
     slot: [front-image, back-image]
     sample: "[[Sumpfschleicher.png]]"
+  name:
+    sample:
+      de: "Sumpfschleicher"
+      en: "Marsh Lurker"
+  original-name:
+    sample: "Marsh Lurker"
+  source:
+    sample:
+      de: "Monsterhandbuch S. 35"
+      en: "Bestiary p. 38"
   hit-points:
     slot: front-hit-points
   armor-class:

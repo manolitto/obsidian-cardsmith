@@ -5,10 +5,10 @@ card:
   language: en
 data:
   # The card's name. Falls back to the file name.
-  name: # no sample
+  name: Goblin
 
   # Flavour or a short description — an italic line at the foot of the card.
-  description: A slender, one-handed blade of forged steel.
+  description: Small, mean and shy of daylight — most dangerous in the dark.
 
   # The card's picture as a wikilink (`[[image.png]]`), embed (`![[image.png]]`) or file name. Sits between the stats and the flavour and takes the room that is left.
   image: '[[Goblin.png]]'

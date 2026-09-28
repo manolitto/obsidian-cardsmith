@@ -44,6 +44,16 @@ properties:
   image:
     sample: "[[Kurzschwert.png]]"
 
+  name:
+    sample:
+      de: "Kurzschwert"
+      en: "Short Sword"
+
+  description:
+    sample:
+      de: "Eine schlanke, einhändige Klinge aus geschmiedetem Stahl."
+      en: "A slender, one-handed blade of forged steel."
+
   icon:
     slot: [front-icon-left, back-icon-top]
     default: assets/icons/knapsack.svg

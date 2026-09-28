@@ -56,9 +56,6 @@ properties:
     description:
       de: "Name der Karte — Kreatur, Gegenstand, Talent, Aktion oder Falle. Fehlt er, gilt der Dateiname."
       en: "The card's name — creature, item, feat, action or hazard. Falls back to the note's file name."
-    sample:
-      de: "Sumpfschleicher"
-      en: "Marsh Lurker"
 
   image:
     slot: back-image
@@ -72,9 +69,6 @@ properties:
     description:
       de: "Quellenangabe — Buchtitel und Seitenzahl, optional als Wikilink (`[[…]]`). Steht klein rechts unten auf der Karte."
       en: "Source reference — book title and page number, optionally a wikilink (`[[…]]`). Set small at the bottom right of the card."
-    sample:
-      de: "Monsterhandbuch S. 35"
-      en: "Bestiary p. 38"
 
   original-name:
     slot: front-footer-left
@@ -82,7 +76,6 @@ properties:
     description:
       de: "Englischer Originalname. Steht klein links unten auf der Karte, mit dem Präfix „engl.“; auf englischen Karten ausgeblendet."
       en: "English original name. Set small at the bottom left of the card, prefixed \"engl.\"; hidden on English cards."
-    sample: "Marsh Lurker"
 
   hit-points:
     aliases: [hp, tp, lp, trefferpunkte, lebenspunkte]

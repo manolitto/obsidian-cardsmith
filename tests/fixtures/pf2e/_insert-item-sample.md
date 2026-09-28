@@ -5,7 +5,7 @@ card:
   language: en
 data:
   # The card's name — creature, item, feat, action or hazard. Falls back to the note's file name.
-  name: Marsh Lurker
+  name: Mistward Armor
 
   # Item description as markdown — the main body of the card.
   description: Runes on the inside of this armor keep the wearer warm and shed mist and drizzle. Its item bonus to AC is 1 higher.
@@ -17,10 +17,10 @@ data:
   tracker: # no sample
 
   # Source reference — book title and page number, optionally a wikilink (`[[…]]`). Set small at the bottom right of the card.
-  source: Bestiary p. 38
+  source: Core Rulebook p. 556
 
   # English original name. Set small at the bottom left of the card, prefixed "engl."; hidden on English cards.
-  original-name: Marsh Lurker
+  original-name: Mistward Armor
 
   # Hit points of a shield or item as a number (`20`).
   hit-points: '20'

@@ -31,6 +31,16 @@ properties:
   image:
     sample: "[[Mehrfachschuss.png]]"
 
+  name:
+    sample:
+      de: "Mehrfachschuss"
+      en: "Multishot"
+
+  description:
+    sample:
+      de: "Ein Atemzug, ein Sehnenschlag — und drei Pfeile finden ihr Ziel."
+      en: "One breath, one twang of the string — and three arrows find their mark."
+
   icon:
     slot: [front-icon-left, back-icon-top]
     default: assets/icons/skills.svg

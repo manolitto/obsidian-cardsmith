@@ -5,7 +5,7 @@ card:
   language: en
 data:
   # The card's name — creature, item, feat, action or hazard. Falls back to the note's file name.
-  name: Marsh Lurker
+  name: Grab an Edge
 
   # The action's effect as markdown — the main body of the card.
   description: When you fall off an edge, you can try to grab it. You must succeed at a Reflex save, usually at the Climb DC.
@@ -17,10 +17,10 @@ data:
   tracker: # no sample
 
   # Source reference — book title and page number, optionally a wikilink (`[[…]]`). Set small at the bottom right of the card.
-  source: Bestiary p. 38
+  source: Core Rulebook p. 472
 
   # English original name. Set small at the bottom left of the card, prefixed "engl."; hidden on English cards.
-  original-name: Marsh Lurker
+  original-name: Grab an Edge
 
   # Action cost, printed as a glyph beside the name: `1`, `2`, `3`, `r` (reaction), `f` (free) or the glyph itself.
   actions: '1'

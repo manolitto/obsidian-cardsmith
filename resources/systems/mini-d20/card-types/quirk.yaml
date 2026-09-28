@@ -18,6 +18,11 @@ properties:
   image:
     sample: "[[Eigenart.png]]"
 
+  name:
+    sample:
+      de: "Dritte Person"
+      en: "Third Person"
+
   icon:
     slot: [front-icon-left, back-icon-top]
     default: assets/icons/portrait.svg

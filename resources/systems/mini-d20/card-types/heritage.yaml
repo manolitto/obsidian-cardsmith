@@ -40,6 +40,11 @@ properties:
   image:
     sample: "[[Zwerg.png]]"
 
+  description:
+    sample:
+      de: "Breitschultrig und bärtig, mit einem Gedächtnis so lang wie ein Stollen."
+      en: "Broad-shouldered and bearded, with a memory as long as a mine shaft."
+
   icon:
     slot: [front-icon-left, back-icon-top]
     default: assets/icons/family-tree.svg

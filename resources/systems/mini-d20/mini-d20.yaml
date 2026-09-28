@@ -64,9 +64,6 @@ properties:
     description:
       de: "Stimmungstext oder Kurzbeschreibung — eine kursive Zeile am Fuß der Karte."
       en: "Flavour or a short description — an italic line at the foot of the card."
-    sample:
-      de: "Eine schlanke, einhändige Klinge aus geschmiedetem Stahl."
-      en: "A slender, one-handed blade of forged steel."
 
   image:
     slot: front-image

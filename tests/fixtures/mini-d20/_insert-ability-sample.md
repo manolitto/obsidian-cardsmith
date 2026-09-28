@@ -5,10 +5,10 @@ card:
   language: en
 data:
   # The card's name. Falls back to the file name.
-  name: # no sample
+  name: Multishot
 
   # Flavour or a short description — an italic line at the foot of the card.
-  description: A slender, one-handed blade of forged steel.
+  description: One breath, one twang of the string — and three arrows find their mark.
 
   # The card's picture as a wikilink (`[[image.png]]`), embed (`![[image.png]]`) or file name. Sits between the stats and the flavour and takes the room that is left.
   image: '[[Mehrfachschuss.png]]'
