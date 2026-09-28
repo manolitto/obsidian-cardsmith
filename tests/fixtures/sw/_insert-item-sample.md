@@ -17,7 +17,7 @@ data:
   tracker: # no sample
 
   # Source reference — rulebook page or wikilink, in italics beside the foot's curl.
-  reference: Complete Rules p. 206, table 93
+  reference: House Rules p. 18, table 4
 
   # The kind of item — potion, scroll, ring, wand, staff, weapon, armour, miscellaneous — in small capitals under the title.
   item-type: Magic melee weapon

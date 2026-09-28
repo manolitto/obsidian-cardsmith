@@ -20,7 +20,7 @@ data:
   tracker: # no sample
 
   # Source reference — rulebook page or wikilink, small at the foot.
-  reference: Rulebook p. 29
+  reference: House Rules p. 9
 
   # The table's title — in the front's banner and as the back's caption ("Rumour", "Where are you?"). In a table note, once in the frontmatter for every row.
   heading: Rumour

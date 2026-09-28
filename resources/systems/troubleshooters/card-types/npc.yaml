@@ -34,8 +34,8 @@ translations:
 properties:
   reference:
     sample:
-      de: "Regelbuch S. 176"
-      en: "Rulebook p. 176"
+      de: "Hausregeln S. 17"
+      en: "House Rules p. 17"
 
   name:
     slot: [front-title, back-title]

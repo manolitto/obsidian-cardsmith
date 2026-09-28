@@ -11,7 +11,7 @@ data:
   tracker: # no sample
 
   # Source reference — rulebook page or wikilink, small at the foot.
-  reference: Rulebook p. 38
+  reference: House Rules p. 6
 
   # The location's category — a small line above the name.
   category: Natural places

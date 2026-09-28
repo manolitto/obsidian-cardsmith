@@ -17,7 +17,7 @@ data:
   tracker: # no sample
 
   # Source reference — rulebook page or wikilink, in italics beside the foot's curl.
-  reference: Complete Rules p. 172
+  reference: House Rules p. 24
 
   # Hit dice — count and bonus, e.g. "4 + 1", or with the hit points in parentheses.
   hit-dice: 3 + 1
