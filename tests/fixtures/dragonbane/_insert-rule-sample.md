@@ -17,22 +17,22 @@ data:
   back-image: '[[Medaillon.png]]'
 
   # Card family — the large green title at the top of the back. Without it the card type's own label appears there ("Ausrüstung", "Waffe"). For roll tables put the table's name here ("Demon Roll in Melee", "Fear", "Hunting"); it then doubles as the title fallback when the table row has no name of its own. In a table note, set once in the frontmatter for all rows.
-  category: Fishing
+  category: Magic
 
   # Finer grouping within the card family — rendered as the small parchment plaque under the back's illustration (e.g. "Clothing", "Tool", "Trade good"). Without it the plaque is omitted; if the value equals `category` it is suppressed as well.
-  subcategory: Tool
+  subcategory: Elementalism
 
   # Source reference — book title with page number, or a wikilink into the vault. Set upright along the card's right edge; falls back to "DRAGONBANE".
-  book-reference: Rules p. 73
+  book-reference: Rules p. 58
 
   # English original name, set small and upright along the card's left edge — the counterpart to the source reference on the right. Omitted when unset.
-  english-original: Boat hook
+  english-original: Ember Grip
 
   # Picture as a wikilink. Rendered on the card front.
   front-image: '[[Glutgriff.png]]'
 
   # Attribute a skill is rolled against: STR, CON, AGL, INT, WIL or CHA.
-  attribute: AGL
+  attribute: # no sample
 
   # Rank of the spell (1–5) or "Magic trick". Quote it so "Magic trick" can stand alongside the numbers.
   rank: '1'

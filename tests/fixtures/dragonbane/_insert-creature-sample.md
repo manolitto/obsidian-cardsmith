@@ -17,16 +17,16 @@ data:
   back-image: '[[Medaillon.png]]'
 
   # Card family — the large green title at the top of the back. Without it the card type's own label appears there ("Ausrüstung", "Waffe"). For roll tables put the table's name here ("Demon Roll in Melee", "Fear", "Hunting"); it then doubles as the title fallback when the table row has no name of its own. In a table note, set once in the frontmatter for all rows.
-  category: Fishing
+  category: Kreatur
 
   # Finer grouping within the card family — rendered as the small parchment plaque under the back's illustration (e.g. "Clothing", "Tool", "Trade good"). Without it the plaque is omitted; if the value equals `category` it is suppressed as well.
-  subcategory: Tool
+  subcategory: Animal
 
   # Source reference — book title with page number, or a wikilink into the vault. Set upright along the card's right edge; falls back to "DRAGONBANE".
-  book-reference: Rules p. 73
+  book-reference: Bestiary p. 21
 
   # English original name, set small and upright along the card's left edge — the counterpart to the source reference on the right. Omitted when unset.
-  english-original: Boat hook
+  english-original: Mist Crow
 
   # Picture of the creature as a wikilink. Rendered on the back, and at the foot of the front when there is room for it.
   artwork: '[[Nebelkraehe.png]]'
@@ -47,16 +47,16 @@ data:
   size: small
 
   # Movement rate in metres (e.g. "10 m" or "6 m, swim 12 m").
-  movement: 4 m, fliegend 16 m
+  movement: 4 m, fly 16 m
 
   # Armor — a monster's natural armor as dice notation or a description, an NPC's worn armor with its rating.
   armor: Mist plumage (d4)
 
   # Skills and ratings as a comma-separated list (uppercase skill names followed by their level).
-  skills: AWARENESS 12, SPEARS 10, SWIMMING 14
+  skills: AWARENESS 12, SNEAKING 14
 
   # NPC's armament as a short list of names with key stats in parentheses (damage, features).
-  weapons: Boat hook (d8, piercing/long), Fish knife (d6, piercing)
+  weapons: # no sample
 
   # List of special traits, each with a name and a description.
   traits:
@@ -66,11 +66,7 @@ data:
       desc: Summons one more crow per round while it shrieks.
 
   # List of heroic abilities, each with a name and a short description.
-  talents:
-    - name: Slippery
-      desc: Boon on EVADE when the ground is wet.
-    - name: Sea legs
-      desc: No bane on rolls made on a rocking deck.
+  talents: # no sample
 
   # Monster attack table (d6: roll, name, desc per entry).
   monster-attacks:

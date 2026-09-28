@@ -41,7 +41,7 @@ data:
   durability: 8
 
   # Armor Rating — how many damage points the armor subtracts from an attack. Helmets use "+1" / "+2" because they're worn in addition.
-  armor-rating: 3
+  armor-rating: # no sample
 
   # Typical cost of the item in gold, silver or copper coins.
   price: 4 silver
@@ -53,7 +53,7 @@ data:
   weight: 1
 
   # Number of uses before the item is consumed (e.g. 10 bandages, 10 doses of perfume).
-  uses: 6
+  uses: # no sample
 
   # Weapon features as a comma-separated list (Slashing, Piercing, Bludgeoning, Long, Toppling, Subtle).
   traits: Piercing, Long

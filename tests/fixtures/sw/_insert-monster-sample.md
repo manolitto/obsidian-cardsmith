@@ -35,7 +35,7 @@ data:
   specials: Camouflage, paralysing slime
 
   # Movement — a number, or with the special mode, e.g. "6/15 (flying)".
-  movement: 9 (schwimmend 12)
+  movement: 9 (swimming 12)
 
   # Alignment — Lawful, Neutral or Chaotic.
   alignment: Neutral

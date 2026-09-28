@@ -43,9 +43,6 @@ properties:
     description:
       de: "Quellenangabe — Regelbuchseite oder Wikilink, klein am Fuß."
       en: "Source reference — rulebook page or wikilink, small at the foot."
-    sample:
-      de: "Regelbuch S. 130"
-      en: "Rulebook p. 130"
 
   # Bound where a face shows it: the front of a gear kit, the back of a
   # character.

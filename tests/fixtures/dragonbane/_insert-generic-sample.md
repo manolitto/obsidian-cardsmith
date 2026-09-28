@@ -14,13 +14,13 @@ data:
   back-image: '[[Medaillon.png]]'
 
   # Card family — the large green title at the top of the back. Without it the card type's own label appears there ("Ausrüstung", "Waffe"). For roll tables put the table's name here ("Demon Roll in Melee", "Fear", "Hunting"); it then doubles as the title fallback when the table row has no name of its own. In a table note, set once in the frontmatter for all rows.
-  category: Fishing
+  category: # no sample
 
   # Finer grouping within the card family — rendered as the small parchment plaque under the back's illustration (e.g. "Clothing", "Tool", "Trade good"). Without it the plaque is omitted; if the value equals `category` it is suppressed as well.
-  subcategory: Tool
+  subcategory: # no sample
 
   # Source reference — book title with page number, or a wikilink into the vault. Set upright along the card's right edge; falls back to "DRAGONBANE".
-  book-reference: Rules p. 73
+  book-reference: # no sample
 
   # Card body as markdown, inline in the cardsmith block. Takes precedence over the note's text. Use the note's text for tables and embedded pictures.
   content: Compiled and designed by **your name here**.

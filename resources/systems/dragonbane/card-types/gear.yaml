@@ -68,6 +68,24 @@ translations:
     front-stat-8-wide-label: "Effect"
 
 properties:
+  category:
+    sample:
+      de: "Fischfang"
+      en: "Fishing"
+
+  subcategory:
+    sample:
+      de: "Werkzeug"
+      en: "Tool"
+
+  book-reference:
+    sample:
+      de: "Regelbuch S. 73"
+      en: "Rules p. 73"
+
+  english-original:
+    sample: "Boat hook"
+
   name:
     slot: front-header-title
     description:
@@ -130,7 +148,6 @@ properties:
     description:
       de: "Rüstungswert – wie viele Schadenspunkte die Rüstung von einem Angriff abzieht. Helme nutzen \"+1\" / \"+2\", da sie zusätzlich getragen werden."
       en: "Armor Rating — how many damage points the armor subtracts from an attack. Helmets use \"+1\" / \"+2\" because they're worn in addition."
-    sample: 3
 
   # ── Trade: a ware, and wares are the gear card ──
   price:
@@ -168,7 +185,6 @@ properties:
     description:
       de: "Anzahl der Anwendungen, bis der Gegenstand verbraucht ist (z. B. 10 Verbände, 10 Portionen Duftwasser)."
       en: "Number of uses before the item is consumed (e.g. 10 bandages, 10 doses of perfume)."
-    sample: 6
 
   # A comma-separated STRING, not a list. `traits` on a creature is a
   # list of {name, desc} pairs set as prose; on a piece of gear it is a

@@ -32,6 +32,11 @@ translations:
     front-languages-label: "Languages"
 
 properties:
+  reference:
+    sample:
+      de: "Regelbuch S. 176"
+      en: "Rulebook p. 176"
+
   name:
     slot: [front-title, back-title]
     sample:

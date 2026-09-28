@@ -11,7 +11,7 @@ data:
   tracker: # no sample
 
   # Source reference — rulebook page or wikilink, small at the foot.
-  reference: Rulebook p. 130
+  reference: Rulebook p. 88
 
   # What the mechanic requires or what triggers it — an action type, a minimum initiative, a successful check.
   requires: Move action
