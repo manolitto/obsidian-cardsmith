@@ -30,7 +30,8 @@ export type InsertMode = "empty" | "sample";
  * language its descriptions and samples are in. A card type
  * that declares a sample table gets a table note instead: the table, then
  * the block with the columns under `table:` and the shared values under
- * `data:`.
+ * `data:`. A card type that declares a sample text gets it after the
+ * sample block, as the note's text.
  */
 export function buildCardBlock(
   system: LoadedSystem,
@@ -41,7 +42,7 @@ export function buildCardBlock(
   const languages = system.declaration.languages;
   const written = languages.includes(language) ? language : languages[0];
   if (written !== undefined) language = written;
-  const table = sampleTableFor(system, cardType, language);
+  const table = forLanguage(system, cardType.declaration.sampleTable, language);
   const columns = new Set(Object.keys(table?.columns ?? {}));
   const lines: string[] = [];
   if (table) lines.push(...markdownTable(table, mode), "");
@@ -86,6 +87,8 @@ export function buildCardBlock(
   }
 
   lines.push("```", "");
+  const text = forLanguage(system, cardType.declaration.sampleText, language);
+  if (text && mode === "sample") lines.push(text, "");
   return lines.join("\n");
 }
 
@@ -96,18 +99,17 @@ function describe(def: PropertyDef | undefined, language: string): string[] {
   return description.split(/\r?\n/).map((line) => `  # ${line}`);
 }
 
-/** The card type's sample table in `language`, else in the first the system documents, else none. */
-function sampleTableFor(
+/** A per-language sample in `language`, else in the first the system documents, else any. */
+function forLanguage<T>(
   system: LoadedSystem,
-  cardType: LoadedCardType,
+  samples: Record<string, T> | undefined,
   language: string
-): SampleTable | undefined {
-  const tables = cardType.declaration.sampleTable;
-  if (!tables) return undefined;
+): T | undefined {
+  if (!samples) return undefined;
   return (
-    tables[language] ??
-    tables[system.declaration.languages[0] ?? ""] ??
-    Object.values(tables)[0]
+    samples[language] ??
+    samples[system.declaration.languages[0] ?? ""] ??
+    Object.values(samples)[0]
   );
 }
 

@@ -156,6 +156,14 @@ export interface CardTypeDeclaration {
    * the sample is one card from the properties' samples.
    */
   sampleTable?: Record<string, SampleTable>;
+  /**
+   * The note text *Insert sample card block at cursor* writes after the
+   * block, per language — markdown, read as the note's text is: what
+   * stands before the first `##` heading is the body. For a card whose
+   * content is prose, a table, a picture: things an author writes into
+   * the note rather than into a YAML value.
+   */
+  sampleText?: Record<string, string>;
 }
 
 /**
@@ -197,6 +205,7 @@ const CARD_TYPE_KEYS: readonly string[] = [
   "classifiers",
   "properties",
   "sample-table",
+  "sample-text",
 ];
 
 /**
@@ -375,7 +384,29 @@ function parseCardType(
   );
   if (sampleTable) out.sampleTable = sampleTable;
 
+  const sampleText = parseSampleTexts(
+    raw["sample-text"],
+    `${context}.sample-text`,
+    diagnostics
+  );
+  if (sampleText) out.sampleText = sampleText;
+
   return out;
+}
+
+/** `sample-text:` — one markdown text per language; a language whose text is not one is dropped. */
+function parseSampleTexts(
+  raw: unknown,
+  context: string,
+  diagnostics: Diagnostics
+): Record<string, string> | undefined {
+  if (raw === null || raw === undefined) return undefined;
+  const out: Record<string, string> = {};
+  for (const [language, text] of Object.entries(asMapping(raw, context, diagnostics))) {
+    if (typeof text === "string" && text.trim()) out[language] = text.trim();
+    else diagnostics.warn(`${context}.${language} must be markdown text; ignoring it`);
+  }
+  return Object.keys(out).length > 0 ? out : undefined;
 }
 
 /** `sample-table:` — one table per language; a language whose table is unusable is dropped. */

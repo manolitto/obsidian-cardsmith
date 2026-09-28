@@ -57,6 +57,12 @@ sample-table:
       - { Wurf: "1", Gerücht: "Kompasse funktionieren auf der Insel nicht so, wie sie sollten." }
 ```
 
+A card type whose content is prose — a spell with its miscast table, a
+rule with a picture — declares a `sample-text:` per language instead, and
+*Insert sample card block at cursor* writes it after the block as the
+note's text, where an author would write it. Leave the sample off the
+property that text fills, or the block's value would win over it.
+
 ```yaml from=resources/systems/simple/simple.yaml
 card-types:
   # The one, universal card type. As the system's only one, a note need not

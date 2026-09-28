@@ -220,6 +220,24 @@ describe("the props", () => {
     expect(card?.props["logo-image"]).toBe("assets/logo.png"); // the default
   });
 
+  it("take a key written without a value as unset, and an empty string as a value", async () => {
+    const sys = await system();
+    const text = (grip: string) =>
+      [
+        "---",
+        "grip: from-frontmatter",
+        "---",
+        "From the body.",
+        "",
+        block("  system: demo\n  card-type: gear", `data:\n  grip:${grip}\n  body:\n`),
+      ].join("\n");
+    const [unset] = resolveCards(note(text("")), sys, collectDiagnostics());
+    expect(unset?.props["grip"]).toBe("from-frontmatter");
+    expect(unset?.props["body"]).toBe("From the body.");
+    const [emptied] = resolveCards(note(text(' ""')), sys, collectDiagnostics());
+    expect(emptied?.props["grip"]).toBe("");
+  });
+
   it("make one card per table row, each row over the shared layers", async () => {
     const sys = await system();
     const text = [
