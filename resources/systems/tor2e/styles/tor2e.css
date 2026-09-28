@@ -365,3 +365,11 @@
   font-size: 0.9em;
   color: var(--tor-accent);
 }
+
+/* ── The tracker ──────────────────────────────────────────────────── */
+
+/* The boxes to tick, under a deep red rule like `.tor-separator`. */
+.card-root.tor2e .cs-tracker {
+  border-top: 0.063em solid var(--tor-accent);
+  padding-top: 0.45em;
+}

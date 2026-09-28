@@ -6,6 +6,9 @@ data:
   # The card's title, shown in the header of the front. Falls back to the note's file name when unset.
   name: Lantern of Revealing
 
+  # Empty boxes to tick off with a pen. A number (`20`), a labelled row (`{ count: 20, label: Arrows }`) or a list of such rows. `group` (default 5) sets how many boxes stand together.
+  tracker: # no sample
+
   # The card body — free Markdown (bold, italic, lists, line breaks, wikilinks) shown in the front content area.
   content: |-
     A hooded lantern that, once per day, sheds **bright light** and reveals what is *hidden*.

@@ -13,6 +13,9 @@ table:
   # The entry's text — the card's text (markdown).
   description: Rumor
 data:
+  # Empty boxes to tick off with a pen. A number (`20`), a labelled row (`{ count: 20, label: Arrows }`) or a list of such rows. `group` (default 5) sets how many boxes stand together.
+  tracker:
+
   # Source reference — rulebook page or wikilink, small at the foot.
   reference:
 

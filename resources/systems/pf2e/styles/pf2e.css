@@ -402,3 +402,13 @@
   max-height: 60%;
   --card-image-fade: 0;
 }
+
+/* ── The tracker ──────────────────────────────────────────────────── */
+
+/* The boxes to tick, under the stat block's hairline. The rule is
+   lightened in its colour rather than by opacity, which would fade the
+   boxes with it. */
+.card-root.pf2e .cs-tracker {
+  border-top: 0.08em solid color-mix(in srgb, var(--pf2e-rule) 50%, transparent);
+  padding-top: 0.4em;
+}

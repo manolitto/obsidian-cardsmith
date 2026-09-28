@@ -56,6 +56,7 @@ hull around an optional place. `0` is a value and renders.
 | `image` | `false` | the value is a picture: its link resolved to a `data:` URI, for a `src` |
 | `plain` | `false` | display text only, escaped — for a comparison, or a `title` attribute |
 | `list=` | `false` | the value as an array, for `{{#each}}` (below) |
+| `tracker` | `false` | the value is a tracker — rows of boxes to tick (below); no other switch applies |
 
 They apply in this order: glyph → signed → join → fallback → image, plain
 or markdown → linebreaks. A switch that is not in the table, or a value
@@ -73,6 +74,31 @@ print the fields, rendered with the call's switches.
 **Wikilinks** render as `<span class="cs-wikilink">display text</span>`
 everywhere — `[[target|alias]]` shows the alias. The baseline gives the
 span no style; a design that wants references to stand out styles it.
+
+## The tracker
+
+The baseline binds the `tracker` property to the slot `front-tracker`, so
+every card type has it. A front that does not read the slot still shows
+the boxes: they are appended to its `card-body-scalable`, after the last
+block. A design that wants them elsewhere — or set off by an ornament of
+its own — reads the slot where they belong:
+
+```handlebars from=resources/systems/5e_2014/templates/tracker.hbs
+{{#if (slot "front-tracker" tracker=true)}}
+<div class="cs-keep-together dd-tracker">
+{{> rule}}
+{{slot "front-tracker" tracker=true}}
+</div>
+{{/if}}
+```
+
+`tracker=true` renders the value as one `cs-tracker cs-keep-together`
+block, which the layout engine moves to the next card whole; wrap
+whatever belongs with it — here the rule above — in a keep-together of
+its own. Keep it inside `card-body-scalable`, so the body's scaling and
+splitting count it. A card type that must never show boxes unbinds the
+property with `tracker: { slot: ~ }`. The markup and its CSS variables
+are in [Styles](styles.md#the-tracker).
 
 ## The other helpers
 

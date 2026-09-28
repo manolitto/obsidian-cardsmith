@@ -53,6 +53,7 @@ describe("buildDeck over the fixture folders", () => {
       "no-card-type-label",
       "no-card-type-named",
       "Rope of Climbing",
+      "Wand of Embers",
     ]);
     expect(built.cardSize).toEqual({ width: 63, height: 88 });
     expect(built.stylesheets).toHaveLength(1);
@@ -106,10 +107,10 @@ describe("buildDeck over the fixture folders", () => {
     );
     const render = calls.filter(([phase]) => phase === "render");
     const layout = calls.filter(([phase]) => phase === "layout");
-    expect(render.map(([, done]) => done)).toEqual([1, 2, 3, 4, 5, 6, 7]);
-    expect(render.every(([, , total]) => total === 7)).toBe(true);
-    expect(layout.map(([, done]) => done)).toEqual([1, 2, 3, 4, 5, 6, 7]);
-    expect(built.cards).toHaveLength(7);
+    expect(render.map(([, done]) => done)).toEqual([1, 2, 3, 4, 5, 6, 7, 8]);
+    expect(render.every(([, , total]) => total === 8)).toBe(true);
+    expect(layout.map(([, done]) => done)).toEqual([1, 2, 3, 4, 5, 6, 7, 8]);
+    expect(built.cards).toHaveLength(8);
   });
 
   it("applies a card-copies override and warns about one that names nothing", async () => {
@@ -118,7 +119,7 @@ describe("buildDeck over the fixture folders", () => {
       "```cardsmith-deck\nsystem: simple\ncard-copies:\n  - { name: linked-reference, copies: 3 }\n  - { name: Nobody, copies: 2 }\n```"
     );
     expect(names(built.cards).filter((n) => n === "linked-reference")).toHaveLength(3);
-    expect(built.cards).toHaveLength(9);
+    expect(built.cards).toHaveLength(10);
     expect(diagnostics.matching('card-copies: "Nobody" names no card')).toHaveLength(1);
   });
 
@@ -178,7 +179,7 @@ describe("buildDeck over the fixture folders", () => {
       "simple",
       "```cardsmith-deck\nsystem: simple\nfolder: ../../fixtures/simple\nnotes: [Rope of Climbing]\n```"
     );
-    expect(built.cards).toHaveLength(7);
+    expect(built.cards).toHaveLength(8);
   });
 
   it("fails a note without a deck block, and a deck that matches no card", async () => {

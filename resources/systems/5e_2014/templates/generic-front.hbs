@@ -7,6 +7,7 @@
     front-body      the text as markdown: paragraphs, lists, tables,
                     `###` sub-headings and embedded pictures, as the
                     note writes them
+    front-tracker   the boxes to tick, under a rule, last
 
   The card knows no structure of its own; what the text needs, the note
   writes. What must stay together goes between `%% keep-together %%`
@@ -23,6 +24,7 @@
     {{> rule}}
 
     <div class="dd-text dd-generic-body">{{slot "front-body" markdown="block"}}</div>
+    {{> tracker}}
     </div>
   </div>
   <div class="dd-bar"></div>

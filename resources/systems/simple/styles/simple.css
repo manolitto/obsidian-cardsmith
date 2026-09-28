@@ -187,3 +187,9 @@
   text-transform: uppercase;
   color: var(--simple-muted);
 }
+
+/* The boxes to tick, set off by the same hairline that closes the header. */
+.card-root.simple .cs-tracker {
+  border-top: 0.08em solid var(--simple-hairline);
+  padding-top: 0.5em;
+}

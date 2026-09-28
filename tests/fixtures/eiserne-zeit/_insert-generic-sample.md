@@ -9,6 +9,9 @@ data:
   # Optional picture as a wikilink (`[[picture.png]]`), embed (`![[picture.png]]`) or file name. Sits below the header band across the full measure. The system is strictly black and white — a hard ink drawing fits, a greyscale photo does not.
   image: '[[wolfsfalle.png]]'
 
+  # Empty boxes to tick off with a pen. A number (`20`), a labelled row (`{ count: 20, label: Arrows }`) or a list of such rows. `group` (default 5) sets how many boxes stand together.
+  tracker: # no sample
+
   # Card body as markdown, inline in the cardsmith block. Takes precedence over the note's text. Use the note's text for tables and embedded pictures.
   content: |-
     A set iron trap, heavy as a millstone.

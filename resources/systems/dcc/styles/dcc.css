@@ -317,3 +317,11 @@
   max-width: 85%;
   line-height: 1.25;
 }
+
+/* ── The tracker ──────────────────────────────────────────────────── */
+
+/* The boxes to tick, under a heavy black rule. */
+.card-root.dcc .cs-tracker {
+  border-top: 0.12em solid var(--dcc-ink);
+  padding-top: 0.45em;
+}

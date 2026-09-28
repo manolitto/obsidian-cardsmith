@@ -6,6 +6,9 @@ data:
   # The card's name. Falls back to the file name.
   name: The Salt Cliffs
 
+  # Empty boxes to tick off with a pen. A number (`20`), a labelled row (`{ count: 20, label: Arrows }`) or a list of such rows. `group` (default 5) sets how many boxes stand together.
+  tracker: # no sample
+
   # Source reference — rulebook page or wikilink, small at the foot.
   reference: Rulebook p. 38
 

@@ -368,6 +368,11 @@ async function assembleStylesheet(
  * not an error: one front may offer places no card type fills yet, and a
  * card type fills the ones it has something for. A partial is any card
  * type's, so its literals count for every one.
+ *
+ * A binding the baseline makes is not the system's to answer for: its
+ * place has a home on every front whether a template reads it or not (the
+ * tracker, which the template engine appends to the body). A card type
+ * that re-binds such a property to a place of its own is checked as usual.
  */
 function checkSlots(
   declaration: SystemDeclaration,
@@ -393,8 +398,9 @@ function checkSlots(
       }
     }
     for (const [property, def] of Object.entries(cardType.properties)) {
+      const inherited = BASELINE.properties[property]?.slot ?? [];
       for (const slot of def.slot ?? []) {
-        if (!mentioned.has(slot)) {
+        if (!mentioned.has(slot) && !inherited.includes(slot)) {
           report(
             `card-types.${cardType.declaration.id} binds "${property}" to slot "${slot}", which no template of the card type reads`
           );

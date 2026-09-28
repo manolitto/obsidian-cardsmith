@@ -3,6 +3,9 @@ card:
   system: mini-d20
   card-type: generic
 data:
+  # Empty boxes to tick off with a pen. A number (`20`), a labelled row (`{ count: 20, label: Arrows }`) or a list of such rows. `group` (default 5) sets how many boxes stand together.
+  tracker:
+
   # The front's title.
   title:
 

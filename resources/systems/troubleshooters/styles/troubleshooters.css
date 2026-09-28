@@ -249,3 +249,11 @@
   font-size: 6.72cqw;
   line-height: 1.1;
 }
+
+/* ── The tracker ──────────────────────────────────────────────────── */
+
+/* The boxes to tick, under a rule in the frame's colour. */
+.card-root.troubleshooters .cs-tracker {
+  border-top: 0.08em solid var(--ts-frame);
+  padding-top: 0.45em;
+}

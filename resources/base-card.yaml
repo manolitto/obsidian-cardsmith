@@ -44,6 +44,19 @@ properties:
       de: "Der Notiztext vor der ersten `##`-Überschrift, als Markdown. Wird nicht im Block geschrieben, sondern ist die Notiz selbst; ein Kartentyp bindet ihn an einen Platz auf der Karte."
       en: "The note's text before the first `##` heading, as markdown. Not written in the block — it is the note itself; a card type binds it to a place on the card."
 
+  # Empty boxes to tick off with a pen — arrows, charges, uses per rest.
+  # The one baseline property with a place of its own: every front shows it,
+  # at the end of its body unless a template puts `{{slot "front-tracker"
+  # tracker=true}}` somewhere else. No sample here, so a sample card of a
+  # system that has no use for boxes does not grow them; a card type that
+  # does gives one.
+  tracker:
+    aliases: [boxes, checkboxes, tick-boxes, kästchen, kaestchen, ankreuzkästchen, ankreuzfelder, abstreichen]
+    slot: front-tracker
+    description:
+      de: "Leere Kästchen zum Abstreichen mit dem Stift. Eine Zahl (`20`), eine Reihe mit Beschriftung (`{ count: 20, label: Pfeile }`) oder eine Liste solcher Reihen. `group` (Standard 5) fasst so viele Kästchen zu einer Gruppe zusammen."
+      en: "Empty boxes to tick off with a pen. A number (`20`), a labelled row (`{ count: 20, label: Arrows }`) or a list of such rows. `group` (default 5) sets how many boxes stand together."
+
   # A card that comes from a roll table — a critical hit, a mishap, a treasure,
   # an encounter — carries the result it is listed under. `roll` is the display
   # form; `roll-min` and `roll-max` are the integer bounds a deck sorts, filters

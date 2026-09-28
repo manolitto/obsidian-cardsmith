@@ -225,6 +225,21 @@ describe("the slot check", () => {
     const { diagnostics } = await load(completeSystem()); // gear's stat-1a is read as {{slot for}}
     expect(diagnostics.messages).toEqual([]);
   });
+
+  it("leaves the baseline's own binding alone, and checks a card type's re-binding of it", async () => {
+    // No template here reads front-tracker, which the baseline binds: the
+    // engine appends the tracker to the body instead, so that is no typo.
+    // A place a card type chooses for it is the card type's to get right.
+    const files = completeSystem();
+    files["game-system.yaml"] = files["game-system.yaml"]!.toString().replace(
+      "  spell:\n",
+      "  spell:\n    properties: { tracker: { slot: front-charges } }\n"
+    );
+    const { diagnostics } = await load(files);
+    expect(diagnostics.messages).toEqual([
+      'demo: card-types.spell binds "tracker" to slot "front-charges", which no template of the card type reads',
+    ]);
+  });
 });
 
 describe("check 2 — every partial called is declared", () => {
@@ -395,13 +410,14 @@ describe("a missing file at runtime", () => {
 });
 
 describe("the baseline", () => {
-  it("ships the eight properties and both setting layers, and reads clean", () => {
+  it("ships the nine properties and both setting layers, and reads clean", () => {
     expect(Object.keys(BASELINE.properties)).toEqual([
       "name",
       "description",
       "image",
       "tags",
       "body",
+      "tracker",
       "roll",
       "roll-min",
       "roll-max",

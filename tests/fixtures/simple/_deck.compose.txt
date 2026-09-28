@@ -1,5 +1,5 @@
 2 pages · 210 × 297 mm · 3 × 3 of 63 × 88 mm at 10.5, 16.5
-1. front · 56 marks
+1. front · 60 marks
    front #1 at 10.5, 16.5 simple/Cloak of the Marsh
    front #2 at 73.5, 16.5 simple/lantern-of-revealing
    front #3 at 136.5, 16.5 simple/laterne-der-enthuellung
@@ -7,7 +7,8 @@
    front #5 at 73.5, 104.5 simple/no-card-type-label
    front #6 at 136.5, 104.5 simple/no-card-type-named
    front #7 at 10.5, 192.5 simple/Rope of Climbing
-2. back · 56 marks
+   front #8 at 73.5, 192.5 simple/Wand of Embers
+2. back · 60 marks
    back #1 at 136.5, 16.5 simple/Cloak of the Marsh
    back #2 at 73.5, 16.5 simple/lantern-of-revealing
    back #3 at 10.5, 16.5 simple/laterne-der-enthuellung
@@ -15,3 +16,4 @@
    back #5 at 73.5, 104.5 simple/no-card-type-label
    back #6 at 10.5, 104.5 simple/no-card-type-named
    back #7 at 136.5, 192.5 simple/Rope of Climbing
+   back #8 at 73.5, 192.5 simple/Wand of Embers

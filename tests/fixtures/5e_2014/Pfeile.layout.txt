@@ -1,0 +1,13 @@
+Pfeile · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   p.dd-subtitle "Geschosse"
+   svg.dd-rule
+   p.dd-line "Gewicht 1 Pfd."
+   p.dd-line "Kosten 1 GM"
+   svg.dd-rule
+   div.dd-text
+     p "Jeder Angriff mit einer Waffe mit …"
+   div.cs-keep-together.dd-tracker "Pfeile"
+     div.cs-tracker.cs-keep-together
+       div.cs-tracker-row "Pfeile"
+2. back [cs-layout-default] scale —

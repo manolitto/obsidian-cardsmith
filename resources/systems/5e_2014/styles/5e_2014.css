@@ -229,6 +229,19 @@
   color: var(--dd-heading);
 }
 
+/* The boxes to tick, under a rule of their own, their label a caption
+   like a line's. */
+.dd-tracker {
+  margin-top: 0.3em;
+}
+.dd-tracker .cs-tracker {
+  margin-top: 0.4em;
+}
+.card-root.dd .cs-tracker-label {
+  font-weight: 700;
+  color: var(--dd-heading);
+}
+
 /* The saving throws: one entry per ability set, the commas between. */
 .dd-save + .dd-save::before {
   content: ", ";

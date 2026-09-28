@@ -8,6 +8,7 @@
     front-damage … front-cost       the statistics, a line each, where
                                     set, under a rule
     front-description               the text, under a rule
+    front-tracker                   the boxes to tick, under a rule, last
 --}}
 <div class="card-root card-front dd item-card">
   <div class="dd-bar"></div>
@@ -34,6 +35,7 @@
     {{> rule}}
 
     <div class="dd-text">{{slot "front-description" markdown="block"}}</div>
+    {{> tracker}}
     </div>
   </div>
   <div class="dd-bar"></div>

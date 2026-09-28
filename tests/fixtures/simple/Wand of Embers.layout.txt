@@ -1,0 +1,7 @@
+Wand of Embers · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   div.simple-body "A charred wand of rowan that …"
+   div.cs-tracker.cs-keep-together
+     div.cs-tracker-row "Charges"
+     div.cs-tracker-row "Per long rest"
+2. back [cs-layout-default] scale —

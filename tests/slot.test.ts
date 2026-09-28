@@ -178,7 +178,7 @@ describe("{{slot}}", () => {
       });
       expect(html).toBe("<em>a</em>");
       expect(diagnostics.messages).toEqual([
-        '{{slot "front-body"}}: "render" is not a switch (markdown, linebreaks, glyph, signed, join, image, plain, list, fallback are); ignoring it',
+        '{{slot "front-body"}}: "render" is not a switch (markdown, linebreaks, glyph, signed, join, image, plain, tracker, list, fallback are); ignoring it',
       ]);
     });
   });

@@ -24,6 +24,7 @@ describe("the defaults", () => {
       join: ", ",
       image: false,
       plain: false,
+      tracker: false,
     });
   });
 
