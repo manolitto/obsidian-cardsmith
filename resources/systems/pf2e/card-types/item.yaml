@@ -72,15 +72,15 @@ properties:
   name:
     sample:
       de: "Nebelrüstung"
-      en: "Mistward Armor"
+      en: "Fog-Rune Armor"
 
   original-name:
-    sample: "Mistward Armor"
+    sample: "Fog-Rune Armor"
 
   source:
     sample:
-      de: "Grundregelwerk S. 560"
-      en: "Core Rulebook p. 556"
+      de: "Hausregeln S. 27"
+      en: "House Rules p. 27"
 
   level:
     slot: front-badge

@@ -17,7 +17,7 @@ data:
   tracker: # no sample
 
   # Source reference — book title and page number, optionally a wikilink (`[[…]]`). Set small at the bottom right of the card.
-  source: Bestiary p. 38
+  source: House Rules p. 21
 
   # English original name. Set small at the bottom left of the card, prefixed "engl."; hidden on English cards.
   original-name: Marsh Lurker
@@ -104,6 +104,6 @@ data:
       damage: 1d6+1 piercing plus Knockdown
     - name: __Marsh Camouflage__
       desc: In reeds or under water the marsh lurker gains +2 to Stealth.
-    - name: __Ferocity__ ⬲
-      desc: When reduced to 0 HP the marsh lurker stays at 1 HP; its wounded value increases by 1.
+    - name: __Clinging Mud__ ⬲
+      desc: The first time each day the marsh lurker would drop to 0 HP, it stays at 1 HP instead and dives.
 ```

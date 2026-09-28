@@ -58,8 +58,8 @@ properties:
     sample: "Marsh Lurker"
   source:
     sample:
-      de: "Monsterhandbuch S. 35"
-      en: "Bestiary p. 38"
+      de: "Hausregeln S. 21"
+      en: "House Rules p. 21"
   hit-points:
     slot: front-hit-points
   armor-class:
@@ -240,16 +240,16 @@ properties:
           damage: "1W6+1 Stich plus Niederwerfen"
         - name: "__Sumpftarnung__"
           desc: "Im Schilf oder unter Wasser erhält der Sumpfschleicher +2 auf Heimlichkeit."
-        - name: "__Wildheit__ ⬲"
-          desc: "Wird der Sumpfschleicher auf 0 TP reduziert, bleibt er bei 1 TP; er erhält Verwundet 1."
+        - name: "__Zäher Schlamm__ ⬲"
+          desc: "Sinkt der Sumpfschleicher zum ersten Mal am Tag auf 0 TP, bleibt er stattdessen bei 1 TP und taucht ab."
       en:
         - name: "__Melee__ ⬻ jaws"
           bonus: 7
           damage: "1d6+1 piercing plus Knockdown"
         - name: "__Marsh Camouflage__"
           desc: "In reeds or under water the marsh lurker gains +2 to Stealth."
-        - name: "__Ferocity__ ⬲"
-          desc: "When reduced to 0 HP the marsh lurker stays at 1 HP; its wounded value increases by 1."
+        - name: "__Clinging Mud__ ⬲"
+          desc: "The first time each day the marsh lurker would drop to 0 HP, it stays at 1 HP instead and dives."
 
   description:
     slot: front-text

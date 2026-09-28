@@ -30,16 +30,16 @@ properties:
 
   name:
     sample:
-      de: "Schnelles Gegenmittel"
-      en: "Snap Antidote"
+      de: "Hastiges Gegenmittel"
+      en: "Hasty Antidote"
 
   original-name:
-    sample: "Snap Antidote"
+    sample: "Hasty Antidote"
 
   source:
     sample:
-      de: "Grundregelwerk S. 262"
-      en: "Core Rulebook p. 258"
+      de: "Hausregeln S. 14"
+      en: "House Rules p. 14"
 
   level:
     slot: front-badge
