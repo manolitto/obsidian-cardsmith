@@ -21,7 +21,7 @@ stylesheet: styles/eiserne-zeit.css
 # The pictures the samples link, written beside a note by *Insert sample
 # card block* when the vault has none of that name.
 sample-pictures:
-  - assets/samples/wolfsfalle.png
+  - assets/samples/Bannkreis.png
 
 partial-templates:
   card-image: templates/card-image.hbs
@@ -55,8 +55,8 @@ properties:
       de: "Titel der Karte — weiß im schwarzen Kopfband. Fällt auf den Dateinamen zurück, wenn nicht gesetzt."
       en: "Card title — white inside the black header band. Falls back to the note's file name when unset."
     sample:
-      de: "Wolfsfalle"
-      en: "Wolf Trap"
+      de: "Bannkreis"
+      en: "Warding Circle"
 
   image:
     slot: front-image
@@ -64,7 +64,7 @@ properties:
     description:
       de: "Optionales Bild als Wikilink (`[[Bild.png]]`), Embed (`![[Bild.png]]`) oder Dateiname. Sitzt unter dem Kopfband über die volle Satzbreite. Das System ist rein schwarz-weiß — harte Tuschezeichnung passt, Graustufenfoto nicht."
       en: "Optional picture as a wikilink (`[[picture.png]]`), embed (`![[picture.png]]`) or file name. Sits below the header band across the full measure. The system is strictly black and white — a hard ink drawing fits, a greyscale photo does not."
-    sample: "[[wolfsfalle.png]]"
+    sample: "[[Bannkreis.png]]"
 
   # The body, from two sources — the first the note sets wins: `content` in
   # the block, else the note's own text before its first `##` heading. That
@@ -80,8 +80,8 @@ properties:
       de: "Kartentext als Markdown, direkt im cardsmith-Block. Hat Vorrang vor dem Notiztext. Für Tabellen und eingebettete Bilder den Notiztext benutzen."
       en: "Card body as markdown, inline in the cardsmith block. Takes precedence over the note's text. Use the note's text for tables and embedded pictures."
     sample:
-      de: "Eine gestellte Falle aus Eisen, schwer wie ein Mühlstein.\n- Auslösen: GES-Probe\n- Schaden: 1w8"
-      en: "A set iron trap, heavy as a millstone.\n- Trigger: DEX check\n- Damage: 1d8"
+      de: "Ein Kreis aus Salz und Eisenspänen, den nichts Unheiliges überschreitet.\n- Reichweite: 3 Meter\n- Dauer: bis zum Morgengrauen"
+      en: "A circle of salt and iron filings that nothing unholy may cross.\n- Range: 10 feet\n- Duration: until dawn"
 
   reference:
     slot: side-reference
@@ -90,18 +90,18 @@ properties:
       de: "Quellenangabe. Läuft gedreht die rechte Kante entlang, in Versalien. Konvention: Buchtitel, Komma, Seite — „Der Hundeführer, S. 8“."
       en: "Source reference. Runs rotated along the right edge, in caps. Convention: book title, comma, page — \"The Dog Handler, p. 8\"."
     sample:
-      de: "Der Hundeführer, S. 8"
-      en: "The Dog Handler, p. 8"
+      de: "Grundregeln, S. 64"
+      en: "Core Rules, p. 64"
 
   card-type-label:
     slot: foot-label
     aliases: [kartentyp, kategorie, category, type-label, rubrik]
     description:
-      de: "Beschriftung des schwarzen Fußbands, in weißen Versalien auf jeder Seite der Karte (z. B. „AUSRÜSTUNG“, „GEFÄHRTE“). Ohne Angabe steht dort die Beschriftung des Kartentyps."
-      en: "Label of the black foot band, in white caps on every face of the card (e.g. \"GEAR\", \"COMPANION\"). Falls back to the card type's own label when unset."
+      de: "Beschriftung des schwarzen Fußbands, in weißen Versalien auf jeder Seite der Karte (z. B. „ZAUBER“, „AUSRÜSTUNG“, „GEFÄHRTE“). Ohne Angabe steht dort die Beschriftung des Kartentyps."
+      en: "Label of the black foot band, in white caps on every face of the card (e.g. \"SPELL\", \"GEAR\", \"COMPANION\"). Falls back to the card type's own label when unset."
     sample:
-      de: "Ausrüstung"
-      en: "Gear"
+      de: "Zauber"
+      en: "Spell"
 
 card-types:
   # The free card, and the system's only one — so a note need not name it.
