@@ -78,8 +78,8 @@ properties:
       de: "Untertyp laut Tabelle — Leicht, Mittel, Schwer bei Rüstung; die Waffenart bei Waffen."
       en: "Subtype per the table — Light, Medium, Heavy for armor; the weapon's style for weapons."
     sample:
-      de: "Mittel"
-      en: "Medium"
+      de: "Leicht"
+      en: "Light"
 
   damage:
     slot: front-damage
@@ -87,7 +87,7 @@ properties:
     description:
       de: "Grundschaden der Waffe als Zahl — MINI D20 würfelt keinen Schaden."
       en: "The weapon's base damage as a number — MINI D20 does not roll damage."
-    sample: 4
+    sample: 3
 
   reach:
     slot: front-reach
@@ -105,7 +105,6 @@ properties:
     description:
       de: "RK-Modifikator — der Bonus auf die Rüstungsklasse durch diese Rüstung."
       en: "AC modification — the bonus to Armor Class from this armor."
-    sample: "+ 4"
 
   price:
     slot: front-price
@@ -114,8 +113,8 @@ properties:
       de: "Preis in Goldmünzen, z. B. „15 GM“; „—“ wenn kostenlos."
       en: "Price in gold pieces, e.g. \"15 GP\"; \"—\" if free."
     sample:
-      de: "15 GM"
-      en: "15 GP"
+      de: "8 GM"
+      en: "8 GP"
 
   effect:
     slot: front-effect
@@ -123,9 +122,6 @@ properties:
     description:
       de: "Spielwirkung — bei allgemeiner Ausrüstung und magischen Artefakten (Markdown)."
       en: "The mechanical effect — for general gear and magical artefacts (markdown)."
-    sample:
-      de: "Heilt 10 TP."
-      en: "Heals 10 HP."
 
   notes:
     slot: front-notes
@@ -133,3 +129,6 @@ properties:
     description:
       de: "Zusätzliche Hinweise oder Bedingungen."
       en: "Additional notes or conditions."
+    sample:
+      de: "Passt unter einen Mantel und fällt dort nicht auf."
+      en: "Fits under a cloak without drawing an eye."
