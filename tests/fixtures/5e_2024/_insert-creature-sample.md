@@ -2,6 +2,7 @@
 card:
   system: 5e_2024
   card-type: creature
+  language: en
 data:
   # The card's name. Falls back to the file name.
   name: Cinder Hound

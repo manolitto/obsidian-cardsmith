@@ -2,6 +2,7 @@
 card:
   system: eiserne-zeit
   card-type: generic
+  language: en
 data:
   # Card title — white inside the black header band. Falls back to the note's file name when unset.
   name:

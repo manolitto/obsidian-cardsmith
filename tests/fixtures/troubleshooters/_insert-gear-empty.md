@@ -2,6 +2,7 @@
 card:
   system: troubleshooters
   card-type: gear
+  language: en
 data:
   # The card's name. Falls back to the file name.
   name:

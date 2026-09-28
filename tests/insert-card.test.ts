@@ -85,6 +85,25 @@ describe("the sample block", () => {
     expect(block).not.toContain("  titel:");
   });
 
+  it("says the language it is written in, so the card prints its captions in it", async () => {
+    const system = await loadedSystem("5e_2024");
+    const cardType = system.cardTypes["item"]!;
+    for (const [asked, written] of [
+      ["de", "de"],
+      ["en", "en"],
+      ["fr", "en"], // not a language of the system: its primary one
+    ] as const) {
+      const block = buildCardBlock(system, cardType, asked, "sample");
+      expect(block).toContain(`  card-type: item\n  language: ${written}\n`);
+      const diagnostics = collectDiagnostics();
+      const note = parseNote(block, "5e_2024/item.md", diagnostics)!;
+      expect(resolveCards(note, system, diagnostics)[0]?.settings.language).toBe(written);
+    }
+    expect(buildCardBlock(system, cardType, "de", "sample")).toContain(
+      "label: Stunden Öl"
+    );
+  });
+
   it("falls back to the language the system documents in", async () => {
     const system = await loadedSystem("eiserne-zeit");
     const cardType = Object.values(system.cardTypes)[0]!;

@@ -2,6 +2,7 @@
 card:
   system: mini-d20
   card-type: cover
+  language: en
 data:
   # The deck's title, large on the front.
   name:

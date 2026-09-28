@@ -2,6 +2,7 @@
 card:
   system: dragonbane
   card-type: creature
+  language: en
 data:
   # Name of the creature — monster or NPC.
   name:

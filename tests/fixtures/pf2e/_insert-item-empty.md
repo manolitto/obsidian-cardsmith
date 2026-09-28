@@ -2,6 +2,7 @@
 card:
   system: pf2e
   card-type: item
+  language: en
 data:
   # The card's name — creature, item, feat, action or hazard. Falls back to the note's file name.
   name:

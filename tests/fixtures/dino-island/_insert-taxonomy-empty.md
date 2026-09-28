@@ -2,6 +2,7 @@
 card:
   system: dino-island
   card-type: taxonomy
+  language: en
 data:
   # The card's name. Falls back to the file name.
   name:
