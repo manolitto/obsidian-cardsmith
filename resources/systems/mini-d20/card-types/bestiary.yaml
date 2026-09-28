@@ -39,6 +39,9 @@ translations:
     front-abilities-label: "Abilities"
 
 properties:
+  image:
+    sample: "[[Goblin.png]]"
+
   icon:
     slot: [front-icon-left, back-icon-top]
     default: assets/icons/claw-slashes.svg

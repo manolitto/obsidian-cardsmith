@@ -33,6 +33,9 @@ stylesheet: styles/5e_2024.css
 # card block* when the vault has none of that name.
 sample-pictures:
   - assets/samples/Cinder-Hound.png
+  - assets/samples/Ember-Lance.png
+  - assets/samples/Ember-Step.png
+  - assets/samples/Lantern-of-Ash.png
 
 partial-templates:
   entries: templates/entries.hbs

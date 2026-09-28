@@ -67,6 +67,7 @@ translations:
 properties:
   image:
     slot: [front-image, back-image]
+    sample: "[[Nebelruestung.png]]"
 
   level:
     slot: front-badge

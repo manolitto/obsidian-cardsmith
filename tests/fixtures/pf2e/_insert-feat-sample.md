@@ -11,7 +11,7 @@ data:
   description: You can use the Craft activity to create alchemical items. When you select this feat, you immediately add four common 1st-level formulas to your formula book.
 
   # The card's picture as a wikilink (`[[Basilisk.png]]`), embed (`![[Basilisk.png]]`) or file name. Shown large on the card back; creatures and items also show it on the front when there is room.
-  image: '[[Sumpfschleicher.png]]'
+  image: '[[Alchemie.png]]'
 
   # Empty boxes to tick off with a pen. A number (`20`), a labelled row (`{ count: 20, label: Arrows }`) or a list of such rows. `group` (default 5) sets how many boxes stand together.
   tracker: # no sample

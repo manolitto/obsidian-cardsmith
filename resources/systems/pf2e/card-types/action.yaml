@@ -31,6 +31,9 @@ translations:
     front-critical-failure-label: "Critical Failure"
 
 properties:
+  image:
+    sample: "[[Kantengriff.png]]"
+
   actions:
     slot: front-title-glyph
     aliases: [aktionen, kosten, action-cost]

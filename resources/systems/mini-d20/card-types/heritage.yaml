@@ -37,6 +37,9 @@ translations:
     front-names-lastname-label: "Last name"
 
 properties:
+  image:
+    sample: "[[Zwerg.png]]"
+
   icon:
     slot: [front-icon-left, back-icon-top]
     default: assets/icons/family-tree.svg

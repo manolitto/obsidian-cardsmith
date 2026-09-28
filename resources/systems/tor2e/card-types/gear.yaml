@@ -53,6 +53,7 @@ properties:
 
   image:
     slot: front-image
+    sample: "[[Jagdspeer.png]]"
 
   damage:
     slot: front-damage

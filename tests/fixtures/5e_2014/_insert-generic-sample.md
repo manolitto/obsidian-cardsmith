@@ -8,7 +8,7 @@ data:
   name: Ember Step
 
   # A picture — a wikilink to a picture in the vault — on the back. Without one the back shows a d20.
-  image: # no sample
+  image: '[[Ember-Step.png]]'
 
   # Empty boxes to tick off with a pen. A number (`20`), a labelled row (`{ count: 20, label: Arrows }`) or a list of such rows. `group` (default 5) sets how many boxes stand together.
   tracker: # no sample

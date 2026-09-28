@@ -28,6 +28,9 @@ translations:
     front-effect-label: "Effect"
 
 properties:
+  image:
+    sample: "[[Mehrfachschuss.png]]"
+
   icon:
     slot: [front-icon-left, back-icon-top]
     default: assets/icons/skills.svg

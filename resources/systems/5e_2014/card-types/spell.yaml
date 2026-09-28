@@ -131,6 +131,7 @@ properties:
     aliases: [bild]
     description:
       en: "A picture for the back — a wikilink to a picture in the vault. Without one the back shows a d20."
+    sample: "[[Ember-Lance.png]]"
 
 glyphs:
   front-level:

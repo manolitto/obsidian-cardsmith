@@ -11,7 +11,7 @@ data:
   description: While lit, this brass lantern sheds dim grey light in a 20-foot radius. Invisible creatures in that light leave faint trails of ash.
 
   # The item's picture — a wikilink to a picture in the vault — on the back. Without one the back shows a d20.
-  image: # no sample
+  image: '[[Lantern-of-Ash.png]]'
 
   # The note's text before the first `##` heading, as markdown. Not written in the block — it is the note itself; a card type binds it to a place on the card.
   body: # no sample

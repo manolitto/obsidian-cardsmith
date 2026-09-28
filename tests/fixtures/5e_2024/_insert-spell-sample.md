@@ -11,7 +11,7 @@ data:
   description: A lance of white-hot ash strikes one creature you can see within range. Make a ranged spell attack. *Hit:* 3d8 Fire damage, and the target sheds dim light until the start of your next turn.
 
   # A picture for the back — a wikilink to a picture in the vault. Without one the back shows a d20.
-  image: # no sample
+  image: '[[Ember-Lance.png]]'
 
   # The note's text before the first `##` heading, as markdown. Not written in the block — it is the note itself; a card type binds it to a place on the card.
   body: # no sample

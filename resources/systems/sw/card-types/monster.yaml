@@ -33,6 +33,9 @@ translations:
     front-abilities-label: "Abilities"
 
 properties:
+  image:
+    sample: "[[Moorschleicher.png]]"
+
   name:
     sample:
       de: "Moorschleicher"

@@ -25,6 +25,9 @@ translations:
     front-special-label: "Special"
 
 properties:
+  image:
+    sample: "[[Alchemie.png]]"
+
   level:
     slot: front-badge
     aliases: [stufe, talentstufe]

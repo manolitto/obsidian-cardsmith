@@ -11,7 +11,7 @@ data:
   description: A slender, one-handed blade of forged steel.
 
   # The card's picture as a wikilink (`[[image.png]]`), embed (`![[image.png]]`) or file name. Sits between the stats and the flavour and takes the room that is left.
-  image: '[[Gegenstand.png]]'
+  image: '[[Mehrfachschuss.png]]'
 
   # Tags as pills — "Active", "Passive", "Melee", "Ranged Combat", "Spell", "Projectile". One to three are usual.
   tags:

@@ -44,6 +44,9 @@ translations:
     front-level-up-label: "Level-up"
 
 properties:
+  image:
+    sample: "[[Schurke.png]]"
+
   icon:
     slot: [front-icon-left, back-icon-top]
     default: assets/icons/character.svg

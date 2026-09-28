@@ -49,6 +49,7 @@ translations:
 properties:
   image:
     slot: [front-image, back-image]
+    sample: "[[Sumpfschleicher.png]]"
   hit-points:
     slot: front-hit-points
   armor-class:

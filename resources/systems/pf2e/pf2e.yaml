@@ -24,6 +24,10 @@ stylesheet: styles/pf2e.css
 # The pictures the samples link, written beside a note by *Insert sample
 # card block* when the vault has none of that name.
 sample-pictures:
+  - assets/samples/Alchemie.png
+  - assets/samples/Kantengriff.png
+  - assets/samples/Nebelruestung.png
+  - assets/samples/Speerfalle.png
   - assets/samples/Sumpfschleicher.png
 
 partial-templates:
@@ -61,7 +65,6 @@ properties:
     description:
       de: "Bild der Karte als Wikilink (`[[Basilisk.png]]`), Embed (`![[Basilisk.png]]`) oder Dateiname. Erscheint groß auf der Kartenrückseite; Kreaturen und Gegenstände zeigen es außerdem auf der Vorderseite, wenn dort Platz bleibt."
       en: "The card's picture as a wikilink (`[[Basilisk.png]]`), embed (`![[Basilisk.png]]`) or file name. Shown large on the card back; creatures and items also show it on the front when there is room."
-    sample: "[[Sumpfschleicher.png]]"
 
   source:
     slot: front-footer-right

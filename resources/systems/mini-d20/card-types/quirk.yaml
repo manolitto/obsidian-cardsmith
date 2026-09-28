@@ -15,6 +15,9 @@ translations:
     back-label: "Quirk"
 
 properties:
+  image:
+    sample: "[[Eigenart.png]]"
+
   icon:
     slot: [front-icon-left, back-icon-top]
     default: assets/icons/portrait.svg
