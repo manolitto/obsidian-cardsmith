@@ -26,6 +26,8 @@ const en = {
   // ── The in-note preview ─────────────────────────────────────────
   "preview.laying-out": "Laying out…",
   "preview.no-card": "This note yields no card.",
+  "preview.second-block":
+    "A note holds one cardsmith block, and this is not the first. For several cards from one note, use a table; for several cards on one subject, write a note per card and gather them in a deck.",
   "preview.clipped":
     "Content was cut at the smallest type size; the card prints as shown.",
   "preview.step": "{index} / {count}",
@@ -216,6 +218,8 @@ const de: Strings = {
   // ── The in-note preview ─────────────────────────────────────────
   "preview.laying-out": "Wird gesetzt…",
   "preview.no-card": "Diese Notiz ergibt keine Karte.",
+  "preview.second-block":
+    "Eine Notiz enthält einen cardsmith-Block, und dies ist nicht der erste. Für mehrere Karten aus einer Notiz eignet sich eine Tabelle; für mehrere Karten zu einem Thema eine Notiz pro Karte, gesammelt in einem Deck.",
   "preview.clipped":
     "Der Inhalt wurde bei der kleinsten Schriftgröße abgeschnitten; die Karte wird so gedruckt.",
   "preview.step": "{index} / {count}",

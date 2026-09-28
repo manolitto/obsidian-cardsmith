@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { collectDiagnostics } from "../src/definitions/diagnostics";
-import { parseNote, sectionKey } from "../src/render/note";
+import { cardBlocks, parseNote, sectionKey } from "../src/render/note";
 
 const parse = (
   text: string,
@@ -260,5 +260,32 @@ describe("the sections", () => {
   it("keep ### headings inside their section", () => {
     const note = parse(`## A\n\n### Sub\n\nText.\n\n${BLOCK}`);
     expect(note?.sections["a"]).toBe("### Sub\n\nText.");
+  });
+});
+
+describe("cardBlocks", () => {
+  it("lists every block with the line of its opening fence, frontmatter counted", () => {
+    const text = [
+      "---",
+      "price: 10",
+      "---",
+      "```cardsmith",
+      "card: { system: x }",
+      "```",
+      "",
+      "Text.",
+      "",
+      "```cardsmith",
+      "data: { price: 99 }",
+      "```",
+    ].join("\r\n");
+    expect(cardBlocks(text)).toEqual([
+      { line: 3, source: "card: { system: x }\n" },
+      { line: 9, source: "data: { price: 99 }\n" },
+    ]);
+  });
+
+  it("finds none in a note without a block", () => {
+    expect(cardBlocks("# Just a note\n\n```yaml\ncard: x\n```")).toEqual([]);
   });
 });

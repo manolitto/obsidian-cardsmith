@@ -11,7 +11,7 @@ import { collectDiagnostics } from "../definitions/diagnostics";
 import { layoutCard } from "../layout/engine";
 import { CARD_PRESETS, DEFAULT_CARD_PRESET, type CardSize } from "../model/card-size";
 import { noteSystemId } from "../render/card";
-import { parseNote } from "../render/note";
+import { cardBlocks, parseNote, type CardBlock } from "../render/note";
 import type { CardRenderer, RenderedCard } from "../render/renderer";
 import type { LoadedSystem } from "../systems/loader";
 import { mountPreview, previewFaces } from "./preview-mount";
@@ -28,6 +28,13 @@ import { t, uiLanguage } from "./strings";
  * previous, next, last — lay the chosen card out on demand, since
  * rendering N cards is templates and fast and layout is per card and the
  * slow part.
+ *
+ * A note is one card and holds one block. Every block would read the same
+ * note-wide values — frontmatter, sections, statblock, table — so a second
+ * block has nothing of its own to show: it says so instead of repeating
+ * the first block's cards. Several cards from one note are a table's rows
+ * or a roll range; several card types from one subject are several notes
+ * a deck gathers.
  *
  * The preview follows its note: an edit to the frontmatter or a section
  * changes the card without touching the block, so the child listens for
@@ -49,9 +56,33 @@ export interface CardBlockContext {
 
 /** The processor `registerMarkdownCodeBlockProcessor("cardsmith", …)` takes. */
 export function cardBlockProcessor(context: CardBlockContext) {
-  return (_source: string, el: HTMLElement, ctx: MarkdownPostProcessorContext): void => {
-    ctx.addChild(new CardPreview(el, ctx.sourcePath, context));
+  return (source: string, el: HTMLElement, ctx: MarkdownPostProcessorContext): void => {
+    const block = { source, line: () => ctx.getSectionInfo(el)?.lineStart };
+    ctx.addChild(new CardPreview(el, ctx.sourcePath, block, context));
   };
+}
+
+/**
+ * The block a processor was handed: its YAML, and the line of its opening
+ * fence — asked for late, since the element is placed in the note only
+ * after the processor returns, and not every view can say where it stands.
+ */
+interface OwnBlock {
+  source: string;
+  line(): number | undefined;
+}
+
+/**
+ * Whether `own` is the note's first block. By its line when the view knows
+ * it; else by its text, which cannot tell two identical blocks apart, so
+ * there both show the card.
+ */
+function isFirstBlock(blocks: readonly CardBlock[], own: OwnBlock): boolean {
+  const first = blocks[0];
+  if (!first || blocks.length === 1) return true;
+  const line = own.line();
+  if (line !== undefined) return line === first.line;
+  return first.source.trimEnd() === own.source.trimEnd();
 }
 
 class CardPreview extends MarkdownRenderChild {
@@ -67,6 +98,7 @@ class CardPreview extends MarkdownRenderChild {
   constructor(
     el: HTMLElement,
     private readonly path: string,
+    private readonly block: OwnBlock,
     private readonly context: CardBlockContext
   ) {
     super(el);
@@ -101,11 +133,17 @@ class CardPreview extends MarkdownRenderChild {
     try {
       const file = this.context.app.vault.getAbstractFileByPath(this.path);
       if (!(file instanceof TFile)) throw new Error(`${this.path}: not a file`);
-      const note = parseNote(
-        await this.context.app.vault.cachedRead(file),
-        this.path,
-        diagnostics
-      );
+      const text = await this.context.app.vault.cachedRead(file);
+      if (!isFirstBlock(cardBlocks(text), this.block)) {
+        if (this.stale(generation)) return;
+        this.containerEl.empty();
+        this.containerEl.createDiv({
+          cls: "cs-card-empty",
+          text: t("preview.second-block"),
+        });
+        return;
+      }
+      const note = parseNote(text, this.path, diagnostics);
       const systemId = note && noteSystemId(note, diagnostics);
       if (!note || !systemId) {
         this.cards = [];
