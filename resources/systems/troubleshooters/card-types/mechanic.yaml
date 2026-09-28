@@ -16,6 +16,11 @@ translations:
     front-requires-label: "Requires"
 
 properties:
+  reference:
+    sample:
+      de: "Regelbuch S. 88"
+      en: "Rulebook p. 88"
+
   name:
     sample:
       de: "Deckung suchen"

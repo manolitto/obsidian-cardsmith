@@ -17,6 +17,11 @@ translations:
     front-story-points-label: "Story points"
 
 properties:
+  reference:
+    sample:
+      de: "Regelbuch S. 130"
+      en: "Rulebook p. 130"
+
   name:
     sample:
       de: "Feldstecher"

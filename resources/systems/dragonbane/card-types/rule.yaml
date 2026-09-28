@@ -56,6 +56,24 @@ translations:
 # „Voraussetzung" → `prerequisite`; EN "Requirement" (what casting costs
 # you in word and gesture) is DE „Vorgabe" → `casting-requirement`.
 properties:
+  category:
+    sample:
+      de: "Magie"
+      en: "Magic"
+
+  subcategory:
+    sample:
+      de: "Elementarmagie"
+      en: "Elementalism"
+
+  book-reference:
+    sample:
+      de: "Regelbuch S. 58"
+      en: "Rules p. 58"
+
+  english-original:
+    sample: "Ember Grip"
+
   name:
     slot: front-header-title
     description:
@@ -80,9 +98,6 @@ properties:
     description:
       de: "Grundeigenschaft, auf die eine Fertigkeit probt: STÄ, KON, GEW, INT, WIL oder CHA."
       en: "Attribute a skill is rolled against: STR, CON, AGL, INT, WIL or CHA."
-    sample:
-      de: "GEW"
-      en: "AGL"
 
   # ── 2 · Zauber ──
   rank:

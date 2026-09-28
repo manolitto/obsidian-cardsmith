@@ -81,6 +81,19 @@ properties:
   category:
     default: "Kreatur"
 
+  subcategory:
+    sample:
+      de: "Tier"
+      en: "Animal"
+
+  book-reference:
+    sample:
+      de: "Bestiarium S. 21"
+      en: "Bestiary p. 21"
+
+  english-original:
+    sample: "Mist Crow"
+
   name:
     slot: front-header-title
     description:
@@ -164,7 +177,9 @@ properties:
     description:
       de: "Bewegungsweite in Metern (z. B. \"10 m\" oder \"6 m, schwimmend 12 m\")."
       en: "Movement rate in metres (e.g. \"10 m\" or \"6 m, swim 12 m\")."
-    sample: "4 m, fliegend 16 m"
+    sample:
+      de: "4 m, fliegend 16 m"
+      en: "4 m, fly 16 m"
 
   armor:
     slot: front-stat-3b
@@ -183,8 +198,8 @@ properties:
       de: "Fertigkeiten und Werte als kommagetrennte Liste (Großbuchstaben für Kompetenzen, gefolgt von der Stufe)."
       en: "Skills and ratings as a comma-separated list (uppercase skill names followed by their level)."
     sample:
-      de: "AUFMERKSAMKEIT 12, SPEERE 10, SCHWIMMEN 14"
-      en: "AWARENESS 12, SPEARS 10, SWIMMING 14"
+      de: "AUFMERKSAMKEIT 12, SCHLEICHEN 14"
+      en: "AWARENESS 12, SNEAKING 14"
 
   weapons:
     slot: front-stat-5-wide
@@ -192,9 +207,6 @@ properties:
     description:
       de: "Bewaffnung des NSCs als kurze Liste mit Namen und wichtigen Werten in Klammern (Schaden, Merkmale)."
       en: "NPC's armament as a short list of names with key stats in parentheses (damage, features)."
-    sample:
-      de: "Bootshaken (W8, Stich/Lang), Fischmesser (W6, Stich)"
-      en: "Boat hook (d8, piercing/long), Fish knife (d6, piercing)"
 
   # As ONE block without rules, not as a row per item: the entries are
   # whole sentences („Nebelflug: Im Nebel ist die Krähe unsichtbar, bis
@@ -223,17 +235,6 @@ properties:
     description:
       de: "Liste heroischer Talente, jedes mit Namen und Kurzbeschreibung."
       en: "List of heroic abilities, each with a name and a short description."
-    sample:
-      de:
-        - name: "Aalglatt"
-          desc: "Vorteil auf AUSWEICHEN, wenn der Boden nass ist."
-        - name: "Standfest im Boot"
-          desc: "Kein Nachteil für Proben auf schwankendem Untergrund."
-      en:
-        - name: "Slippery"
-          desc: "Boon on EVADE when the ground is wet."
-        - name: "Sea legs"
-          desc: "No bane on rolls made on a rocking deck."
 
   monster-attacks:
     slot: front-table

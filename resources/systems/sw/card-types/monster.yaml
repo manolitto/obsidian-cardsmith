@@ -96,7 +96,9 @@ properties:
     description:
       de: "Bewegungsrate — eine Zahl, oder mit der Sonderform, z. B. „6/15 (fliegend)“."
       en: "Movement — a number, or with the special mode, e.g. \"6/15 (flying)\"."
-    sample: "9 (schwimmend 12)"
+    sample:
+      de: "9 (schwimmend 12)"
+      en: "9 (swimming 12)"
 
   alignment:
     slot: front-alignment

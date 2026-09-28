@@ -17,7 +17,7 @@ data:
   tracker: # no sample
 
   # Source reference — rulebook page or wikilink, small at the foot.
-  reference: Rulebook p. 130
+  reference: Rulebook p. 176
 
   # Initiative in combat — underlings and lieutenants usually 7, mooks 5.
   initiative: 5

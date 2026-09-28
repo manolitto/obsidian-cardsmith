@@ -1,6 +1,6 @@
-| Würfelwurf | Wurf-Min | Wurf-Max | Name | Voraussetzungen | Rationen | Beschreibung |
-| ---------- | -------- | -------- | ---- | --------------- | -------- | ------------ |
-|            |          |          |      |                 |          |              |
+| Roll | Roll min | Roll max | Name | Requirements | Rations | Description |
+| ---- | -------- | -------- | ---- | ------------ | ------- | ----------- |
+|      |          |          |      |              |         |             |
 
 ```cardsmith
 card:
@@ -9,24 +9,24 @@ card:
   language: en
 table:
   # Die-roll result (range or single value) under which this card appears in the source table. Display form — e.g. "01", "23–24", "98–100". For numeric queries and sorting see `roll-min` and `roll-max`.
-  roll: Würfelwurf
+  roll: Roll
 
   # Lower bound of the roll range as an integer. For single-value rolls, `roll-min == roll-max`.
-  roll-min: Wurf-Min
+  roll-min: Roll min
 
   # Upper bound of the roll range as an integer.
-  roll-max: Wurf-Max
+  roll-max: Roll max
 
   # Title of the table row (e.g. "Oar snapped", "Mist perch"). When absent, `category` takes its place — for tables whose rows carry no names.
   name: Name
 
   # Free label/value pairs for table-specific values — "Rations: 2d6", "Requirements: weapon or trap", "Healing time: d6 days of rest".
   stats:
-    - Voraussetzungen
-    - Rationen
+    - Requirements
+    - Rations
 
   # The narrative half of the table entry — what happens.
-  description: Beschreibung
+  description: Description
 data:
   # Empty boxes to tick off with a pen. A number (`20`), a labelled row (`{ count: 20, label: Arrows }`) or a list of such rows. `group` (default 5) sets how many boxes stand together.
   tracker:

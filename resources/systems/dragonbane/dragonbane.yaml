@@ -74,9 +74,6 @@ properties:
     description:
       de: "Kartenfamilie – der große grüne Titel oben auf der Rückseite. Ohne Angabe steht dort die Bezeichnung des Kartentyps („Ausrüstung“, „Waffe“). Bei Würfeltabellen trägt man hier den Tabellennamen ein („Dämonenwurf im Nahkampf“, „Furcht“, „Jagdbeute“); er dient dann auch als Titel-Rückfall, wenn die Tabellenzeile keinen eigenen Namen hat. In einer Tabellennotiz einmal im Frontmatter für alle Zeilen setzbar."
       en: "Card family — the large green title at the top of the back. Without it the card type's own label appears there (\"Ausrüstung\", \"Waffe\"). For roll tables put the table's name here (\"Demon Roll in Melee\", \"Fear\", \"Hunting\"); it then doubles as the title fallback when the table row has no name of its own. In a table note, set once in the frontmatter for all rows."
-    sample:
-      de: "Fischfang"
-      en: "Fishing"
 
   subcategory:
     slot: back-footer-title
@@ -84,9 +81,6 @@ properties:
     description:
       de: "Feinere Einordnung innerhalb der Kartenfamilie – erscheint als kleine Pergamentplakette unter dem Bild der Rückseite (z. B. „Kleidung“, „Werkzeug“, „Handelsware“). Ohne Angabe entfällt die Plakette; stimmt der Wert mit `category` überein, wird sie ebenfalls unterdrückt."
       en: "Finer grouping within the card family — rendered as the small parchment plaque under the back's illustration (e.g. \"Clothing\", \"Tool\", \"Trade good\"). Without it the plaque is omitted; if the value equals `category` it is suppressed as well."
-    sample:
-      de: "Werkzeug"
-      en: "Tool"
 
   # The two upright edge labels. System-wide because every card answers them
   # the same way: on the right where to look it up, on the left what it is
@@ -97,9 +91,6 @@ properties:
     description:
       de: "Quellenangabe – Buchtitel mit Seitenzahl oder Wikilink in den Vault. Steht hochkant am rechten Kartenrand; ohne Angabe steht dort „DRAGONBANE“."
       en: "Source reference — book title with page number, or a wikilink into the vault. Set upright along the card's right edge; falls back to \"DRAGONBANE\"."
-    sample:
-      de: "Regelbuch S. 73"
-      en: "Rules p. 73"
 
   english-original:
     slot: front-side-left
@@ -107,7 +98,6 @@ properties:
     description:
       de: "Englischer Originalname, klein und hochkant am linken Kartenrand – Gegenstück zur Quellenangabe rechts. Hilft beim Nachschlagen im englischen Regelwerk. Ohne Angabe entfällt die Zeile."
       en: "English original name, set small and upright along the card's left edge — the counterpart to the source reference on the right. Omitted when unset."
-    sample: "Boat hook"
 
 # The strings the shared front and back read that are not a place's caption.
 # A card type's table overrides these per key.

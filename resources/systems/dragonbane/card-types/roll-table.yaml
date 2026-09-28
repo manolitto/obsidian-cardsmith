@@ -33,6 +33,18 @@ sample-table:
       - { Würfelwurf: "1", Wurf-Min: 1, Wurf-Max: 1, Name: Nebelbarsch, Voraussetzungen: Angel oder Netz, Rationen: W6, Beschreibung: "Ein fetter Barsch mit milchigen Augen, schmeckt nach Moos." }
       - { Würfelwurf: "2–3", Wurf-Min: 2, Wurf-Max: 3, Name: Schlickaal, Voraussetzungen: Reuse, Rationen: W4, Beschreibung: "Glitschig, zäh und überraschend nahrhaft." }
       - { Würfelwurf: "4–6", Wurf-Min: 4, Wurf-Max: 6, Name: Flussforelle, Voraussetzungen: Angel, Rationen: W8, Beschreibung: "Silbern und schnell; beißt nur in der Dämmerung." }
+  en:
+    columns:
+      roll: Roll
+      roll-min: Roll min
+      roll-max: Roll max
+      name: Name
+      stats: [Requirements, Rations]
+      description: Description
+    rows:
+      - { Roll: "1", Roll min: 1, Roll max: 1, Name: Mist perch, Requirements: Fishing rod or net, Rations: d6, Description: "A fat perch with milky eyes; tastes of moss." }
+      - { Roll: "2–3", Roll min: 2, Roll max: 3, Name: Mud eel, Requirements: Fish trap, Rations: d4, Description: "Slippery, tough and surprisingly filling." }
+      - { Roll: "4–6", Roll min: 4, Roll max: 6, Name: River trout, Requirements: Fishing rod, Rations: d8, Description: "Silver and quick; bites only at dusk." }
 
 translations:
   de:
@@ -41,6 +53,24 @@ translations:
     back-label: "Roll Table"
 
 properties:
+  category:
+    sample:
+      de: "Fischfang"
+      en: "Fishing"
+
+  subcategory:
+    sample:
+      de: "Wildnis"
+      en: "Wilderness"
+
+  book-reference:
+    sample:
+      de: "Regelbuch S. 49"
+      en: "Rules p. 49"
+
+  english-original:
+    sample: "Fishing"
+
   # The row's own name first, the table's name behind it — the order of
   # the bindings is the priority: a card shows its row's name and falls
   # back to its table's only when the row has none (Furcht). Swap the
@@ -98,8 +128,8 @@ properties:
       de: "Spielmechanischer Effekt – was die Karte bewirkt, wenn sie zum Tragen kommt."
       en: "Mechanical effect — what the card does when it triggers."
     sample:
-      de: "Bis zum Ende des Tagesabschnitts Nachteil auf SEEFAHRT."
-      en: "Bane on SEAMANSHIP until the end of the shift."
+      de: "Eine Ration sättigt eine Person für einen Tag."
+      en: "One ration feeds one person for a day."
 
   note:
     slot: front-note-top

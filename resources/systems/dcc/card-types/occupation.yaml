@@ -20,6 +20,17 @@ translations:
     front-goods-label: "Trade goods"
 
 properties:
+  roll:
+    sample: "07"
+
+  reference:
+    sample:
+      de: "Regelwerk S. 26"
+      en: "Core Rulebook p. 22"
+
+  original-name:
+    sample: "Stargazer"
+
   name:
     sample:
       de: "Sterndeuter"

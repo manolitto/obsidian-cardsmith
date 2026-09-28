@@ -35,7 +35,6 @@ properties:
     description:
       de: "Der Wurf, unter dem der Eintrag in seiner Tabelle steht — als Abzeichen neben dem Titel. `roll-min` und `roll-max` daneben sind die Zahlen dazu."
       en: "The roll the entry is listed under in its table — a badge beside the title. `roll-min` and `roll-max` beside it are the numbers."
-    sample: "07"
 
   description:
     slot: front-text
@@ -50,9 +49,6 @@ properties:
     description:
       de: "Quellenangabe — Regelwerkseite oder Wikilink, klein rechts am Fuß."
       en: "Source reference — rulebook page or wikilink, small at the foot's right."
-    sample:
-      de: "Regelwerk S. 26"
-      en: "Core Rulebook p. 22"
 
   original-name:
     slot: front-footer-left
@@ -60,7 +56,6 @@ properties:
     description:
       de: "Englischer Originalname, klein links am Fuß mit dem Präfix „engl.“; auf englischen Karten ausgeblendet."
       en: "English original name, small at the foot's left, prefixed \"engl.\"; hidden on English cards."
-    sample: "Stargazer"
 
 translations:
   de:

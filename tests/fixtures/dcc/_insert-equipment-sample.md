@@ -14,13 +14,13 @@ data:
   tracker: # no sample
 
   # The roll the entry is listed under in its table — a badge beside the title. `roll-min` and `roll-max` beside it are the numbers.
-  roll: '07'
+  roll: '09'
 
   # Source reference — rulebook page or wikilink, small at the foot's right.
-  reference: Core Rulebook p. 22
+  reference: Core Rulebook p. 73
 
   # English original name, small at the foot's left, prefixed "engl."; hidden on English cards.
-  original-name: Stargazer
+  original-name: Grappling hook
 
   # The kind of equipment, as it is to stand under the title — "Weapon", "Armor", "Ammunition", "Gear", "Mount".
   type: Gear

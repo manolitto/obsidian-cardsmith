@@ -32,6 +32,17 @@ translations:
     front-cost-label: "Cost"
 
 properties:
+  roll:
+    sample: "09"
+
+  reference:
+    sample:
+      de: "Regelwerk S. 78"
+      en: "Core Rulebook p. 73"
+
+  original-name:
+    sample: "Grappling hook"
+
   name:
     sample:
       de: "Wurfhaken"
