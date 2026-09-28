@@ -20,8 +20,8 @@ stylesheet: styles/sw.css
 # The pictures the samples link, written beside a note by *Insert sample
 # card block* when the vault has none of that name.
 sample-pictures:
-  - assets/samples/Mondsichelklinge.png
-  - assets/samples/Moorschleicher.png
+  - assets/samples/Mondsichelklinge.jpg
+  - assets/samples/Moorschleicher.jpg
 
 partial-templates:
   header: templates/header.hbs

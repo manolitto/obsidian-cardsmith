@@ -260,13 +260,13 @@ describe("the pictures a sample links", () => {
       "```cardsmith",
       "data:",
       "  # A picture, e.g. `[[Medaillon.png]]`.",
-      "  artwork: '[[Nebelkraehe.png]]'",
+      "  artwork: '[[Nebelkraehe.jpg]]'",
       "  back-image: '[[Medaillon.png|the seal]]'",
       "  other: '[[Medaillon.png]] [[Unknown.png]]'",
       "```",
     ].join("\n");
     expect(linkedSamplePictures(system, block)).toEqual([
-      { link: "Nebelkraehe.png", path: "assets/samples/Nebelkraehe.png" },
+      { link: "Nebelkraehe.jpg", path: "assets/samples/Nebelkraehe.jpg" },
       { link: "Medaillon.png", path: "assets/samples/Medaillon.png" },
     ]);
   });
@@ -278,7 +278,7 @@ describe("the pictures a sample links", () => {
       "dragonbane",
       collectDiagnostics()
     ))!;
-    const block = "  artwork: '[[Nebelkraehe.png]]'\n  back-image: '[[Medaillon.png]]'";
+    const block = "  artwork: '[[Nebelkraehe.jpg]]'\n  back-image: '[[Medaillon.png]]'";
     const created: [string, number][] = [];
     const app = {
       metadataCache: {
@@ -296,13 +296,13 @@ describe("the pictures a sample links", () => {
     } as unknown as App;
     const result = await writeSamplePictures(app, system, block, "Cards/Crow.md");
     expect(result).toEqual({
-      written: ["Cards/attachments/Nebelkraehe.png"],
+      written: ["Cards/attachments/Nebelkraehe.jpg"],
       unavailable: [],
     });
     const bytes = await system.source.readBinary(
-      system.declaration.samplePictures.find((p) => p.endsWith("Nebelkraehe.png"))!
+      system.declaration.samplePictures.find((p) => p.endsWith("Nebelkraehe.jpg"))!
     );
-    expect(created).toEqual([["Cards/attachments/Nebelkraehe.png", bytes.byteLength]]);
+    expect(created).toEqual([["Cards/attachments/Nebelkraehe.jpg", bytes.byteLength]]);
   });
 
   it("skip a picture that cannot be downloaded, and name it, without failing the insert", async () => {
@@ -326,11 +326,11 @@ describe("the pictures a sample links", () => {
     const result = await writeSamplePictures(
       app,
       system,
-      "  artwork: '[[Nebelkraehe.png]]'",
+      "  artwork: '[[Nebelkraehe.jpg]]'",
       "Cards/Crow.md"
     );
     warn.mockRestore();
-    expect(result).toEqual({ written: [], unavailable: ["Nebelkraehe.png"] });
+    expect(result).toEqual({ written: [], unavailable: ["Nebelkraehe.jpg"] });
     expect(created).toEqual([]);
   });
 });

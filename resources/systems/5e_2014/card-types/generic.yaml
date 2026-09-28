@@ -83,4 +83,4 @@ properties:
     description:
       en: "A picture — a wikilink to a picture in the vault — on the back. Without one the back shows a d20."
       de: "Ein Bild – ein Wikilink auf ein Bild im Vault – auf der Rückseite. Ohne Angabe zeigt die Rückseite einen W20."
-    sample: "[[Ember-Step.png]]"
+    sample: "[[Ember-Step.jpg]]"

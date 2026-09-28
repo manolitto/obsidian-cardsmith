@@ -21,11 +21,11 @@ stylesheet: styles/dragonbane.css
 # The pictures the samples link, written beside a note by *Insert sample
 # card block* when the vault has none of that name.
 sample-pictures:
-  - assets/samples/Bootshaken.png
-  - assets/samples/Glutgriff.png
+  - assets/samples/Bootshaken.jpg
+  - assets/samples/Glutgriff.jpg
   - assets/samples/Medaillon.png
-  - assets/samples/Nebelbarsch.png
-  - assets/samples/Nebelkraehe.png
+  - assets/samples/Nebelbarsch.jpg
+  - assets/samples/Nebelkraehe.jpg
 
 partial-templates:
   stat-cell: templates/stat-cell.hbs

@@ -29,7 +29,7 @@ properties:
 
   image:
     slot: front-image
-    sample: "[[Feldstecher.png]]"
+    sample: "[[Feldstecher.jpg]]"
 
   content:
     slot: front-text

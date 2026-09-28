@@ -52,7 +52,7 @@ data:
   table-name: Fishing
 
   # Picture as a wikilink. Rendered on the card front.
-  front-image: '[[Nebelbarsch.png]]'
+  front-image: '[[Nebelbarsch.jpg]]'
 
   # Mechanical effect — what the card does when it triggers.
   effect: One ration feeds one person for a day.

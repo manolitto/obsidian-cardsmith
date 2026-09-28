@@ -8,7 +8,7 @@ import { MissingFileError, RemoteFileError, type SystemSource } from "./source";
 
 /**
  * Fetches a file of a bundled system that the plugin does not carry, by its
- * path under `resources/systems/` — `dragonbane/assets/samples/Glutgriff.png`.
+ * path under `resources/systems/` — `dragonbane/assets/samples/Glutgriff.jpg`.
  * Rejects when it cannot.
  */
 export type Download = (path: string) => Promise<Uint8Array>;

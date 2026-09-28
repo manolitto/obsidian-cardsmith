@@ -66,8 +66,8 @@ them must keep it.
 | `dragonbane/assets/parchment_light.webp`, `tor2e/assets/parchment_light.webp` | dragonbane, tor2e | The parchment behind the cards: *Parchment Paper Background* by Andrea Stöckel, released into the public domain on publicdomainpictures.net, in the lightened version Sibling Dex made for the Dragonbrew template (below); re-encoded to WebP and downscaled for the bundle. |
 | `dragonbane/assets/scroll-n.webp`, `dragonbane/assets/banner-n.webp` | dragonbane | The stat box and the plaques: cut by Sibling Dex for the Dragonbrew template from *Old Scroll Texture II* by Esther Sanz (https://www.deviantart.com/esther-sanz/art/Old-Scroll-Texture-II-114214631), licensed **CC BY 3.0** (https://creativecommons.org/licenses/by/3.0/); re-encoded to WebP. Anyone who shares cards printed with this system keeps this attribution. |
 | The gear back of `dragonbane` and the emblem on its picture-less backs; the flourish on `tor2e`'s picture-less backs | dragonbane, tor2e | Inline SVG drawn for this project (MIT), in each system's stylesheet. |
-| `*/assets/samples/*.png` — `Alchemie.png`, `Bannkreis.png`, `Bootshaken.png`, `Cinder-Hound.png`, `Deckblatt.png`, `Eigenart.png`, `Ember-Lance.png`, `Ember-Step.png`, `Feldstecher.png`, `Glutgriff.png`, `Goblin.png`, `Jagdspeer.png`, `Kantengriff.png`, `Kurzschwert.png`, `Lantern-of-Ash.png`, `Medaillon.png`, `Mehrfachschuss.png`, `Mondsichelklinge.png`, `Moorschleicher.png`, `Moorschlurfer.png`, `Nebelbarsch.png`, `Nebelkraehe.png`, `Nebelruestung.png`, `Panzerlaeufer.png`, `Schurke.png`, `Speerfalle.png`, `Sumpfschleicher.png`, `Zollbeamtin.png`, `Zwerg.png` | 5e_2014, 5e_2024, dino-island, dragonbane, eiserne-zeit, mini-d20, pf2e, sw, tor2e, troubleshooters | The pictures the sample cards link, which *Insert sample card block* writes into a vault: flat shapes on a plain field, drawn for this project (MIT). |
-| `tests/fixtures/tor2e/Moorschlurfer.jpg` | — | The picture on the sample adversary's back: *Nøkken* (The Water Sprite, 1887–92) by Theodor Kittelsen, Nasjonalmuseet Oslo, via Wikimedia Commons; public domain (the artist died in 1914). A portrait crop around the creature, downscaled. |
+| `*/assets/samples/*` | 5e_2014, 5e_2024, dino-island, dragonbane, eiserne-zeit, mini-d20, pf2e, sw, tor2e, troubleshooters | The pictures the sample cards link — public-domain drawings, prints and paintings; see *Sample pictures* below. |
+| `tests/fixtures/tor2e/Moorschlurfer.jpg` | — | The tor2e sample adversary's picture (see *Sample pictures* below), as a test fixture. |
 | `docs/images/**` | — | Renders of the plugin's own test fixtures — invented cards, one of every card type of every bundled system — made for the README and the documentation. What shows on them of the material above shows under the same terms: the game-icons.net icons on the MINI D20 cards, the parchment and ornaments on the Dragonbane and The One Ring cards, the Paizo mark on the Pathfinder cards, the Eiserne Zeit logo. |
 
 The three textures above reached this project through the *Dragonbrew*
@@ -76,6 +76,52 @@ template for the Homebrewery by Sibling Dex
 for Dragonbane material, whose own credits name these sources and ask that
 material made with it say so: this deck design was made using the
 Dragonbrew template by Sibling Dex.
+
+### Sample pictures
+
+The pictures the sample cards link — `<system>/assets/samples/*` — are
+not part of `main.js`: *Insert sample card block* downloads the ones a
+sample needs and writes them into the vault. Every one is a reproduction
+of a drawing, print or painting that is in the **public domain** worldwide:
+its artist died more than seventy years ago, or, for an anonymous work, it
+was published more than seventy years ago, and it was published before
+1931. Reproductions of public-domain artwork carry no rights of their own
+in the EU (Directive 2019/790, Art. 14); the three that a museum released
+itself are also marked CC0 there. They reached this project through
+Wikimedia Commons, the holding institution named, or the Internet Archive,
+and were cropped and downscaled for the cards.
+
+| File | System | The work | Crop |
+|---|---|---|---|
+| `Cinder-Hound.jpg` | 5e_2014, 5e_2024 | *Cerberus* (Dante, *Inferno*, canto 6), wood engraving after Gustave Doré (d. 1883), 1861; National Library of Poland | a crop around the heads and the body, lightened |
+| `Ember-Step.jpg` | 5e_2014, 5e_2024 | *Loge! Loge! Appear!*, Arthur Rackham (d. 1939), from *The Rhinegold & the Valkyrie*, 1910 | the fire spirit, without Wotan |
+| `Lantern-of-Ash.jpg` | 5e_2014, 5e_2024 | *Youth with a lantern and basket*, circle of Rembrandt, 17th century; British Museum | — |
+| `Ember-Lance.jpg` | 5e_2014, 5e_2024 | *Comet of March 1843*, lithograph by Mary Morton Allport (d. 1895), c. 1843 | without the caption |
+| `Panzerlaeufer.jpg` | dino-island | *Polacanthus*, Alice B. Woodward (d. 1951), from H. R. Knipe, *Evolution in the Past*, 1912; Biodiversity Heritage Library | inside the plate's frame |
+| `Bootshaken.jpg` | dragonbane | A foot soldier with a hooked polearm, wood engraving after Eugène Viollet-le-Duc (d. 1879), *Dictionnaire raisonné du mobilier français*, vol. 5, 1874 | — |
+| `Glutgriff.jpg` | dragonbane | *A Boy Blowing on a Firebrand*, Gerrit van Honthorst, 1621–22; Art Institute of Chicago (CC0) | — |
+| `Medaillon.png` | dragonbane | The dragon biting its tail from the *Book of Lambspring*, engraving by Lucas Jennis, 1625 | cut out as a roundel with a drawn rim |
+| `Nebelbarsch.jpg` | dragonbane | *Perca fluviatilis*, plate 52 of Marcus Elieser Bloch's *Oeconomische Naturgeschichte der Fische Deutschlands*, drawn by Krüger, engraved by A. F. Schmidt, 1783–85; Biodiversity Heritage Library | the plate's caption and signatures retouched away with the plate's own paper |
+| `Nebelkraehe.jpg` | dragonbane | *Crow and Reeds by a Stream*, Kawanabe Kyōsai, 1887; Metropolitan Museum of Art (CC0) | without the seal and inscription |
+| `Bannkreis.png` | eiserne-zeit | The woodcut from the title page of *The Tragicall History of the Life and Death of Doctor Faustus*, anonymous, 1628 | set in pure black and white |
+| `Deckblatt.jpg` | mini-d20 | *In dragon's form Fafner now watches the hoard*, Arthur Rackham (d. 1939), from *Siegfried & The Twilight of the Gods*, 1911 | — |
+| `Eigenart.jpg` | mini-d20 | Baron Munchausen as a bust of himself, wood engraving after Gustave Doré (d. 1883), from *Aventures du baron de Münchhausen*, 1862; National Library of Poland | the head, above the library stamp |
+| `Goblin.jpg` | mini-d20 | A goblin, John Dickson Batten (d. 1932), from Joseph Jacobs, *English Fairy Tales*, 1890 | — |
+| `Kurzschwert.jpg` | mini-d20 | A short sword, wood engraving after Eugène Viollet-le-Duc (d. 1879), *Dictionnaire raisonné du mobilier français*, vol. 5, 1874 | the sword without its scabbard |
+| `Mehrfachschuss.jpg` | mini-d20 | *Robin Wins the Queen's Prize*, Louis Rhead (d. 1926), from *Bold Robin Hood and His Outlaw Band*, 1912; Internet Archive | the archers |
+| `Schurke.jpg` | mini-d20 | *Guy of Gisbourne*, Louis Rhead (d. 1926), from *Bold Robin Hood and His Outlaw Band*, 1912; Internet Archive | without the name banner |
+| `Zwerg.jpg` | mini-d20 | *Mime at the anvil*, Arthur Rackham (d. 1939), from *Siegfried & The Twilight of the Gods*, 1911 | — |
+| `Alchemie.jpg` | pf2e | *Habit d'Apoticaire*, engraving published by Nicolas de Larmessin, c. 1695; Bibliothèque nationale de France | without the caption |
+| `Kantengriff.jpg` | pf2e | A climber hanging below a crag, wood engraving by Edward Whymper (d. 1911), from *Scrambles amongst the Alps*, 1871 | — |
+| `Nebelruestung.jpg` | pf2e | A breastplate with applied scrollwork, wood engraving after Eugène Viollet-le-Duc (d. 1879), *Dictionnaire raisonné du mobilier français*, vol. 6, 1874 | — |
+| `Speerfalle.jpg` | pf2e | *Winkelried at Sempach*, Konrad Grob (d. 1904), 1878 | the hedge of spears |
+| `Sumpfschleicher.jpg` | pf2e | The hydra of plate 102 of Albertus Seba's *Thesaurus*, vol. 1, hand-coloured engraving, 1734 | without the birds |
+| `Mondsichelklinge.jpg` | sw | *Sir Bedivere throwing Excalibur into the lake*, Walter Crane (d. 1915), from Henry Gilbert, *King Arthur's Knights*, 1911 | the upper half |
+| `Moorschleicher.jpg` | sw | *Triturus cristatus*, J. W. Palmstruch (d. 1811), from *Svensk Zoologi*, vol. 1, 1806 | — |
+| `Jagdspeer.jpg` | tor2e | *Seated hunter with fur cap, spear and game bag*, pen and watercolour by Abraham van Strij I (d. 1826); Rijksmuseum (CC0) | — |
+| `Moorschlurfer.jpg` | tor2e | *Nøkken* (The Water Sprite), Theodor Kittelsen (d. 1914), 1887–92; Nasjonalmuseet Oslo | a portrait crop around the creature; the same picture is `tests/fixtures/tor2e/Moorschlurfer.jpg` |
+| `Feldstecher.jpg` | troubleshooters | Field glasses from a Carl Zeiss Jena advertisement, anonymous, in a *Storm Reiseführer* travel guide, 1924 | the binoculars and hat, without the lettering |
+| `Zollbeamtin.jpg` | troubleshooters | *I tullen 1909* (At the customs), Per Fredrik Röding (d. 1928), 1909; Stockholms stadsmuseum | — |
 
 ## Bundled systems
 

@@ -29,7 +29,7 @@ data:
   english-original: Ember Grip
 
   # Picture as a wikilink. Rendered on the card front.
-  front-image: '[[Glutgriff.png]]'
+  front-image: '[[Glutgriff.jpg]]'
 
   # Attribute a skill is rolled against: STR, CON, AGL, INT, WIL or CHA.
   attribute: # no sample

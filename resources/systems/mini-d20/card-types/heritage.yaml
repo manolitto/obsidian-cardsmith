@@ -38,7 +38,7 @@ translations:
 
 properties:
   image:
-    sample: "[[Zwerg.png]]"
+    sample: "[[Zwerg.jpg]]"
 
   description:
     sample:

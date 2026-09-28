@@ -24,11 +24,11 @@ stylesheet: styles/pf2e.css
 # The pictures the samples link, written beside a note by *Insert sample
 # card block* when the vault has none of that name.
 sample-pictures:
-  - assets/samples/Alchemie.png
-  - assets/samples/Kantengriff.png
-  - assets/samples/Nebelruestung.png
-  - assets/samples/Speerfalle.png
-  - assets/samples/Sumpfschleicher.png
+  - assets/samples/Alchemie.jpg
+  - assets/samples/Kantengriff.jpg
+  - assets/samples/Nebelruestung.jpg
+  - assets/samples/Speerfalle.jpg
+  - assets/samples/Sumpfschleicher.jpg
 
 partial-templates:
   header: templates/header.hbs

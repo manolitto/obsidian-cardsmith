@@ -20,7 +20,7 @@ stylesheet: styles/dino-island.css
 # The pictures the samples link, written beside a note by *Insert sample
 # card block* when the vault has none of that name.
 sample-pictures:
-  - assets/samples/Panzerlaeufer.png
+  - assets/samples/Panzerlaeufer.jpg
 
 partial-templates:
   footer: templates/footer.hbs
