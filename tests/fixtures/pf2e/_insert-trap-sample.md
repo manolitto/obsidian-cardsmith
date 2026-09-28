@@ -28,10 +28,10 @@ data:
   # Armor Class (AC). The short forms `ac` and `rk` are accepted as aliases.
   armor-class: 18
 
-  # Saves as a list of single-key pairs, in the Monsterhandbuch's order: `ZÄH` (Fortitude), `REF` (Reflex), `WIL` (Will). The sign is added when printed.
+  # Saves as a list of single-key pairs, in the Bestiary's order: `Fort`, `Ref`, `Will`. The sign is added when printed.
   saves:
-    - ZÄH: 7
-    - REF: 5
+    - Fort: 7
+    - Ref: 5
 
   # Immunities as free text — comma-separated damage types and conditions, e.g. `unconscious, poison, mental`.
   immunities: critical hits, mental

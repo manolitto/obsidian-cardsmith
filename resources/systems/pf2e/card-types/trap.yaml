@@ -115,8 +115,12 @@ properties:
   saves:
     slot: front-saves
     sample:
-      - { ZÄH: 7 }
-      - { REF: 5 }
+      de:
+        - { ZÄH: 7 }
+        - { REF: 5 }
+      en:
+        - { Fort: 7 }
+        - { Ref: 5 }
 
   hardness:
     slot: front-hardness
