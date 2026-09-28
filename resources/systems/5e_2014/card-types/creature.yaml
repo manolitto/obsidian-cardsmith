@@ -29,6 +29,7 @@ properties:
     aliases: [größe, groesse]
     description:
       en: "The size category — Tiny, Small, Medium, Large, Huge, Gargantuan — first in the italic line under the name."
+      de: "Die Größenkategorie — Winzig, Klein, Mittelgroß, Groß, Riesig, Gigantisch — vorn in der kursiven Zeile unter dem Namen."
     sample:
       en: "Medium"
       de: "Mittelgroßes"
@@ -38,6 +39,7 @@ properties:
     aliases: [art, kreaturentyp]
     description:
       en: "The creature type, with its tags in parentheses — `humanoid (goblinoid)`, `beast`, `undead`. Also the label on the back, unless the note sets `back-label`."
+      de: "Der Kreaturentyp, Kennzeichnungen in Klammern — `Humanoider (Goblinoider)`, `Tier`, `Untoter`. Auch die Beschriftung der Rückseite, wenn die Notiz kein `back-label` setzt."
     sample:
       en: "beast"
       de: "Tier"
@@ -47,6 +49,7 @@ properties:
     aliases: [gesinnung]
     description:
       en: "The alignment — `neutral evil`, `chaotic good`, `unaligned` — after the type, comma-separated."
+      de: "Die Gesinnung — `neutral böse`, `chaotisch gut`, `gesinnungslos` — nach dem Typ, durch Komma getrennt."
     sample:
       en: "unaligned"
       de: "gesinnungslos"
@@ -56,6 +59,7 @@ properties:
     aliases: [armor-class, armorclass, rüstungsklasse, ruestungsklasse, rk]
     description:
       en: "Armor Class, usually a number with its source in parentheses — `15 (leather armor, shield)`."
+      de: "Rüstungsklasse, meist eine Zahl mit ihrer Quelle in Klammern — `15 (Lederrüstung, Schild)`."
     sample:
       en: "13 (natural armor)"
       de: "13 (natürliche Rüstung)"
@@ -64,12 +68,14 @@ properties:
     aliases: [ini]
     description:
       en: "The initiative modifier — `+2`. Printed by 5E (2024); this edition leaves it out."
+      de: "Der Initiativemodifikator — `+2`. Nur 5E (2024) druckt ihn; diese Ausgabe lässt ihn weg."
 
   hp:
     slot: front-hp
     aliases: [hit-points, hitpoints, trefferpunkte, tp]
     description:
       en: "Hit Points, usually the average with the hit-die formula in parentheses — `7 (2d6)`."
+      de: "Trefferpunkte, meist der Durchschnitt mit der Trefferwürfelformel in Klammern — `7 (2W6)`."
     sample:
       en: "22 (4d8 + 4)"
       de: "22 (4W8 + 4)"
@@ -79,6 +85,7 @@ properties:
     aliases: [bewegungsrate, bewegung]
     description:
       en: "The speeds, comma-separated where there are several — `40 ft., climb 40 ft., fly 80 ft.`."
+      de: "Die Bewegungsraten, durch Komma getrennt, wo es mehrere sind — `12 m, Klettern 12 m, Fliegen 24 m`."
     sample:
       en: "40 ft."
       de: "12 m"
@@ -90,6 +97,7 @@ properties:
     aliases: [strength, stärke, staerke]
     description:
       en: "Strength — `score (modifier)`, e.g. `8 (-1)`."
+      de: "Stärke — `Wert (Modifikator)`, z. B. `8 (-1)`."
     sample: "15 (+2)"
 
   dex:
@@ -97,6 +105,7 @@ properties:
     aliases: [dexterity, geschicklichkeit, ges]
     description:
       en: "Dexterity — `score (modifier)`."
+      de: "Geschicklichkeit — `Wert (Modifikator)`."
     sample: "14 (+2)"
 
   con:
@@ -104,6 +113,7 @@ properties:
     aliases: [constitution, konstitution, kon]
     description:
       en: "Constitution — `score (modifier)`."
+      de: "Konstitution — `Wert (Modifikator)`."
     sample: "13 (+1)"
 
   int:
@@ -111,6 +121,7 @@ properties:
     aliases: [intelligence, intelligenz]
     description:
       en: "Intelligence — `score (modifier)`."
+      de: "Intelligenz — `Wert (Modifikator)`."
     sample: "3 (-4)"
 
   wis:
@@ -118,6 +129,7 @@ properties:
     aliases: [wisdom, weisheit, wei]
     description:
       en: "Wisdom — `score (modifier)`."
+      de: "Weisheit — `Wert (Modifikator)`."
     sample: "12 (+1)"
 
   cha:
@@ -125,6 +137,7 @@ properties:
     aliases: [charisma]
     description:
       en: "Charisma — `score (modifier)`."
+      de: "Charisma — `Wert (Modifikator)`."
     sample: "6 (-2)"
 
   # The saving throws, one per ability, each only where the creature is
@@ -134,42 +147,49 @@ properties:
     aliases: [strength-save, stärke-rettungswurf, staerke-rettungswurf]
     description:
       en: "The Strength saving throw bonus — `+5`. Set it where the creature is proficient; the Saving Throws line names the ones set."
+      de: "Der Bonus auf Stärkerettungswürfe — `+5`. Nur setzen, wo die Kreatur geübt ist; die Zeile Rettungswürfe nennt die gesetzten."
 
   dex-save:
     slot: front-dex-save
     aliases: [dexterity-save, geschicklichkeit-rettungswurf, ges-rettungswurf]
     description:
       en: "The Dexterity saving throw bonus — `+5`."
+      de: "Der Bonus auf Geschicklichkeitsrettungswürfe — `+5`."
 
   con-save:
     slot: front-con-save
     aliases: [constitution-save, konstitution-rettungswurf, kon-rettungswurf]
     description:
       en: "The Constitution saving throw bonus — `+5`."
+      de: "Der Bonus auf Konstitutionsrettungswürfe — `+5`."
 
   int-save:
     slot: front-int-save
     aliases: [intelligence-save, intelligenz-rettungswurf]
     description:
       en: "The Intelligence saving throw bonus — `+5`."
+      de: "Der Bonus auf Intelligenzrettungswürfe — `+5`."
 
   wis-save:
     slot: front-wis-save
     aliases: [wisdom-save, weisheit-rettungswurf, wei-rettungswurf]
     description:
       en: "The Wisdom saving throw bonus — `+5`."
+      de: "Der Bonus auf Weisheitsrettungswürfe — `+5`."
 
   cha-save:
     slot: front-cha-save
     aliases: [charisma-save, charisma-rettungswurf]
     description:
       en: "The Charisma saving throw bonus — `+5`."
+      de: "Der Bonus auf Charismarettungswürfe — `+5`."
 
   skills:
     slot: front-skills
     aliases: [fertigkeiten]
     description:
       en: "Skill bonuses, comma-separated — `Perception +3, Stealth +4`. The line prints when it is set."
+      de: "Fertigkeitsboni, durch Komma getrennt — `Heimlichkeit +4, Wahrnehmung +3`. Die Zeile steht, wenn sie gesetzt ist."
     sample:
       en: "Perception +3, Stealth +4"
       de: "Heimlichkeit +4, Wahrnehmung +3"
@@ -179,18 +199,21 @@ properties:
     aliases: [damage-vulnerabilities, schadensanfälligkeiten, schadensanfaelligkeiten]
     description:
       en: "Damage vulnerabilities, comma-separated. The line prints when it is set."
+      de: "Schadensanfälligkeiten, durch Komma getrennt. Die Zeile steht, wenn sie gesetzt ist."
 
   resistances:
     slot: front-resistances
     aliases: [damage-resistances, schadensresistenzen]
     description:
       en: "Damage resistances, comma-separated. The line prints when it is set."
+      de: "Schadensresistenzen, durch Komma getrennt. Die Zeile steht, wenn sie gesetzt ist."
 
   immunities:
     slot: front-immunities
     aliases: [damage-immunities, schadensimmunitäten, schadensimmunitaeten]
     description:
       en: "Damage immunities, comma-separated. The line prints when it is set."
+      de: "Schadensimmunitäten, durch Komma getrennt. Die Zeile steht, wenn sie gesetzt ist."
     sample:
       en: "fire"
       de: "Feuer"
@@ -200,17 +223,20 @@ properties:
     aliases: [conditionimmunities, zustandsimmunitäten, zustandsimmunitaeten]
     description:
       en: "Condition immunities, comma-separated — `charmed, frightened`. The line prints when it is set."
+      de: "Zustandsimmunitäten, durch Komma getrennt — `bezaubert, verängstigt`. Die Zeile steht, wenn sie gesetzt ist."
 
   gear:
     aliases: [equipment, ausrüstung, ausruestung]
     description:
       en: "The gear carried, comma-separated. Printed by 5E (2024); this edition leaves it out."
+      de: "Die mitgeführte Ausrüstung, durch Komma getrennt. Nur 5E (2024) druckt sie; diese Ausgabe lässt sie weg."
 
   senses:
     slot: front-senses
     aliases: [sinne]
     description:
       en: "The senses — `darkvision 60 ft., passive Perception 13`."
+      de: "Die Sinne — `Dunkelsicht 18 m, passive Wahrnehmung 13`."
     sample:
       en: "darkvision 60 ft., passive Perception 13"
       de: "Dunkelsicht 18 m, passive Wahrnehmung 13"
@@ -220,6 +246,7 @@ properties:
     aliases: [sprachen]
     description:
       en: "The languages, or `—` for a creature that has none."
+      de: "Die Sprachen, oder `—` für eine Kreatur, die keine hat."
     sample: "—"
 
   cr:
@@ -227,6 +254,7 @@ properties:
     aliases: [challenge, challenge-rating, challengerating, herausforderungsgrad, hg]
     description:
       en: "The challenge rating — a number, a fraction (`1/8`, `1/2`) — with the experience points from `xp` in parentheses after it."
+      de: "Der Herausforderungsgrad — eine Zahl oder ein Bruch (`1/8`, `1/2`) — mit den Erfahrungspunkten aus `xp` in Klammern dahinter."
     sample: "1"
 
   xp:
@@ -234,6 +262,7 @@ properties:
     aliases: [experience, exp, ep, erfahrungspunkte]
     description:
       en: "The experience points for the creature, printed after the challenge rating — `1 (200 XP)`."
+      de: "Die Erfahrungspunkte für die Kreatur, nach dem Herausforderungsgrad gedruckt — `1 (200 EP)`."
     sample: 200
 
   proficiency-bonus:
@@ -241,16 +270,19 @@ properties:
     aliases: [pb, prof, prof-bonus, übungsbonus, uebungsbonus]
     description:
       en: "The proficiency bonus, on the challenge line — `+2`. Prints when it is set."
+      de: "Der Übungsbonus, in der Zeile des Herausforderungsgrads — `+2`. Steht, wenn er gesetzt ist."
 
   habitat:
     aliases: [environment, lebensraum]
     description:
       en: "The habitat — `Forest, Grassland`. Printed by 5E (2024); this edition leaves it out."
+      de: "Der Lebensraum — `Wald, Grasland`. Nur 5E (2024) druckt ihn; diese Ausgabe lässt ihn weg."
 
   treasure:
     aliases: [hoard, schatz]
     description:
       en: "The treasure category — `Individual`, `Hoard`, `None`. Printed by 5E (2024); this edition leaves it out."
+      de: "Die Schatzkategorie — `Einzeln`, `Hort`, `Keiner`. Nur 5E (2024) druckt sie; diese Ausgabe lässt sie weg."
 
   # The feature sections: each a list of `name` and `desc`, printed as
   # paragraphs led by the name in bold italics. An entry with only a
@@ -260,6 +292,7 @@ properties:
     aliases: [merkmale, eigenschaften]
     description:
       en: "The traits above the actions — a list of `name` and `desc`; the description takes markdown and wikilinks."
+      de: "Die Merkmale über den Aktionen — eine Liste aus `name` und `desc`; die Beschreibung darf Markdown und Wikilinks enthalten."
     sample:
       en:
         - name: "Keen Smell"
@@ -273,6 +306,7 @@ properties:
     aliases: [aktionen]
     description:
       en: "The actions, under their head — a list of `name` and `desc`; `*Melee Weapon Attack:*` and the like as markdown."
+      de: "Die Aktionen, unter ihrer Überschrift — eine Liste aus `name` und `desc`; `*Nahkampf-Waffenangriff:*` und dergleichen als Markdown."
     sample:
       en:
         - name: "Bite"
@@ -286,34 +320,40 @@ properties:
     aliases: [bonusactions, bonusaktionen]
     description:
       en: "The bonus actions, under their own head — the same shape as `actions`."
+      de: "Die Bonusaktionen, unter eigener Überschrift — so aufgebaut wie `actions`."
 
   reactions:
     slot: front-reactions
     aliases: [reaktionen]
     description:
       en: "The reactions, under their own head — the same shape as `actions`; each states its trigger in the description."
+      de: "Die Reaktionen, unter eigener Überschrift — so aufgebaut wie `actions`; jede nennt ihren Auslöser in der Beschreibung."
 
   legendary-actions:
     slot: front-legendary-actions
     aliases: [legendaryactions, legendäre-aktionen, legendaere-aktionen]
     description:
       en: "The legendary actions — the same shape as `actions`; the preamble is a first entry with only a `desc`, a cost belongs in the name — `Wing Attack (Costs 2 Actions)`."
+      de: "Die legendären Aktionen — so aufgebaut wie `actions`; die Einleitung ist ein erster Eintrag nur mit `desc`, die Kosten gehören in den Namen — `Flügelangriff (kostet 2 Aktionen)`."
 
   lair-actions:
     slot: front-lair-actions
     aliases: [lairactions, hort-aktionen]
     description:
       en: "The lair actions — the same shape as `legendary-actions`, the preamble first."
+      de: "Die Hortaktionen — so aufgebaut wie `legendary-actions`, die Einleitung zuerst."
 
   regional-effects:
     slot: front-regional-effects
     aliases: [regionaleffects, regionale-effekte]
     description:
       en: "The regional effects — the same shape as `legendary-actions`, the preamble first."
+      de: "Die regionalen Effekte — so aufgebaut wie `legendary-actions`, die Einleitung zuerst."
 
   image:
     slot: back-image
     aliases: [bild]
     description:
       en: "The creature's picture — a wikilink to a picture in the vault — large on the back between the orange bars. Without one the back shows a d20 and the back label."
+      de: "Das Bild der Kreatur — ein Wikilink auf ein Bild im Vault — groß auf der Rückseite zwischen den orangefarbenen Balken. Ohne Bild zeigt die Rückseite einen W20 und die Beschriftung."
     sample: "[[Cinder-Hound.png]]"

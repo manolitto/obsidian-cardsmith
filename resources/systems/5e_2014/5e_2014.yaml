@@ -53,12 +53,14 @@ properties:
     slot: [front-title, back-title]
     description:
       en: "The card's name. Falls back to the file name."
+      de: "Der Name der Karte. Ohne Angabe der Dateiname."
 
   back-label:
     slot: back-heading
     aliases: [back-caption, rückseite, rueckseite]
     description:
       en: "The label on the back — above the picture or the d20 — `Background`, `Feat`, `NPC`. Without it a creature's type or an item's category, else the card type's own. A feature's origin or a spell's school follows it."
+      de: "Die Beschriftung der Rückseite — über dem Bild oder dem W20 — `Hintergrund`, `Talent`, `NSC`. Ohne Angabe der Typ einer Kreatur oder die Kategorie eines Gegenstands, sonst die des Kartentyps. Die Herkunft eines Merkmals oder die Schule eines Zaubers folgt ihr."
 
 translations:
   en:
