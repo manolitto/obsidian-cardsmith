@@ -1,8 +1,11 @@
+import { createHash } from "crypto";
+import { readFileSync } from "fs";
+import { join } from "path";
 import { describe, expect, it } from "vitest";
 import { collectDiagnostics } from "../src/definitions/diagnostics";
 import type { SystemPath } from "../src/definitions/game-system";
 import { BUNDLED_SYSTEMS, type BundledFile } from "../src/generated/bundled-systems";
-import { BundledSystemSource } from "../src/systems/bundled-source";
+import { BundledSystemSource, type Download } from "../src/systems/bundled-source";
 import { loadSystem } from "../src/systems/loader";
 
 /**
@@ -15,12 +18,20 @@ import { loadSystem } from "../src/systems/loader";
  * renamed template, say — and a partial nothing calls fail here. A font's
  * licence and a readme travel with the system without being part of it.
  */
+/** Loading, checking and assembling a system never downloads. */
+const noDownload: Download = (path) =>
+  Promise.reject(new Error(`the load tried to download ${path}`));
+
 describe.each(BUNDLED_SYSTEMS.map((system) => [system.id, system] as const))(
   "bundled system %s",
   (id, bundled) => {
     it("loads with nothing to report", async () => {
       const diagnostics = collectDiagnostics();
-      const system = await loadSystem(new BundledSystemSource(bundled), id, diagnostics);
+      const system = await loadSystem(
+        new BundledSystemSource(bundled, noDownload),
+        id,
+        diagnostics
+      );
       expect(diagnostics.messages).toEqual([]);
       expect(system).toBeDefined();
       expect(Object.keys(system!.cardTypes).length).toBeGreaterThan(0);
@@ -28,7 +39,7 @@ describe.each(BUNDLED_SYSTEMS.map((system) => [system.id, system] as const))(
 
     it("uses every file it ships and every partial it declares", async () => {
       const system = await loadSystem(
-        new BundledSystemSource(bundled),
+        new BundledSystemSource(bundled, noDownload),
         id,
         collectDiagnostics()
       );
@@ -38,13 +49,44 @@ describe.each(BUNDLED_SYSTEMS.map((system) => [system.id, system] as const))(
 
     it("assembles a stylesheet for each card type with every url() inlined", async () => {
       const system = await loadSystem(
-        new BundledSystemSource(bundled),
+        new BundledSystemSource(bundled, noDownload),
         id,
         collectDiagnostics()
       );
       for (const cardTypeId of Object.keys(system!.cardTypes)) {
         const css = await system!.stylesheet(cardTypeId);
         expect(css, cardTypeId).not.toMatch(/url\((['"]?)(?!data:)[^'")]/);
+      }
+    });
+
+    it("leaves out exactly its sample pictures, and knows their size and hash", async () => {
+      const system = await loadSystem(
+        new BundledSystemSource(bundled, noDownload),
+        id,
+        collectDiagnostics()
+      );
+      const samples = [...system!.declaration.samplePictures].sort();
+      expect(Object.keys(bundled.remote).sort()).toEqual(samples);
+      for (const path of samples) {
+        expect(bundled.files[path], path).toBeUndefined();
+        const bytes = readFileSync(
+          join(__dirname, "../resources/systems", bundled.folder, path)
+        );
+        expect(bundled.remote[path], path).toEqual({
+          size: bytes.length,
+          sha256: createHash("sha256").update(bytes).digest("hex"),
+        });
+      }
+    });
+
+    it("does not hand its sample pictures to the template engine", async () => {
+      const system = await loadSystem(
+        new BundledSystemSource(bundled, noDownload),
+        id,
+        collectDiagnostics()
+      );
+      for (const path of system!.declaration.samplePictures) {
+        expect(system!.documentAssets).not.toContain(path);
       }
     });
   }
@@ -73,12 +115,17 @@ it("holds a file two systems share once", () => {
 
 it("reads a shared file byte-exact under either path", async () => {
   const shared: BundledFile = { base64: Buffer.from([1, 2, 3, 250]).toString("base64") };
-  const source = new BundledSystemSource({
-    id: "two",
-    name: "Two",
-    document: "two.yaml",
-    files: { "fonts/a.woff2": shared, "fonts/b.woff2": shared },
-  });
+  const source = new BundledSystemSource(
+    {
+      id: "two",
+      name: "Two",
+      document: "two.yaml",
+      folder: "two",
+      files: { "fonts/a.woff2": shared, "fonts/b.woff2": shared },
+      remote: {},
+    },
+    noDownload
+  );
   const a = await source.readBinary("fonts/a.woff2" as SystemPath);
   const b = await source.readBinary("fonts/b.woff2" as SystemPath);
   expect([...a]).toEqual([1, 2, 3, 250]);

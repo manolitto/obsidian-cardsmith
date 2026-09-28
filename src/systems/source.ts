@@ -29,9 +29,12 @@ export interface SystemSource {
   readonly document: SystemPath;
   /** Every file in the system's folder, relative and `/`-separated. */
   listFiles(): Promise<SystemPath[]>;
-  /** Throws `MissingFileError` for a path the source does not have. */
+  /**
+   * Throws `MissingFileError` for a path the source does not have, and
+   * `RemoteFileError` for one it has but could not download.
+   */
   readText(path: SystemPath): Promise<string>;
-  /** Throws `MissingFileError` for a path the source does not have. */
+  /** Throws as `readText` does. */
   readBinary(path: SystemPath): Promise<Uint8Array>;
 }
 
@@ -46,5 +49,20 @@ export class MissingFileError extends Error {
   ) {
     super(`${root}: no file "${path}"`);
     this.name = "MissingFileError";
+  }
+}
+
+/**
+ * A file the source has, but not at hand, that could not be fetched — no
+ * network, no such release, or bytes that are not the ones the build saw.
+ */
+export class RemoteFileError extends Error {
+  constructor(
+    readonly root: string,
+    readonly path: string,
+    readonly reason: string
+  ) {
+    super(`${root}: could not download "${path}": ${reason}`);
+    this.name = "RemoteFileError";
   }
 }

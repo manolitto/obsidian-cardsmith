@@ -25,7 +25,7 @@ name: Simple
 | `stylesheet` | The system's stylesheet, one path. |
 | `partial-templates` | Named partials the faces call: `stat-cell: templates/stat-cell.hbs`. |
 | `markdown-image-partial` | The partial an `![[embed]]` in a note's body renders through, by name. |
-| `sample-pictures` | Files of the system that the samples link by name — `assets/samples/Medaillon.png` for a sample `image: "[[Medaillon.png]]"`. *Insert sample card block* writes each linked one into the vault, beside the note, when the vault has no picture of that name. |
+| `sample-pictures` | Files of the system that the samples link by name — `assets/samples/Medaillon.png` for a sample `image: "[[Medaillon.png]]"`. *Insert sample card block* writes each linked one into the vault, beside the note, when the vault has no picture of that name. A bundled system's are left out of the plugin and downloaded from its repository when needed, so they cost the plugin nothing. |
 | `properties` | The properties every card type has — see [Properties](properties.md). |
 | `translations` | Captions per language, `de: { back-label: "…" }`. |
 | `glyphs`, `classifiers` | How a place spells a value out, and how it classes one — see [Properties](properties.md). |

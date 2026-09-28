@@ -4,7 +4,7 @@ import { noteSystemId } from "../../src/render/card";
 import type { ImageSource } from "../../src/render/images";
 import { parseNote } from "../../src/render/note";
 import { CardRenderer, type RenderedCard } from "../../src/render/renderer";
-import { BundledSystemSource } from "../../src/systems/bundled-source";
+import { BundledSystemSource, type Download } from "../../src/systems/bundled-source";
 import { loadSystem, type LoadedSystem } from "../../src/systems/loader";
 import { TemplateEngine } from "../../src/templates/engine";
 import { escapeHtml } from "../../src/templates/inline-markdown";
@@ -47,6 +47,10 @@ export async function renderNote(
 
 const systems = new Map<string, Promise<LoadedSystem>>();
 
+/** Rendering never downloads: what a bundled system does not carry is not a card's. */
+const noDownload: Download = (path) =>
+  Promise.reject(new Error(`a render tried to download ${path}`));
+
 /** A bundled system, loaded once per run with nothing to report. */
 export function loadedSystem(id: string): Promise<LoadedSystem> {
   let pending = systems.get(id);
@@ -56,7 +60,11 @@ export function loadedSystem(id: string): Promise<LoadedSystem> {
       if (!bundled)
         throw new Error(`no bundled system "${id}" for the fixtures under ${id}/`);
       const diagnostics = collectDiagnostics();
-      const system = await loadSystem(new BundledSystemSource(bundled), id, diagnostics);
+      const system = await loadSystem(
+        new BundledSystemSource(bundled, noDownload),
+        id,
+        diagnostics
+      );
       if (!system || diagnostics.messages.length > 0) {
         throw new Error(
           `${id} loads with problems:\n  ${diagnostics.messages.join("\n  ")}`

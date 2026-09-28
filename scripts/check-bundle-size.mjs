@@ -5,6 +5,8 @@
  * so the bundle grows silently whenever a system gains an asset. The budget
  * is a ratchet, not a target: lower it whenever the bundle shrinks, and never
  * raise it without the commit message saying what the new bytes are for.
+ * A system's sample pictures do not count: they are downloaded when needed,
+ * not embedded (see `generate-manifest.mjs`).
  *
  * Runs after `npm run build`; fails the build when `main.js` is over budget.
  */
@@ -16,7 +18,7 @@ import { fileURLToPath } from "url";
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
 /** Hard ceiling in KiB. */
-const BUDGET_KIB = 5110;
+const BUDGET_KIB = 5057;
 
 const path = resolve(ROOT, "main.js");
 let bytes;

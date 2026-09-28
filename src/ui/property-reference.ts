@@ -108,7 +108,15 @@ export class PropertyReferenceModal extends Modal {
     insertAtCursor(this.target.editor, block);
     const notePath = this.target.file?.path;
     if (mode === "sample" && notePath !== undefined) {
-      void writeSamplePictures(this.app, this.system, block, notePath);
+      void writeSamplePictures(this.app, this.system, block, notePath).then(
+        ({ unavailable }) => {
+          if (unavailable.length === 0) return;
+          new Notice(
+            `Cardsmith: ${t("insert.pictures-unavailable", { names: unavailable.join(", ") })}`,
+            10000
+          );
+        }
+      );
     }
     this.close();
     this.app.workspace.setActiveLeaf(this.target.leaf, { focus: true });

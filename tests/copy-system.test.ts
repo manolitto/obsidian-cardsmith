@@ -5,18 +5,22 @@ import {
   findDuplicateActiveIds,
   isSystemId,
 } from "../src/settings/system-registry";
+import { BUNDLED_SYSTEMS } from "../src/generated/bundled-systems";
 import type { SystemEntry } from "../src/settings/types";
+import { BundledSystemSource } from "../src/systems/bundled-source";
 import { SystemLibrary } from "../src/systems/library";
+import { RemoteFileError } from "../src/systems/source";
 import {
+  copiedFiles,
   namesSystem,
   rewriteDeclaration,
   rewriteSystemId,
 } from "../src/ui/copy-rewrites";
-import { completeSystem, MemoryVault } from "./helpers/systems";
+import { completeSystem, downloadFromResources, MemoryVault } from "./helpers/systems";
 
 /**
- * The pure parts of copying a bundled system into the vault: the root
- * document with the chosen id and name, the note rewrite that touches
+ * The pure parts of copying a bundled system into the vault: every file
+ * read before one is written, the root document with the chosen id and name, the note rewrite that touches
  * `system:` inside the two card fences and nothing else, and the registry
  * after a copy with the id kept or changed.
  */
@@ -191,7 +195,7 @@ describe("the library after a registry change", () => {
       "id: simple"
     );
     vault.addFolder("Systems/simple", files);
-    const library = new SystemLibrary(vault);
+    const library = new SystemLibrary(vault, downloadFromResources);
     const bundled: SystemEntry = { type: "bundled", id: "simple", active: true };
     const copy: SystemEntry = {
       type: "vault",
@@ -214,7 +218,7 @@ describe("the library after a registry change", () => {
   });
 
   it("loads a bundled system for copying whatever its switch says", async () => {
-    const library = new SystemLibrary(new MemoryVault());
+    const library = new SystemLibrary(new MemoryVault(), downloadFromResources);
     library.setEntries([{ type: "bundled", id: "simple", active: false }]);
     expect((await library.load("simple")).system).toBeUndefined();
     expect((await library.loadBundled("simple")).system?.id).toBe("simple");
@@ -262,5 +266,38 @@ describe("entriesAfterAdd", () => {
       bundled,
       { type: "vault", id: "mine", path: "mine/mine.yaml", active: true },
     ]);
+  });
+});
+
+describe("copiedFiles", () => {
+  const bundled = BUNDLED_SYSTEMS.find((s) => s.id === "dragonbane")!;
+  const from = { id: "dragonbane", name: "Dragonbane" };
+
+  it("holds every file, the sample pictures downloaded, the document renamed", async () => {
+    const source = new BundledSystemSource(bundled, downloadFromResources);
+    const files = await copiedFiles(source, from, { id: "mine", name: "Mine" });
+    expect(files.map((f) => f.path).sort()).toEqual((await source.listFiles()).sort());
+    const document = files.find((f) => f.path === source.document)!.content;
+    expect(document).toMatch(/^id: mine$/m);
+    const picture = files.find((f) => f.path === "assets/samples/Medaillon.png")!.content;
+    expect(picture).toBeInstanceOf(Uint8Array);
+    expect((picture as Uint8Array).length).toBe(
+      bundled.remote["assets/samples/Medaillon.png"]!.size
+    );
+  });
+
+  it("keeps the document as bytes when neither id nor name changes", async () => {
+    const source = new BundledSystemSource(bundled, downloadFromResources);
+    const files = await copiedFiles(source, from, from);
+    expect(files.find((f) => f.path === source.document)!.content).toBeInstanceOf(
+      Uint8Array
+    );
+  });
+
+  it("fails before anything is written when a download fails", async () => {
+    const source = new BundledSystemSource(bundled, () =>
+      Promise.reject(new Error("offline"))
+    );
+    await expect(copiedFiles(source, from, from)).rejects.toThrow(RemoteFileError);
   });
 });

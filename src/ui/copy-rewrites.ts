@@ -1,9 +1,46 @@
+import type { SystemPath } from "../definitions/game-system";
+import type { SystemSource } from "../systems/source";
+
 /*
- * The rewrites the copy-into-vault action makes, all pure: the copied
- * root document with the id and name the dialog chose, and — when the id
- * changed — the notes naming the old one, `system: <id>` inside a
- * `cardsmith` or `cardsmith-deck` fence and nowhere else.
+ * What the copy-into-vault action writes, apart from the vault itself: the
+ * system's files, the copied root document with the id and name the dialog
+ * chose, and — when the id changed — the notes naming the old one,
+ * `system: <id>` inside a `cardsmith` or `cardsmith-deck` fence and
+ * nowhere else.
  */
+
+/** One file of the copy: text for the rewritten root document, bytes for the rest. */
+export interface CopiedFile {
+  path: SystemPath;
+  content: string | Uint8Array;
+}
+
+/**
+ * Every file of the system as the copy writes it, read in full before
+ * anything is written: a bundled system downloads its sample pictures
+ * here, and a download that fails must leave no half-written folder
+ * behind. The root document carries the new id and name when either
+ * changed.
+ */
+export async function copiedFiles(
+  source: SystemSource,
+  from: { id: string; name: string },
+  to: { id: string; name: string }
+): Promise<CopiedFile[]> {
+  const renamed = to.id !== from.id || to.name !== from.name;
+  const out: CopiedFile[] = [];
+  for (const path of await source.listFiles()) {
+    out.push(
+      path === source.document && renamed
+        ? {
+            path,
+            content: rewriteDeclaration(await source.readText(path), to.id, to.name),
+          }
+        : { path, content: await source.readBinary(path) }
+    );
+  }
+  return out;
+}
 
 /**
  * The root document with `id:` and `name:` set. Each is a top-level line,

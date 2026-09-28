@@ -3,6 +3,7 @@ import {
   MarkdownView,
   Platform,
   Plugin,
+  requestUrl,
   type Editor,
   type TAbstractFile,
 } from "obsidian";
@@ -13,6 +14,7 @@ import { reconcileSystemEntries } from "./settings/system-registry";
 import { DEFAULT_SETTINGS, type CardsmithSettings } from "./settings/types";
 import { CardRenderer } from "./render/renderer";
 import { VaultImageSource } from "./render/vault-images";
+import { repositoryDownload } from "./systems/bundled-source";
 import { BUNDLED_IDS, SystemLibrary } from "./systems/library";
 import { TemplateEngine } from "./templates/engine";
 import { cardBlockProcessor } from "./ui/card-block";
@@ -40,7 +42,13 @@ export default class CardsmithPlugin extends Plugin {
   override async onload(): Promise<void> {
     await this.loadSettings();
 
-    this.systems = new SystemLibrary(this.app.vault.adapter);
+    this.systems = new SystemLibrary(
+      this.app.vault.adapter,
+      repositoryDownload(this.manifest.version, async (url) => {
+        const response = await requestUrl({ url });
+        return response.arrayBuffer;
+      })
+    );
     this.systems.setEntries(this.settings.systems);
 
     // A vault system's files change while Obsidian runs; a bundled one's never do.
@@ -155,7 +163,18 @@ export default class CardsmithPlugin extends Plugin {
     const block = buildCardBlock(picked.system, picked.cardType, uiLanguage(), mode);
     insertAtCursor(editor, block);
     if (mode === "sample" && notePath !== undefined) {
-      await writeSamplePictures(this.app, picked.system, block, notePath);
+      const { unavailable } = await writeSamplePictures(
+        this.app,
+        picked.system,
+        block,
+        notePath
+      );
+      if (unavailable.length > 0) {
+        notice(
+          t("insert.pictures-unavailable", { names: unavailable.join(", ") }),
+          10000
+        );
+      }
     }
   }
 

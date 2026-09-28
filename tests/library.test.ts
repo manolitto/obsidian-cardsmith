@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { SystemEntry } from "../src/settings/types";
 import { BUNDLED_IDS, SystemLibrary } from "../src/systems/library";
-import { completeSystem, MemoryVault } from "./helpers/systems";
+import { completeSystem, downloadFromResources, MemoryVault } from "./helpers/systems";
 
 const VAULT_ENTRY: SystemEntry = {
   type: "vault",
@@ -11,7 +11,7 @@ const VAULT_ENTRY: SystemEntry = {
 };
 
 function libraryWith(entries: SystemEntry[], vault = new MemoryVault()): SystemLibrary {
-  const library = new SystemLibrary(vault);
+  const library = new SystemLibrary(vault, downloadFromResources);
   library.setEntries(entries);
   return library;
 }
