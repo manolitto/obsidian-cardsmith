@@ -172,6 +172,32 @@ describe("a sample table", () => {
   });
 });
 
+describe("a sample text", () => {
+  it("is written after the sample block and read back as the card's body", async () => {
+    const system = await loadedSystem("eiserne-zeit");
+    const cardType = system.cardTypes["generic"]!;
+    const block = buildCardBlock(system, cardType, "de", "sample");
+    const fence = block.lastIndexOf("```\n");
+    expect(block.slice(fence)).toMatch(/^```\n\n\*\*Wirkungsdauer:\*\*/);
+    expect(block).toContain("### Magische Fehlwirkung, 1w6.\n\n| 1w6 | Fehlwirkung |");
+    expect(block).not.toMatch(/^ {2}content: [^#\s]/m);
+
+    const diagnostics = collectDiagnostics();
+    const note = parseNote(block, "eiserne-zeit/generic.md", diagnostics)!;
+    const [card] = resolveCards(note, system, diagnostics);
+    expect(String(card?.props["content"])).toMatch(/^\*\*Wirkungsdauer:\*\*/);
+    expect(String(card?.props["content"])).toContain("| 6 | Die Linie hat eine Lücke");
+    expect(diagnostics.messages).toEqual([]);
+  });
+
+  it("is left out of the empty block", async () => {
+    const system = await loadedSystem("eiserne-zeit");
+    const block = buildCardBlock(system, system.cardTypes["generic"]!, "de", "empty");
+    expect(block).not.toContain("Wirkungsdauer");
+    expect(block.endsWith("```\n")).toBe(true);
+  });
+});
+
 describe("inserting a block", () => {
   it("puts it after a blank line, adding only what is missing", () => {
     expect(blankLineBefore("Intro\nSome text", false)).toBe("\n\n");

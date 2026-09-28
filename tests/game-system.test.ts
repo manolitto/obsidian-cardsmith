@@ -199,6 +199,18 @@ card-types:
     expect(diagnostics.matching("no front-template")).toHaveLength(1);
   });
 
+  it("reads a card type's sample text per language, and drops one that is not text", () => {
+    const diagnostics = collectDiagnostics();
+    const card = parse(
+      'id: x\nlanguages: [de, en]\ncard-types:\n  card:\n    front-template: f.hbs\n    sample-text:\n      de: "Ein **Zauber**.\\n"\n      en: [nonsense]\n',
+      diagnostics
+    )?.cardTypes["card"];
+    expect(card?.sampleText).toEqual({ de: "Ein **Zauber**." });
+    expect(
+      diagnostics.matching("card-types.card.sample-text.en must be markdown text")
+    ).toHaveLength(1);
+  });
+
   it("does not let one broken card type take its siblings down", () => {
     const diagnostics = collectDiagnostics();
     const system = parse(

@@ -67,6 +67,10 @@ are one key — and each property accepts the aliases its system declares:
 says so. A property nothing sets falls back to its default; the card's
 title falls back to the note's file name.
 
+A key written without a value — `content:` left empty in the block — sets
+nothing, so the places before it still count: the note's text shows. To
+blank a value on purpose, write it as an empty string, `content: ""`.
+
 A note written for a query plugin, its values as inline fields — the card's
 text is the intro with the field lines gone, and the frontmatter's
 `category:` wins over the field:

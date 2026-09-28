@@ -249,9 +249,15 @@ function everythingBut(
   return out;
 }
 
-/** Keys in their one spelling, so `Preis:` in the frontmatter and `preis:` in the block meet. */
+/**
+ * Keys in their one spelling, so `Preis:` in the frontmatter and `preis:` in
+ * the block meet. A key written without a value sets nothing: an empty
+ * `content:` left in a block would otherwise shadow the note's text below it.
+ */
 function canonicalKeys(mapping: Record<string, unknown>): Record<string, unknown> {
   const out: Record<string, unknown> = {};
-  for (const [key, value] of Object.entries(mapping)) out[propertyKey(key)] = value;
+  for (const [key, value] of Object.entries(mapping)) {
+    if (value !== null && value !== undefined) out[propertyKey(key)] = value;
+  }
   return out;
 }
