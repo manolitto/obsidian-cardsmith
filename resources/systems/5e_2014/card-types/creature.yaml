@@ -20,35 +20,45 @@ translations:
 
 properties:
   name:
-    sample: "Cinder Hound"
+    sample:
+      en: "Cinder Hound"
+      de: "Glutwolf"
 
   size:
     slot: front-size
     aliases: [größe, groesse]
     description:
       en: "The size category — Tiny, Small, Medium, Large, Huge, Gargantuan — first in the italic line under the name."
-    sample: "Medium"
+    sample:
+      en: "Medium"
+      de: "Mittelgroßes"
 
   type:
     slot: [front-type, back-heading]
     aliases: [art, kreaturentyp]
     description:
       en: "The creature type, with its tags in parentheses — `humanoid (goblinoid)`, `beast`, `undead`. Also the label on the back, unless the note sets `back-label`."
-    sample: "beast"
+    sample:
+      en: "beast"
+      de: "Tier"
 
   alignment:
     slot: front-alignment
     aliases: [gesinnung]
     description:
       en: "The alignment — `neutral evil`, `chaotic good`, `unaligned` — after the type, comma-separated."
-    sample: "unaligned"
+    sample:
+      en: "unaligned"
+      de: "gesinnungslos"
 
   ac:
     slot: front-ac
     aliases: [armor-class, armorclass, rüstungsklasse, ruestungsklasse, rk]
     description:
       en: "Armor Class, usually a number with its source in parentheses — `15 (leather armor, shield)`."
-    sample: "13 (natural armor)"
+    sample:
+      en: "13 (natural armor)"
+      de: "13 (natürliche Rüstung)"
 
   initiative:
     aliases: [ini]
@@ -60,14 +70,18 @@ properties:
     aliases: [hit-points, hitpoints, trefferpunkte, tp]
     description:
       en: "Hit Points, usually the average with the hit-die formula in parentheses — `7 (2d6)`."
-    sample: "22 (4d8 + 4)"
+    sample:
+      en: "22 (4d8 + 4)"
+      de: "22 (4W8 + 4)"
 
   speed:
     slot: front-speed
     aliases: [bewegungsrate, bewegung]
     description:
       en: "The speeds, comma-separated where there are several — `40 ft., climb 40 ft., fly 80 ft.`."
-    sample: "40 ft."
+    sample:
+      en: "40 ft."
+      de: "12 m"
 
   # The six scores, each as the rulebook writes it: the score and the
   # modifier in parentheses. A plain number prints as it is.
@@ -156,7 +170,9 @@ properties:
     aliases: [fertigkeiten]
     description:
       en: "Skill bonuses, comma-separated — `Perception +3, Stealth +4`. The line prints when it is set."
-    sample: "Perception +3, Stealth +4"
+    sample:
+      en: "Perception +3, Stealth +4"
+      de: "Heimlichkeit +4, Wahrnehmung +3"
 
   vulnerabilities:
     slot: front-vulnerabilities
@@ -175,7 +191,9 @@ properties:
     aliases: [damage-immunities, schadensimmunitäten, schadensimmunitaeten]
     description:
       en: "Damage immunities, comma-separated. The line prints when it is set."
-    sample: "fire"
+    sample:
+      en: "fire"
+      de: "Feuer"
 
   condition-immunities:
     slot: front-condition-immunities
@@ -193,7 +211,9 @@ properties:
     aliases: [sinne]
     description:
       en: "The senses — `darkvision 60 ft., passive Perception 13`."
-    sample: "darkvision 60 ft., passive Perception 13"
+    sample:
+      en: "darkvision 60 ft., passive Perception 13"
+      de: "Dunkelsicht 18 m, passive Wahrnehmung 13"
 
   languages:
     slot: front-languages
@@ -241,8 +261,12 @@ properties:
     description:
       en: "The traits above the actions — a list of `name` and `desc`; the description takes markdown and wikilinks."
     sample:
-      - name: "Keen Smell"
-        desc: "The hound has advantage on Wisdom (Perception) checks that rely on smell."
+      en:
+        - name: "Keen Smell"
+          desc: "The hound has advantage on Wisdom (Perception) checks that rely on smell."
+      de:
+        - name: "Scharfer Geruchssinn"
+          desc: "Der Wolf ist bei Weisheitswürfen (Wahrnehmung), die auf dem Geruchssinn basieren, im Vorteil."
 
   actions:
     slot: front-actions
@@ -250,8 +274,12 @@ properties:
     description:
       en: "The actions, under their head — a list of `name` and `desc`; `*Melee Weapon Attack:*` and the like as markdown."
     sample:
-      - name: "Bite"
-        desc: "*Melee Weapon Attack:* +4 to hit, reach 5 ft., one target. *Hit:* 7 (2d4 + 2) piercing damage plus 3 (1d6) fire damage."
+      en:
+        - name: "Bite"
+          desc: "*Melee Weapon Attack:* +4 to hit, reach 5 ft., one target. *Hit:* 7 (2d4 + 2) piercing damage plus 3 (1d6) fire damage."
+      de:
+        - name: "Biss"
+          desc: "*Nahkampf-Waffenangriff:* +4 auf Treffer, Reichweite 1,5 m, ein Ziel. *Treffer:* 7 (2W4 + 2) Stichschaden plus 3 (1W6) Feuerschaden."
 
   bonus-actions:
     slot: front-bonus-actions
