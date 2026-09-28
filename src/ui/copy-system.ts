@@ -3,7 +3,7 @@ import { entriesAfterCopy, isSystemId } from "../settings/system-registry";
 import type { SystemEntry } from "../settings/types";
 import type { LoadedSystem } from "../systems/loader";
 import { notice } from "./export-run";
-import { namesSystem, rewriteDeclaration, rewriteSystemId } from "./copy-rewrites";
+import { copiedFiles, namesSystem, rewriteSystemId } from "./copy-rewrites";
 import { t } from "./strings";
 
 /*
@@ -112,18 +112,23 @@ async function runCopy(
   name: string
 ): Promise<void> {
   const { app } = context;
+  const progress = notice(t("copy.progress", { name: system.declaration.name }), 0);
+  let files;
+  try {
+    files = await copiedFiles(
+      system.source,
+      { id: system.id, name: system.declaration.name },
+      { id, name }
+    );
+  } finally {
+    progress.hide();
+  }
   await createFolders(app, folder);
-  for (const path of await system.source.listFiles()) {
+  for (const { path, content } of files) {
     const target = `${folder}/${path}`;
     await createFolders(app, target.slice(0, target.lastIndexOf("/")));
-    const renamed = id !== system.id || name !== system.declaration.name;
-    if (path === system.source.document && renamed) {
-      const text = await system.source.readText(path);
-      await app.vault.create(target, rewriteDeclaration(text, id, name));
-    } else {
-      const bytes = await system.source.readBinary(path);
-      await app.vault.createBinary(target, bytesToBuffer(bytes));
-    }
+    if (typeof content === "string") await app.vault.create(target, content);
+    else await app.vault.createBinary(target, bytesToBuffer(content));
   }
 
   const document = `${folder}/${system.source.document}`;

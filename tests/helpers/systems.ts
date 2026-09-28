@@ -1,6 +1,16 @@
+import { readFile } from "fs/promises";
+import { resolve } from "path";
 import type { SystemPath } from "../../src/definitions/game-system";
+import type { Download } from "../../src/systems/bundled-source";
 import { MissingFileError, type SystemSource } from "../../src/systems/source";
 import type { VaultFiles } from "../../src/systems/vault-source";
+
+/**
+ * A bundled system's download, answered from `resources/systems/` of this
+ * checkout — the files the release tag would serve, with no network.
+ */
+export const downloadFromResources: Download = async (path) =>
+  new Uint8Array(await readFile(resolve(__dirname, "../../resources/systems", path)));
 
 /** A folder's worth of files: path → text, or path → bytes. */
 export type Files = Record<string, string | Uint8Array>;

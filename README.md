@@ -111,6 +111,18 @@ deck leaves the paper's edge clear on its own; see
 | [Bundled systems](docs/systems.md) | The thirteen card designs that ship with the plugin, their card types, sizes and languages |
 | [Writing a system](docs/authoring/system.md) | A folder with a YAML root document, templates, stylesheets and fonts — starting from a copy of `simple` |
 
+## Network use
+
+Cardsmith renders and exports with no network connection: every bundled
+system's templates, stylesheets, fonts and images ship inside the plugin.
+The one exception is a bundled system's **sample pictures**, the
+illustrations of the sample cards. They are downloaded from this
+repository on GitHub (`raw.githubusercontent.com`), from the release that
+matches the installed version, when *Insert sample card block* or *Copy
+into vault* needs one the vault does not have yet. The request asks for
+that file and sends nothing else. There is no other network access, no
+telemetry and no account.
+
 ## Contributing
 
 **The thirteen bundled systems are a start**, not the catalogue: more

@@ -37,8 +37,10 @@ links*. The plugin reads them either way.
 
 *Copy into vault* on a bundled system's row writes every file of the
 system into a folder of the vault — `cardsmith/<id>` by default — so the
-copy is yours to edit: change a colour, add a card type, swap a font. The
-dialog asks for three things:
+copy is yours to edit: change a colour, add a card type, swap a font.
+The system's sample pictures are downloaded from the plugin's GitHub
+repository for the copy; without a connection the copy fails and writes
+nothing. The dialog asks for three things:
 
 - **Name** — what the pickers and the settings call the copy. *Copy of
   Dragonbane*, or the original's name when cleared.

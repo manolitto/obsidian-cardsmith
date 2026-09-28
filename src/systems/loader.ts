@@ -51,7 +51,8 @@ export interface LoadedSystem {
   unusedPartials: readonly string[];
   /**
    * Every asset the root document names — a property's `default:`, a
-   * classifier's token — that the folder has. The template engine reads
+   * classifier's token — that the folder has, except the sample pictures,
+   * which no card shows. The template engine reads
    * these before a render beside the literals it finds in the templates,
    * so a template may compute a path from a value: `{{asset (slot-class
    * "front-icon") inline=true}}`.
@@ -210,13 +211,19 @@ export async function loadSystem(
   }
 
   // ── The document's own references — a property's default, say ───
+  // The sample pictures are among them, but no card shows one: they are
+  // checked and counted as used, and not handed to the template engine.
   const documentRefs = documentAssetReferences(doc);
   referenced(documentRefs, source.document);
+  const samplePictures = new Set<string>(declaration.samplePictures);
   const documentAssets = [
     ...new Set(
       documentRefs
         .map((ref) => parseSystemPath(ref.path, ref.where, IGNORE_DIAGNOSTICS))
-        .filter((path): path is SystemPath => path !== undefined && files.has(path))
+        .filter(
+          (path): path is SystemPath =>
+            path !== undefined && files.has(path) && !samplePictures.has(path)
+        )
     ),
   ];
 

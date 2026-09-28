@@ -41,6 +41,8 @@ const en = {
   "picker.no-systems": "No system is switched on in the settings",
   "insert.no-properties": "This card type puts no property on the card",
   "insert.no-sample": "no sample",
+  "insert.pictures-unavailable":
+    "Could not download the sample picture {names}; the card shows without it. Sample pictures come from GitHub and need a connection.",
   "reference.title": "{system} — {cardType}",
   "reference.key": "Key",
   "reference.description": "Description",
@@ -150,6 +152,7 @@ const en = {
   "copy.no-folder": "Name a folder for the copy",
   "copy.invalid-id": "An id is lowercase letters, digits and hyphens",
   "copy.exists": "{path} already exists",
+  "copy.progress": "Collecting the files of {name}…",
   "copy.done": "Copied into {path} and switched on",
   "copy.rewrite.title": "Rewrite the notes?",
   "copy.rewrite.body":
@@ -228,6 +231,8 @@ const de: Strings = {
   "picker.no-systems": "In den Einstellungen ist kein System eingeschaltet",
   "insert.no-properties": "Dieser Kartentyp bringt keine Eigenschaft auf die Karte",
   "insert.no-sample": "kein Beispiel",
+  "insert.pictures-unavailable":
+    "Das Beispielbild {names} ließ sich nicht herunterladen; die Karte bleibt ohne Bild. Beispielbilder kommen von GitHub und brauchen eine Verbindung.",
   "reference.title": "{system} — {cardType}",
   "reference.key": "Schlüssel",
   "reference.description": "Beschreibung",
@@ -338,6 +343,7 @@ const de: Strings = {
   "copy.no-folder": "Einen Ordner für die Kopie angeben",
   "copy.invalid-id": "Eine Id besteht aus Kleinbuchstaben, Ziffern und Bindestrichen",
   "copy.exists": "{path} existiert bereits",
+  "copy.progress": "Dateien von {name} werden gesammelt …",
   "copy.done": "Nach {path} kopiert und eingeschaltet",
   "copy.rewrite.title": "Notizen umschreiben?",
   "copy.rewrite.body":

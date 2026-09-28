@@ -245,6 +245,9 @@ Obsidian's language when the system has it, else in the system's first
 language, and set `language:` to match, so the card's captions are in
 the language of its descriptions and samples. A sample that shows a picture
 comes with it: the picture is written where Obsidian puts the note's
-attachments, unless the vault already has one of that name. *Show property
+attachments, unless the vault already has one of that name. A bundled
+system's sample pictures are not part of the plugin: they are downloaded
+from its GitHub repository at that moment, and without a connection the
+block is inserted without its picture. *Show property
 reference* opens the same list as a table, with each property's aliases
 and description.

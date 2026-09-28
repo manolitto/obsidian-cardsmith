@@ -1,6 +1,6 @@
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import { join, relative } from "path";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { collectDiagnostics } from "../src/definitions/diagnostics";
 import { BUNDLED_SYSTEMS } from "../src/generated/bundled-systems";
 import { parseNote } from "../src/render/note";
@@ -15,7 +15,10 @@ import {
   writeSamplePictures,
   type InsertMode,
 } from "../src/ui/insert-card";
+import { BundledSystemSource } from "../src/systems/bundled-source";
+import { loadSystem } from "../src/systems/loader";
 import { FIXTURES_DIR } from "./helpers/render-fixture";
+import { downloadFromResources } from "./helpers/systems";
 import { loadedSystem } from "./helpers/render";
 
 /**
@@ -269,7 +272,12 @@ describe("the pictures a sample links", () => {
   });
 
   it("are written where the note's attachments go, unless the link already resolves", async () => {
-    const system = await loadedSystem("dragonbane");
+    const bundled = BUNDLED_SYSTEMS.find((s) => s.id === "dragonbane")!;
+    const system = (await loadSystem(
+      new BundledSystemSource(bundled, downloadFromResources),
+      "dragonbane",
+      collectDiagnostics()
+    ))!;
     const block = "  artwork: '[[Nebelkraehe.png]]'\n  back-image: '[[Medaillon.png]]'";
     const created: [string, number][] = [];
     const app = {
@@ -286,11 +294,43 @@ describe("the pictures a sample links", () => {
         },
       },
     } as unknown as App;
-    const written = await writeSamplePictures(app, system, block, "Cards/Crow.md");
-    expect(written).toEqual(["Cards/attachments/Nebelkraehe.png"]);
+    const result = await writeSamplePictures(app, system, block, "Cards/Crow.md");
+    expect(result).toEqual({
+      written: ["Cards/attachments/Nebelkraehe.png"],
+      unavailable: [],
+    });
     const bytes = await system.source.readBinary(
       system.declaration.samplePictures.find((p) => p.endsWith("Nebelkraehe.png"))!
     );
     expect(created).toEqual([["Cards/attachments/Nebelkraehe.png", bytes.byteLength]]);
+  });
+
+  it("skip a picture that cannot be downloaded, and name it, without failing the insert", async () => {
+    const bundled = BUNDLED_SYSTEMS.find((s) => s.id === "dragonbane")!;
+    const system = (await loadSystem(
+      new BundledSystemSource(bundled, () => Promise.reject(new Error("offline"))),
+      "dragonbane",
+      collectDiagnostics()
+    ))!;
+    const created: string[] = [];
+    const app = {
+      metadataCache: { getFirstLinkpathDest: () => null },
+      fileManager: { getAvailablePathForAttachment: async (name: string) => name },
+      vault: {
+        createBinary: async (path: string) => {
+          created.push(path);
+        },
+      },
+    } as unknown as App;
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    const result = await writeSamplePictures(
+      app,
+      system,
+      "  artwork: '[[Nebelkraehe.png]]'",
+      "Cards/Crow.md"
+    );
+    warn.mockRestore();
+    expect(result).toEqual({ written: [], unavailable: ["Nebelkraehe.png"] });
+    expect(created).toEqual([]);
   });
 });

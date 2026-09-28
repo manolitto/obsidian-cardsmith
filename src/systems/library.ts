@@ -3,7 +3,7 @@ import { collectDiagnostics } from "../definitions/diagnostics";
 import { BUNDLED_SYSTEMS } from "../generated/bundled-systems";
 import { findDuplicateActiveIds } from "../settings/system-registry";
 import type { SystemEntry } from "../settings/types";
-import { BundledSystemSource } from "./bundled-source";
+import { BundledSystemSource, type Download } from "./bundled-source";
 import { loadSystem, type LoadedSystem } from "./loader";
 import { folderOf, VaultSystemSource, type VaultFiles } from "./vault-source";
 
@@ -36,7 +36,14 @@ export class SystemLibrary {
   /** The ids whose cached load read the bundled source — the only loads a settings change keeps. */
   private readonly bundledLoads = new Set<string>();
 
-  constructor(private readonly files: VaultFiles) {}
+  /**
+   * `download` fetches what a bundled system does not carry — its sample
+   * pictures; see `BundledSystemSource`.
+   */
+  constructor(
+    private readonly files: VaultFiles,
+    private readonly download: Download
+  ) {}
 
   /**
    * Replace the registry. Vault systems reload on next use; bundled ones
@@ -94,7 +101,11 @@ export class SystemLibrary {
       };
     }
     const diagnostics = collectDiagnostics();
-    const system = await loadSystem(new BundledSystemSource(bundled), id, diagnostics);
+    const system = await loadSystem(
+      new BundledSystemSource(bundled, this.download),
+      id,
+      diagnostics
+    );
     return { system, messages: diagnostics.messages };
   }
 
@@ -221,7 +232,7 @@ export class SystemLibrary {
   ): BundledSystemSource | VaultSystemSource | undefined {
     if (entry.type === "vault") return new VaultSystemSource(entry.path, this.files);
     const bundled = BUNDLED_SYSTEMS.find((system) => system.id === entry.id);
-    return bundled ? new BundledSystemSource(bundled) : undefined;
+    return bundled ? new BundledSystemSource(bundled, this.download) : undefined;
   }
 
   private enabledEntry(id: string): SystemEntry | undefined {

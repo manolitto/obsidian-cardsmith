@@ -7,6 +7,7 @@ import {
   type PropertyDef,
 } from "../definitions/property-defs";
 import type { LoadedCardType, LoadedSystem } from "../systems/loader";
+import { RemoteFileError } from "../systems/source";
 import { t } from "./strings";
 
 /*
@@ -219,21 +220,35 @@ export function linkedSamplePictures(
  * Write the sample pictures a block links into the vault, where Obsidian
  * puts an attachment of the note, unless the link already resolves: a
  * picture of that name anywhere the note can reach is the one it means,
- * and is never replaced. Returns the paths written.
+ * and is never replaced.
+ *
+ * A bundled system downloads its sample pictures, so one may be out of
+ * reach — no connection, say. That never undoes the insert: the picture
+ * is skipped, named in `unavailable`, and the card shows without it until
+ * the reader adds one. Returns the paths written and the links skipped.
  */
 export async function writeSamplePictures(
   app: App,
   system: LoadedSystem,
   block: string,
   notePath: string
-): Promise<string[]> {
+): Promise<{ written: string[]; unavailable: string[] }> {
   const written: string[] = [];
+  const unavailable: string[] = [];
   for (const { link, path } of linkedSamplePictures(system, block)) {
     if (app.metadataCache.getFirstLinkpathDest(link, notePath)) continue;
-    const bytes = await system.source.readBinary(path);
+    let bytes: Uint8Array;
+    try {
+      bytes = await system.source.readBinary(path);
+    } catch (error) {
+      if (!(error instanceof RemoteFileError)) throw error;
+      console.warn(`[Cardsmith] ${error.message}`);
+      unavailable.push(link);
+      continue;
+    }
     const target = await app.fileManager.getAvailablePathForAttachment(link, notePath);
     await app.vault.createBinary(target, bytes.slice().buffer);
     written.push(target);
   }
-  return written;
+  return { written, unavailable };
 }
