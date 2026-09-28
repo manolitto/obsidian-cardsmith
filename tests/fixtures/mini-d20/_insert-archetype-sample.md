@@ -37,7 +37,7 @@ data:
   # Starting skill bonuses as a list of single-key pairs (`{ Skill: bonus }`), set in two columns.
   skill-bonuses:
     - Stealth: '+4'
-    - Dexterity: '+4'
+    - Sleight of Hand: '+4'
     - Acrobatics: '+3'
     - Perception: '+3'
     - Ranged Combat: '+2'

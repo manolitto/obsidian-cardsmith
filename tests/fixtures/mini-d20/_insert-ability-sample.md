@@ -36,5 +36,4 @@ data:
   # Explanations of single tags as a list of single-key pairs (`{ Active: … }`) — how often "Active" triggers for a cleric, say. Set small under the effect.
   tag-description:
     - Active: Twice per day per character level.
-    - Spell: For every spell, add your Arcana skill as a bonus.
 ```

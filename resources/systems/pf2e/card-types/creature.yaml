@@ -167,9 +167,6 @@ properties:
     description:
       de: "Mitgeführte Ausrüstung als Freitext, kommagetrennt. Tiere und geistlose Wesen haben meist keine — dann das Feld weglassen."
       en: "Carried equipment as free text, comma-separated. Beasts and mindless creatures usually have none — omit the field then."
-    sample:
-      de: "Speer, Lederrüstung"
-      en: "spear, leather armor"
 
   resistances:
     slot: front-resistances
@@ -197,9 +194,6 @@ properties:
     description:
       de: "Einfache Bewegung als Freitext (z. B. `6 m`, `7,5 m`). Die Karte stellt das Aktionssymbol ⬻ voran — das Symbol daher nicht mitschreiben. Bei mehreren Bewegungsarten stattdessen `speed` verwenden."
       en: "Simple movement as free text (e.g. `20 feet`, `25 ft.`). The card puts the ⬻ action glyph in front — do not write it into the value. For several movement modes use `speed` instead."
-    sample:
-      de: "7,5 m"
-      en: "25 feet"
 
   speed:
     slot: front-speed

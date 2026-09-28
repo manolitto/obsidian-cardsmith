@@ -118,7 +118,7 @@ properties:
         - { Nahkampf: "+2" }
       en:
         - { Stealth: "+4" }
-        - { Dexterity: "+4" }
+        - { Sleight of Hand: "+4" }
         - { Acrobatics: "+3" }
         - { Perception: "+3" }
         - { "Ranged Combat": "+2" }

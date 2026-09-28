@@ -87,7 +87,5 @@ properties:
     sample:
       de:
         - { Aktiv: "Zweimal täglich je Charakterstufe." }
-        - { Zauber: "Bei allen Zaubern zählt die Fertigkeit Arkanes als Bonus." }
       en:
         - { Active: "Twice per day per character level." }
-        - { Spell: "For every spell, add your Arcana skill as a bonus." }
