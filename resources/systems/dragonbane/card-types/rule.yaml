@@ -89,7 +89,7 @@ properties:
     description:
       de: "Bild zur Regel, zum Talent oder zum Zauber als Wikilink. Erscheint auf der Vorderseite."
       en: "Picture as a wikilink. Rendered on the card front."
-    sample: "[[Glutgriff.png]]"
+    sample: "[[Glutgriff.jpg]]"
 
   # ── 1 · Fertigkeiten ──
   attribute:

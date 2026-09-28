@@ -40,7 +40,7 @@ translations:
 
 properties:
   image:
-    sample: "[[Goblin.png]]"
+    sample: "[[Goblin.jpg]]"
 
   name:
     sample:

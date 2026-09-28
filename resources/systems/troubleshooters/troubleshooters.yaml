@@ -20,8 +20,8 @@ stylesheet: styles/troubleshooters.css
 # The pictures the samples link, written beside a note by *Insert sample
 # card block* when the vault has none of that name.
 sample-pictures:
-  - assets/samples/Feldstecher.png
-  - assets/samples/Zollbeamtin.png
+  - assets/samples/Feldstecher.jpg
+  - assets/samples/Zollbeamtin.jpg
 
 partial-templates:
   logo: templates/logo.hbs

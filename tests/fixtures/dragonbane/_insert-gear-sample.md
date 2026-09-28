@@ -26,7 +26,7 @@ data:
   english-original: Boat hook
 
   # Picture as a wikilink. Rendered on the card front.
-  front-image: '[[Bootshaken.png]]'
+  front-image: '[[Bootshaken.jpg]]'
 
   # Grip — "1H" for one-handed or "2H" for two-handed.
   grip: 2H

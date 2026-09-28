@@ -32,10 +32,10 @@ stylesheet: styles/5e_2024.css
 # The pictures the samples link, written beside a note by *Insert sample
 # card block* when the vault has none of that name.
 sample-pictures:
-  - assets/samples/Cinder-Hound.png
-  - assets/samples/Ember-Lance.png
-  - assets/samples/Ember-Step.png
-  - assets/samples/Lantern-of-Ash.png
+  - assets/samples/Cinder-Hound.jpg
+  - assets/samples/Ember-Lance.jpg
+  - assets/samples/Ember-Step.jpg
+  - assets/samples/Lantern-of-Ash.jpg
 
 partial-templates:
   entries: templates/entries.hbs

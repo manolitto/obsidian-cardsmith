@@ -11,7 +11,7 @@ data:
   description: Broad-shouldered and bearded, with a memory as long as a mine shaft.
 
   # The card's picture as a wikilink (`[[image.png]]`), embed (`![[image.png]]`) or file name. Sits between the stats and the flavour and takes the room that is left.
-  image: '[[Zwerg.png]]'
+  image: '[[Zwerg.jpg]]'
 
   # Tags as pills — usually "Passive".
   tags:

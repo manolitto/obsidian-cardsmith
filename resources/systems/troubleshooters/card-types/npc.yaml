@@ -45,7 +45,7 @@ properties:
 
   image:
     slot: back-image
-    sample: "[[Zollbeamtin.png]]"
+    sample: "[[Zollbeamtin.jpg]]"
 
   initiative:
     slot: front-initiative

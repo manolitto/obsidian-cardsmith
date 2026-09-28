@@ -423,7 +423,7 @@ properties:
     description:
       en: "The creature's picture — a wikilink to a picture in the vault — on the back under the label. Without one the back shows a d20."
       de: "Das Bild der Kreatur — ein Wikilink auf ein Bild im Vault — auf der Rückseite unter der Beschriftung. Ohne Bild zeigt die Rückseite einen W20."
-    sample: "[[Cinder-Hound.png]]"
+    sample: "[[Cinder-Hound.jpg]]"
 
 # ── What the card derives ─────────────────────────────────────────────
 classifiers:

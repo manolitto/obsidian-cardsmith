@@ -29,13 +29,13 @@ stylesheet: styles/mini-d20.css
 # The pictures the samples link, written beside a note by *Insert sample
 # card block* when the vault has none of that name.
 sample-pictures:
-  - assets/samples/Deckblatt.png
-  - assets/samples/Eigenart.png
-  - assets/samples/Goblin.png
-  - assets/samples/Kurzschwert.png
-  - assets/samples/Mehrfachschuss.png
-  - assets/samples/Schurke.png
-  - assets/samples/Zwerg.png
+  - assets/samples/Deckblatt.jpg
+  - assets/samples/Eigenart.jpg
+  - assets/samples/Goblin.jpg
+  - assets/samples/Kurzschwert.jpg
+  - assets/samples/Mehrfachschuss.jpg
+  - assets/samples/Schurke.jpg
+  - assets/samples/Zwerg.jpg
 
 partial-templates:
   header: templates/header.hbs

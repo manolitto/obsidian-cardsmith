@@ -49,7 +49,7 @@ properties:
     description:
       de: "Titelbild als Wikilink; ohne Angabe steht dort der MiNI-D20-Schriftzug."
       en: "Cover art as a wikilink; without it the MiNI D20 wordmark stands there."
-    sample: "[[Deckblatt.png]]"
+    sample: "[[Deckblatt.jpg]]"
 
   reference:
     slot: ~

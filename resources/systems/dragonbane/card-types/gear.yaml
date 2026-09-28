@@ -104,7 +104,7 @@ properties:
     description:
       de: "Bild des Gegenstands als Wikilink. Erscheint auf der Vorderseite."
       en: "Picture as a wikilink. Rendered on the card front."
-    sample: "[[Bootshaken.png]]"
+    sample: "[[Bootshaken.jpg]]"
 
   # ── Weapons ──
   grip:

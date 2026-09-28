@@ -8,7 +8,7 @@ data:
   name: Dragonhoard Campaign
 
   # Cover art as a wikilink; without it the MiNI D20 wordmark stands there.
-  image: '[[Deckblatt.png]]'
+  image: '[[Deckblatt.jpg]]'
 
   # The note's text before its first `##` heading — the back's licences and acknowledgements. `###` headings structure it.
   body: # no sample

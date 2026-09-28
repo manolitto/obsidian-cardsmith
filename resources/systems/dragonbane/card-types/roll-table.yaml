@@ -109,7 +109,7 @@ properties:
     description:
       de: "Bild zu dieser Tabellenzeile als Wikilink. Erscheint auf der Vorderseite."
       en: "Picture as a wikilink. Rendered on the card front."
-    sample: "[[Nebelbarsch.png]]"
+    sample: "[[Nebelbarsch.jpg]]"
 
   description:
     slot: front-text-top

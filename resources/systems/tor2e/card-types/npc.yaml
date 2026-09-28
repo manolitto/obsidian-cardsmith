@@ -35,7 +35,7 @@ translations:
 
 properties:
   image:
-    sample: "[[Moorschlurfer.png]]"
+    sample: "[[Moorschlurfer.jpg]]"
 
   name:
     slot: [front-title, back-title]

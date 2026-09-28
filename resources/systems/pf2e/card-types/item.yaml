@@ -67,7 +67,7 @@ translations:
 properties:
   image:
     slot: [front-image, back-image]
-    sample: "[[Nebelruestung.png]]"
+    sample: "[[Nebelruestung.jpg]]"
 
   name:
     sample:

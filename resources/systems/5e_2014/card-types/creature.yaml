@@ -356,4 +356,4 @@ properties:
     description:
       en: "The creature's picture — a wikilink to a picture in the vault — large on the back between the orange bars. Without one the back shows a d20 and the back label."
       de: "Das Bild der Kreatur — ein Wikilink auf ein Bild im Vault — groß auf der Rückseite zwischen den orangefarbenen Balken. Ohne Bild zeigt die Rückseite einen W20 und die Beschriftung."
-    sample: "[[Cinder-Hound.png]]"
+    sample: "[[Cinder-Hound.jpg]]"

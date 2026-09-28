@@ -20,8 +20,8 @@ stylesheet: styles/tor2e.css
 # The pictures the samples link, written beside a note by *Insert sample
 # card block* when the vault has none of that name.
 sample-pictures:
-  - assets/samples/Jagdspeer.png
-  - assets/samples/Moorschlurfer.png
+  - assets/samples/Jagdspeer.jpg
+  - assets/samples/Moorschlurfer.jpg
 
 partial-templates:
   diamond: templates/diamond.hbs
