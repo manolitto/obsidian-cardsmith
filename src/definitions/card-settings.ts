@@ -9,6 +9,7 @@ import {
   positiveNumber,
   mergeSettings,
   parseSettings,
+  settingEntries,
   settingKeys,
   type Parse,
   type SettingTable,
@@ -112,6 +113,11 @@ export const CARD_SETTING_KEYS = settingKeys(CARD_SETTINGS);
 
 export function isCardSettingKey(key: string): boolean {
   return CARD_SETTING_KEYS.includes(key);
+}
+
+/** The fields a layer sets, under their keys, in table order. */
+export function cardSettingEntries(layer: CardSettings): [string, unknown][] {
+  return settingEntries(CARD_SETTINGS, layer);
 }
 
 /** Read one layer — a system's, a card type's, a deck block's, a note's — typed. */

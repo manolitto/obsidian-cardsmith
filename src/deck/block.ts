@@ -47,6 +47,8 @@ export interface DeckBlock {
   selection: DeckSelection;
   /** Baseline → deck. */
   settings: DeckSettings;
+  /** The deck's layer alone — what the block itself says, before the baseline is folded under it. */
+  deckLayer: DeckSettings;
   /** The deck's layer of the card-setting chain, unfolded. */
   cardLayer: CardSettings;
   /** Where the exports go, absent an `output-path:` beside the deck note. */
@@ -175,12 +177,11 @@ export function parseDeckBlock(
     ),
   };
 
+  const deckLayer = parseDeckSettings(deckRaw, where);
   return {
     selection,
-    settings: mergeDeckSettings([
-      BASELINE.deckSettings,
-      parseDeckSettings(deckRaw, where),
-    ]),
+    settings: mergeDeckSettings([BASELINE.deckSettings, deckLayer]),
+    deckLayer,
     cardLayer: parseCardSettings(cardRaw, where),
     outputPath: outputPaths(selectionRaw["output-path"], path, where),
   };

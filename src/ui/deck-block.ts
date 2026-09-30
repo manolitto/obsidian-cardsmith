@@ -2,6 +2,16 @@ import { Platform, TFile, type App, type MarkdownPostProcessorContext } from "ob
 import { parseDeckBlock } from "../deck/block";
 import { selectNotes } from "../deck/select";
 import { listDeckNotes, type DeckSource } from "../deck/source";
+import {
+  cardSettingEntries,
+  type LayoutDecision,
+  type LayoutCandidate,
+} from "../definitions/card-settings";
+import {
+  deckSettingEntries,
+  type CardCopies,
+  type CutMarks,
+} from "../definitions/deck-settings";
 import { collectDiagnostics } from "../definitions/diagnostics";
 import type { BuiltDeck, DeckExporter, ExportFormat } from "../export/exporter";
 import type { PaperSize } from "../model/paper-size";
@@ -15,9 +25,12 @@ import { t, type StringKey } from "./strings";
  * of what the deck will print, and the buttons that print it.
  *
  * The summary is what parsing and filtering yield — the system, the card
- * types, the folders and the notes named, the notes the selection keeps by card type, the paper
- * and the card size — which is cheap enough to run on every render of the
- * block. The number of cards is known only after rendering (rows, roll
+ * types, the folders (and whether their subfolders count) and the notes
+ * named, the tag and language filters, the notes the selection keeps by
+ * card type, the paper, the card size and where the exports go — which is
+ * cheap enough to run on every render of the block. Every other setting
+ * the block states is listed under its own key, in the block's words, so
+ * nothing the block says changes the print unseen. The number of cards is known only after rendering (rows, roll
  * ranges, copies) and is what the export's notice says. Whatever the block
  * gets wrong is listed inline, in the parser's own words. The YAML itself
  * is edited in the editor, as cards are; *Insert deck block at cursor*
@@ -58,7 +71,7 @@ export function deckBlockProcessor(context: DeckBlockContext) {
     };
 
     if (block) {
-      const { selection, settings, cardLayer } = block;
+      const { selection, settings, deckLayer, cardLayer } = block;
       let system: LoadedSystem | undefined;
       try {
         system = await context.systems.get(selection.systemId);
@@ -75,10 +88,26 @@ export function deckBlockProcessor(context: DeckBlockContext) {
       if (selection.folders.length > 0) {
         row(
           selection.folders.length > 1 ? "deck.folders" : "deck.folder",
-          selection.folders.map((folder) => folder || t("deck.root-folder")).join(", ")
+          `${selection.folders
+            .map((folder) => folder || t("deck.root-folder"))
+            .join(", ")} (${t(
+            settings.folderRecursive ? "deck.subfolders" : "deck.no-subfolders"
+          )})`
         );
       }
       if (selection.notes.length > 0) row("deck.named-notes", selection.notes.join(", "));
+      const tagRows = [
+        ["deck.include-tags-all", selection.includeTagsAll],
+        ["deck.include-tags-any", selection.includeTagsAny],
+        ["deck.exclude-tags-any", selection.excludeTagsAny],
+        ["deck.exclude-tags-all", selection.excludeTagsAll],
+      ] as const;
+      for (const [label, tags] of tagRows) {
+        if (tags.length > 0) row(label, tags.map((tag) => `#${tag}`).join(", "));
+      }
+      if (selection.languages.length > 0) {
+        row("deck.languages", selection.languages.join(", "));
+      }
       const notes = row("deck.notes", "…");
       row("deck.paper", paperText(settings.paperSize));
       const sizes = new Set<string>();
@@ -91,9 +120,17 @@ export function deckBlockProcessor(context: DeckBlockContext) {
         if (size) sizes.add(`${size.width} × ${size.height} mm`);
       }
       row("deck.card-size", [...sizes].join(", "));
-      if (cardLayer.side === "front" || cardLayer.side === "back") {
-        row("deck.sides", t(`deck.sides.${cardLayer.side}`));
+      if (cardLayer.side) row("deck.sides", t(`deck.sides.${cardLayer.side}`));
+      for (const [key, value] of [
+        ...deckSettingEntries(deckLayer),
+        ...cardSettingEntries(cardLayer),
+      ]) {
+        if (SHOWN_ABOVE.has(key)) continue;
+        rows.createEl("dt", { text: key, cls: "cs-deck-key" });
+        rows.createEl("dd", { text: settingText(key, value) });
       }
+      const stem = block.outputPath.html.replace(/\.html$/, "");
+      row("deck.output", Platform.isDesktop ? `${stem} (.pdf, .html)` : `${stem}.html`);
 
       if (system) {
         const listed = await listDeckNotes(
@@ -142,6 +179,35 @@ export function deckBlockProcessor(context: DeckBlockContext) {
       exportButton(buttons, "deck.export-html", "html", file, context);
     }
   };
+}
+
+/** The settings with a row of their own above; the rest are listed by key. */
+const SHOWN_ABOVE = new Set(["paper-size", "folder-recursive", "card-size", "side"]);
+
+/** A setting's value in the block's own words: `short-edge`, `Beil × 3`, `enabled: false`. */
+function settingText(key: string, value: unknown): string {
+  switch (key) {
+    case "page-margin":
+      return `${String(value)} mm`;
+    case "display-height":
+      return `${String(value)} px`;
+    case "cut-marks":
+      return Object.entries(value as CutMarks)
+        .map(([field, v]) => `${field}: ${String(v)}`)
+        .join(", ");
+    case "card-copies":
+      return (value as CardCopies[])
+        .map(({ name, copies }) => `${name} × ${copies}`)
+        .join(", ");
+    case "layouts":
+      return (value as LayoutCandidate[]).map(({ name }) => name).join(", ");
+    case "layout-decision":
+      return (value as LayoutDecision).order
+        .map(({ metric, direction }) => `${metric} ${direction}`)
+        .join(", ");
+    default:
+      return String(value);
+  }
 }
 
 /** "24 notes — 20 gear, 4 npc", or that none matches. */

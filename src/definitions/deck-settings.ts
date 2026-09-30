@@ -10,6 +10,7 @@ import {
   positiveNumber,
   mergeSettings,
   parseSettings,
+  settingEntries,
   settingKeys,
   type SettingTable,
 } from "./setting-chain";
@@ -90,6 +91,11 @@ export const DECK_SETTING_KEYS = settingKeys(DECK_SETTINGS);
 
 export function isDeckSettingKey(key: string): boolean {
   return DECK_SETTING_KEYS.includes(key);
+}
+
+/** The fields a layer sets, under their keys, in table order. */
+export function deckSettingEntries(layer: DeckSettings): [string, unknown][] {
+  return settingEntries(DECK_SETTINGS, layer);
 }
 
 /** Read one layer — the baseline's or a deck block's — typed. */

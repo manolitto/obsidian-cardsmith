@@ -132,6 +132,11 @@
   margin: 0;
 }
 
+/* A setting listed under the key the block writes it with. */
+.cs-deck-summary dt.cs-deck-key {
+  font-family: var(--font-monospace);
+}
+
 .cs-deck-diagnostics {
   margin: var(--size-4-2) 0 0;
   padding-left: var(--size-4-4);
