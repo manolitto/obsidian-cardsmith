@@ -43,9 +43,9 @@ card-size: poker
 # tables — the author writes as markdown in the note itself, and a card type
 # called `generic` should know nothing of races and hit points.
 #
-# Every place is read by both faces: the head band, the foot band and the
-# edge reference are the same construction on the front and on the back, so
-# one binding serves both. `description` is bilingual throughout; `sample`
+# The head band and the foot band are the same construction on the front and
+# on the back, so one binding serves both; the edge reference stands on the
+# front alone. `description` is bilingual throughout; `sample`
 # too as soon as it holds natural language.
 properties:
   name:
@@ -86,8 +86,8 @@ properties:
     slot: side-reference
     aliases: [referenz, quelle, buch, source, seite, page]
     description:
-      de: "Quellenangabe. Läuft gedreht die rechte Kante entlang, in Versalien. Konvention: Buchtitel, Komma, Seite — „Der Hundeführer, S. 8“."
-      en: "Source reference. Runs rotated along the right edge, in caps. Convention: book title, comma, page — \"The Dog Handler, p. 8\"."
+      de: "Quellenangabe. Läuft gedreht die rechte Kante der Vorderseite entlang, in Versalien. Konvention: Buchtitel, Komma, Seite — „Der Hundeführer, S. 8“."
+      en: "Source reference. Runs rotated along the front's right edge, in caps. Convention: book title, comma, page — \"The Dog Handler, p. 8\"."
     sample:
       de: "Hausregeln, S. 12"
       en: "House Rules, p. 12"
@@ -105,8 +105,8 @@ properties:
 card-types:
   # The free card, and the system's only one — so a note need not name it.
   # Front AND back carry the base design: the black head band with its torn
-  # edge and the title, the running card-kind foot, the source along the
-  # edge; the back's body is the steel logo, the front's is the note's text.
+  # edge and the title, the running card-kind foot; the back's body is the
+  # steel logo, the front's is the note's text and the source along the edge.
   generic:
     front-template: templates/front.hbs
     back-template: templates/back.hbs

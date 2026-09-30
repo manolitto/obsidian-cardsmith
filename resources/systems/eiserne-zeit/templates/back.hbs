@@ -6,7 +6,6 @@
       .card-root > .ez-head > .ez-band > .card-title
                  > .card-content-container > .card-body-scalable > .ez-logo-band
                  > .ez-foot > .ez-torn + .ez-foot-label
-                 > .ez-side-ref
 
   so that ONE rule in eiserne-zeit.css serves the logo on both faces — there
   is no second logo path for the back. If you find yourself writing one, the
@@ -24,6 +23,9 @@
 
   The head band runs at half height on the back, as on every face after the
   first: the title is a reminder there, not an announcement.
+
+  The source reference along the right edge (.ez-side-ref) is the front's
+  alone: the back carries no book reference.
 --}}
 <div class="card-root card-back eiserne-zeit {{card-type}}-card">
 
@@ -46,9 +48,5 @@
     <div class="ez-torn ez-torn-foot"></div>
     <div class="ez-foot-label"><span class="text-scalable">{{slot "foot-label" plain=true fallback=(t "back-label")}}</span></div>
   </div>
-
-  {{#if (slot "side-reference")}}
-  <div class="ez-side-ref">{{slot "side-reference" markdown=false}}</div>
-  {{/if}}
 
 </div>
