@@ -16,7 +16,7 @@ data:
   # Card body as markdown, inline in the cardsmith block. Takes precedence over the note's text. Use the note's text for tables and embedded pictures.
   content:
 
-  # Source reference. Runs rotated along the right edge, in caps. Convention: book title, comma, page — "The Dog Handler, p. 8".
+  # Source reference. Runs rotated along the front's right edge, in caps. Convention: book title, comma, page — "The Dog Handler, p. 8".
   reference:
 
   # Label of the black foot band, in white caps on every face of the card (e.g. "SPELL", "GEAR", "COMPANION"). Falls back to the card type's own label when unset.
