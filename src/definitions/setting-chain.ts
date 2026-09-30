@@ -93,6 +93,22 @@ export function settingKeys<S>(table: SettingTable<S>): readonly string[] {
   return (Object.values(table) as Setting<unknown>[]).map((setting) => setting.key);
 }
 
+/**
+ * The fields a layer sets, each under the key an author writes, in table
+ * order — what a summary of that layer lists.
+ */
+export function settingEntries<S extends object>(
+  table: SettingTable<S>,
+  layer: Partial<S>
+): [string, unknown][] {
+  const out: [string, unknown][] = [];
+  for (const field of Object.keys(table) as (keyof S)[]) {
+    const value = layer[field];
+    if (value !== undefined) out.push([table[field].key, value]);
+  }
+  return out;
+}
+
 // ── Value parsers ───────────────────────────────────────────────────
 
 export function oneOf<T extends string>(values: readonly T[]): Parse<T> {

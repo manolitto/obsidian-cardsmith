@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { parseDeckBlock, quoteTagValues } from "../src/deck/block";
+import { deckSettingEntries } from "../src/definitions/deck-settings";
 import { collectDiagnostics } from "../src/definitions/diagnostics";
 
 const fence = (yaml: string): string =>
@@ -88,7 +89,23 @@ describe("the cardsmith-deck block", () => {
       orientation: "auto",
     });
     expect(deck?.settings.cutMarks?.enabled).toBeDefined();
+    expect(deck?.deckLayer).toEqual({});
     expect(deck?.cardLayer).toEqual({});
+  });
+
+  it("keeps the deck's own layer beside the fold, so a summary can list what the block says", () => {
+    const deck = parse(
+      "system: simple\ncut-marks: { color: red }\nduplex-flip: short-edge"
+    );
+    expect(deck?.deckLayer).toEqual({
+      duplexFlip: "short-edge",
+      cutMarks: { color: "red" },
+    });
+    expect(deckSettingEntries(deck?.deckLayer ?? {})).toEqual([
+      ["duplex-flip", "short-edge"],
+      ["cut-marks", { color: "red" }],
+    ]);
+    expect(deck?.settings.cutMarks?.enabled).toBe(true);
   });
 
   it("reports a key it does not know, by name, and keeps the rest", () => {
