@@ -1,5 +1,6 @@
 Fischspeer · 1 card · 2 faces · clipped: no
 1. front [cs-layout-default cs-front-first] scale 1.00
+   p.db-flavor "Ein Eschenschaft mit Widerhaken, wie ihn …"
    span.db-fill-top
    div.db-stats-box
      div.db-stats-row "Griff zweihändig Reichweite 2"

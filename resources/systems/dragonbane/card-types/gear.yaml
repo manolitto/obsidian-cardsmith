@@ -106,6 +106,19 @@ properties:
       en: "Picture as a wikilink. Rendered on the card front."
     sample: "[[Bootshaken.jpg]]"
 
+  # What the item is, in a sentence or two — set as the slanted lead
+  # above the picture, the way a creature card opens, so the card reads
+  # name, words, picture, numbers.
+  description:
+    slot: front-lead-text
+    aliases: [beschreibung]
+    description:
+      de: "Kurze Beschreibung des Gegenstands, über dem Bild."
+      en: "Short description of the item, above the picture."
+    sample:
+      de: "Eine lange Stange mit eisernem Haken, glatt gegriffen von vielen Händen am Steg."
+      en: "A long pole with an iron hook, worn smooth by many hands on the jetty."
+
   # ── Weapons ──
   grip:
     slot: front-stat-1a
