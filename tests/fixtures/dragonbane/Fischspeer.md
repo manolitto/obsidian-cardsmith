@@ -11,6 +11,7 @@ Fertigkeit: Speere
 STÄ: 9
 Art: Nahkampfwaffe
 Kategorie: Ausrüstung
+Beschreibung: Ein Eschenschaft mit Widerhaken, wie ihn die Fischer am Nebelsee tragen.
 Buch: "[[Kampagnenbuch.pdf#page=12|Kampagnenbuch S. 12]]"
 ---
 #Ausrüstung #Waffe

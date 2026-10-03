@@ -7,6 +7,9 @@ data:
   # Item's name.
   name: Boat hook
 
+  # Short description of the item, above the picture.
+  description: A long pole with an iron hook, worn smooth by many hands on the jetty.
+
   # Empty boxes to tick off with a pen. A number (`20`), a labelled row (`{ count: 20, label: Arrows }`) or a list of such rows. `group` (default 5) sets how many boxes stand together.
   tracker: # no sample
 
