@@ -36,6 +36,8 @@ export interface DeckSettings {
   fold?: Fold;
   /** Millimetres between the columns of a folding deck — a hinge between a fold's panels, to cut out before laminating. 0 folds along a crease. */
   foldGap?: number;
+  /** Millimetres of a `cover`'s outer hinge — between the cover and the last page — when it wraps three panels or more; absent, `foldGap`. Needs a `foldGap`. */
+  foldGapOuter?: number;
   /** Alignment marks at each card's corners. Fields merge, so one can change alone. */
   cutMarks?: CutMarks;
   /** Whether to print the system's background textures. Defaults from the settings, which also govern the card shown in its note. */
@@ -93,6 +95,7 @@ const DECK_SETTINGS: SettingTable<DeckSettings> = {
   duplexFlip: { key: "duplex-flip", parse: oneOf(["long-edge", "short-edge"]) },
   fold: { key: "fold", parse: oneOf(["off", "strip", "cover", "booklet"]) },
   foldGap: { key: "fold-gap", parse: nonNegativeNumber },
+  foldGapOuter: { key: "fold-gap-outer", parse: nonNegativeNumber },
   cutMarks: {
     key: "cut-marks",
     parse: parseCutMarks,

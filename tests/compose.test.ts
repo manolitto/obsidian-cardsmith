@@ -548,10 +548,21 @@ describe("fold gaps", () => {
     ]);
   });
 
-  it("can cost a column: three poker cards no longer fit across A4 portrait inside 10 mm", () => {
-    expect(layoutGrid(paper("A4 portrait"), card("poker"), 10, 1).columns).toBe(3);
-    expect(layoutGrid(paper("A4 portrait"), card("poker"), 10, 1, 3).columns).toBe(2);
-    expect(layoutGrid(paper("A4 landscape"), card("poker"), 10, 1, 3).columns).toBe(4);
+  it("puts no gap between separate cards: three poker cards across A4 portrait, a hinged fold and a card not", () => {
+    const a4 = { paperSize: paper("A4 portrait"), pageMargin: 10, foldGap: 1.5 };
+    const singles = composePages(deck({ ...a4, cards: notes(1, 1, 1), fold: "strip" }));
+    expect(faces(singles.pages[0]!)).toEqual([
+      "A1f@10.5,16.5",
+      "B1f@73.5,16.5",
+      "C1f@136.5,16.5",
+    ]);
+    // 126 + 1.5 + 63 = 190.5 mm against 190: the single card opens the next row.
+    const mixed = composePages(deck({ ...a4, cards: notes(2, 1), fold: "strip" }));
+    expect(faces(mixed.pages[0]!).map((f) => f.split("@")[1])).toEqual([
+      "10.5,16.5",
+      "75,16.5",
+      "10.5,104.5",
+    ]);
   });
 
   it("prints a hinge between the panels of one fold, on the front page only", () => {
@@ -594,5 +605,48 @@ describe("fold gaps", () => {
       "2 pages · 140 × 280 mm · 2 × 3 of 63 × 88 mm at 5.5, 8 · gap 3 mm",
       "1. front · 32 marks · 1 hinge",
     ]);
+  });
+
+  it("gives a cover's outer hinge its own width once panels fold inside it", () => {
+    const outer = { foldGap: 1.5, foldGapOuter: 2.5, paperSize: paper("200 x 88") };
+    const { pages, grid } = composePages(
+      deck({ ...outer, cards: notes(3), fold: "cover" })
+    );
+    // 189 + 1.5 + 2.5 = 193 mm, centred on 200: 5, 6 | 1 with the wide hinge before the cover.
+    expect(faces(pages[0]!)).toEqual(["A3f@3.5,0", "A3b@68,0", "A1f@133.5,0"]);
+    expect(pages[0]!.hinges).toEqual([
+      { x: 66.5, y: 0, width: 1.5, height: 88 },
+      { x: 131, y: 0, width: 2.5, height: 88 },
+    ]);
+    // Behind each panel, mirrored about the paper's centre — the hinges are uneven, so the
+    // middle panel's back lands a millimetre off its front's x, and exactly behind it.
+    expect(faces(pages[1]!)).toEqual(["A2b@133.5,0", "A2f@69,0", "A1b@3.5,0"]);
+    expect(compositionText(pages, grid).split("\n")[0]).toContain(
+      "gap 1.5 mm, outer 2.5 mm"
+    );
+    const hingeWidths = (
+      cards: PhysicalCard[],
+      fold: "cover" | "strip",
+      size = "200 x 88"
+    ) =>
+      composePages(
+        deck({ ...outer, paperSize: paper(size), cards, fold })
+      ).pages[0]!.hinges.map((h) => h.width);
+    // A greeting card folds round nothing; a strip folds zigzag; four panels widen only the outer one.
+    expect(hingeWidths(notes(2), "cover")).toEqual([1.5]);
+    expect(hingeWidths(notes(3), "strip")).toEqual([1.5, 1.5]);
+    expect(hingeWidths(notes(4), "cover", "260 x 88")).toEqual([1.5, 1.5, 2.5]);
+  });
+
+  it("needs a fold gap for the outer one", () => {
+    const { pages } = composePages(
+      deck({
+        cards: notes(3),
+        paperSize: paper("200 x 88"),
+        fold: "cover",
+        foldGapOuter: 2.5,
+      })
+    );
+    expect(pages[0]!.hinges).toEqual([]);
   });
 });
