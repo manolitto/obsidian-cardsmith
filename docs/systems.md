@@ -1,6 +1,6 @@
 # Bundled systems
 
-A system is a family of cards that share a look and a vocabulary. Thirteen
+A system is a family of cards that share a look and a vocabulary. Fourteen
 ship with the plugin; each is a folder under `resources/systems/` that you
 can also [copy into your vault](settings.md#copying-a-bundled-system-into-the-vault)
 and make your own. What every system bundles of its game is a card design
@@ -11,7 +11,8 @@ A card's size is the card type's, else the system's, else poker
 (63 × 88 mm). *Languages* are the ones the system has captions for; a
 note may pick one with `language:`. Every picture is one card of the
 type, front and back, rendered from a sample note exactly as the plugin
-prints it — invented content, never a rulebook's — in English wherever
+prints it — invented content, or a reference document the game's
+licence makes free to quote, never a rulebook's — in English wherever
 the system has English captions.
 
 ## simple
@@ -197,3 +198,31 @@ question card — the text in the middle of a tarot-sized face, the game's
 name on the back. Tarot (70 × 120 mm); `en`, `de`.
 
 <img src="images/cards/dftq/prompt.webp" alt="dftq prompt card, front and back" width="360">
+
+## daggerheart
+
+Daggerheart™ compatible cards, on the Daggerheart System Reference
+Document 1.0 under the Darrington Press Community Gaming License. The
+character cards share one front: a pennant at the top left in the
+card's colour, a badge at the right, the picture across the top — or,
+without one, a narrow tinted strip — the kind of card on a ribbon, the
+title, the text, and at the foot the compatibility line the licence
+asks every card to carry. The back is the card's colour with its word
+in the middle: a domain card's domain, else the card type. The design
+is this project's own; no artwork, glyph or typography of the
+publisher's is used. The sample cards quote the SRD, which the licence
+makes free to reproduce; the German ones are translated from it.
+
+| | Card type | |
+|---|---|---|
+| <img src="images/cards/daggerheart/domain.webp" alt="daggerheart domain card, front and back" width="360"> | `domain` | a spell, an ability or a grimoire: the level and the domain in the pennant, the recall cost in the badge, the kind on the ribbon; a colour per domain |
+| <img src="images/cards/daggerheart/ancestry.webp" alt="daggerheart ancestry card, front and back" width="360"> | `ancestry` | the name, an italic line on the people, the ancestry features |
+| <img src="images/cards/daggerheart/community.webp" alt="daggerheart community card, front and back" width="360"> | `community` | the name, an italic line on where one grew up, the community feature |
+| <img src="images/cards/daggerheart/subclass.webp" alt="daggerheart subclass card, front and back" width="360"> | `subclass` | the class on the ribbon, the subclass as the title, foundation, specialization or mastery under it, the spellcast trait |
+
+Poker; `en`, `de`, the German captions the terms of the official German
+edition — *Zauber*, *Fähigkeit*, *Zauberbuch*, *Rückruf*, *Basis*,
+*Zauber-Attribut*, the domains *Arkana* … *Mut*. A note may write a
+domain, a kind of card, a class, a subclass stage or a trait in English
+or in German; the card prints it in its own language. A long card spills
+onto further cards, never onto the back.

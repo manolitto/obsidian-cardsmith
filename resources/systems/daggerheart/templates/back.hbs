@@ -1,7 +1,21 @@
 {{!--
-  Daggerheart — the back every card shares: the card type's caption,
-  centred.
+  Daggerheart — the back every card shares.
+
+  The whole face in the card's colour, a fine frame inset in paper, and
+  in the middle between two small diamonds the card's word: the domain on
+  a domain card, with the card type's caption under it; the card type's
+  caption alone on every other card. A deck of domain cards thus sorts by
+  colour and name face down, as players sort them.
 --}}
-<div class="card-root card-back daggerheart {{card-type}}-card dh-back">
-  <div class="dh-back-label"><span class="text-scalable">{{t "back-label"}}</span></div>
+<div class="card-root card-back daggerheart {{card-type}}-card dh-back dh-domain-{{slot-class "front-banner-label"}}">
+  <div class="dh-back-frame">
+    <div class="dh-back-diamond"></div>
+    {{#if (slot "front-banner-label")}}
+    <div class="dh-back-word"><span class="text-scalable">{{slot "front-banner-label" glyph=true plain=true}}</span></div>
+    <div class="dh-back-caption">{{t "back-label"}}</div>
+    {{else}}
+    <div class="dh-back-word"><span class="text-scalable">{{t "back-label"}}</span></div>
+    {{/if}}
+    <div class="dh-back-diamond"></div>
+  </div>
 </div>

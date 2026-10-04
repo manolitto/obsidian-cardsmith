@@ -251,6 +251,7 @@ describe.each([
   "5e_2014",
   "5e_2024",
   "dftq",
+  "daggerheart",
 ])("the %s deck composes", (system) => {
   it("as its composition golden says", async () => {
     const { built } = await build(system);

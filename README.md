@@ -5,12 +5,12 @@ print-ready, double-sided card decks — board game components, reference
 cards, flash cards, any deck you print.
 
 A note is a card. A folder of notes is a deck. A *system* gives the cards
-their look and vocabulary: Cardsmith bundles [thirteen](#bundled-systems)
+their look and vocabulary: Cardsmith bundles [fourteen](#bundled-systems)
 and lets you write your own in the vault.
 
 ## Bundled systems
 
-Thirteen card designs ship with the plugin, each with its card types: a
+Fourteen card designs ship with the plugin, each with its card types: a
 note names the system and the card type, and prints in that design. Each picture is one card of the system, front and back, as it
 prints; [Bundled systems](docs/systems.md) shows every card type of every
 one, with sizes, languages and the terms each design comes under. A
@@ -24,7 +24,7 @@ system is also the thing to copy into the vault and make your own.
 | <img src="docs/images/cards/dino-island/location.webp" alt="dino-island location card, front and back" width="420"><br>[**dino-island**](docs/systems.md#dino-island) — *Escape from Dino Island*<br>`location` `taxonomy` `roll-table` | <img src="docs/images/cards/tor2e/npc.webp" alt="tor2e npc card, front and back" width="420"><br>[**tor2e**](docs/systems.md#tor2e) — *The One Ring*, second edition<br>`gear` `npc` |
 | <img src="docs/images/cards/sw/item.webp" alt="sw item card, front and back" width="420"><br>[**sw**](docs/systems.md#sw) — *Swords & Wizardry*<br>`item` `monster` | <img src="docs/images/cards/troubleshooters/npc.webp" alt="troubleshooters npc card, front and back" width="420"><br>[**troubleshooters**](docs/systems.md#troubleshooters) — *The Troubleshooters*<br>`npc` `mechanic` `gear` |
 | <img src="docs/images/cards/5e_2014/creature.webp" alt="5e_2014 creature card, front and back" width="420"><br>[**5e_2014**](docs/systems.md#5e_2014) — fifth-edition play, 2014 rules (SRD 5.1)<br>`creature` `spell` `item` `generic` | <img src="docs/images/cards/5e_2024/creature.webp" alt="5e_2024 creature card, front and back" width="420"><br>[**5e_2024**](docs/systems.md#5e_2024) — fifth-edition play, 2024 rules (SRD 5.2.1)<br>`creature` `spell` `item` `generic` |
-| <img src="docs/images/cards/dftq/prompt.webp" alt="dftq prompt card, front and back" width="420"><br>[**dftq**](docs/systems.md#dftq) — games *Descended from the Queen*<br>`prompt` | |
+| <img src="docs/images/cards/dftq/prompt.webp" alt="dftq prompt card, front and back" width="420"><br>[**dftq**](docs/systems.md#dftq) — games *Descended from the Queen*<br>`prompt` | <img src="docs/images/cards/daggerheart/domain.webp" alt="daggerheart domain card, front and back" width="420"><br>[**daggerheart**](docs/systems.md#daggerheart) — Daggerheart™ compatible (SRD 1.0)<br>`domain` `ancestry` `community` `subclass` |
 
 ## Install
 
@@ -108,7 +108,7 @@ deck leaves the paper's edge clear on its own; see
 | [Cards](docs/cards.md) | The `cardsmith` block: card settings, where a card's properties come from, tables that make one card per row, pictures, the preview |
 | [Decks](docs/decks.md) | The `cardsmith-deck` block: selecting notes, sort order, copies, card and paper sizes, cut marks, duplex, the two exports, the preview pane and how to print |
 | [Settings](docs/settings.md) | The systems list, adding your own, copying a bundled one into the vault, the three preferences |
-| [Bundled systems](docs/systems.md) | The thirteen card designs that ship with the plugin, their card types, sizes and languages |
+| [Bundled systems](docs/systems.md) | The fourteen card designs that ship with the plugin, their card types, sizes and languages |
 | [Writing a system](docs/authoring/system.md) | A folder with a YAML root document, templates, stylesheets and fonts — starting from a copy of `simple` |
 
 ## Network use
@@ -125,7 +125,7 @@ telemetry and no account.
 
 ## Contributing
 
-**The thirteen bundled systems are a start**, not the catalogue: more
+**The fourteen bundled systems are a start**, not the catalogue: more
 are on the way, and a system does not have to be bundled to be shared.
 A system is one folder — a YAML root document, templates, a stylesheet,
 fonts — and any vault can run one: unzip the folder into the vault, pick
