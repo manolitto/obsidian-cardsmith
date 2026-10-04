@@ -247,9 +247,13 @@ interface Place {
  * faces are numbered in reading order, the first card's front 1, its back
  * 2, the second card's front 3, and on:
  *
- * - `pairs` keeps each card on its panel, as laid out;
- * - `leporello` puts the first half across the front, left to right, and
- *   the rest behind them, so that turned over like a page they read on;
+ * - `strip` reads 1 to `k` across the front, page 1 on the left with its
+ *   fold on the right, and turned over like a page, on across the back —
+ *   unfolded, a strip with a front and a back;
+ * - `cover` puts page 1 on the right with its fold on the left, the last
+ *   pages before it — `k + 2` to `2k`, then 1 — and 2 to `k + 1` across
+ *   the back, so that folded inwards page 1 is a cover and the last page
+ *   lies behind it;
  *
  * both as far as a row reaches, the rest a further piece. `booklet` is a
  * printer's booklet: the faces padded with blank pages to a multiple of
@@ -308,12 +312,22 @@ function foldPieces(
         ]);
       }
     } else {
+      // Panel `n` of `count`, counted from the left on the front; what lies
+      // behind it shows mirrored when the strip is turned over.
+      const face = (n: number) => faces[n - 1];
       out.push(
-        run.map((card, i) =>
-          fold === "leporello"
-            ? place(card, faces[i], faces[2 * count - 1 - i], i + 1, count)
-            : place(card, faces[2 * i], faces[2 * i + 1], i + 1, count)
-        )
+        run.map((card, i) => {
+          const n = i + 1;
+          return fold === "cover"
+            ? place(
+                card,
+                face(n < count ? count + 1 + n : 1),
+                face(count + 2 - n),
+                n,
+                count
+              )
+            : place(card, face(n), face(2 * count + 1 - n), n, count);
+        })
       );
     }
   }

@@ -138,11 +138,13 @@ duplex-flip: long-edge
 # Whether a note that runs onto several cards prints them side by side,
 # uncut, as one strip folded instead of cut apart — and which face goes where.
 # The faces count in reading order: the first card's front 1, its back 2, the
-# second card's front 3, and on. `pairs`: each panel is one card, 1 and 3
-# side by side, 2 and 4 behind them. `leporello`: 1, 2, 3 across one side,
-# 4, 5, 6 across the other. Both fold a note as far as one row of the grid
-# reaches. `booklet`: sheets of two cards, nested and folded down the middle
-# like a printer's booklet. `off` cuts every card out.
+# second card's front 3, and on. `strip`: page 1 on the left, its fold on
+# the right — 1, 2, 3 across the front, 4, 5, 6 across the back. `cover`:
+# page 1 on the right, its fold on the left — 5, 6, 1 across the front, 2, 3,
+# 4 across the back, so that folded inwards page 1 is a cover with the last
+# page behind it. Both fold a note as far as one row of the grid reaches.
+# `booklet`: sheets of two cards, nested and folded down the middle like a
+# printer's booklet. `off` cuts every card out.
 fold: off
 
 # Alignment marks at each card's outer corners; a page that holds a single

@@ -91,7 +91,7 @@ consecutively.
 | `page-margin` | Blank space around the card grid, in millimetres. The margin yields where the paper is too small for it — the card never does. |
 | `cut-marks` | `{enabled: true, length: 3, margin: 0, color: '#aaaaaa', weight: 0.25}` — a cross at every card corner, its arms along the cuts and `margin` mm clear of the corner, printed over the cards. An arm on a card is `length` mm long; an arm that leaves the block of cards runs on to the paper's edge, so a guillotine can be set against it. The fields merge, so one can change alone. A page that holds a single card gets none. |
 | `duplex-flip` | Which edge is the binding when printing duplex, `long-edge` or `short-edge`, so a back lands behind its front. |
-| `fold` | `off` (default), `pairs`, `leporello` or `booklet`: a note's cards printed side by side, uncut, and folded instead of cut apart — see *Folded cards*. |
+| `fold` | `off` (default), `strip`, `cover` or `booklet`: a note's cards printed side by side, uncut, and folded instead of cut apart — see *Folded cards*. |
 | `paper-background` | `textured` prints the system's background pictures, `plain` leaves them out. Default: the plugin setting. |
 
 The cards are packed without gaps on one grid and centred inside the
@@ -123,28 +123,39 @@ folds side by side in a row, and the same holds for each of their panels.
 ## Folded cards
 
 A note whose text runs onto several cards can print them as one strip of
-paper instead, folded rather than cut apart: `fold: pairs`, `leporello`
-or `booklet`. The faces are numbered in reading order: the first card's
-front is 1, its back 2, the second card's front 3, and on.
+paper instead, folded rather than cut apart: `fold: strip`, `cover` or
+`booklet`. The faces are numbered in reading order: the first card's
+front is 1, its back 2, the second card's front 3, and on. Each row below
+is one side of the paper as you look at it, the back after turning it
+over like a page.
 
 ```
-fold: pairs                 fold: leporello            fold: booklet (8 pages)
+              fold: strip              fold: cover              fold: booklet
 
-front   [ 1 ][ 3 ][ 5 ]     front   [ 1 ][ 2 ][ 3 ]    sheet 1  [ 8 ][ 1 ]   behind  2 | 7
-behind    2    4    6       behind    6    5    4      sheet 2  [ 6 ][ 3 ]   behind  4 | 5
+2 cards       front  1 2               front  4 1               the same as cover
+              back   3 4               back   2 3
+
+3 cards       front  1 2 3             front  5 6 1             sheet 1  front 8 1
+              back   4 5 6             back   2 3 4                      back  2 7
+                                                                sheet 2  front 6 3
+4 cards       front  1 2 3 4           front  6 7 8 1                    back  4 5
+              back   5 6 7 8           back   2 3 4 5           (pages 7, 8 blank)
 ```
 
-- **`pairs`** keeps every card as it is, its back behind its front — the
-  strip folds where the cards would have been cut.
-- **`leporello`** reads across the front and, turned over like a page, on
-  across the back: 4, 5, 6 from left to right.
+- **`strip`** — page 1 on the left, its fold on the right. Unfolded, the
+  card is a strip with a front and a back: read across the front, turn
+  it over, read on across the back.
+- **`cover`** — page 1 on the right, its fold on the left, like a book's
+  spine. Fold the panels inwards and page 1 is the cover, with the last
+  page behind it; open it and the rest reads in order. Two cards make a
+  greeting card.
 - **`booklet`** works like a printer's booklet setting: sheets of two
   cards, laid inside one another and folded down the middle, so the pages
-  read 1 to 8 like a little book. The pages are padded with blank ones to
-  a multiple of four — three cards are six faces, so pages 7 and 8 are
+  read like a little book. The pages are padded with blank ones to a
+  multiple of four — three cards are six faces, so pages 7 and 8 are
   blank.
 
-`pairs` and `leporello` fold a note as far as one row of the grid
+`strip` and `cover` fold a note as far as one row of the grid
 reaches — two poker cards on A4 make a card that opens, three a leaflet
 — and go on in a further piece when the note has more cards than a row
 holds. A note on one card prints as a card under every fold, and copies

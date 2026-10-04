@@ -53,10 +53,10 @@ export type DuplexFlip = "long-edge" | "short-edge";
 export type Fold =
   /** Every card is cut out on its own. */
   | "off"
-  /** Each panel is one card as laid out: 1 and 3 side by side, 2 behind 1, 4 behind 3. */
-  | "pairs"
-  /** Read across, then turned over like a page: 1, 2, 3 on one side, 4, 5, 6 on the other. */
-  | "leporello"
+  /** Page 1 on the left, its fold on the right: 1, 2, 3 across the front, 4, 5, 6 across the back — unfolded, a strip with a front and a back. */
+  | "strip"
+  /** Page 1 on the right, its fold on the left: 5, 6, 1 across the front, 2, 3, 4 across the back — folded inwards, page 1 is a cover with the last page behind it. */
+  | "cover"
   /** Sheets of two, nested and folded down the middle like a printed booklet: 8 | 1 and 2 | 7, then 6 | 3 and 4 | 5. */
   | "booklet";
 
@@ -89,7 +89,7 @@ const DECK_SETTINGS: SettingTable<DeckSettings> = {
   paperSize: { key: "paper-size", parse: parsePaperSize },
   pageMargin: { key: "page-margin", parse: nonNegativeNumber },
   duplexFlip: { key: "duplex-flip", parse: oneOf(["long-edge", "short-edge"]) },
-  fold: { key: "fold", parse: oneOf(["off", "pairs", "leporello", "booklet"]) },
+  fold: { key: "fold", parse: oneOf(["off", "strip", "cover", "booklet"]) },
   cutMarks: {
     key: "cut-marks",
     parse: parseCutMarks,

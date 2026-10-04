@@ -140,7 +140,7 @@ const en = {
   "deck-key.duplex-flip":
     "Which paper edge is the binding when printing duplex, so fronts and backs align: `long-edge` or `short-edge`.",
   "deck-key.fold":
-    "A note's cards side by side, uncut, folded instead of cut apart: `pairs` (1 and 3 side by side, 2 and 4 behind them), `leporello` (1, 2, 3 on one side, 4, 5, 6 on the other), `booklet` (nested sheets of two, like a printer's booklet) or `off`.",
+    "A note's cards side by side, uncut, folded instead of cut apart: `strip` (1, 2, 3 across the front, 4, 5, 6 across the back), `cover` (5, 6, 1 across the front, page 1 a cover with the last page behind it), `booklet` (nested sheets of two, like a printer's booklet) or `off`.",
   "deck-key.cut-marks":
     "The cut marks at every card corner; the fields merge, so one can change alone.",
   "deck-key.paper-background":
@@ -344,7 +344,7 @@ const de: Strings = {
   "deck-key.duplex-flip":
     "Welche Papierkante beim Duplexdruck die Bindung ist, damit Vorder- und Rückseiten übereinanderliegen: `long-edge` oder `short-edge`.",
   "deck-key.fold":
-    "Die Karten einer Notiz ungeschnitten nebeneinander, gefalzt statt geschnitten: `pairs` (1 und 3 nebeneinander, 2 und 4 dahinter), `leporello` (1, 2, 3 auf einer Seite, 4, 5, 6 auf der anderen), `booklet` (ineinandergelegte Bögen zu zwei Karten, wie die Broschüre eines Druckertreibers) oder `off`.",
+    "Die Karten einer Notiz ungeschnitten nebeneinander, gefalzt statt geschnitten: `strip` (vorne 1, 2, 3, hinten 4, 5, 6), `cover` (vorne 5, 6, 1, Seite 1 als Umschlag mit der letzten Seite dahinter), `booklet` (ineinandergelegte Bögen zu zwei Karten, wie die Broschüre eines Druckertreibers) oder `off`.",
   "deck-key.cut-marks":
     "Die Schnittmarken an jeder Kartenecke; die Felder verschmelzen, eines lässt sich allein ändern.",
   "deck-key.paper-background":

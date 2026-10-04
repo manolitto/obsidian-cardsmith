@@ -35,7 +35,7 @@ card-type: simple
 # Which paper edge is the binding when printing duplex, so fronts and backs align: `long-edge` or `short-edge`.
 # duplex-flip: long-edge
 
-# A note's cards side by side, uncut, folded instead of cut apart: `pairs` (1 and 3 side by side, 2 and 4 behind them), `leporello` (1, 2, 3 on one side, 4, 5, 6 on the other), `booklet` (nested sheets of two, like a printer's booklet) or `off`.
+# A note's cards side by side, uncut, folded instead of cut apart: `strip` (1, 2, 3 across the front, 4, 5, 6 across the back), `cover` (5, 6, 1 across the front, page 1 a cover with the last page behind it), `booklet` (nested sheets of two, like a printer's booklet) or `off`.
 # fold: 'off'
 
 # The cut marks at every card corner; the fields merge, so one can change alone.

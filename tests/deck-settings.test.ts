@@ -81,7 +81,7 @@ describe("the deck-setting fold", () => {
 
   it("knows four folds and no fifth, keeping the layer below for anything else", () => {
     const diagnostics = collectDiagnostics();
-    for (const fold of ["off", "pairs", "leporello", "booklet"]) {
+    for (const fold of ["off", "strip", "cover", "booklet"]) {
       expect(resolve(["fold: off", `fold: ${fold}`]).fold).toBe(fold);
     }
     expect(resolve(["fold: off", "fold: book"], diagnostics).fold).toBe("off");
