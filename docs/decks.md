@@ -92,6 +92,7 @@ consecutively.
 | `cut-marks` | `{enabled: true, length: 3, margin: 0, color: '#aaaaaa', weight: 0.25}` — a cross at every card corner, its arms along the cuts and `margin` mm clear of the corner, printed over the cards. An arm on a card is `length` mm long; an arm that leaves the block of cards runs on to the paper's edge, so a guillotine can be set against it. The fields merge, so one can change alone. A page that holds a single card gets none. |
 | `duplex-flip` | Which edge is the binding when printing duplex, `long-edge` or `short-edge`, so a back lands behind its front. |
 | `fold` | `off` (default), `strip`, `cover` or `booklet`: a note's cards printed side by side, uncut, and folded instead of cut apart — see *Folded cards*. |
+| `fold-gap` | Millimetres between the cards of a folding deck, so that a folded card can be laminated with a hinge — see *Laminating a folded card*. Default `0`, a crease. |
 | `paper-background` | `textured` prints the system's background pictures, `plain` leaves them out. Default: the plugin setting. |
 
 The cards are packed without gaps on one grid and centred inside the
@@ -176,6 +177,26 @@ instead, on, off, coloured and weighted with the cut marks.
 A folded card is two or more layers of paper, back to back, so the front
 and back of a duplex print have to meet more exactly than for a card
 that is cut out: print a test sheet first.
+
+### Laminating a folded card
+
+Laminated along a crease, paper and film fold stiffly and the card springs
+open. A **hinge** folds instead: with `fold-gap: 3`, the cards stand 3 mm
+apart and the gap between two panels of one fold is printed as a grey
+strip.
+
+1. Cut the grey strips out with a craft knife, along the cut marks either
+   side. Cut nothing else — the sheet stays in one piece.
+2. Laminate the whole sheet. Where a strip was, the film seals to itself.
+3. Cut the cards out. Each fold now bends along its film hinge, lies flat
+   when closed and stays closed.
+
+3 mm suits most cards; give a panel that folds inside another — the inner
+panel of a three-card `cover` — 4 mm. Thin film (80 µm) folds more easily
+than thick. The gap stands between every two cards across, not only
+inside a fold, so a row may hold one card fewer: three poker cards no
+longer fit across A4 portrait inside a 10 mm margin. The grey strips are
+printed even with the cut marks off, and only on the front of the sheet.
 
 ## The block in reading view
 

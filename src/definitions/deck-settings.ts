@@ -34,6 +34,8 @@ export interface DeckSettings {
   duplexFlip?: DuplexFlip;
   /** Whether a note's physical cards print side by side, uncut, to be folded, and which face goes where. */
   fold?: Fold;
+  /** Millimetres between the columns of a folding deck — a hinge between a fold's panels, to cut out before laminating. 0 folds along a crease. */
+  foldGap?: number;
   /** Alignment marks at each card's corners. Fields merge, so one can change alone. */
   cutMarks?: CutMarks;
   /** Whether to print the system's background textures. Defaults from the settings, which also govern the card shown in its note. */
@@ -90,6 +92,7 @@ const DECK_SETTINGS: SettingTable<DeckSettings> = {
   pageMargin: { key: "page-margin", parse: nonNegativeNumber },
   duplexFlip: { key: "duplex-flip", parse: oneOf(["long-edge", "short-edge"]) },
   fold: { key: "fold", parse: oneOf(["off", "strip", "cover", "booklet"]) },
+  foldGap: { key: "fold-gap", parse: nonNegativeNumber },
   cutMarks: {
     key: "cut-marks",
     parse: parseCutMarks,

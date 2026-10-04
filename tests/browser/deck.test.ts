@@ -117,6 +117,21 @@ describe("buildDeck over the fixture folders", () => {
     expect(pages.map((page) => page.cells.length)).toEqual([8, 8, 5, 5]);
   });
 
+  it("dragonbane folded with a gap: a hinge between the panels of each fold", async () => {
+    const { built } = await build("dragonbane");
+    const { pages, grid } = composeDeck({
+      ...built,
+      settings: { ...built.settings, fold: "cover", foldGap: 3 },
+    });
+    // `A4 portrait` inside 10 mm: three poker cards and two gaps are 195 mm, so two across.
+    expect(grid).toMatchObject({ paper: { width: 210 }, columns: 2, gap: 3 });
+    const hinges = pages.filter((page) => page.side === "front").flatMap((p) => p.hinges);
+    expect(hinges).toHaveLength(3);
+    expect(
+      pages.filter((page) => page.side === "back").every((p) => p.hinges.length === 0)
+    ).toBe(true);
+  });
+
   it("eiserne-zeit: the German cards only, plain paper, no cut marks", async () => {
     const { built, diagnostics } = await build("eiserne-zeit");
     expect(diagnostics.messages).toEqual([]);

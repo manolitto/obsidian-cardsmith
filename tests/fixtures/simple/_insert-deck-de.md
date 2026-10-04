@@ -38,6 +38,9 @@ card-type: simple
 # Die Karten einer Notiz ungeschnitten nebeneinander, gefalzt statt geschnitten: `strip` (vorne 1, 2, 3, hinten 4, 5, 6), `cover` (vorne 5, 6, 1, Seite 1 als Umschlag mit der letzten Seite dahinter), `booklet` (ineinandergelegte Bögen zu zwei Karten, wie die Broschüre eines Druckertreibers) oder `off`.
 # fold: 'off'
 
+# Millimeter zwischen den Karten eines gefalzten Decks; ein grauer Streifen zwischen den Teilen einer Faltkarte ist ein Scharnier, das vor dem Laminieren herausgeschnitten wird. 3 passt für die meisten Karten, 0 falzt ohne Lücke.
+# fold-gap: 0
+
 # Die Schnittmarken an jeder Kartenecke; die Felder verschmelzen, eines lässt sich allein ändern.
 # cut-marks: {enabled: true, length: 3, margin: 0, color: '#aaaaaa', weight: 0.25}
 
