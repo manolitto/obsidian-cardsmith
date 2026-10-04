@@ -91,6 +91,47 @@ describe("buildDeck over the fixture folders", () => {
     expect(built.stylesheets).toHaveLength(5);
   });
 
+  it("dragonbane folded: each note's cards side by side, a table note's rows never", async () => {
+    const { built } = await build("dragonbane");
+    const { pages, grid } = composeDeck({
+      ...built,
+      settings: { ...built.settings, fold: "strip" },
+    });
+    // The deck writes `A4 portrait`: three across, three down.
+    expect(grid).toMatchObject({ paper: { width: 210 }, columns: 3, rows: 3 });
+    const folded = pages
+      .filter((page) => page.side === "front")
+      .flatMap((page) => page.cells)
+      .filter((cell) => cell.fold !== undefined)
+      .map((cell) => `${cell.name} ${cell.fold!.panel}/${cell.fold!.panels}`);
+    expect(folded).toEqual([
+      "Knochensammler 1/2",
+      "Knochensammler 2/2",
+      "Moorschleicher 1/2",
+      "Moorschleicher 2/2",
+      "Nebelweberei 1/2",
+      "Nebelweberei 2/2",
+    ]);
+    // Moorschleicher does not fit beside Knochensammler and opens the next row;
+    // Glutfunken, a single card, takes the place beside it.
+    expect(pages.map((page) => page.cells.length)).toEqual([8, 8, 5, 5]);
+  });
+
+  it("dragonbane folded with a gap: a hinge between the panels of each fold", async () => {
+    const { built } = await build("dragonbane");
+    const { pages, grid } = composeDeck({
+      ...built,
+      settings: { ...built.settings, fold: "cover", foldGap: 3 },
+    });
+    // `A4 portrait` inside 10 mm: three poker cards and two gaps are 195 mm, so two across.
+    expect(grid).toMatchObject({ paper: { width: 210 }, columns: 2, gap: 3 });
+    const hinges = pages.filter((page) => page.side === "front").flatMap((p) => p.hinges);
+    expect(hinges).toHaveLength(3);
+    expect(
+      pages.filter((page) => page.side === "back").every((p) => p.hinges.length === 0)
+    ).toBe(true);
+  });
+
   it("eiserne-zeit: the German cards only, plain paper, no cut marks", async () => {
     const { built, diagnostics } = await build("eiserne-zeit");
     expect(diagnostics.messages).toEqual([]);

@@ -33,6 +33,7 @@ describe("copies", () => {
     expect(out[0]).toEqual({
       name: "Beil",
       cardTypeId: "gear",
+      group: 0,
       front: "Beil 1",
       back: "Beil back",
     });
@@ -76,6 +77,8 @@ describe("copies", () => {
       "Beil 1",
       "Beil 1",
     ]);
+    // What a fold keeps together: one printing of one note, never two.
+    expect(out.map((c) => c.group)).toEqual([0, 0, 1, 1, 2, 3, 4]);
   });
 
   it("lets card-copies win over the card's own, by path, path without .md, or name", () => {

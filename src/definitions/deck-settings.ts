@@ -32,6 +32,10 @@ export interface DeckSettings {
   pageMargin?: number;
   /** Which paper edge is the binding, so fronts and backs align after a flip. */
   duplexFlip?: DuplexFlip;
+  /** Whether a note's physical cards print side by side, uncut, to be folded, and which face goes where. */
+  fold?: Fold;
+  /** Millimetres between the columns of a folding deck — a hinge between a fold's panels, to cut out before laminating. 0 folds along a crease. */
+  foldGap?: number;
   /** Alignment marks at each card's corners. Fields merge, so one can change alone. */
   cutMarks?: CutMarks;
   /** Whether to print the system's background textures. Defaults from the settings, which also govern the card shown in its note. */
@@ -43,6 +47,20 @@ export interface DeckSettings {
 }
 
 export type DuplexFlip = "long-edge" | "short-edge";
+
+/**
+ * Whether, and how, a note's cards fold. The faces are numbered in reading
+ * order — the first card's front and back, then the second's, and on.
+ */
+export type Fold =
+  /** Every card is cut out on its own. */
+  | "off"
+  /** Page 1 on the left, its fold on the right: 1, 2, 3 across the front, 4, 5, 6 across the back — unfolded, a strip with a front and a back. */
+  | "strip"
+  /** Page 1 on the right, its fold on the left: 5, 6, 1 across the front, 2, 3, 4 across the back — folded inwards, page 1 is a cover with the last page behind it. */
+  | "cover"
+  /** Sheets of two, nested and folded down the middle like a printed booklet: 8 | 1 and 2 | 7, then 6 | 3 and 4 | 5. */
+  | "booklet";
 
 export type PaperBackground =
   /** Use the system's background images. */
@@ -73,6 +91,8 @@ const DECK_SETTINGS: SettingTable<DeckSettings> = {
   paperSize: { key: "paper-size", parse: parsePaperSize },
   pageMargin: { key: "page-margin", parse: nonNegativeNumber },
   duplexFlip: { key: "duplex-flip", parse: oneOf(["long-edge", "short-edge"]) },
+  fold: { key: "fold", parse: oneOf(["off", "strip", "cover", "booklet"]) },
+  foldGap: { key: "fold-gap", parse: nonNegativeNumber },
   cutMarks: {
     key: "cut-marks",
     parse: parseCutMarks,

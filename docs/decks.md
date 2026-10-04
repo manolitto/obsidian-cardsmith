@@ -91,6 +91,8 @@ consecutively.
 | `page-margin` | Blank space around the card grid, in millimetres. The margin yields where the paper is too small for it — the card never does. |
 | `cut-marks` | `{enabled: true, length: 3, margin: 0, color: '#aaaaaa', weight: 0.25}` — a cross at every card corner, its arms along the cuts and `margin` mm clear of the corner, printed over the cards. An arm on a card is `length` mm long; an arm that leaves the block of cards runs on to the paper's edge, so a guillotine can be set against it. The fields merge, so one can change alone. A page that holds a single card gets none. |
 | `duplex-flip` | Which edge is the binding when printing duplex, `long-edge` or `short-edge`, so a back lands behind its front. |
+| `fold` | `off` (default), `strip`, `cover` or `booklet`: a note's cards printed side by side, uncut, and folded instead of cut apart — see *Folded cards*. |
+| `fold-gap` | Millimetres between the cards of a folding deck, so that a folded card can be laminated with a hinge — see *Laminating a folded card*. Default `0`, a crease. |
 | `paper-background` | `textured` prints the system's background pictures, `plain` leaves them out. Default: the plugin setting. |
 
 The cards are packed without gaps on one grid and centred inside the
@@ -116,7 +118,88 @@ pages then.
 Pages come in print order: a sheet's front, then its back — when any card
 in the deck has one. On the back page every card sits where its front
 lands after the flip, so a duplex print aligns from the first sheet to the
-last. A deck without backs prints no blank sheets.
+last. A deck without backs prints no blank sheets. A folding deck places
+folds side by side in a row, and the same holds for each of their panels.
+
+## Folded cards
+
+A note whose text runs onto several cards can print them as one strip of
+paper instead, folded rather than cut apart: `fold: strip`, `cover` or
+`booklet`. The faces are numbered in reading order: the first card's
+front is 1, its back 2, the second card's front 3, and on. Each row below
+is one side of the paper as you look at it, the back after turning it
+over like a page.
+
+```
+              fold: strip              fold: cover              fold: booklet
+
+2 cards       front  1 2               front  4 1               the same as cover
+              back   3 4               back   2 3
+
+3 cards       front  1 2 3             front  5 6 1             sheet 1  front 8 1
+              back   4 5 6             back   2 3 4                      back  2 7
+                                                                sheet 2  front 6 3
+4 cards       front  1 2 3 4           front  6 7 8 1                    back  4 5
+              back   5 6 7 8           back   2 3 4 5           (pages 7, 8 blank)
+```
+
+- **`strip`** — page 1 on the left, its fold on the right. Unfolded, the
+  card is a strip with a front and a back: read across the front, turn
+  it over, read on across the back.
+- **`cover`** — page 1 on the right, its fold on the left, like a book's
+  spine. Fold the panels inwards and page 1 is the cover, with the last
+  page behind it; open it and the rest reads in order. Two cards make a
+  greeting card.
+- **`booklet`** works like a printer's booklet setting: sheets of two
+  cards, laid inside one another and folded down the middle, so the pages
+  read like a little book. The pages are padded with blank ones to a
+  multiple of four — three cards are six faces, so pages 7 and 8 are
+  blank.
+
+`strip` and `cover` fold a note as far as one row of the grid
+reaches — two poker cards on A4 make a card that opens, three a leaflet
+— and go on in a further piece when the note has more cards than a row
+holds. A note on one card prints as a card under every fold, and copies
+of a note are separate folds.
+
+Folds go into the rows in deck order, beside single cards. A fold that
+does not fit what is left of a row starts the next one; the gap stays
+empty, so the print order is the deck's order. A folding deck needs at
+least two cards across; when `paper-size` leaves the orientation free, it
+picks the one that holds more cards in pairs — poker cards on A4 go
+landscape, four across, rather than three across with every third place
+left over.
+
+The cut marks go round each piece of paper — a fold's panels together —
+and never along a crease. Each end of a crease gets a dashed fold mark
+instead, on, off, coloured and weighted with the cut marks.
+
+A folded card is two or more layers of paper, back to back, so the front
+and back of a duplex print have to meet more exactly than for a card
+that is cut out: print a test sheet first.
+
+### Laminating a folded card
+
+Laminated along a crease, paper and film fold stiffly and the card springs
+open. A **hinge** folds instead: with `fold-gap: 2`, the cards stand 2 mm
+apart and the gap between two panels of one fold is printed as a grey
+strip.
+
+1. Cut the grey strips out with a craft knife, along the cut marks either
+   side. Cut nothing else — the sheet stays in one piece.
+2. Laminate the whole sheet. Where a strip was, the film seals to itself.
+3. Cut the cards out. Each fold now bends along its film hinge, lies flat
+   when closed and stays closed.
+
+2 mm suits most cards — wide enough for the film to seal in the slot,
+narrow enough to cut cleanly; give a panel that folds inside another —
+the inner panel of a three-card `cover` — 3 mm. Below about 1.5 mm the
+film may not seal. Print a test sheet with two or three widths to find
+yours. Thin film (80 µm) folds more easily
+than thick. The gap stands between every two cards across, not only
+inside a fold, so a row may hold one card fewer: three poker cards no
+longer fit across A4 portrait inside a 10 mm margin. The grey strips are
+printed even with the cut marks off, and only on the front of the sheet.
 
 ## The block in reading view
 

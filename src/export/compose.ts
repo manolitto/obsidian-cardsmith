@@ -1,6 +1,6 @@
 import type { PhysicalCard } from "../deck/copies";
 import type { Deck } from "../deck/pipeline";
-import type { CutMarks, DuplexFlip } from "../definitions/deck-settings";
+import type { CutMarks, DuplexFlip, Fold } from "../definitions/deck-settings";
 import type { CardSize } from "../model/card-size";
 import { DEFAULT_PAPER_PRESET, PAPER_PRESETS, type PaperSize } from "../model/paper-size";
 
@@ -19,6 +19,14 @@ import { DEFAULT_PAPER_PRESET, PAPER_PRESETS, type PaperSize } from "../model/pa
  * room for a single card it yields, on that axis, to what the paper has —
  * so a card on paper its own size fills the page edge to edge, whatever
  * margin the deck asked for.
+ *
+ * A deck may fold: the physical cards of one note then print side by side
+ * in one row, uncut, and the strip is folded instead of cut apart. The
+ * grid stays a grid of cards; a fold only never breaks across a row.
+ * Nothing changes for the back page: each panel's back lies behind it as
+ * any card's does. With a fold gap, the columns stand that far apart, and
+ * the gap between two panels of one fold is a hinge: printed as a strip to
+ * cut out, so that a laminate seals to itself there and folds as film.
  */
 
 /** The grid a deck is imposed in: the paper the right way round, and where the cards sit on it. */
@@ -28,6 +36,8 @@ export interface Grid {
   card: CardSize;
   columns: number;
   rows: number;
+  /** Millimetres between two columns; 0 packs them edge to edge. */
+  gap: number;
   /** The grid's top-left corner on the page. */
   originX: number;
   originY: number;
@@ -35,7 +45,7 @@ export interface Grid {
 
 /** One side of one card at one place on a page. */
 export interface Cell {
-  /** The card's position in the deck, so a front and its back can be told to belong together. */
+  /** The place's position in print order, so a front and the back behind it can be told to belong together. */
   index: number;
   side: "front" | "back";
   name: string;
@@ -44,6 +54,8 @@ export interface Cell {
   y: number;
   /** The settled face; absent for the back of a card that has none — the place stays empty. */
   html?: string;
+  /** Set when the place is a panel of a fold: which fold, and which of its panels, counted from 1. */
+  fold?: { chunk: number; panel: number; panels: number };
 }
 
 export interface Page {
@@ -51,6 +63,17 @@ export interface Page {
   cells: Cell[];
   /** The cut marks, as lines in millimetres on the page. */
   marks: Line[];
+  /** The fold marks, likewise. */
+  folds: Line[];
+  /** The hinges to cut out, on a front page whose deck folds with a gap. */
+  hinges: Rect[];
+}
+
+export interface Rect {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
 }
 
 export interface Line {
@@ -68,30 +91,51 @@ export interface Composable {
   pageMargin: number;
   duplexFlip: DuplexFlip;
   cutMarks: CutMarks;
+  /** Absent: `off`. */
+  fold?: Fold;
+  /** Millimetres between the columns of a folding deck; absent or under `off`, none. */
+  foldGap?: number;
 }
 
 /**
  * Lay the grid out. `auto` orientation tries the paper both ways and takes
  * the one that holds more cards, portrait on a tie. A card that does not
- * fit the paper even once is an error naming both.
+ * fit the paper even once is an error naming both. `minColumns` — two for
+ * a deck that folds — has `auto` count only the cards that fit in runs of
+ * that many across, so it never picks a way round with fewer, and a fixed
+ * one with fewer is an error of its own. `gap` stands the columns that far
+ * apart.
  */
-export function layoutGrid(paper: PaperSize, card: CardSize, pageMargin: number): Grid {
+export function layoutGrid(
+  paper: PaperSize,
+  card: CardSize,
+  pageMargin: number,
+  minColumns = 1,
+  gap = 0
+): Grid {
   const short = Math.min(paper.width, paper.height);
   const long = Math.max(paper.width, paper.height);
-  const portrait = fit({ width: short, height: long }, card, pageMargin);
-  const landscape = fit({ width: long, height: short }, card, pageMargin);
+  const portrait = fit({ width: short, height: long }, card, pageMargin, gap);
+  const landscape = fit({ width: long, height: short }, card, pageMargin, gap);
+  // Counted in runs of `minColumns`: a folding deck's place left over at
+  // the end of an odd row holds a single card at best.
+  const holds = (g: Grid) => Math.floor(g.columns / minColumns) * minColumns * g.rows;
   const chosen =
     paper.orientation === "portrait"
       ? portrait
       : paper.orientation === "landscape"
         ? landscape
-        : landscape.columns * landscape.rows > portrait.columns * portrait.rows
+        : holds(landscape) > holds(portrait)
           ? landscape
           : portrait;
 
+  const where = `${chosen.paper.width} × ${chosen.paper.height} mm paper`;
   if (chosen.columns < 1 || chosen.rows < 1) {
+    throw new Error(`A ${card.width} × ${card.height} mm card does not fit on ${where}`);
+  }
+  if (chosen.columns < minColumns) {
     throw new Error(
-      `A ${card.width} × ${card.height} mm card does not fit on ${chosen.paper.width} × ${chosen.paper.height} mm paper`
+      `A fold needs ${minColumns} ${card.width} × ${card.height} mm cards side by side, and ${where} holds ${chosen.columns}`
     );
   }
   return chosen;
@@ -101,22 +145,28 @@ export function layoutGrid(paper: PaperSize, card: CardSize, pageMargin: number)
 function fit(
   paper: { width: number; height: number },
   card: CardSize,
-  margin: number
+  margin: number,
+  gap: number
 ): Grid {
   const marginX = Math.min(margin, Math.max(0, (paper.width - card.width) / 2));
   const marginY = Math.min(margin, Math.max(0, (paper.height - card.height) / 2));
   const usableWidth = paper.width - 2 * marginX;
   const usableHeight = paper.height - 2 * marginY;
-  const columns = Math.max(0, Math.floor(usableWidth / card.width));
+  const columns = Math.max(0, Math.floor((usableWidth + gap) / (card.width + gap)));
   const rows = Math.max(0, Math.floor(usableHeight / card.height));
+  const grid = { paper, card, columns, rows, gap, originX: 0, originY: 0 };
   return {
-    paper,
-    card,
-    columns,
-    rows,
-    originX: marginX + (usableWidth - columns * card.width) / 2,
+    ...grid,
+    originX: marginX + (usableWidth - blockWidth(grid)) / 2,
     originY: marginY + (usableHeight - rows * card.height) / 2,
   };
+}
+
+/** The width of the cards across, the gaps between them included. */
+function blockWidth(grid: Pick<Grid, "card" | "columns" | "gap">): number {
+  return grid.columns === 0
+    ? 0
+    : grid.columns * grid.card.width + (grid.columns - 1) * grid.gap;
 }
 
 /**
@@ -128,56 +178,186 @@ function fit(
  * On a back page each card sits where its front lands after the flip:
  * turned about the long edge, the columns mirror within the row; about
  * the short edge, the rows mirror within the column.
+ *
+ * A folding deck places folds, not cards: each goes into the current row
+ * when it fits what is left of it, else starts the next one — so the
+ * deck's order is the print order, and a row's remainder stays empty
+ * rather than taking a later card.
  */
 export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
-  const grid = layoutGrid(deck.paperSize, deck.cardSize, deck.pageMargin);
-  const perPage = grid.columns * grid.rows;
-  const withBacks = deck.cards.some((card) => card.back !== undefined);
-  const pages: Page[] = [];
+  const fold = deck.fold ?? "off";
+  const grid = layoutGrid(
+    deck.paperSize,
+    deck.cardSize,
+    deck.pageMargin,
+    fold === "off" ? 1 : 2,
+    fold === "off" ? 0 : (deck.foldGap ?? 0)
+  );
+  const pieces = foldPieces(deck.cards, fold, grid.columns);
+  const withBacks = pieces.some((piece) =>
+    piece.some((place) => place.back !== undefined)
+  );
+  const sheets: { front: Cell[]; back: Cell[] }[] = [];
 
-  for (let start = 0; start < deck.cards.length; start += perPage) {
-    const sheet = deck.cards.slice(start, start + perPage);
-    const front: Cell[] = [];
-    const back: Cell[] = [];
-    sheet.forEach((card, i) => {
-      const column = i % grid.columns;
-      const row = Math.floor(i / grid.columns);
-      const index = start + i;
-      front.push({
-        index,
+  // The running row, over every page, and the cards already in it.
+  let row = 0;
+  let used = 0;
+  for (const piece of pieces) {
+    if (used + piece.length > grid.columns) {
+      row++;
+      used = 0;
+    }
+    const local = row % grid.rows;
+    const sheet = (sheets[Math.floor(row / grid.rows)] ??= { front: [], back: [] });
+    piece.forEach((place, i) => {
+      const column = used + i;
+      const common = {
+        index: place.index,
+        name: place.name,
+        cardTypeId: place.cardTypeId,
+        ...(place.fold === undefined ? {} : { fold: place.fold }),
+      };
+      sheet.front.push({
+        ...common,
         side: "front",
-        name: card.name,
-        cardTypeId: card.cardTypeId,
-        ...at(grid, column, row),
-        ...(card.front === undefined ? {} : { html: card.front }),
+        ...at(grid, column, local),
+        ...(place.front === undefined ? {} : { html: place.front }),
       });
       const mirrored =
         deck.duplexFlip === "short-edge"
-          ? at(grid, column, grid.rows - 1 - row)
-          : at(grid, grid.columns - 1 - column, row);
-      back.push({
-        index,
+          ? at(grid, column, grid.rows - 1 - local)
+          : at(grid, grid.columns - 1 - column, local);
+      sheet.back.push({
+        ...common,
         side: "back",
-        name: card.name,
-        cardTypeId: card.cardTypeId,
         ...mirrored,
-        ...(card.back === undefined ? {} : { html: card.back }),
+        ...(place.back === undefined ? {} : { html: place.back }),
       });
     });
-    pages.push({
-      side: "front",
-      cells: front,
-      marks: cutMarks(front, grid, deck.cutMarks),
-    });
-    if (withBacks) {
-      pages.push({
-        side: "back",
-        cells: back,
-        marks: cutMarks(back, grid, deck.cutMarks),
-      });
-    }
+    used += piece.length;
+  }
+
+  const pages: Page[] = [];
+  for (const { front, back } of sheets) {
+    pages.push(page("front", front, grid, deck.cutMarks));
+    if (withBacks) pages.push(page("back", back, grid, deck.cutMarks));
   }
   return { pages, grid };
+}
+
+function page(side: "front" | "back", cells: Cell[], grid: Grid, marks: CutMarks): Page {
+  return {
+    side,
+    cells,
+    marks: cutMarks(cells, grid, marks),
+    folds: foldMarks(cells, grid, marks),
+    // The knife works from the front; behind a hinge there is no paper left.
+    hinges: side === "front" ? paperPieces(cells, grid).hinges : [],
+  };
+}
+
+/** One place on the paper — a card, or a panel of a fold — with the faces that go on it. */
+interface Place {
+  index: number;
+  name: string;
+  cardTypeId: string;
+  front?: string;
+  back?: string;
+  fold?: { chunk: number; panel: number; panels: number };
+}
+
+/**
+ * The deck's cards as pieces of paper, each a run of places side by side.
+ * A note printing's cards — one `group` — fold together; a run of one is a
+ * card as it is, whatever the fold, and with `off` every card is. The
+ * faces are numbered in reading order, the first card's front 1, its back
+ * 2, the second card's front 3, and on:
+ *
+ * - `strip` reads 1 to `k` across the front, page 1 on the left with its
+ *   fold on the right, and turned over like a page, on across the back —
+ *   unfolded, a strip with a front and a back;
+ * - `cover` puts page 1 on the right with its fold on the left, the last
+ *   pages before it — `k + 2` to `2k`, then 1 — and 2 to `k + 1` across
+ *   the back, so that folded inwards page 1 is a cover and the last page
+ *   lies behind it;
+ *
+ * both as far as a row reaches, the rest a further piece. `booklet` is a
+ * printer's booklet: the faces padded with blank pages to a multiple of
+ * four, then sheets of two panels, nested — of eight, the outer sheet
+ * 8 | 1 with 2 | 7 behind it, the inner 6 | 3 with 4 | 5.
+ */
+function foldPieces(
+  cards: readonly PhysicalCard[],
+  fold: Fold,
+  columns: number
+): Place[][] {
+  const out: Place[][] = [];
+  let index = 0;
+  const place = (
+    card: PhysicalCard,
+    front: string | undefined,
+    back: string | undefined,
+    panel: number,
+    panels: number
+  ): Place => ({
+    index: index++,
+    name: card.name,
+    cardTypeId: card.cardTypeId,
+    ...(front === undefined ? {} : { front }),
+    ...(back === undefined ? {} : { back }),
+    ...(panels > 1 ? { fold: { chunk: out.length, panel, panels } } : {}),
+  });
+
+  for (let start = 0; start < cards.length;) {
+    const reach = fold === "off" ? 1 : fold === "booklet" ? Infinity : columns;
+    let end = start + 1;
+    while (
+      end < cards.length &&
+      end - start < reach &&
+      cards[end]!.group === cards[start]!.group
+    ) {
+      end++;
+    }
+    const run = cards.slice(start, end);
+    start = end;
+    const faces = run.flatMap((card) => [card.front, card.back]);
+    const count = run.length;
+
+    if (count === 1) {
+      out.push([place(run[0]!, faces[0], faces[1], 1, 1)]);
+    } else if (fold === "booklet") {
+      const pages = 4 * Math.ceil(count / 2);
+      const face = (n: number) => faces[n - 1];
+      for (let sheet = 0; sheet < pages / 4; sheet++) {
+        const card = run[0]!;
+        const outer = pages - 2 * sheet;
+        const inner = 1 + 2 * sheet;
+        out.push([
+          place(card, face(outer), face(outer - 1), 1, 2),
+          place(card, face(inner), face(inner + 1), 2, 2),
+        ]);
+      }
+    } else {
+      // Panel `n` of `count`, counted from the left on the front; what lies
+      // behind it shows mirrored when the strip is turned over.
+      const face = (n: number) => faces[n - 1];
+      out.push(
+        run.map((card, i) => {
+          const n = i + 1;
+          return fold === "cover"
+            ? place(
+                card,
+                face(n < count ? count + 1 + n : 1),
+                face(count + 2 - n),
+                n,
+                count
+              )
+            : place(card, face(n), face(2 * count + 1 - n), n, count);
+        })
+      );
+    }
+  }
+  return out;
 }
 
 /** A built deck onto pages: its settings are the composition's inputs, the baseline having answered whatever the block did not. */
@@ -193,12 +373,14 @@ export function composeDeck(deck: Deck): { pages: Page[]; grid: Grid } {
     pageMargin: settings.pageMargin ?? 0,
     duplexFlip: settings.duplexFlip ?? "long-edge",
     cutMarks: settings.cutMarks ?? {},
+    fold: settings.fold ?? "off",
+    foldGap: settings.foldGap ?? 0,
   });
 }
 
 function at(grid: Grid, column: number, row: number): { x: number; y: number } {
   return {
-    x: grid.originX + column * grid.card.width,
+    x: grid.originX + column * (grid.card.width + grid.gap),
     y: grid.originY + row * grid.card.height,
   };
 }
@@ -222,29 +404,42 @@ function at(grid: Grid, column: number, row: number): { x: number; y: number } {
  * good as — a sheet for a screen, not for the guillotine. The rule reads
  * the grid, not the page, so the last page of a deck, part-filled, is
  * marked like the ones before it.
+ *
+ * A fold is one piece of paper: its corners are marked, the ends of its
+ * creases are not, and an arm that would run along a crease is left out
+ * — it would say "cut here" where the paper is folded. A fold with a gap
+ * is a card per panel again, every corner marked: the crosses either side
+ * of a hinge are the four cuts that take it out.
  */
 export function cutMarks(cells: readonly Cell[], grid: Grid, marks: CutMarks): Line[] {
   if (!marks.enabled || cells.length === 0) return [];
   if (grid.columns * grid.rows < 2) return [];
   const length = marks.length ?? 3;
   const gap = marks.margin ?? 0;
-  const { width, height } = grid.card;
+  const { height } = grid.card;
+  const { pieces, creases } = paperPieces(cells, grid);
 
-  // Keyed on the printed value: a corner reached from two cells is the
+  // Keyed on the printed value: a corner reached from two pieces is the
   // same corner, whatever the last bit of the arithmetic said.
   const corners = new Map<string, { x: number; y: number }>();
-  for (const cell of cells) {
-    for (const x of [cell.x, cell.x + width]) {
-      for (const y of [cell.y, cell.y + height]) {
+  for (const piece of pieces) {
+    for (const x of [piece.x, piece.x + piece.width]) {
+      for (const y of [piece.y, piece.y + height]) {
         const key = `${mm(x)},${mm(y)}`;
         if (!corners.has(key)) corners.set(key, { x, y });
       }
     }
   }
+  // A crease end, with the way the crease runs from it.
+  const alongCrease = new Set<string>();
+  for (const c of creases) {
+    alongCrease.add(`${mm(c.x1)},${mm(c.y1)},down`);
+    alongCrease.add(`${mm(c.x2)},${mm(c.y2)},up`);
+  }
 
   const block = {
     left: mm(grid.originX),
-    right: mm(grid.originX + grid.columns * width),
+    right: mm(grid.originX + blockWidth(grid)),
     top: mm(grid.originY),
     bottom: mm(grid.originY + grid.rows * height),
   };
@@ -259,23 +454,130 @@ export function cutMarks(cells: readonly Cell[], grid: Grid, marks: CutMarks): L
     const down = mm(y) === block.bottom ? grid.paper.height : y + gap + length;
     const left = mm(x) === block.left ? 0 : x - gap - length;
     const right = mm(x) === block.right ? grid.paper.width : x + gap + length;
-    arm({ x1: x, y1: up, x2: x, y2: y - gap });
-    arm({ x1: x, y1: y + gap, x2: x, y2: down });
+    const key = `${mm(x)},${mm(y)}`;
+    if (!alongCrease.has(`${key},up`)) arm({ x1: x, y1: up, x2: x, y2: y - gap });
+    if (!alongCrease.has(`${key},down`)) arm({ x1: x, y1: y + gap, x2: x, y2: down });
     arm({ x1: left, y1: y, x2: x - gap, y2: y });
     arm({ x1: x + gap, y1: y, x2: right, y2: y });
   }
   return out;
 }
 
-/** The marks of a page as an SVG the size of the paper, its units millimetres. */
+/**
+ * Fold marks for a page: at each end of every crease, an arm running on
+ * from it the way a cut arm would — `margin` clear, `length` long, to the
+ * paper's edge where the crease ends at the block's — drawn dashed, so a
+ * fold is never taken for a cut. An end where a cut meets the crease gets
+ * none: the cut's own arm is there. They follow the cut marks: on, off,
+ * colour and weight alike.
+ */
+export function foldMarks(cells: readonly Cell[], grid: Grid, marks: CutMarks): Line[] {
+  if (!marks.enabled) return [];
+  const { pieces, creases } = paperPieces(cells, grid);
+  if (creases.length === 0) return [];
+  const length = marks.length ?? 3;
+  const gap = marks.margin ?? 0;
+  const { height } = grid.card;
+  const corners = new Set<string>();
+  for (const piece of pieces) {
+    for (const x of [piece.x, piece.x + piece.width]) {
+      for (const y of [piece.y, piece.y + height]) corners.add(`${mm(x)},${mm(y)}`);
+    }
+  }
+  const top = mm(grid.originY);
+  const bottom = mm(grid.originY + grid.rows * height);
+  const out: Line[] = [];
+  for (const { x1: x, y1: start, y2: end } of creases) {
+    if (!corners.has(`${mm(x)},${mm(start)}`)) {
+      const from = mm(start) === top ? 0 : start - gap - length;
+      if (from < start - gap) out.push({ x1: x, y1: from, x2: x, y2: start - gap });
+    }
+    if (!corners.has(`${mm(x)},${mm(end)}`)) {
+      const to = mm(end) === bottom ? grid.paper.height : end + gap + length;
+      if (end + gap < to) out.push({ x1: x, y1: end + gap, x2: x, y2: to });
+    }
+  }
+  return out;
+}
+
+/**
+ * The pieces of paper a page is cut into — a card, or a fold's panels
+ * together — and the creases inside them, top to bottom. With a gap
+ * between the columns a fold has no crease on paper: each panel is a
+ * piece of its own, and the gap between two of them is a hinge.
+ */
+function paperPieces(
+  cells: readonly Cell[],
+  grid: Grid
+): {
+  pieces: { x: number; y: number; width: number }[];
+  creases: Line[];
+  hinges: Rect[];
+} {
+  const { width, height } = grid.card;
+  const pieces: { x: number; y: number; width: number }[] = [];
+  const creases: Line[] = [];
+  const hinges: Rect[] = [];
+  const folds = new Map<number, Cell[]>();
+  for (const cell of cells) {
+    if (cell.fold === undefined || grid.gap > 0)
+      pieces.push({ x: cell.x, y: cell.y, width });
+    if (cell.fold === undefined) continue;
+    const panels = folds.get(cell.fold.chunk) ?? [];
+    panels.push(cell);
+    folds.set(cell.fold.chunk, panels);
+  }
+  for (const panels of folds.values()) {
+    const left = Math.min(...panels.map((cell) => cell.x));
+    const y = panels[0]!.y;
+    const pitch = width + grid.gap;
+    if (grid.gap > 0) {
+      for (let i = 1; i < panels.length; i++) {
+        hinges.push({ x: left + i * pitch - grid.gap, y, width: grid.gap, height });
+      }
+      continue;
+    }
+    pieces.push({ x: left, y, width: panels.length * width });
+    for (let i = 1; i < panels.length; i++) {
+      creases.push({ x1: left + i * width, y1: y, x2: left + i * width, y2: y + height });
+    }
+  }
+  return { pieces, creases, hinges };
+}
+
+/**
+ * The marks of a page as an SVG the size of the paper, its units
+ * millimetres: the hinges first, filled light in the marks' colour —
+ * drawn whether or not the marks are, being what to cut out rather than a
+ * mark — then the cut marks, then the fold marks dashed.
+ */
 export function cutMarksSvg(page: Page, grid: Grid, marks: CutMarks): string {
-  if (page.marks.length === 0) return "";
+  if (page.marks.length === 0 && page.folds.length === 0 && page.hinges.length === 0)
+    return "";
   const { width, height } = grid.paper;
   const stroke = marks.color ?? "#aaaaaa";
   const weight = marks.weight ?? 0.25;
-  const lines = page.marks.map(
-    (l) => `<line x1="${mm(l.x1)}" y1="${mm(l.y1)}" x2="${mm(l.x2)}" y2="${mm(l.y2)}"/>`
-  );
+  const line = (l: Line) =>
+    `<line x1="${mm(l.x1)}" y1="${mm(l.y1)}" x2="${mm(l.x2)}" y2="${mm(l.y2)}"/>`;
+  const lines: string[] = [];
+  if (page.hinges.length > 0) {
+    lines.push(
+      `<g class="cs-hinges" fill="${stroke}" fill-opacity="0.6" stroke="none">`,
+      ...page.hinges.map(
+        (r) =>
+          `<rect x="${mm(r.x)}" y="${mm(r.y)}" width="${mm(r.width)}" height="${mm(r.height)}"/>`
+      ),
+      "</g>"
+    );
+  }
+  lines.push(...page.marks.map(line));
+  if (page.folds.length > 0) {
+    lines.push(
+      `<g class="cs-fold-marks" stroke-dasharray="${mm(4 * weight)} ${mm(3 * weight)}">`,
+      ...page.folds.map(line),
+      "</g>"
+    );
+  }
   return (
     `<svg class="cs-cut-marks" width="${width}mm" height="${height}mm" viewBox="0 0 ${width} ${height}" ` +
     `stroke="${stroke}" stroke-width="${weight}" xmlns="http://www.w3.org/2000/svg">` +
@@ -291,17 +593,21 @@ export function mm(value: number): string {
 
 /**
  * The composition as text: page count, then per page each cell's side,
- * position and card name — what a reviewer reads when a card moves.
+ * position, panel when it folds, and card name — what a reviewer reads
+ * when a card moves.
  */
 export function compositionText(pages: readonly Page[], grid: Grid): string {
   const lines = [
-    `${pages.length} ${pages.length === 1 ? "page" : "pages"} · ${mm(grid.paper.width)} × ${mm(grid.paper.height)} mm · ${grid.columns} × ${grid.rows} of ${mm(grid.card.width)} × ${mm(grid.card.height)} mm at ${mm(grid.originX)}, ${mm(grid.originY)}`,
+    `${pages.length} ${pages.length === 1 ? "page" : "pages"} · ${mm(grid.paper.width)} × ${mm(grid.paper.height)} mm · ${grid.columns} × ${grid.rows} of ${mm(grid.card.width)} × ${mm(grid.card.height)} mm at ${mm(grid.originX)}, ${mm(grid.originY)}${grid.gap > 0 ? ` · gap ${mm(grid.gap)} mm` : ""}`,
   ];
   pages.forEach((page, i) => {
-    lines.push(`${i + 1}. ${page.side} · ${page.marks.length} marks`);
+    lines.push(
+      `${i + 1}. ${page.side} · ${page.marks.length} marks${page.folds.length > 0 ? ` · ${page.folds.length} fold marks` : ""}${page.hinges.length > 0 ? ` · ${page.hinges.length} ${page.hinges.length === 1 ? "hinge" : "hinges"}` : ""}`
+    );
     for (const cell of page.cells) {
+      const panel = cell.fold ? `panel ${cell.fold.panel}/${cell.fold.panels} ` : "";
       lines.push(
-        `   ${cell.side} #${cell.index + 1} at ${mm(cell.x)}, ${mm(cell.y)} ${cell.html === undefined ? "(empty) " : ""}${cell.cardTypeId}/${cell.name}`
+        `   ${cell.side} #${cell.index + 1} at ${mm(cell.x)}, ${mm(cell.y)} ${panel}${cell.html === undefined ? "(empty) " : ""}${cell.cardTypeId}/${cell.name}`
       );
     }
   });

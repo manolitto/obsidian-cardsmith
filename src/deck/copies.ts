@@ -10,6 +10,12 @@ export interface PhysicalCard {
   /** The note's name, for messages. */
   name: string;
   cardTypeId: string;
+  /**
+   * Which printing of which note the card belongs to, counted up through
+   * the deck: the cards one note spilled onto share it, each copy has its
+   * own. What a fold keeps together.
+   */
+  group: number;
   front?: string;
   back?: string;
 }
@@ -44,6 +50,7 @@ export function applyCopies(
 ): PhysicalCard[] {
   const matched = new Set<CardCopies>();
   const out: PhysicalCard[] = [];
+  let group = 0;
 
   for (const { path, times = 1, card } of cards) {
     const override =
@@ -52,11 +59,12 @@ export function applyCopies(
     const count = times * (override.at(-1)?.copies ?? card.settings.copies ?? 1);
 
     const side = card.settings.side ?? "both";
-    for (let i = 0; i < count; i++) {
+    for (let i = 0; i < count; i++, group++) {
       for (const faces of card.cards) {
         out.push({
           name: card.name,
           cardTypeId: card.cardTypeId,
+          group,
           ...(faces.front === undefined || side === "back" ? {} : { front: faces.front }),
           ...(faces.back === undefined || side === "front" ? {} : { back: faces.back }),
         });
