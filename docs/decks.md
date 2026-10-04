@@ -181,7 +181,7 @@ that is cut out: print a test sheet first.
 ### Laminating a folded card
 
 Laminated along a crease, paper and film fold stiffly and the card springs
-open. A **hinge** folds instead: with `fold-gap: 2`, the cards stand 2 mm
+open. A **hinge** folds instead: with `fold-gap: 1.5`, the cards stand 1.5 mm
 apart and the gap between two panels of one fold is printed as a grey
 strip.
 
@@ -191,11 +191,10 @@ strip.
 3. Cut the cards out. Each fold now bends along its film hinge, lies flat
    when closed and stays closed.
 
-2 mm suits most cards — wide enough for the film to seal in the slot,
-narrow enough to cut cleanly; give a panel that folds inside another —
-the inner panel of a three-card `cover` — 3 mm. Below about 1.5 mm the
-film may not seal. Print a test sheet with two or three widths to find
-yours. Thin film (80 µm) folds more easily
+1.5 mm has proved itself for a single fold on 120 g paper in 80 µm film;
+thicker paper or film wants a little more. Give a panel that folds inside
+another — the inner panel of a three-card `cover` — 3 mm, since it has to
+go round the one it is tucked under. Thin film (80 µm) folds more easily
 than thick. The gap stands between every two cards across, not only
 inside a fold, so a row may hold one card fewer: three poker cards no
 longer fit across A4 portrait inside a 10 mm margin. The grey strips are
