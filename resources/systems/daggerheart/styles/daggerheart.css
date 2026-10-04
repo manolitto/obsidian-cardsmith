@@ -70,6 +70,22 @@
   overflow-wrap: break-word;
 }
 
+/*
+ * Running text hyphenates: the card text, the italic line under a title,
+ * and the stat block's lines. The root carries the card's `lang`, so the
+ * browser breaks by the right dictionary — a German card's long compounds
+ * no longer leave a ragged column on a narrow card. Only words of seven
+ * letters or more, at least three on each side of the break, so short
+ * words are never split. Titles, ribbons, the pennant and the back stay
+ * whole: they are one line and are scaled instead.
+ */
+.daggerheart .dh-body,
+.daggerheart .dh-subtitle,
+.daggerheart .dh-sb-lead {
+  hyphens: auto;
+  hyphenate-limit-chars: 7 3 3;
+}
+
 .card-root.daggerheart strong,
 .card-root.daggerheart b { font-weight: 700; }
 .card-root.daggerheart em,
@@ -311,7 +327,8 @@
  */
 .card-root.daggerheart.dh-statblock { --card-font-size-min: 1.9mm; }
 
-.card-root.daggerheart.adversary-card { --dh-accent: #7a2230; }
+.card-root.daggerheart.adversary-card   { --dh-accent: #7a2230; }
+.card-root.daggerheart.environment-card { --dh-accent: #2d5a4c; }
 
 /* The head: the name and the tier line on the card's colour. */
 .daggerheart .dh-sb-head {

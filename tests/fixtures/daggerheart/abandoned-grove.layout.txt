@@ -1,0 +1,15 @@
+abandoned-grove · 1 card · 2 faces · clipped: no
+1. front [cs-overflow-active cs-layout-default cs-front-first cs-front-has-next] scale 0.69
+   div.dh-body
+     p "Overgrown Battlefield – Passive: There has …"
+     ul (1 items) "Traces of a battle (broken weapons …"
+2. back-as-front [cs-overflow-back-as-front cs-overflow-active cs-layout-default cs-front-continued] scale 0.69
+   div.dh-body
+     ul (2 items) "A moss-covered tree trunk is actually …"
+     p "Why did these groups come to …"
+     p "Barbed Vines – Action: Pick a …"
+     p "How many vines are there? Where …"
+     p "You Are Not Welcome Here – …"
+     p "What are the grove guardians concealing? …"
+     p "Defiler – Action: Spend a Fear …"
+     p "What color does the grass turn …"

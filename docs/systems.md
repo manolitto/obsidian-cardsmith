@@ -220,6 +220,7 @@ makes free to reproduce; the German ones are translated from it.
 | <img src="images/cards/daggerheart/community.webp" alt="daggerheart community card, front and back" width="360"> | `community` | the name, an italic line on where one grew up, the community feature |
 | <img src="images/cards/daggerheart/subclass.webp" alt="daggerheart subclass card, front and back" width="360"> | `subclass` | the class on the ribbon, the subclass as the title, foundation, specialization or mastery under it, the spellcast trait |
 | <img src="images/cards/daggerheart/adversary.webp" alt="daggerheart adversary card, front and back" width="360"> | `adversary` | the stat block for the GM: tier and role, the description, motives and tactics, Difficulty, thresholds, HP and Stress in a box, the standard attack, the experience, the features; a long block spills onto the back first |
+| <img src="images/cards/daggerheart/environment.webp" alt="daggerheart environment card, front and back" width="360"> | `environment` | the scene on the same front: tier and type, the description, the impulses, the Difficulty, the potential adversaries, the features with the GM's questions in italics |
 
 Poker; `en`, `de`, the German captions the terms of the official German
 edition — *Zauber*, *Fähigkeit*, *Zauberbuch*, *Rückruf*, *Basis*,
@@ -228,5 +229,6 @@ domain, a kind of card, a class, a subclass stage or a trait in English
 or in German; the card prints it in its own language. A long character
 card spills onto further cards, never onto the back; an adversary uses
 its back first, and from its second face on shows the name and the
-features only. The German role names and "Motive & Taktiken" on the
-adversary are provisional.
+features only; an environment likewise. Running text hyphenates by the
+card's language. The German role names, "Motive & Taktiken",
+"Schauplatz" and the environment types are provisional.

@@ -39,7 +39,13 @@
    back #16 at 136.5, 192.5 adversary/acid-burrower
    back #17 at 73.5, 192.5 adversary/dire-wolf
    back #18 at 10.5, 192.5 adversary/jagged-knife-lackey
-5. front · 16 marks
+5. front · 40 marks
    front #19 at 10.5, 16.5 adversary/schreckenswolf
-6. back · 16 marks
+   front #20 at 73.5, 16.5 environment/abandoned-grove
+   front #21 at 136.5, 16.5 environment/ambushed
+   front #22 at 10.5, 104.5 environment/hinterhalt
+6. back · 40 marks
    back #19 at 136.5, 16.5 adversary/schreckenswolf
+   back #20 at 73.5, 16.5 environment/abandoned-grove
+   back #21 at 10.5, 16.5 environment/ambushed
+   back #22 at 136.5, 104.5 environment/hinterhalt

@@ -1,0 +1,115 @@
+# An environment: the scene as a stat block, on the same front as an
+# adversary. The head carries the name and the tier and type, then the
+# one-line description, the impulses, the Difficulty alone in the box,
+# the potential adversaries, and the features as the text — each a bold
+# `**Name – Action:** …` paragraph, the GM's questions after it in
+# italics. A long environment spills onto the back first.
+front-template: templates/statblock-front.hbs
+back-template: templates/back.hbs
+overflow-mode: back-then-cards
+
+# "Schauplatz" and the German type names are provisional: the official
+# German edition's terms for the GM side were not at hand.
+translations:
+  en:
+    back-label: "Environment"
+    front-tier-label: "Tier"
+    front-motives-label: "Impulses:"
+    front-difficulty-label: "Difficulty"
+    front-extra-label: "Potential Adversaries:"
+    front-body-label: "Features"
+  de:
+    back-label: "Schauplatz"
+    front-tier-label: "Rang"
+    front-motives-label: "Impulse:"
+    front-difficulty-label: "Schwierigkeit"
+    front-extra-label: "Mögliche Gegner:"
+    front-body-label: "Merkmale"
+
+properties:
+  name:
+    sample:
+      en: "Ambushed"
+      de: "Hinterhalt"
+
+  # The stat block has no picture place.
+  image:
+    slot: ~
+
+  tier:
+    slot: front-tier
+    aliases: [rang]
+    description:
+      en: "The tier, 1 to 4."
+      de: "Der Rang, 1 bis 4."
+    sample: 1
+
+  type:
+    slot: front-role
+    aliases: [kind, typ, art]
+    description:
+      en: "The type — Exploration, Social, Traversal or Event."
+      de: "Die Art — Erkundung, Gesellschaft, Durchquerung oder Ereignis; englische Namen gehen auch."
+    sample:
+      en: "Event"
+      de: "Ereignis"
+
+  blurb:
+    slot: front-subtitle
+    aliases: [summary-line, flavor, flavour, kurzbeschreibung, beschreibungszeile]
+    description:
+      en: "The one-line description, in italics under the head."
+      de: "Die einzeilige Beschreibung, kursiv unter dem Kopf."
+    sample:
+      en: "An ambush is set to catch an unsuspecting party off-guard."
+      de: "Ein Hinterhalt soll eine ahnungslose Gruppe überrumpeln."
+
+  impulses:
+    slot: front-motives
+    aliases: [impulse]
+    description:
+      en: "The impulses — what the place pushes toward, comma-separated."
+      de: "Die Impulse — wozu der Ort drängt, mit Kommas getrennt."
+    sample:
+      en: "Overwhelm, scatter, surround"
+      de: "Überwältigen, zerstreuen, umzingeln"
+
+  difficulty:
+    slot: front-difficulty
+    aliases: [diff, schwierigkeit, schwierigkeitsgrad]
+    description:
+      en: "The Difficulty — a number, or \"Special\"."
+      de: "Der Schwierigkeitsgrad — eine Zahl oder „Speziell“."
+    sample:
+      en: "Special"
+      de: "Speziell"
+
+  potential-adversaries:
+    slot: front-extra
+    aliases: [adversaries, potential, gegner, mögliche-gegner, moegliche-gegner]
+    description:
+      en: "The potential adversaries — groups with their members in brackets, or \"Any\"."
+      de: "Mögliche Gegner — Gruppen mit ihren Mitgliedern in Klammern, oder „Beliebig“."
+    sample:
+      en: "Any"
+      de: "Beliebig"
+
+  description:
+    aliases: [features, merkmale]
+    sample:
+      en: "**Relative Strength – Passive:** The Difficulty of this environment equals that of the adversary with the highest Difficulty.\n\n*Who cues the ambush? What makes it clear they're in charge?*\n\n**Surprise! – Action:** The ambushers reveal themselves to the party, you gain 2 Fear, and the spotlight immediately shifts to one of the ambushing adversaries.\n\n*What do the ambushers want from the party? How do their tactics in the ambush reflect that?*"
+      de: "**Relative Stärke – Passiv:** Der Schwierigkeitsgrad dieses Schauplatzes entspricht dem des gegnerischen Charakters mit dem höchsten Schwierigkeitsgrad.\n\n*Wer gibt das Zeichen zum Angriff? Woran erkennt man, dass er das Sagen hat?*\n\n**Überraschung! – Aktion:** Die Angreifenden geben sich zu erkennen, du erhältst 2 Furcht, und das Rampenlicht wechselt sofort zu einem der gegnerischen Charaktere im Hinterhalt.\n\n*Was wollen die Angreifenden von der Gruppe? Wie zeigt sich das in ihrer Taktik?*"
+
+glyphs:
+  front-role:
+    exploration:   { en: "Exploration", de: "Erkundung" }
+    erkundung:     { en: "Exploration", de: "Erkundung" }
+    social:        { en: "Social",      de: "Gesellschaft" }
+    gesellschaft:  { en: "Social",      de: "Gesellschaft" }
+    traversal:     { en: "Traversal",   de: "Durchquerung" }
+    durchquerung:  { en: "Traversal",   de: "Durchquerung" }
+    event:         { en: "Event",       de: "Ereignis" }
+    ereignis:      { en: "Event",       de: "Ereignis" }
+  front-difficulty:
+    special:       { en: "Special",     de: "Speziell" }
+    speziell:      { en: "Special",     de: "Speziell" }

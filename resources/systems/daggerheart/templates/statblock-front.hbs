@@ -34,7 +34,7 @@
 
     {{#if (or (slot "front-difficulty") (slot "front-thresholds") (slot "front-hp") (slot "front-stress"))}}
     <div class="dh-sb-stats">
-      {{#if (slot "front-difficulty")}}<div class="dh-sb-stat"><span class="dh-sb-stat-label">{{slot-label "front-difficulty"}}</span><span class="dh-sb-stat-value">{{slot "front-difficulty" plain=true}}</span></div>{{/if}}
+      {{#if (slot "front-difficulty")}}<div class="dh-sb-stat"><span class="dh-sb-stat-label">{{slot-label "front-difficulty"}}</span><span class="dh-sb-stat-value">{{slot "front-difficulty" glyph=true plain=true}}</span></div>{{/if}}
       {{#if (slot "front-thresholds")}}<div class="dh-sb-stat"><span class="dh-sb-stat-label">{{slot-label "front-thresholds"}}</span><span class="dh-sb-stat-value">{{slot "front-thresholds" glyph=true plain=true}}</span></div>{{/if}}
       {{#if (slot "front-hp")}}<div class="dh-sb-stat"><span class="dh-sb-stat-label">{{slot-label "front-hp"}}</span><span class="dh-sb-stat-value">{{slot "front-hp" plain=true}}</span></div>{{/if}}
       {{#if (slot "front-stress")}}<div class="dh-sb-stat"><span class="dh-sb-stat-label">{{slot-label "front-stress"}}</span><span class="dh-sb-stat-value">{{slot "front-stress" plain=true}}</span></div>{{/if}}
