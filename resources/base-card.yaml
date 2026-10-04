@@ -135,17 +135,15 @@ page-margin: 10
 # and backs align after the flip. `long-edge` or `short-edge`.
 duplex-flip: long-edge
 
-# How many of a note's physical cards print side by side, uncut, so the strip
-# is folded instead of cut apart: 2 makes a card that opens, 3 a leaflet with
-# two folds. A note with fewer cards takes fewer panels; one with more makes
-# several folds. 1 folds nothing.
-fold-panels: 1
-
-# Which face of a fold goes where. `pairs`: each panel is one card, so the
-# faces 1 and 3 sit side by side with 2 and 4 behind them. `leporello`: read
-# across, then turned over like a page — 1, 2, 3 on one side, 4, 5, 6 on the
-# other.
-fold-order: pairs
+# Whether a note that runs onto several cards prints them side by side,
+# uncut, as one strip folded instead of cut apart — and which face goes where.
+# The faces count in reading order: the first card's front 1, its back 2, the
+# second card's front 3, and on. `pairs`: each panel is one card, 1 and 3
+# side by side, 2 and 4 behind them. `leporello`: 1, 2, 3 across one side,
+# 4, 5, 6 across the other. Both fold a note as far as one row of the grid
+# reaches. `booklet`: sheets of two cards, nested and folded down the middle
+# like a printer's booklet. `off` cuts every card out.
+fold: off
 
 # Alignment marks at each card's outer corners; a page that holds a single
 # card gets none. The fields merge across layers, so a deck can change the

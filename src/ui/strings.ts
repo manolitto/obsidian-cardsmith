@@ -139,10 +139,8 @@ const en = {
     "Blank space around the card grid, in millimetres. Yields where the paper is too small for it; the card never does.",
   "deck-key.duplex-flip":
     "Which paper edge is the binding when printing duplex, so fronts and backs align: `long-edge` or `short-edge`.",
-  "deck-key.fold-panels":
-    "How many of a note's cards print side by side, uncut, to be folded: 2 makes a card that opens, 3 a leaflet. 1 folds nothing.",
-  "deck-key.fold-order":
-    "Which face of a fold goes where: `pairs` (1 and 3 side by side, 2 and 4 behind them) or `leporello` (1, 2, 3 on one side, 4, 5, 6 on the other).",
+  "deck-key.fold":
+    "A note's cards side by side, uncut, folded instead of cut apart: `pairs` (1 and 3 side by side, 2 and 4 behind them), `leporello` (1, 2, 3 on one side, 4, 5, 6 on the other), `booklet` (nested sheets of two, like a printer's booklet) or `off`.",
   "deck-key.cut-marks":
     "The cut marks at every card corner; the fields merge, so one can change alone.",
   "deck-key.paper-background":
@@ -345,10 +343,8 @@ const de: Strings = {
     "Rand um das Kartenraster, in Millimetern. Weicht, wo das Papier zu klein dafür ist; die Karte nie.",
   "deck-key.duplex-flip":
     "Welche Papierkante beim Duplexdruck die Bindung ist, damit Vorder- und Rückseiten übereinanderliegen: `long-edge` oder `short-edge`.",
-  "deck-key.fold-panels":
-    "Wie viele Karten einer Notiz ungeschnitten nebeneinander gedruckt werden, um gefalzt zu werden: 2 ergibt eine Klappkarte, 3 einen Falzflyer. 1 falzt nichts.",
-  "deck-key.fold-order":
-    "Welche Seite eines Falzes wohin kommt: `pairs` (1 und 3 nebeneinander, 2 und 4 dahinter) oder `leporello` (1, 2, 3 auf einer Seite, 4, 5, 6 auf der anderen).",
+  "deck-key.fold":
+    "Die Karten einer Notiz ungeschnitten nebeneinander, gefalzt statt geschnitten: `pairs` (1 und 3 nebeneinander, 2 und 4 dahinter), `leporello` (1, 2, 3 auf einer Seite, 4, 5, 6 auf der anderen), `booklet` (ineinandergelegte Bögen zu zwei Karten, wie die Broschüre eines Druckertreibers) oder `off`.",
   "deck-key.cut-marks":
     "Die Schnittmarken an jeder Kartenecke; die Felder verschmelzen, eines lässt sich allein ändern.",
   "deck-key.paper-background":
