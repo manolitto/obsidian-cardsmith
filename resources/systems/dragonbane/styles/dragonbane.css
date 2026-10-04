@@ -440,7 +440,12 @@
   text-transform: uppercase;
   text-align: center;
   margin: 0;
-  flex: 0 1 auto;
+  /* The whole width of the plaque, whatever the title's length: this box is
+     what the FontScaler fits the title into, and the overflow counter hangs
+     out of the title's last line into it. Shrunk to the text, it would leave
+     the counter no room at all and every overflowing card's title would be
+     set at the floor. */
+  flex: 1 1 auto;
   min-width: 0;
   /* Override the base `.card-title` nowrap/clip so a long name wraps. */
   white-space: normal;
@@ -488,19 +493,69 @@
   overflow-wrap: break-word;
 }
 
-/* "N / X" overflow page counter — a quiet subordinate beside the title.
-   It lives as a plaque flex sibling rather than inside `.card-title` so it
-   neither inherits the tracking nor inflates the title's measured height
-   (which would defeat the FontScaler's title auto-shrink on spawned
-   overflow faces). */
+/* "N / X" overflow page counter — a quiet subordinate after the title.
+   It sits inside the title's text, glued to its last word, so on a title
+   that wraps it lands on the last line — usually the short one — instead of
+   standing beside the whole block and taking its width from every line.
+
+   Out of flow, so the title stays centred: in flow, the counter's width
+   would be part of the last line and shift it left by half of it. Absolute
+   with no offsets keeps its static position, right after the last glyph;
+   the title span is its containing block, so the counter is part of that
+   span's overflow and the FontScaler shrinks the title when a full-width
+   last line would push it past the content box.
+
+   The text is drawn by `::before`; the base stylesheet's `::after` stays
+   as an invisible copy of it. Centred, the last line leaves only half of
+   the free width on its right, so the counter has to be counted twice to
+   be sure of fitting there — counted once, a one-line title close to the
+   full width hung half the counter into the plaque's ornamental edge. Its
+   size is the body's, not the title's, so it reads the same on face 1 and
+   on a continuation face's smaller title.
+
+   Its box is one title line high (`1lh` at the title's size, which the
+   counter inherits) and centres its text in it, so the small figures sit
+   on the middle of the line they follow rather than at its top. */
+.card-root.dragonbane .card-title .text-scalable {
+  position: relative;
+}
+
+.card-root.dragonbane .cs-overflow-counter::before {
+  content: counter(cs-idx) " / " counter(cs-tot);
+  margin-left: 0.47em;
+}
+
+.card-root.dragonbane .cs-overflow-counter::before,
+.card-root.dragonbane .cs-overflow-counter::after {
+  font-size: calc(var(--font-size-body) * 0.85);
+  line-height: 1;
+}
+
+.card-root.dragonbane .cs-overflow-counter::after {
+  visibility: hidden;
+  margin-left: 0.47em;
+}
+
 .card-root.dragonbane .cs-overflow-counter {
-  flex: none;
+  position: absolute;
+  margin-left: 0;
+  white-space: nowrap;
   font-family: var(--font-body);
   font-weight: 400;
-  font-size: 0.85em;
   color: var(--db-text-soft);
   text-transform: none;
   letter-spacing: 0;
+}
+
+.card-root.dragonbane.cs-overflow-active .cs-overflow-counter {
+  /* Inline-level, so the static position is right after the last glyph;
+     a block-level box would start a line of its own below the title. */
+  display: inline-flex;
+  align-items: center;
+  /* The title's size, not the base stylesheet's 0.7em, so that 1lh is
+     the title's line. */
+  font-size: 1em;
+  height: 1lh;
 }
 
 /* ── The plaque on a CONTINUATION face ──
