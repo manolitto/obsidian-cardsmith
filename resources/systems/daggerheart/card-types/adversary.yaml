@@ -1,0 +1,206 @@
+# An adversary: the stat block as the SRD prints it, on a poker card for
+# the GM's table. A head in the card's colour with the name and the tier
+# and role, then the one-line description, the motives and tactics, a box
+# of the four numbers, the standard attack, the experience, and the
+# features as the text — `**Name – Action:** …`, one paragraph each.
+#
+# A long block — a Solo's — spills onto the back first and then onto
+# further cards; from the second face on, the head carries the name
+# alone and the numbers stay on the first.
+front-template: templates/statblock-front.hbs
+back-template: templates/back.hbs
+overflow-mode: back-then-cards
+
+# The German role names and "Motive & Taktiken" are provisional: the
+# official German edition's terms for the GM side were not at hand. A
+# German value written in a note prints as it is written.
+translations:
+  en:
+    back-label: "Adversary"
+    front-tier-label: "Tier"
+    front-motives-label: "Motives & Tactics:"
+    front-difficulty-label: "Difficulty"
+    front-thresholds-label: "Thresholds"
+    front-hp-label: "HP"
+    front-stress-label: "Stress"
+    front-atk-label: "ATK"
+    front-experience-label: "Experience:"
+    front-body-label: "Features"
+  de:
+    back-label: "Gegner"
+    front-tier-label: "Rang"
+    front-motives-label: "Motive & Taktiken:"
+    front-difficulty-label: "Schwierigkeit"
+    front-thresholds-label: "Schwellen"
+    front-hp-label: "TP"
+    front-stress-label: "Stress"
+    front-atk-label: "Angriff"
+    front-experience-label: "Erfahrung:"
+    front-body-label: "Merkmale"
+
+properties:
+  name:
+    sample:
+      en: "Dire Wolf"
+      de: "Schreckenswolf"
+
+  # The stat block has no picture place; the GM's table wants the numbers.
+  image:
+    slot: ~
+
+  tier:
+    slot: front-tier
+    aliases: [rang]
+    description:
+      en: "The tier, 1 to 4."
+      de: "Der Rang, 1 bis 4."
+    sample: 1
+
+  role:
+    slot: front-role
+    aliases: [type, rolle, typ]
+    description:
+      en: "The role — Bruiser, Horde, Leader, Minion, Ranged, Skulk, Social, Solo, Standard or Support; a Horde may add its HP rule in brackets."
+      de: "Die Rolle — Schläger, Horde, Anführer, Scherge, Fernkämpfer, Schleicher, Höfling, Solo, Standard oder Unterstützer; englische Namen gehen auch."
+    sample:
+      en: "Skulk"
+      de: "Schleicher"
+
+  blurb:
+    slot: front-subtitle
+    aliases: [summary-line, flavor, flavour, kurzbeschreibung, beschreibungszeile]
+    description:
+      en: "The one-line description, in italics under the head."
+      de: "Die einzeilige Beschreibung, kursiv unter dem Kopf."
+    sample:
+      en: "A large wolf with menacing teeth, seldom encountered alone."
+      de: "Ein großer Wolf mit bedrohlichen Zähnen, selten allein anzutreffen."
+
+  motives:
+    slot: front-motives
+    aliases: [motives-and-tactics, motives-tactics, tactics, motive, motive-und-taktiken, taktiken]
+    description:
+      en: "Motives and tactics — a comma-separated list of verbs."
+      de: "Motive und Taktiken — eine Liste von Verben, mit Kommas getrennt."
+    sample:
+      en: "Defend territory, harry, protect pack, surround, trail"
+      de: "Revier verteidigen, hetzen, Rudel schützen, umzingeln, verfolgen"
+
+  difficulty:
+    slot: front-difficulty
+    aliases: [diff, schwierigkeit, schwierigkeitsgrad]
+    description:
+      en: "The Difficulty to hit and to beat."
+      de: "Der Schwierigkeitsgrad."
+    sample: 12
+
+  thresholds:
+    slot: front-thresholds
+    aliases: [threshold, schwellen, schadensschwellen]
+    description:
+      en: "The damage thresholds, major/severe — \"5/9\" — or \"None\"."
+      de: "Die Schadensschwellen, mittel/schwer — „5/9“ — oder „Keine“."
+    sample: "5/9"
+
+  hp:
+    slot: front-hp
+    aliases: [hit-points, tp, trefferpunkte]
+    description:
+      en: "Hit Points."
+      de: "Trefferpunkte."
+    sample: 4
+
+  stress:
+    slot: front-stress
+    description:
+      en: "Stress."
+      de: "Stress."
+    sample: 3
+
+  atk:
+    slot: front-atk
+    aliases: [attack-modifier, attack-bonus, angriffsbonus, angriffsmodifikator]
+    description:
+      en: "The attack modifier — +2 or -4; a plain 2 prints as +2."
+      de: "Der Angriffsmodifikator — +2 oder -4; eine bloße 2 wird als +2 gedruckt."
+    sample: 2
+
+  attack:
+    slot: front-attack
+    aliases: [weapon, standard-attack, angriff, waffe]
+    description:
+      en: "The standard attack's name — Claws, Daggers."
+      de: "Der Name des Standardangriffs — Klauen, Dolche."
+    sample:
+      en: "Claws"
+      de: "Klauen"
+
+  range:
+    slot: front-range
+    aliases: [reichweite, distanz]
+    description:
+      en: "The attack's range — Melee, Very Close, Close, Far or Very Far."
+      de: "Die Reichweite des Angriffs — unmittelbar, sehr kurz, kurz, weit oder sehr weit."
+    sample:
+      en: "Melee"
+      de: "unmittelbar"
+
+  damage:
+    slot: front-damage
+    aliases: [schaden]
+    description:
+      en: "The attack's damage — \"1d6+2 phy\"."
+      de: "Der Schaden des Angriffs — „1W6+2 phy“."
+    sample:
+      en: "1d6+2 phy"
+      de: "1W6+2 phy"
+
+  experience:
+    slot: front-experience
+    aliases: [experiences, erfahrung, erfahrungen]
+    description:
+      en: "The experience — \"Keen Senses +3\"; several separated by commas."
+      de: "Die Erfahrung — „Scharfe Sinne +3“; mehrere mit Kommas getrennt."
+    sample:
+      en: "Keen Senses +3"
+      de: "Scharfe Sinne +3"
+
+  description:
+    aliases: [features, merkmale]
+    sample:
+      en: "**Pack Tactics – Passive:** If the Wolf makes a successful standard attack and another Dire Wolf is within Melee range of the target, deal 1d6+5 physical damage instead of their standard damage and you gain a Fear.\n\n**Hobbling Strike – Action:** Mark a Stress to make an attack against a target within Melee range. On a success, deal 3d4+10 direct physical damage and make them Vulnerable until they clear at least 1 HP."
+      de: "**Rudeltaktik – Passiv:** Gelingt dem Wolf ein Standardangriff und befindet sich ein weiterer Schreckenswolf in unmittelbarer Distanz zum Ziel, verursacht er statt seines Standardschadens 1W6+5 physischen Schaden, und du erhältst 1 Furcht.\n\n**Lähmender Biss – Aktion:** Markiere 1 Stress, um einen Angriff gegen ein Ziel in unmittelbarer Distanz auszuführen. Bei einem Erfolg verursacht er 3W4+10 direkten physischen Schaden, und das Ziel ist Verwundbar, bis es mindestens 1 TP löscht."
+
+glyphs:
+  front-role:
+    bruiser:      { en: "Bruiser",  de: "Schläger" }
+    schläger:     { en: "Bruiser",  de: "Schläger" }
+    horde:        { en: "Horde",    de: "Horde" }
+    leader:       { en: "Leader",   de: "Anführer" }
+    anführer:     { en: "Leader",   de: "Anführer" }
+    minion:       { en: "Minion",   de: "Scherge" }
+    scherge:      { en: "Minion",   de: "Scherge" }
+    ranged:       { en: "Ranged",   de: "Fernkämpfer" }
+    fernkämpfer:  { en: "Ranged",   de: "Fernkämpfer" }
+    skulk:        { en: "Skulk",    de: "Schleicher" }
+    schleicher:   { en: "Skulk",    de: "Schleicher" }
+    social:       { en: "Social",   de: "Höfling" }
+    höfling:      { en: "Social",   de: "Höfling" }
+    solo:         { en: "Solo",     de: "Solo" }
+    standard:     { en: "Standard", de: "Standard" }
+    support:      { en: "Support",  de: "Unterstützer" }
+    unterstützer: { en: "Support",  de: "Unterstützer" }
+  front-range:
+    melee:        { en: "Melee",      de: "unmittelbar" }
+    unmittelbar:  { en: "Melee",      de: "unmittelbar" }
+    very close:   { en: "Very Close", de: "sehr kurz" }
+    sehr kurz:    { en: "Very Close", de: "sehr kurz" }
+    close:        { en: "Close",      de: "kurz" }
+    kurz:         { en: "Close",      de: "kurz" }
+    far:          { en: "Far",        de: "weit" }
+    weit:         { en: "Far",        de: "weit" }
+    very far:     { en: "Very Far",   de: "sehr weit" }
+    sehr weit:    { en: "Very Far",   de: "sehr weit" }
+  front-thresholds:
+    none:         { en: "None",  de: "Keine" }
+    keine:        { en: "None",  de: "Keine" }

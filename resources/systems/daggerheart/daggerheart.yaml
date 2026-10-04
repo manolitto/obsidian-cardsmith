@@ -75,3 +75,5 @@ card-types:
   ancestry: card-types/ancestry.yaml
   community: card-types/community.yaml
   subclass: card-types/subclass.yaml
+  adversary: card-types/adversary.yaml
+  environment: card-types/environment.yaml
