@@ -72,3 +72,6 @@ classifiers:
 
 card-types:
   domain: card-types/domain.yaml
+  ancestry: card-types/ancestry.yaml
+  community: card-types/community.yaml
+  subclass: card-types/subclass.yaml

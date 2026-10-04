@@ -8,9 +8,16 @@
     front-corner        a number in the badge at the top right (a recall cost)
     front-image         the picture across the top; without one the text
                         moves up and the pennant stands on the paper
-    front-ribbon        the kind of card, in the band under the picture
-    front-title, front-subtitle, front-meta, front-body
-  A place a card type does not fill stays out.
+    front-ribbon        the kind of card, in the band under the picture; a
+                        card type with one kind only names it once, as
+                        the caption `front-ribbon-label`
+    front-title         the name
+    front-subtitle      an italic line under it (a blurb, a subclass stage)
+    front-meta          a bold line under that, after the caption
+                        `front-meta-label` when the card type has one
+    front-body          the text
+  A place a card type does not fill stays out; without a pennant and a
+  picture the top shrinks to a band.
 
   At the foot the compatibility line the Darrington Press Community Gaming
   License asks every card to carry. Header, content and footer are flex
@@ -38,14 +45,14 @@
     {{/if}}
   </div>
 
-  {{#if (slot "front-ribbon")}}
-  <div class="dh-ribbon"><span class="dh-ribbon-text">{{slot "front-ribbon" glyph=true plain=true}}</span></div>
+  {{#if (or (slot "front-ribbon") (slot-label "front-ribbon"))}}
+  <div class="dh-ribbon"><span class="dh-ribbon-text">{{slot "front-ribbon" glyph=true plain=true fallback=(slot-label "front-ribbon")}}</span></div>
   {{/if}}
 
   <div class="card-header dh-header">
     <div class="card-title dh-title"><span class="text-scalable">{{slot "front-title"}}</span><span class="cs-overflow-counter"></span></div>
-    {{#if (slot "front-subtitle")}}<div class="dh-subtitle">{{slot "front-subtitle"}}</div>{{/if}}
-    {{#if (slot "front-meta")}}<div class="dh-meta">{{slot "front-meta"}}</div>{{/if}}
+    {{#if (slot "front-subtitle")}}<div class="dh-subtitle">{{slot "front-subtitle" glyph=true}}</div>{{/if}}
+    {{#if (slot "front-meta")}}<div class="dh-meta">{{#if (slot-label "front-meta")}}{{slot-label "front-meta"}} {{/if}}{{slot "front-meta" glyph=true}}</div>{{/if}}
   </div>
 
   <div class="card-content-container dh-content">

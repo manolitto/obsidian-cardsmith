@@ -1,0 +1,6 @@
+stalwart · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   div.dh-body
+     p "Unwavering: Gain a permanent +1 bonus …"
+     p "Iron Will: When you take physical …"
+2. back [cs-layout-default] scale —

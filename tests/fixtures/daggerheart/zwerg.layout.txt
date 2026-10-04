@@ -1,0 +1,6 @@
+zwerg · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   div.dh-body
+     p "Dicke Haut: Wenn du Leichten Schaden …"
+     p "Zähigkeit: Setze 3 Hoffnung ein, um …"
+2. back [cs-layout-default] scale —

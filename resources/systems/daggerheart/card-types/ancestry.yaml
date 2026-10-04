@@ -1,0 +1,34 @@
+# An ancestry card: the name, a line on what the people look like, and
+# the ancestry features as the text — a feature's name in bold. No
+# pennant and no badge, so the top is a narrow band under the ribbon.
+front-template: templates/front.hbs
+back-template: templates/back.hbs
+
+translations:
+  en:
+    back-label: "Ancestry"
+    front-ribbon-label: "Ancestry"
+  de:
+    back-label: "Abstammung"
+    front-ribbon-label: "Abstammung"
+
+properties:
+  name:
+    sample:
+      en: "Dwarf"
+      de: "Zwerg*in"
+
+  blurb:
+    slot: front-subtitle
+    aliases: [summary-line, flavor, flavour, kurzbeschreibung, beschreibungszeile]
+    description:
+      en: "One line on the ancestry, in italics under the name."
+      de: "Eine Zeile über die Abstammung, kursiv unter dem Namen."
+    sample:
+      en: "Short humanoids with square frames, dense musculature and thick hair."
+      de: "Kleine Humanoide mit kantigem Körperbau, kräftigen Muskeln und dichtem Haar."
+
+  description:
+    sample:
+      en: "**Thick Skin:** When you take Minor damage, you can mark 2 Stress instead of marking a Hit Point.\n\n**Increased Fortitude:** Spend 3 Hope to halve incoming physical damage."
+      de: "**Dicke Haut:** Wenn du Leichten Schaden erleidest, kannst du 2 Stress markieren, statt 1 TP zu markieren.\n\n**Zähigkeit:** Setze 3 Hoffnung ein, um eingehenden physischen Schaden zu halbieren."

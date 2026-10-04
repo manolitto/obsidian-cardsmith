@@ -1,0 +1,5 @@
+troubadour-mastery · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   div.dh-body
+     p "Virtuoso: You are among the greatest …"
+2. back [cs-layout-default] scale —
