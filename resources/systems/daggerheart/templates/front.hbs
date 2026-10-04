@@ -15,6 +15,8 @@
     front-subtitle      an italic line under it (a blurb, a subclass stage)
     front-meta          a bold line under that, after the caption
                         `front-meta-label` when the card type has one
+    front-fact-1 … 4    short facts on one line, dot-separated (a weapon's
+                        trait, range, damage, burden)
     front-body          the text
   A place a card type does not fill stays out; without a pennant and a
   picture the top shrinks to a band.
@@ -53,6 +55,14 @@
     <div class="card-title dh-title"><span class="text-scalable">{{slot "front-title"}}</span><span class="cs-overflow-counter"></span></div>
     {{#if (slot "front-subtitle")}}<div class="dh-subtitle">{{slot "front-subtitle" glyph=true}}</div>{{/if}}
     {{#if (slot "front-meta")}}<div class="dh-meta">{{#if (slot-label "front-meta")}}{{slot-label "front-meta"}} {{/if}}{{slot "front-meta" glyph=true}}</div>{{/if}}
+    {{#if (or (slot "front-fact-1") (slot "front-fact-2") (slot "front-fact-3") (slot "front-fact-4"))}}
+    <div class="dh-facts">
+      {{#if (slot "front-fact-1")}}<span class="dh-fact">{{slot "front-fact-1" glyph=true plain=true}}</span>{{/if}}
+      {{#if (slot "front-fact-2")}}<span class="dh-fact">{{slot "front-fact-2" glyph=true plain=true}}</span>{{/if}}
+      {{#if (slot "front-fact-3")}}<span class="dh-fact">{{slot "front-fact-3" glyph=true plain=true}}</span>{{/if}}
+      {{#if (slot "front-fact-4")}}<span class="dh-fact">{{slot "front-fact-4" glyph=true plain=true}}</span>{{/if}}
+    </div>
+    {{/if}}
   </div>
 
   <div class="card-content-container dh-content">
