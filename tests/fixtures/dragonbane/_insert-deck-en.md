@@ -38,7 +38,7 @@ card-type: [gear, creature]
 # A note's cards side by side, uncut, folded instead of cut apart: `strip` (1, 2, 3 across the front, 4, 5, 6 across the back), `cover` (5, 6, 1 across the front, page 1 a cover with the last page behind it), `booklet` (nested sheets of two, like a printer's booklet) or `off`.
 # fold: 'off'
 
-# Millimetres between the cards of a folding deck; a grey strip between the panels of a fold is a hinge to cut out before laminating. 3 suits most cards, 0 folds along a crease.
+# Millimetres between the cards of a folding deck; a grey strip between the panels of a fold is a hinge to cut out before laminating. 2 suits most cards, 0 folds along a crease.
 # fold-gap: 0
 
 # The cut marks at every card corner; the fields merge, so one can change alone.
