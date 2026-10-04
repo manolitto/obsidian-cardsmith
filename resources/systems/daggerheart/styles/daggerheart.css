@@ -114,6 +114,7 @@
 .card-root.daggerheart.ancestry-card  { --dh-accent: #2e6e70; }
 .card-root.daggerheart.community-card { --dh-accent: #8a5a2b; }
 .card-root.daggerheart.subclass-card  { --dh-accent: #7a3450; }
+.card-root.daggerheart.item-card      { --dh-accent: #4d5966; }
 
 /* ── Front: the top ────────────────────────────────────────────── */
 
@@ -295,6 +296,21 @@
   font-size: 0.85em;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+}
+
+/* The facts: short values on one line between dots, the line between two
+   hairlines in the accent. */
+.daggerheart .dh-facts {
+  margin-top: 0.35em;
+  padding: 0.2em 0;
+  border-top: 0.06em solid color-mix(in srgb, var(--dh-accent) 55%, transparent);
+  border-bottom: 0.06em solid color-mix(in srgb, var(--dh-accent) 55%, transparent);
+  font-size: 0.85em;
+  font-weight: 700;
+}
+.daggerheart .dh-fact + .dh-fact::before {
+  content: " · ";
+  color: var(--dh-accent);
 }
 
 .daggerheart .dh-content {

@@ -1,0 +1,179 @@
+# An item: a weapon, a piece of armor, loot or a consumable, on the
+# shared player front. The ribbon names the category, the pennant holds
+# the tier — or, for loot rolled from a table, the roll — and the text is
+# the item's feature or description.
+#
+#   weapon      trait · range · damage · burden on one line under the name
+#   armor       the base thresholds on the bold line, the armor score in
+#               the badge
+#   loot,       the rarity in italics under the name; a table note of the
+#   consumable  SRD's loot tables prints one card per row, its roll in the
+#               pennant
+#
+# Category, trait, range, burden and rarity may be written in English or
+# German and print in the card's language.
+front-template: templates/front.hbs
+back-template: templates/back.hbs
+
+translations:
+  en:
+    back-label: "Item"
+    front-ribbon-label: "Item"
+    front-corner-label: "Armor"
+    front-meta-label: "Thresholds:"
+  de:
+    back-label: "Gegenstand"
+    front-ribbon-label: "Gegenstand"
+    front-corner-label: "Rüstung"
+    front-meta-label: "Schwellenwerte:"
+
+properties:
+  name:
+    sample:
+      en: "Broadsword"
+      de: "Breitschwert"
+
+  category:
+    slot: front-ribbon
+    aliases: [kategorie, art, typ, type]
+    description:
+      en: "Primary Weapon, Secondary Weapon, Armor, Loot or Consumable — the word in the ribbon."
+      de: "Primärwaffe, Sekundärwaffe, Rüstung, Beute oder Verbrauchsgut — das Wort im Band."
+    sample:
+      en: "Primary Weapon"
+      de: "Primärwaffe"
+
+  # Tier and roll share the pennant: a weapon or armor has a tier, a row
+  # of a loot table its roll.
+  tier:
+    slot: front-banner
+    aliases: [rang]
+    description:
+      en: "The tier, 1 to 4 — the number in the pennant."
+      de: "Der Rang, 1 bis 4 — die Zahl im Banner."
+    sample: 1
+
+  roll:
+    slot: front-banner
+
+  trait:
+    slot: front-fact-1
+    aliases: [attribut, merkmal-attribut]
+    description:
+      en: "A weapon's trait — Agility, Strength, Finesse, Instinct, Presence, Knowledge or Spellcast."
+      de: "Das Attribut der Waffe — Agilität, Stärke, Geschick, Instinkt, Präsenz, Wissen oder Zauberwurf."
+    sample:
+      en: "Agility"
+      de: "Agilität"
+
+  range:
+    slot: front-fact-2
+    aliases: [reichweite, distanz]
+    description:
+      en: "A weapon's range — Melee, Very Close, Close, Far or Very Far."
+      de: "Die Reichweite der Waffe — unmittelbar, sehr kurz, kurz, weit oder sehr weit."
+    sample:
+      en: "Melee"
+      de: "unmittelbar"
+
+  damage:
+    slot: front-fact-3
+    aliases: [schaden]
+    description:
+      en: "A weapon's damage — \"d8 phy\", \"d10+3 mag\"."
+      de: "Der Schaden der Waffe — „W8 phy“, „W10+3 mag“."
+    sample:
+      en: "d8 phy"
+      de: "W8 phy"
+
+  burden:
+    slot: front-fact-4
+    aliases: [last, hands, hände]
+    description:
+      en: "A weapon's burden — One-Handed or Two-Handed."
+      de: "Die Last der Waffe — einhändig oder zweihändig."
+    sample:
+      en: "One-Handed"
+      de: "einhändig"
+
+  thresholds:
+    slot: front-meta
+    aliases: [base-thresholds, schwellen, schwellenwerte, schadensschwellen]
+    description:
+      en: "An armor's base thresholds, major / severe — \"5 / 11\"."
+      de: "Die Basis-Schwellenwerte einer Rüstung, mittel / schwer — „5 / 11“."
+
+  armor-score:
+    slot: front-corner
+    aliases: [score, base-score, armor, rüstungswert, ruestungswert]
+    description:
+      en: "An armor's base score — the number in the badge."
+      de: "Der Basis-Rüstungswert einer Rüstung — die Zahl im Eckabzeichen."
+
+  rarity:
+    slot: front-subtitle
+    aliases: [seltenheit]
+    description:
+      en: "Loot's rarity — Common, Uncommon, Rare or Legendary; in italics under the name."
+      de: "Die Seltenheit der Beute — gewöhnlich, ungewöhnlich, selten oder legendär; kursiv unter dem Namen."
+
+  description:
+    aliases: [feature, merkmal]
+    sample:
+      en: "**Reliable:** +1 to attack rolls."
+      de: "**Zuverlässig:** +1 auf Angriffswürfe."
+
+glyphs:
+  front-ribbon:
+    primary weapon:   { en: "Primary Weapon",   de: "Primärwaffe" }
+    primary:          { en: "Primary Weapon",   de: "Primärwaffe" }
+    primärwaffe:      { en: "Primary Weapon",   de: "Primärwaffe" }
+    secondary weapon: { en: "Secondary Weapon", de: "Sekundärwaffe" }
+    secondary:        { en: "Secondary Weapon", de: "Sekundärwaffe" }
+    sekundärwaffe:    { en: "Secondary Weapon", de: "Sekundärwaffe" }
+    armor:            { en: "Armor",            de: "Rüstung" }
+    rüstung:          { en: "Armor",            de: "Rüstung" }
+    loot:             { en: "Loot",             de: "Beute" }
+    beute:            { en: "Loot",             de: "Beute" }
+    consumable:       { en: "Consumable",       de: "Verbrauchsgut" }
+    verbrauchsgut:    { en: "Consumable",       de: "Verbrauchsgut" }
+  front-fact-1:
+    agility:   { en: "Agility",   de: "Agilität" }
+    agilität:  { en: "Agility",   de: "Agilität" }
+    strength:  { en: "Strength",  de: "Stärke" }
+    stärke:    { en: "Strength",  de: "Stärke" }
+    finesse:   { en: "Finesse",   de: "Geschick" }
+    geschick:  { en: "Finesse",   de: "Geschick" }
+    instinct:  { en: "Instinct",  de: "Instinkt" }
+    instinkt:  { en: "Instinct",  de: "Instinkt" }
+    presence:  { en: "Presence",  de: "Präsenz" }
+    präsenz:   { en: "Presence",  de: "Präsenz" }
+    knowledge: { en: "Knowledge", de: "Wissen" }
+    wissen:    { en: "Knowledge", de: "Wissen" }
+    spellcast: { en: "Spellcast", de: "Zauberwurf" }
+    zauberwurf: { en: "Spellcast", de: "Zauberwurf" }
+  front-fact-2:
+    melee:        { en: "Melee",      de: "unmittelbar" }
+    unmittelbar:  { en: "Melee",      de: "unmittelbar" }
+    very close:   { en: "Very Close", de: "sehr kurz" }
+    sehr kurz:    { en: "Very Close", de: "sehr kurz" }
+    close:        { en: "Close",      de: "kurz" }
+    kurz:         { en: "Close",      de: "kurz" }
+    far:          { en: "Far",        de: "weit" }
+    weit:         { en: "Far",        de: "weit" }
+    very far:     { en: "Very Far",   de: "sehr weit" }
+    sehr weit:    { en: "Very Far",   de: "sehr weit" }
+  front-fact-4:
+    one-handed:   { en: "One-Handed", de: "einhändig" }
+    einhändig:    { en: "One-Handed", de: "einhändig" }
+    two-handed:   { en: "Two-Handed", de: "zweihändig" }
+    zweihändig:   { en: "Two-Handed", de: "zweihändig" }
+  front-subtitle:
+    common:       { en: "Common",     de: "gewöhnlich" }
+    gewöhnlich:   { en: "Common",     de: "gewöhnlich" }
+    uncommon:     { en: "Uncommon",   de: "ungewöhnlich" }
+    ungewöhnlich: { en: "Uncommon",   de: "ungewöhnlich" }
+    rare:         { en: "Rare",       de: "selten" }
+    selten:       { en: "Rare",       de: "selten" }
+    legendary:    { en: "Legendary",  de: "legendär" }
+    legendär:     { en: "Legendary",  de: "legendär" }

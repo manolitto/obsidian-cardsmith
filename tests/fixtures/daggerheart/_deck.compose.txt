@@ -1,4 +1,4 @@
-6 pages · 210 × 297 mm · 3 × 3 of 63 × 88 mm at 10.5, 16.5
+8 pages · 210 × 297 mm · 3 × 3 of 63 × 88 mm at 10.5, 16.5
 1. front · 64 marks
    front #1 at 10.5, 16.5 domain/book-of-ava
    front #2 at 73.5, 16.5 domain/cinder-grasp
@@ -26,9 +26,9 @@
    front #13 at 10.5, 104.5 subclass/stalwart
    front #14 at 73.5, 104.5 subclass/troubadour
    front #15 at 136.5, 104.5 subclass/troubadour-mastery
-   front #16 at 10.5, 192.5 adversary/acid-burrower
-   front #17 at 73.5, 192.5 adversary/dire-wolf
-   front #18 at 136.5, 192.5 adversary/jagged-knife-lackey
+   front #16 at 10.5, 192.5 item/broadsword
+   front #17 at 73.5, 192.5 item/consumables
+   front #18 at 136.5, 192.5 item/consumables
 4. back · 64 marks
    back #10 at 136.5, 16.5 community/seaborne
    back #11 at 73.5, 16.5 community/von-den-wassern
@@ -36,16 +36,30 @@
    back #13 at 136.5, 104.5 subclass/stalwart
    back #14 at 73.5, 104.5 subclass/troubadour
    back #15 at 10.5, 104.5 subclass/troubadour-mastery
-   back #16 at 136.5, 192.5 adversary/acid-burrower
-   back #17 at 73.5, 192.5 adversary/dire-wolf
-   back #18 at 10.5, 192.5 adversary/jagged-knife-lackey
-5. front · 40 marks
-   front #19 at 10.5, 16.5 adversary/schreckenswolf
-   front #20 at 73.5, 16.5 environment/abandoned-grove
-   front #21 at 136.5, 16.5 environment/ambushed
-   front #22 at 10.5, 104.5 environment/hinterhalt
-6. back · 40 marks
-   back #19 at 136.5, 16.5 adversary/schreckenswolf
-   back #20 at 73.5, 16.5 environment/abandoned-grove
-   back #21 at 10.5, 16.5 environment/ambushed
-   back #22 at 136.5, 104.5 environment/hinterhalt
+   back #16 at 136.5, 192.5 item/broadsword
+   back #17 at 73.5, 192.5 item/consumables
+   back #18 at 10.5, 192.5 item/consumables
+5. front · 64 marks
+   front #19 at 10.5, 16.5 item/consumables
+   front #20 at 73.5, 16.5 item/gambeson-armor
+   front #21 at 136.5, 16.5 item/langbogen
+   front #22 at 10.5, 104.5 adversary/acid-burrower
+   front #23 at 73.5, 104.5 adversary/dire-wolf
+   front #24 at 136.5, 104.5 adversary/jagged-knife-lackey
+   front #25 at 10.5, 192.5 adversary/schreckenswolf
+   front #26 at 73.5, 192.5 environment/abandoned-grove
+   front #27 at 136.5, 192.5 environment/ambushed
+6. back · 64 marks
+   back #19 at 136.5, 16.5 item/consumables
+   back #20 at 73.5, 16.5 item/gambeson-armor
+   back #21 at 10.5, 16.5 item/langbogen
+   back #22 at 136.5, 104.5 adversary/acid-burrower
+   back #23 at 73.5, 104.5 adversary/dire-wolf
+   back #24 at 10.5, 104.5 adversary/jagged-knife-lackey
+   back #25 at 136.5, 192.5 adversary/schreckenswolf
+   back #26 at 73.5, 192.5 environment/abandoned-grove
+   back #27 at 10.5, 192.5 environment/ambushed
+7. front · 16 marks
+   front #28 at 10.5, 16.5 environment/hinterhalt
+8. back · 16 marks
+   back #28 at 136.5, 16.5 environment/hinterhalt
