@@ -1,0 +1,77 @@
+id: daggerheart
+name: Daggerheart
+
+# Cards for Daggerheart, built on the Daggerheart System Reference
+# Document 1.0 under the Darrington Press Community Gaming License. The
+# game deals its character options as cards — domain cards, ancestries,
+# communities, subclasses — and every one of them is the same frame: a
+# banner, a corner badge, a ribbon naming the kind, the title and the
+# text. So the player cards share one front and differ only in what fills
+# its places. The design is this project's own; nothing of the publisher's
+# card art, glyphs or typography is reproduced. Every front carries the
+# compatibility line the licence asks of cards.
+#
+# English and German: the German captions use the terms of the official
+# German edition; the sample texts are translated from the SRD.
+languages: [en, de]
+
+stylesheet: styles/daggerheart.css
+
+card-size: poker
+
+# The back of a player card is a designed face, so a long front spills
+# onto further front/back pairs instead of replacing it.
+overflow-mode: extra-cards
+
+properties:
+  name:
+    slot: front-title
+    description:
+      en: "The card's name, shown as the title on the front. Falls back to the note's file name when unset."
+      de: "Name der Karte, als Titel auf der Vorderseite. Fällt auf den Dateinamen zurück, wenn nicht gesetzt."
+
+  image:
+    slot: front-image
+    aliases: [bild, illustration]
+    description:
+      en: "A picture for the upper half of the front — a wikilink to an image in the vault. Without one the text moves up."
+      de: "Ein Bild für die obere Hälfte der Vorderseite — ein Wikilink auf ein Bild im Vault. Ohne Bild rückt der Text nach oben."
+
+  # `body` last: it is also the note's own text before the first `##`
+  # heading, and an alias is tried in declaration order.
+  description:
+    slot: front-body
+    aliases: [text, beschreibung, body]
+    description:
+      en: "The card's text — Markdown; a feature's name in bold, as the cards print it."
+      de: "Der Kartentext — Markdown; der Name eines Merkmals fett, wie auf den Karten."
+
+translations:
+  en:
+    front-corner-label: "Recall"
+  de:
+    front-corner-label: "Rückruf"
+
+# The card's colour: a token per domain, whichever language the note
+# wrote it in; the stylesheet keys `dh-domain-<token>` on it. On the
+# system, so every card type that shares the front has it — one with no
+# domain gets `none`, the neutral ink.
+classifiers:
+  front-banner-label:
+    match:
+      - { pattern: "^(arcana|arkana)$",       token: arcana }
+      - { pattern: "^(blade|klinge)$",        token: blade }
+      - { pattern: "^(bone|knochen)$",        token: bone }
+      - { pattern: "^(codex|kodex)$",         token: codex }
+      - { pattern: "^(grace|anmut)$",         token: grace }
+      - { pattern: "^(midnight|mitternacht)$", token: midnight }
+      - { pattern: "^(sage|natur)$",          token: sage }
+      - { pattern: "^(splendor|leben)$",      token: splendor }
+      - { pattern: "^(valor|mut)$",           token: valor }
+    default: none
+
+card-types:
+  domain: card-types/domain.yaml
+  ancestry: card-types/ancestry.yaml
+  community: card-types/community.yaml
+  subclass: card-types/subclass.yaml

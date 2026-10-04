@@ -5,7 +5,7 @@ rendered with, and four preferences.
 
 ## Systems
 
-Every system is a row with a switch. The thirteen bundled systems are there
+Every system is a row with a switch. The fourteen bundled systems are there
 from the start; a system of your own appears once you add it. A row says
 where the system comes from — *Bundled with the plugin*, or the vault file
 it was registered from — and offers *Copy into vault* for a bundled one

@@ -1,0 +1,92 @@
+# A domain card: a spell, an ability or a grimoire of one of the nine
+# domains, at a level from 1 to 10. The banner holds the level and the
+# domain, the badge at the right the recall cost, the ribbon the kind of
+# card. A note may write the domain and the kind in English or in German;
+# the card prints them in its own language.
+front-template: templates/front.hbs
+back-template: templates/back.hbs
+
+translations:
+  en:
+    back-label: "Domain"
+  de:
+    back-label: "Domäne"
+
+properties:
+  name:
+    sample:
+      en: "Rune Ward"
+      de: "Runensiegel"
+
+  level:
+    slot: front-banner
+    aliases: [lvl, stufe]
+    description:
+      en: "The card's level, 1 to 10 — the number in the banner."
+      de: "Die Stufe der Karte, 1 bis 10 — die Zahl im Banner."
+    sample: 1
+
+  domain:
+    slot: front-banner-label
+    aliases: [domäne, domaene]
+    description:
+      en: "The domain — Arcana, Blade, Bone, Codex, Grace, Midnight, Sage, Splendor or Valor; German names work too. Sets the card's colour."
+      de: "Die Domäne — Arkana, Klinge, Knochen, Kodex, Anmut, Mitternacht, Natur, Leben oder Mut; englische Namen gehen auch. Bestimmt die Farbe der Karte."
+    sample:
+      en: "Arcana"
+      de: "Arkana"
+
+  type:
+    slot: front-ribbon
+    aliases: [kind, typ, art]
+    description:
+      en: "Spell, Ability or Grimoire — the word in the ribbon."
+      de: "Zauber, Fähigkeit oder Zauberbuch — das Wort im Band."
+    sample:
+      en: "Spell"
+      de: "Zauber"
+
+  recall-cost:
+    slot: front-corner
+    aliases: [recall, cost, rückruf, rueckruf, rückruf-kosten, rueckruf-kosten, kosten]
+    description:
+      en: "The recall cost — the Stress it takes to swap the card in from the vault; the number in the corner badge."
+      de: "Die Rückruf-Kosten — der Stress, um die Karte aus der Reserve zu holen; die Zahl im Eckabzeichen."
+    sample: 0
+
+  description:
+    sample:
+      en: "You have a deeply personal trinket that can be infused with protective magic and held as a ward by you or an ally. Describe what it is and why it's important to you. The ward's holder can spend a Hope to reduce incoming damage by 1d8.\n\nIf the Ward Die result is 8, the ward's power ends after it reduces damage this turn. It can be recharged for free on your next rest."
+      de: "Du besitzt ein sehr persönliches Schmuckstück, das mit Schutzmagie erfüllt werden kann und dir oder einem Verbündeten als Siegel dient. Beschreibe, was es ist und warum es dir so viel bedeutet. Wer das Siegel hält, kann 1 Hoffnung einsetzen, um eingehenden Schaden um 1W8 zu verringern.\n\nZeigt der Siegelwürfel eine 8, erlischt die Kraft des Siegels, nachdem es in diesem Zug Schaden verringert hat. Bei deiner nächsten Rast lässt es sich kostenlos wieder aufladen."
+
+# The domain and the kind as the card's language spells them. A key is
+# the stored value, lowercased; German values are keys too, so a German
+# note prints in English when its card says `language: en`.
+glyphs:
+  front-banner-label:
+    arcana:     { en: "Arcana",   de: "Arkana" }
+    arkana:     { en: "Arcana",   de: "Arkana" }
+    blade:      { en: "Blade",    de: "Klinge" }
+    klinge:     { en: "Blade",    de: "Klinge" }
+    bone:       { en: "Bone",     de: "Knochen" }
+    knochen:    { en: "Bone",     de: "Knochen" }
+    codex:      { en: "Codex",    de: "Kodex" }
+    kodex:      { en: "Codex",    de: "Kodex" }
+    grace:      { en: "Grace",    de: "Anmut" }
+    anmut:      { en: "Grace",    de: "Anmut" }
+    midnight:   { en: "Midnight", de: "Mitternacht" }
+    mitternacht: { en: "Midnight", de: "Mitternacht" }
+    sage:       { en: "Sage",     de: "Natur" }
+    natur:      { en: "Sage",     de: "Natur" }
+    splendor:   { en: "Splendor", de: "Leben" }
+    leben:      { en: "Splendor", de: "Leben" }
+    valor:      { en: "Valor",    de: "Mut" }
+    mut:        { en: "Valor",    de: "Mut" }
+  front-ribbon:
+    spell:      { en: "Spell",    de: "Zauber" }
+    zauber:     { en: "Spell",    de: "Zauber" }
+    ability:    { en: "Ability",  de: "Fähigkeit" }
+    fähigkeit:  { en: "Ability",  de: "Fähigkeit" }
+    faehigkeit: { en: "Ability",  de: "Fähigkeit" }
+    grimoire:   { en: "Grimoire", de: "Zauberbuch" }
+    zauberbuch: { en: "Grimoire", de: "Zauberbuch" }

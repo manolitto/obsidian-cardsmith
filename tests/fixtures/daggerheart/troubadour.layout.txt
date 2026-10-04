@@ -1,0 +1,6 @@
+troubadour · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   div.dh-body
+     p "Gifted Performer: You can play three …"
+     ul (3 items) "Relaxing Song: You and all allies …"
+2. back [cs-layout-default] scale —

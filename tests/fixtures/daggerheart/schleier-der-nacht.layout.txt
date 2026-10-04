@@ -1,0 +1,5 @@
+schleier-der-nacht · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   div.dh-body
+     p "Führe einen Zauberwurf (13) aus. Bei …"
+2. back [cs-layout-default] scale —

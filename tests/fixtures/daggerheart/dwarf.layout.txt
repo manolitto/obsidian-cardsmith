@@ -1,0 +1,6 @@
+dwarf · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   div.dh-body
+     p "Thick Skin: When you take Minor …"
+     p "Increased Fortitude: Spend 3 Hope to …"
+2. back [cs-layout-default] scale —

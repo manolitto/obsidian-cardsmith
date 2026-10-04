@@ -1,0 +1,104 @@
+# A subclass card: one of the three a subclass has — foundation,
+# specialization, mastery. The class rides in the ribbon, the subclass is
+# the title, the stage of the card is the line under it, and the
+# spellcast trait — when the subclass has one — is the bold line below.
+# Class, stage and trait may be written in English or German.
+front-template: templates/front.hbs
+back-template: templates/back.hbs
+
+translations:
+  en:
+    back-label: "Subclass"
+    front-meta-label: "Spellcast Trait:"
+  de:
+    back-label: "Subklasse"
+    front-meta-label: "Zauber-Attribut:"
+
+properties:
+  name:
+    sample:
+      en: "Troubadour"
+      de: "Minnesang"
+
+  class:
+    slot: front-ribbon
+    aliases: [klasse]
+    description:
+      en: "The class — Bard, Druid, Guardian, Ranger, Rogue, Seraph, Sorcerer, Warrior or Wizard; German names work too. The word in the ribbon."
+      de: "Die Klasse — Barde*in, Druide*in, Wächter*in, Waldläufer*in, Schurke*in, Seraph, Zauberer*in, Krieger*in oder Magier*in; englische Namen gehen auch. Das Wort im Band."
+    sample:
+      en: "Bard"
+      de: "Barde*in"
+
+  stage:
+    slot: front-subtitle
+    aliases: [card, subclass-card, karte, kartenstufe]
+    description:
+      en: "Which of the subclass's three cards this is: Foundation, Specialization or Mastery."
+      de: "Welche der drei Karten der Subklasse das ist: Basis, Spezialisierung oder Meisterschaft."
+    sample:
+      en: "Foundation"
+      de: "Basis"
+
+  spellcast-trait:
+    slot: front-meta
+    aliases: [spellcast, trait, zauber-attribut, zauberattribut, attribut]
+    description:
+      en: "The subclass's spellcast trait — Agility, Strength, Finesse, Instinct, Presence or Knowledge. Leave it out for a subclass without one."
+      de: "Das Zauber-Attribut der Subklasse — Agilität, Stärke, Geschick, Instinkt, Präsenz oder Wissen. Weglassen bei einer Subklasse ohne."
+    sample:
+      en: "Presence"
+      de: "Präsenz"
+
+  description:
+    sample:
+      en: "**Gifted Performer:** You can play three different types of songs, once each per long rest; describe how you perform for others to gain the listed benefit:\n\n- **Relaxing Song:** You and all allies within Close range clear a Hit Point.\n- **Epic Song:** Make a target within Close range temporarily Vulnerable.\n- **Heartbreaking Song:** You and all allies within Close range gain a Hope."
+      de: "**Bühnentalent:** Du kannst drei verschiedene Arten von Liedern spielen, jede einmal pro langer Rast; beschreibe, wie du vor anderen auftrittst, um den genannten Vorteil zu erhalten:\n\n- **Beruhigendes Lied:** Du und alle Verbündeten in kurzer Distanz löschen 1 TP.\n- **Episches Lied:** Ein Ziel in kurzer Distanz wird vorübergehend Verwundbar.\n- **Herzzerreißendes Lied:** Du und alle Verbündeten in kurzer Distanz erhalten 1 Hoffnung."
+
+glyphs:
+  front-ribbon:
+    bard:          { en: "Bard",     de: "Barde*in" }
+    barde:         { en: "Bard",     de: "Barde*in" }
+    barde*in:      { en: "Bard",     de: "Barde*in" }
+    druid:         { en: "Druid",    de: "Druide*in" }
+    druide:        { en: "Druid",    de: "Druide*in" }
+    druide*in:     { en: "Druid",    de: "Druide*in" }
+    guardian:      { en: "Guardian", de: "Wächter*in" }
+    wächter:       { en: "Guardian", de: "Wächter*in" }
+    wächter*in:    { en: "Guardian", de: "Wächter*in" }
+    ranger:        { en: "Ranger",   de: "Waldläufer*in" }
+    waldläufer:    { en: "Ranger",   de: "Waldläufer*in" }
+    waldläufer*in: { en: "Ranger",   de: "Waldläufer*in" }
+    rogue:         { en: "Rogue",    de: "Schurke*in" }
+    schurke:       { en: "Rogue",    de: "Schurke*in" }
+    schurke*in:    { en: "Rogue",    de: "Schurke*in" }
+    seraph:        { en: "Seraph",   de: "Seraph" }
+    sorcerer:      { en: "Sorcerer", de: "Zauberer*in" }
+    zauberer:      { en: "Sorcerer", de: "Zauberer*in" }
+    zauberer*in:   { en: "Sorcerer", de: "Zauberer*in" }
+    warrior:       { en: "Warrior",  de: "Krieger*in" }
+    krieger:       { en: "Warrior",  de: "Krieger*in" }
+    krieger*in:    { en: "Warrior",  de: "Krieger*in" }
+    wizard:        { en: "Wizard",   de: "Magier*in" }
+    magier:        { en: "Wizard",   de: "Magier*in" }
+    magier*in:     { en: "Wizard",   de: "Magier*in" }
+  front-subtitle:
+    foundation:      { en: "Foundation",     de: "Basis" }
+    basis:           { en: "Foundation",     de: "Basis" }
+    specialization:  { en: "Specialization", de: "Spezialisierung" }
+    spezialisierung: { en: "Specialization", de: "Spezialisierung" }
+    mastery:         { en: "Mastery",        de: "Meisterschaft" }
+    meisterschaft:   { en: "Mastery",        de: "Meisterschaft" }
+  front-meta:
+    agility:   { en: "Agility",   de: "Agilität" }
+    agilität:  { en: "Agility",   de: "Agilität" }
+    strength:  { en: "Strength",  de: "Stärke" }
+    stärke:    { en: "Strength",  de: "Stärke" }
+    finesse:   { en: "Finesse",   de: "Geschick" }
+    geschick:  { en: "Finesse",   de: "Geschick" }
+    instinct:  { en: "Instinct",  de: "Instinkt" }
+    instinkt:  { en: "Instinct",  de: "Instinkt" }
+    presence:  { en: "Presence",  de: "Präsenz" }
+    präsenz:   { en: "Presence",  de: "Präsenz" }
+    knowledge: { en: "Knowledge", de: "Wissen" }
+    wissen:    { en: "Knowledge", de: "Wissen" }

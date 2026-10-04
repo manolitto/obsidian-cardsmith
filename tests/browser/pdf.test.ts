@@ -37,6 +37,7 @@ describe.each([
   "5e_2014",
   "5e_2024",
   "dftq",
+  "daggerheart",
 ])("the %s deck prints", (system) => {
   it("to as many pages as it composed, on the paper it said", async () => {
     const deck = await deckNote(system);
