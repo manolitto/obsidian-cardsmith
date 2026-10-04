@@ -150,7 +150,7 @@ fold: off
 # Millimetres between the columns of a folding deck. The gap between two
 # panels of one fold is printed as a grey strip — a hinge: cut the strips out,
 # laminate the whole sheet, and the film seals to itself there and folds
-# easily. 2 suits most cards, 3 where a panel folds inside another. 0 folds
+# easily. 1.5 suits a single fold, 3 where a panel folds inside another. 0 folds
 # along a crease, as for a card that is not laminated.
 fold-gap: 0
 
