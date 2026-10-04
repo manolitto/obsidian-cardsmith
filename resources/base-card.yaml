@@ -147,11 +147,12 @@ duplex-flip: long-edge
 # printer's booklet. `off` cuts every card out.
 fold: off
 
-# Millimetres between the columns of a folding deck. The gap between two
-# panels of one fold is printed as a grey strip — a hinge: cut the strips out,
-# laminate the whole sheet, and the film seals to itself there and folds
-# easily. 1.5 suits a single fold, 3 where a panel folds inside another. 0 folds
-# along a crease, as for a card that is not laminated.
+# Millimetres between the panels of a fold, printed as a grey strip — a
+# hinge: cut the strips out, laminate the whole sheet, and the film seals to
+# itself there and folds easily. 1.5 suits a single fold. A `cover` of three
+# panels or more may give its outer hinge, which goes round the panels folded
+# inside, a width of its own: `fold-gap-outer`. 0 folds along a crease, as for
+# a card that is not laminated.
 fold-gap: 0
 
 # Alignment marks at each card's outer corners; a page that holds a single

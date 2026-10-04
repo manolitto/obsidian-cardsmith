@@ -95,6 +95,13 @@ describe("the deck-setting fold", () => {
     expect(diagnostics.matching("fold-gap")).toHaveLength(1);
   });
 
+  it("reads the outer fold gap beside it", () => {
+    expect(resolve(["fold-gap: 0", "fold-gap: 1.5\nfold-gap-outer: 2.5"])).toMatchObject({
+      foldGap: 1.5,
+      foldGapOuter: 2.5,
+    });
+  });
+
   it("says a card setting is not a deck setting", () => {
     // A deck block does carry card settings — as overrides for every card it
     // holds — but the deck parser hands those to the card chain. Here they

@@ -123,8 +123,10 @@ describe("buildDeck over the fixture folders", () => {
       ...built,
       settings: { ...built.settings, fold: "cover", foldGap: 3 },
     });
-    // `A4 portrait` inside 10 mm: three poker cards and two gaps are 195 mm, so two across.
-    expect(grid).toMatchObject({ paper: { width: 210 }, columns: 2, gap: 3 });
+    // `A4 portrait` inside 10 mm: three cards across, edge to edge, where a row holds no
+    // fold; a two-card fold with its 3 mm hinge leaves no room for a card beside it.
+    expect(grid).toMatchObject({ paper: { width: 210 }, columns: 3, gap: 3 });
+    expect(pages.map((page) => page.cells.length)).toEqual([7, 7, 6, 6]);
     const hinges = pages.filter((page) => page.side === "front").flatMap((p) => p.hinges);
     expect(hinges).toHaveLength(3);
     expect(

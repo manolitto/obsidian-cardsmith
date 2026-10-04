@@ -92,7 +92,8 @@ consecutively.
 | `cut-marks` | `{enabled: true, length: 3, margin: 0, color: '#aaaaaa', weight: 0.25}` — a cross at every card corner, its arms along the cuts and `margin` mm clear of the corner, printed over the cards. An arm on a card is `length` mm long; an arm that leaves the block of cards runs on to the paper's edge, so a guillotine can be set against it. The fields merge, so one can change alone. A page that holds a single card gets none. |
 | `duplex-flip` | Which edge is the binding when printing duplex, `long-edge` or `short-edge`, so a back lands behind its front. |
 | `fold` | `off` (default), `strip`, `cover` or `booklet`: a note's cards printed side by side, uncut, and folded instead of cut apart — see *Folded cards*. |
-| `fold-gap` | Millimetres between the cards of a folding deck, so that a folded card can be laminated with a hinge — see *Laminating a folded card*. Default `0`, a crease. |
+| `fold-gap` | Millimetres between the panels of a fold, so that a folded card can be laminated with a hinge — see *Laminating a folded card*. Default `0`, a crease. |
+| `fold-gap-outer` | Millimetres of a `cover`'s outer hinge, between the cover and the last page, where three panels or more fold inside it. Default: `fold-gap`. |
 | `paper-background` | `textured` prints the system's background pictures, `plain` leaves them out. Default: the plugin setting. |
 
 The cards are packed without gaps on one grid and centred inside the
@@ -181,24 +182,38 @@ that is cut out: print a test sheet first.
 ### Laminating a folded card
 
 Laminated along a crease, paper and film fold stiffly and the card springs
-open. A **hinge** folds instead: with `fold-gap: 1.5`, the cards stand 1.5 mm
-apart and the gap between two panels of one fold is printed as a grey
-strip.
+open. A **hinge** folds instead: with `fold-gap: 1.5`, the panels of a fold
+stand 1.5 mm apart and the gap between them is printed as a grey strip.
 
 1. Cut the grey strips out with a craft knife, along the cut marks either
    side. Cut nothing else — the sheet stays in one piece.
 2. Laminate the whole sheet. Where a strip was, the film seals to itself.
-3. Cut the cards out. Each fold now bends along its film hinge, lies flat
-   when closed and stays closed.
+3. Cut the rows apart, then the cards out of each row. Each fold now bends
+   along its film hinge, lies flat when closed and stays closed.
 
 1.5 mm has proved itself for a single fold on 120 g paper in 80 µm film;
-thicker paper or film wants a little more. Give a panel that folds inside
-another — the inner panel of a three-card `cover` — 3 mm, since it has to
-go round the one it is tucked under. Thin film (80 µm) folds more easily
-than thick. The gap stands between every two cards across, not only
-inside a fold, so a row may hold one card fewer: three poker cards no
-longer fit across A4 portrait inside a 10 mm margin. The grey strips are
-printed even with the cut marks off, and only on the front of the sheet.
+thicker paper or film wants a little more, and thin film folds more easily
+than thick.
+
+A `cover` of three panels or more folds its cover round the rest, which
+folds accordion-wise inside it — so its outer hinge, between the cover and
+the last page, goes round a stack. Give it a width of its own:
+
+```yaml
+fold: cover
+fold-gap: 1.5
+fold-gap-outer: 2.5
+```
+
+A greeting card, a `strip` and a `booklet` fold nothing inside a hinge and
+use `fold-gap` throughout.
+
+Only a fold has gaps: separate cards stand edge to edge, as without a
+fold. A row is laid out by the millimetre, so a row with a fold and its
+hinges may hold one card fewer than a row of single cards — and the
+vertical cuts of two rows need not line up, which is why the rows are cut
+apart first. The grey strips are printed even with the cut marks off, and
+only on the front of the sheet.
 
 ## The block in reading view
 
