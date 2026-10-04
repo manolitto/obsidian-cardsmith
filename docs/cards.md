@@ -235,7 +235,9 @@ note, then the deck it is printed in, then the card type, then the system.
 Before it prints, every card is laid out: the type is scaled down towards
 the system's floor until the text fits, and what still does not fit
 follows `overflow-mode`. A card that spilled shows every physical card in
-the preview, in print order.
+the preview, in print order. A deck can print those cards side by side as
+one strip of paper, folded instead of cut apart — see
+[Folded cards](decks.md#folded-cards).
 
 ## The preview
 
