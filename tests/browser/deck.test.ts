@@ -91,6 +91,31 @@ describe("buildDeck over the fixture folders", () => {
     expect(built.stylesheets).toHaveLength(5);
   });
 
+  it("dragonbane folded: each note's cards side by side, a table note's rows never", async () => {
+    const { built } = await build("dragonbane");
+    const { pages, grid } = composeDeck({
+      ...built,
+      settings: { ...built.settings, foldPanels: 2 },
+    });
+    // The deck writes `A4 portrait`: one strip across, three down.
+    expect(grid).toMatchObject({ paper: { width: 210 }, panels: 2, columns: 2, rows: 3 });
+    const folded = pages
+      .filter((page) => page.side === "front")
+      .flatMap((page) => page.cells)
+      .filter((cell) => cell.fold !== undefined)
+      .map((cell) => `${cell.name} ${cell.fold!.panel}/${cell.fold!.panels}`);
+    expect(folded).toEqual([
+      "Knochensammler 1/2",
+      "Knochensammler 2/2",
+      "Moorschleicher 1/2",
+      "Moorschleicher 2/2",
+      "Nebelweberei 1/2",
+      "Nebelweberei 2/2",
+    ]);
+    // A fold that does not fit what is left of a strip starts the next one.
+    expect(pages.map((page) => page.cells.length)).toEqual([5, 5, 5, 5, 3, 3]);
+  });
+
   it("eiserne-zeit: the German cards only, plain paper, no cut marks", async () => {
     const { built, diagnostics } = await build("eiserne-zeit");
     expect(diagnostics.messages).toEqual([]);
