@@ -26,16 +26,15 @@ back-template: templates/back.hbs
 stylesheet: styles/creature.css
 card-size: large
 
-# The picture sits on the back; the `front-image` candidate shows it on
-# the front as well when that prints fewer cards.
+# A creature always ends on its designed back: a long text runs over
+# fronts only, padded to an odd count, and the back with the portrait
+# follows as the last face. A second candidate at `front-face-count: even`
+# would print fewer cards now and then — the portrait at the foot of the
+# last front, no back — and `creature.css` still styles one as
+# `.cs-layout-front-image`, so a deck or a note that prefers that can
+# declare both.
 layouts:
   - { name: with-back, front-face-count: odd, fallback: true }
-  - { name: front-image, front-face-count: even }
-layout-decision:
-  order:
-    - { metric: printed-cards, direction: minimize }
-    - { metric: whitespace, direction: minimize }
-  tie-break: declaration-order
 
 translations:
   de:
@@ -114,8 +113,8 @@ properties:
       en: "A bird of mist and feathers that steals waymarks from travellers on the lake shore."
 
   # ONE picture, TWO places — named after what it shows, not where it
-  # sits. Always on the back; on the front only when the `front-image`
-  # layout candidate wins. `back-image` is bound to the same back place
+  # sits. Always on the back; on the front only under a `front-image`
+  # layout candidate, which the card type does not declare. `back-image` is bound to the same back place
   # at system level, i.e. earlier, so an explicit back picture wins over
   # the artwork. Not `portrait`: that is an alias of the baseline's
   # `image`, and a name that is another property's alias is a collision.
@@ -123,8 +122,8 @@ properties:
     slot: [front-image-bottom, back-image-primary]
     aliases: [image, bild, vorderbild, vorderseitenbild, bild-vorderseite]
     description:
-      de: "Bild der Kreatur als Wikilink. Erscheint auf der Rückseite und – wenn der Platz reicht – auch unten auf der Vorderseite."
-      en: "Picture of the creature as a wikilink. Rendered on the back, and at the foot of the front when there is room for it."
+      de: "Bild der Kreatur als Wikilink. Erscheint auf der Rückseite."
+      en: "Picture of the creature as a wikilink. Rendered on the back."
     sample: "[[Nebelkraehe.jpg]]"
 
   hit-points:

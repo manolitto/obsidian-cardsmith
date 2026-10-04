@@ -1,12 +1,11 @@
 # Knochensammler
 
-A creature too long for one face. The card type offers two ways to lay it
-out: `with-back` keeps the designed back and spills onto further cards,
-`front-image` gives the back up, shows the portrait at the foot of the last
-front and pairs the fronts two by two. The text here runs past one face but
-not past one and a half, which is where the second way prints fewer cards —
-the decision is meant to come out for `front-image`. Invented for this deck,
-not a creature of any published bestiary.
+A creature too long for one face. The card type keeps its designed back
+however long the text runs: the text goes onto fronts only, padded to an
+odd count, and the back with the portrait comes last. The text here runs
+past one face but not past one and a half — two fronts' worth, so a third
+front pads the count and the type grows to fill it. Invented for this
+deck, not a creature of any published bestiary.
 
 ```cardsmith
 card:
