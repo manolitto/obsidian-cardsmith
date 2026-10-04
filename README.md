@@ -106,7 +106,7 @@ deck leaves the paper's edge clear on its own; see
 | | |
 |---|---|
 | [Cards](docs/cards.md) | The `cardsmith` block: card settings, where a card's properties come from, tables that make one card per row, pictures, the preview |
-| [Decks](docs/decks.md) | The `cardsmith-deck` block: selecting notes, sort order, copies, card and paper sizes, cut marks, duplex, the two exports, the preview pane and how to print |
+| [Decks](docs/decks.md) | The `cardsmith-deck` block: selecting notes, sort order, copies, card and paper sizes, cut marks, duplex, folded cards, the two exports, the preview pane and how to print |
 | [Settings](docs/settings.md) | The systems list, adding your own, copying a bundled one into the vault, the three preferences |
 | [Bundled systems](docs/systems.md) | The fourteen card designs that ship with the plugin, their card types, sizes and languages |
 | [Writing a system](docs/authoring/system.md) | A folder with a YAML root document, templates, stylesheets and fonts — starting from a copy of `simple` |

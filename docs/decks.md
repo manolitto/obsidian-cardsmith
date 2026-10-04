@@ -118,7 +118,8 @@ pages then.
 Pages come in print order: a sheet's front, then its back — when any card
 in the deck has one. On the back page every card sits where its front
 lands after the flip, so a duplex print aligns from the first sheet to the
-last. A deck without backs prints no blank sheets.
+last. A deck without backs prints no blank sheets. A folding deck places
+strips of cards instead of single ones, and the same holds for each.
 
 ## Folded cards
 
