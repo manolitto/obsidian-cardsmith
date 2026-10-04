@@ -1,0 +1,6 @@
+runensiegel · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   div.dh-body
+     p "Du besitzt ein sehr persönliches Schmuckstück, …"
+     p "Zeigt der Siegelwürfel eine 8, erlischt …"
+2. back [cs-layout-default] scale —

@@ -1,0 +1,61 @@
+id: daggerheart
+name: Daggerheart
+
+# Cards for Daggerheart, built on the Daggerheart System Reference
+# Document 1.0 under the Darrington Press Community Gaming License. The
+# game deals its character options as cards — domain cards, ancestries,
+# communities, subclasses — and every one of them is the same frame: a
+# banner, a corner badge, a ribbon naming the kind, the title and the
+# text. So the player cards share one front and differ only in what fills
+# its places. The design is this project's own; nothing of the publisher's
+# card art, glyphs or typography is reproduced. Every front carries the
+# compatibility line the licence asks of cards.
+#
+# English and German: the German captions use the terms of the official
+# German edition; the sample texts are translated from the SRD.
+languages: [en, de]
+
+stylesheet: styles/daggerheart.css
+
+card-size: poker
+
+# The back of a player card is a designed face, so a long front spills
+# onto further front/back pairs instead of replacing it.
+overflow-mode: extra-cards
+
+properties:
+  name:
+    slot: front-title
+    description:
+      en: "The card's name, shown as the title on the front. Falls back to the note's file name when unset."
+      de: "Name der Karte, als Titel auf der Vorderseite. Fällt auf den Dateinamen zurück, wenn nicht gesetzt."
+
+  # `body` last: it is also the note's own text before the first `##`
+  # heading, and an alias is tried in declaration order.
+  description:
+    slot: front-body
+    aliases: [text, beschreibung, body]
+    description:
+      en: "The card's text — Markdown; a feature's name in bold, as the cards print it."
+      de: "Der Kartentext — Markdown; der Name eines Merkmals fett, wie auf den Karten."
+
+card-types:
+  # A domain card: a spell, an ability or a grimoire of one of the nine
+  # domains, at a level from 1 to 10.
+  domain:
+    front-template: templates/front.hbs
+    back-template: templates/back.hbs
+    translations:
+      en:
+        back-label: "Domain"
+      de:
+        back-label: "Domäne"
+    properties:
+      name:
+        sample:
+          en: "Rune Ward"
+          de: "Runensiegel"
+      description:
+        sample:
+          en: "You have a deeply personal trinket that can be infused with protective magic and held as a ward by you or an ally. Describe what it is and why it's important to you. The ward's holder can spend a Hope to reduce incoming damage by 1d8.\n\nIf the Ward Die result is 8, the ward's power ends after it reduces damage this turn. It can be recharged for free on your next rest."
+          de: "Du besitzt ein sehr persönliches Schmuckstück, das mit Schutzmagie erfüllt werden kann und dir oder einem Verbündeten als Siegel dient. Beschreibe, was es ist und warum es dir so viel bedeutet. Wer das Siegel hält, kann 1 Hoffnung einsetzen, um eingehenden Schaden um 1W8 zu verringern.\n\nZeigt der Siegelwürfel eine 8, erlischt die Kraft des Siegels, nachdem es in diesem Zug Schaden verringert hat. Bei deiner nächsten Rast lässt es sich kostenlos wieder aufladen."

@@ -1,0 +1,22 @@
+{{!--
+  Daggerheart — the front every player card shares.
+  The title, the text, and at the foot the compatibility line the
+  Darrington Press Community Gaming License asks every card to carry.
+  Header, content and footer are flex siblings under the root, so the
+  footer reappears on every continuation face.
+--}}
+<div class="card-root card-front daggerheart {{card-type}}-card">
+
+  <div class="card-header dh-header">
+    <div class="card-title dh-title"><span class="text-scalable">{{slot "front-title"}}</span><span class="cs-overflow-counter"></span></div>
+  </div>
+
+  <div class="card-content-container dh-content">
+    <div class="card-body-scalable">
+      <div class="dh-body">{{slot "front-body" markdown="block"}}</div>
+    </div>
+  </div>
+
+  <div class="card-footer dh-footer">Daggerheart™ Compatible. Terms at Daggerheart.com</div>
+
+</div>

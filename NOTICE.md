@@ -41,7 +41,7 @@ No glyph, metric or name-table data was altered.
 | Nunito Sans | dino-island | SIL OFL 1.1 | `dino-island/fonts/nunito-sans-OFL.txt` |
 | Pathfinder 2e action glyphs (five symbols) | pf2e | Paizo Community Use Policy | `pf2e/fonts/pathfinder-2e-actions-LICENSE.txt` — see the Paizo notice below |
 | Rubik Distressed | dino-island | SIL OFL 1.1 | `dino-island/fonts/rubik-distressed-OFL.txt` |
-| Source Sans 3 | pf2e, simple, tor2e | SIL OFL 1.1 | `*/fonts/source-sans-3-OFL.txt` |
+| Source Sans 3 | daggerheart, pf2e, simple, tor2e | SIL OFL 1.1 | `*/fonts/source-sans-3-OFL.txt` |
 | TeX Gyre Bonum | 5e_2014 | GUST Font License | `5e_2014/fonts/tex-gyre-bonum-LICENSE.txt` — the whole font, recompressed into WOFF2 |
 | TeX Gyre Pagella | dcc | GUST Font License | `dcc/fonts/pagella-LICENSE.txt` |
 | Wellfleet | mini-d20 | SIL OFL 1.1 | `mini-d20/fonts/wellfleet-OFL.txt` |
@@ -134,6 +134,7 @@ trade dress, artwork and proper nouns remain the property of their owners.
 | **5e_2014** | *System Reference Document 5.1*, Wizards of the Coast LLC | CC BY 4.0 (the SRD 5.1) | Field names and terminology follow the SRD; no SRD text is bundled. The German captions use the terminology of the German Player's Handbook of these rules (*Spielerhandbuch*) — single terms such as "Rüstungsklasse", "Herausforderung", "Auf höheren Graden"; no text of it is bundled. The system is named "5E (2014)" and carries no publisher's wordmark or logo; the d20 on its back is original. See the SRD attribution below. |
 | **5e_2024** | *System Reference Document 5.2.1*, Wizards of the Coast LLC, in English and in its German translation (*Systemreferenzdokument 5.2.1*) | CC BY 4.0 (the SRD 5.2.1) | Field names, the stat block's structure and the terminology follow the SRD 5.2.1; the German captions are those of the German SRD 5.2.1. No SRD text is bundled; the samples are invented. The system is named "5E (2024)" and carries no publisher's wordmark, logo, fonts or trade dress; the colours, the d20 on its back and the typography are this project's. See the SRD attribution below. |
 | **dcc** | *Dungeon Crawl Classics*, Goodman Games | Open Game License v1.0a | `dcc/OGL.txt` carries the notice and the licence: no game text bundled, field names follow the game, samples invented. "Dungeon Crawl Classics" and Goodman Games' Product Identity are not reproduced. |
+| **daggerheart** | *Daggerheart System Reference Document 1.0*, Darrington Press / Critical Role, LLC; German edition by Pegasus Spiele | Darrington Press Community Gaming License (DPCGL) | Field names, the card structure and the sample texts follow the SRD 1.0, which the licence names Public Game Content; the German sample texts are this project's translation of it. The German captions use the terminology of the official German edition — single terms such as "Rückruf", "Zauber-Attribut", "Schadensschwellen"; no text of it is bundled. No artwork, logo, glyph, typography or trade dress of the publisher's is reproduced; the design is this project's. Every card front carries the line "Daggerheart™ Compatible. Terms at Daggerheart.com". See the DPCGL attribution below. |
 | **dftq** | *Descended from the Queen* — the framework *For the Queen* (Alex Roberts) offers for games built on it | The framework's terms | The system is a card design for such games; nothing of *For the Queen* is bundled, and the samples are invented. |
 | **dino-island** | *Escape from Dino Island* (Sam Tung & Sam Roberts, Mythworks); German edition *Flucht von Dino Island* (System Matters) | **Bundled with the explicit permission of the authors, Sam Tung & Sam Roberts** | Layouts and terminology only — no prose, images or logos of the game. |
 | **dragonbane** | *Dragonbane*, Free League Publishing (Fria Ligan AB) | Not a Supplement under the Dragonbane Third-Party Tabletop Module License, which defines one as a publication of adventures, setting material or rules additions; the system bundles none, and no Free League text, artwork or logo | A card design in the spirit of the game's own card deck: colours and proportions follow the printed cards, no illustration of the publisher's is reproduced, and the textures are not Free League's. Anyone who publishes a Supplement made with it carries that licence's obligations — the logo, the notice — themselves. This system is not affiliated with, sponsored or endorsed by Fria Ligan AB. |
@@ -166,6 +167,20 @@ trade dress, artwork and proper nouns remain the property of their owners.
 > https://www.dndbeyond.com/srd. Das SRD 5.2.1 ist lizenziert gemäß
 > Creative Commons Namensnennung 4.0 International Public License
 > (verfügbar unter https://creativecommons.org/licenses/by/4.0/legalcode.de).
+
+### DPCGL attribution (daggerheart)
+
+> This product includes materials from the Daggerheart System Reference
+> Document 1.0, © Critical Role, LLC. under the terms of the Darrington
+> Press Community Gaming (DPCGL) License. More information can be found
+> at https://www.daggerheart.com. The licence is available at
+> https://darringtonpress.com/license/. The German texts are a
+> translation of the Public Game Content made for this project; there
+> are no previous modifications by others.
+
+Daggerheart™ Compatible. Terms at Daggerheart.com. Cardsmith is not
+connected with, sponsored or endorsed by Darrington Press or Critical
+Role.
 
 ### Paizo Community Use notice (pf2e)
 

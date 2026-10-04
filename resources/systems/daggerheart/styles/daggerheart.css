@@ -1,0 +1,135 @@
+/*
+ * Daggerheart — the player cards and the GM cards.
+ *
+ * Type: Source Sans 3, a humanist sans under the SIL Open Font License
+ * (fonts/source-sans-3-OFL.txt). Variable weight 400–700, upright and
+ * italic, split into latin and latin-ext faces so a card without umlauts
+ * loads half.
+ */
+
+/* ── Type face ─────────────────────────────────────────────────── */
+
+@font-face {
+  font-family: 'Source Sans 3';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('fonts/source-sans-3-normal-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Source Sans 3';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('fonts/source-sans-3-normal-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Source Sans 3';
+  font-style: italic;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('fonts/source-sans-3-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Source Sans 3';
+  font-style: italic;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('fonts/source-sans-3-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* ── Palette and base type ─────────────────────────────────────── */
+
+.card-root.daggerheart {
+  --dh-ink:   #1f1d24;   /* near-black text */
+  --dh-muted: #7d7886;   /* footer */
+  --dh-paper: #fbfaf7;
+
+  --dh-font: "Source Sans 3", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+
+  --card-font-size-min:        2.3mm;
+  --card-font-size-max:        3mm;
+  --card-font-size-title-min:  3.2mm;
+  --card-font-size-title-max:  5mm;
+
+  --dh-font-body:  clamp(var(--card-font-size-min),       calc(var(--card-width, 63mm) * 0.045), var(--card-font-size-max));
+  --dh-font-title: clamp(var(--card-font-size-title-min), calc(var(--card-width, 63mm) * 0.072), var(--card-font-size-title-max));
+
+  display: flex;
+  flex-direction: column;
+  background-color: var(--dh-paper);
+  color: var(--dh-ink);
+  font-family: var(--dh-font);
+  font-weight: 400;
+  font-size: var(--dh-font-body);
+  line-height: 1.35;
+  overflow-wrap: break-word;
+}
+
+.card-root.daggerheart strong,
+.card-root.daggerheart b { font-weight: 700; }
+.card-root.daggerheart em,
+.card-root.daggerheart i { font-style: italic; }
+
+/* ── Front ─────────────────────────────────────────────────────── */
+
+.daggerheart .dh-header {
+  flex: 0 0 auto;
+  padding: 6% 7% 2%;
+}
+
+.daggerheart .dh-title {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 0.4em;
+  font-size: var(--dh-font-title);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.daggerheart .dh-content {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 0 7%;
+  overflow: hidden;
+}
+
+.daggerheart .dh-body p { margin: 0 0 0.45em; }
+.daggerheart .dh-body p:last-child { margin-bottom: 0; }
+.daggerheart .dh-body ul { margin: 0 0 0.45em; padding-left: 1.1em; }
+
+/* The licence's compatibility line, small and quiet at the foot. */
+.daggerheart .dh-footer {
+  flex: 0 0 auto;
+  padding: 2% 7% 4%;
+  font-size: 0.62em;
+  color: var(--dh-muted);
+  text-align: center;
+}
+
+/* ── Back ──────────────────────────────────────────────────────── */
+
+.card-root.daggerheart.dh-back {
+  justify-content: center;
+  align-items: center;
+}
+
+.daggerheart .dh-back-label {
+  width: 80%;
+  font-size: var(--dh-font-title);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+}
