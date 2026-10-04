@@ -35,11 +35,8 @@ card-type: [gear, creature]
 # Welche Papierkante beim Duplexdruck die Bindung ist, damit Vorder- und Rückseiten übereinanderliegen: `long-edge` oder `short-edge`.
 # duplex-flip: long-edge
 
-# Wie viele Karten einer Notiz ungeschnitten nebeneinander gedruckt werden, um gefalzt zu werden: 2 ergibt eine Klappkarte, 3 einen Falzflyer. 1 falzt nichts.
-# fold-panels: 1
-
-# Welche Seite eines Falzes wohin kommt: `pairs` (1 und 3 nebeneinander, 2 und 4 dahinter) oder `leporello` (1, 2, 3 auf einer Seite, 4, 5, 6 auf der anderen).
-# fold-order: pairs
+# Die Karten einer Notiz ungeschnitten nebeneinander, gefalzt statt geschnitten: `strip` (vorne 1, 2, 3, hinten 4, 5, 6), `cover` (vorne 5, 6, 1, Seite 1 als Umschlag mit der letzten Seite dahinter), `booklet` (ineinandergelegte Bögen zu zwei Karten, wie die Broschüre eines Druckertreibers) oder `off`.
+# fold: 'off'
 
 # Die Schnittmarken an jeder Kartenecke; die Felder verschmelzen, eines lässt sich allein ändern.
 # cut-marks: {enabled: true, length: 3, margin: 0, color: '#aaaaaa', weight: 0.25}

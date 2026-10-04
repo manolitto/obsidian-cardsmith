@@ -1,6 +1,6 @@
 import type { PhysicalCard } from "../deck/copies";
 import type { Deck } from "../deck/pipeline";
-import type { CutMarks, DuplexFlip, FoldOrder } from "../definitions/deck-settings";
+import type { CutMarks, DuplexFlip, Fold } from "../definitions/deck-settings";
 import type { CardSize } from "../model/card-size";
 import { DEFAULT_PAPER_PRESET, PAPER_PRESETS, type PaperSize } from "../model/paper-size";
 
@@ -20,11 +20,11 @@ import { DEFAULT_PAPER_PRESET, PAPER_PRESETS, type PaperSize } from "../model/pa
  * so a card on paper its own size fills the page edge to edge, whatever
  * margin the deck asked for.
  *
- * A deck may fold: the physical cards of one note then print side by side,
- * uncut, `fold-panels` to a strip, and the strip is folded instead of cut
- * apart. The grid is then counted in strips, and a strip may hold several
- * shorter folds or single cards, in deck order. Nothing changes for the
- * back page: each panel's back lies behind it as any card's does.
+ * A deck may fold: the physical cards of one note then print side by side
+ * in one row, uncut, and the strip is folded instead of cut apart. The
+ * grid stays a grid of cards; a fold only never breaks across a row.
+ * Nothing changes for the back page: each panel's back lies behind it as
+ * any card's does.
  */
 
 /** The grid a deck is imposed in: the paper the right way round, and where the cards sit on it. */
@@ -32,9 +32,6 @@ export interface Grid {
   /** The paper as printed — width across, height down. */
   paper: { width: number; height: number };
   card: CardSize;
-  /** Cards to a strip: the grid is counted in strips of this many, side by side. 1 when the deck does not fold. */
-  panels: number;
-  /** In cards, a multiple of `panels`. */
   columns: number;
   rows: number;
   /** The grid's top-left corner on the page. */
@@ -81,67 +78,67 @@ export interface Composable {
   pageMargin: number;
   duplexFlip: DuplexFlip;
   cutMarks: CutMarks;
-  /** Absent: 1, nothing folds. */
-  foldPanels?: number;
-  /** Absent: `pairs`. */
-  foldOrder?: FoldOrder;
+  /** Absent: `off`. */
+  fold?: Fold;
 }
 
 /**
  * Lay the grid out. `auto` orientation tries the paper both ways and takes
  * the one that holds more cards, portrait on a tie. A card that does not
- * fit the paper even once is an error naming both; with `panels`, the
- * unit is a strip of that many cards side by side, and so is the error.
+ * fit the paper even once is an error naming both. `minColumns` — two for
+ * a deck that folds — has `auto` count only the cards that fit in runs of
+ * that many across, so it never picks a way round with fewer, and a fixed
+ * one with fewer is an error of its own.
  */
 export function layoutGrid(
   paper: PaperSize,
   card: CardSize,
   pageMargin: number,
-  panels = 1
+  minColumns = 1
 ): Grid {
   const short = Math.min(paper.width, paper.height);
   const long = Math.max(paper.width, paper.height);
-  const portrait = fit({ width: short, height: long }, card, pageMargin, panels);
-  const landscape = fit({ width: long, height: short }, card, pageMargin, panels);
+  const portrait = fit({ width: short, height: long }, card, pageMargin);
+  const landscape = fit({ width: long, height: short }, card, pageMargin);
+  // Counted in runs of `minColumns`: a folding deck's place left over at
+  // the end of an odd row holds a single card at best.
+  const holds = (g: Grid) => Math.floor(g.columns / minColumns) * minColumns * g.rows;
   const chosen =
     paper.orientation === "portrait"
       ? portrait
       : paper.orientation === "landscape"
         ? landscape
-        : landscape.columns * landscape.rows > portrait.columns * portrait.rows
+        : holds(landscape) > holds(portrait)
           ? landscape
           : portrait;
 
+  const where = `${chosen.paper.width} × ${chosen.paper.height} mm paper`;
   if (chosen.columns < 1 || chosen.rows < 1) {
-    const what =
-      panels > 1
-        ? `A fold of ${panels} ${card.width} × ${card.height} mm cards (${mm(panels * card.width)} × ${card.height} mm)`
-        : `A ${card.width} × ${card.height} mm card`;
+    throw new Error(`A ${card.width} × ${card.height} mm card does not fit on ${where}`);
+  }
+  if (chosen.columns < minColumns) {
     throw new Error(
-      `${what} does not fit on ${chosen.paper.width} × ${chosen.paper.height} mm paper`
+      `A fold needs ${minColumns} ${card.width} × ${card.height} mm cards side by side, and ${where} holds ${chosen.columns}`
     );
   }
   return chosen;
 }
 
-/** The grid on the paper this way round. The margin yields, per axis, where it would not leave room for one strip. */
+/** The grid on the paper this way round. The margin yields, per axis, where it would not leave room for one card. */
 function fit(
   paper: { width: number; height: number },
   card: CardSize,
-  margin: number,
-  panels: number
+  margin: number
 ): Grid {
-  const strip = panels * card.width;
-  const marginX = Math.min(margin, Math.max(0, (paper.width - strip) / 2));
+  const marginX = Math.min(margin, Math.max(0, (paper.width - card.width) / 2));
   const marginY = Math.min(margin, Math.max(0, (paper.height - card.height) / 2));
   const usableWidth = paper.width - 2 * marginX;
   const usableHeight = paper.height - 2 * marginY;
-  const columns = Math.max(0, Math.floor(usableWidth / strip)) * panels;
+  const columns = Math.max(0, Math.floor(usableWidth / card.width));
   const rows = Math.max(0, Math.floor(usableHeight / card.height));
   return {
     paper,
     card,
-    panels,
     columns,
     rows,
     originX: marginX + (usableWidth - columns * card.width) / 2,
@@ -159,33 +156,37 @@ function fit(
  * turned about the long edge, the columns mirror within the row; about
  * the short edge, the rows mirror within the column.
  *
- * A folding deck places folds, not cards: each goes into the current
- * strip when it fits what is left of it, else starts the next one — so
- * the deck's order is the print order, and a strip's remainder stays
- * empty rather than taking a later card.
+ * A folding deck places folds, not cards: each goes into the current row
+ * when it fits what is left of it, else starts the next one — so the
+ * deck's order is the print order, and a row's remainder stays empty
+ * rather than taking a later card.
  */
 export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
-  const panels = deck.foldPanels ?? 1;
-  const grid = layoutGrid(deck.paperSize, deck.cardSize, deck.pageMargin, panels);
-  const stripColumns = grid.columns / panels;
-  const stripsPerPage = stripColumns * grid.rows;
-  const folds = foldChunks(deck.cards, panels, deck.foldOrder ?? "pairs");
-  const withBacks = folds.some((fold) => fold.some((place) => place.back !== undefined));
+  const fold = deck.fold ?? "off";
+  const grid = layoutGrid(
+    deck.paperSize,
+    deck.cardSize,
+    deck.pageMargin,
+    fold === "off" ? 1 : 2
+  );
+  const pieces = foldPieces(deck.cards, fold, grid.columns);
+  const withBacks = pieces.some((piece) =>
+    piece.some((place) => place.back !== undefined)
+  );
   const sheets: { front: Cell[]; back: Cell[] }[] = [];
 
-  let strip = 0;
+  // The running row, over every page, and the cards already in it.
+  let row = 0;
   let used = 0;
-  for (const fold of folds) {
-    if (used + fold.length > panels) {
-      strip++;
+  for (const piece of pieces) {
+    if (used + piece.length > grid.columns) {
+      row++;
       used = 0;
     }
-    const local = strip % stripsPerPage;
-    const row = Math.floor(local / stripColumns);
-    const first = (local % stripColumns) * panels + used;
-    const sheet = (sheets[Math.floor(strip / stripsPerPage)] ??= { front: [], back: [] });
-    fold.forEach((place, i) => {
-      const column = first + i;
+    const local = row % grid.rows;
+    const sheet = (sheets[Math.floor(row / grid.rows)] ??= { front: [], back: [] });
+    piece.forEach((place, i) => {
+      const column = used + i;
       const common = {
         index: place.index,
         name: place.name,
@@ -195,13 +196,13 @@ export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
       sheet.front.push({
         ...common,
         side: "front",
-        ...at(grid, column, row),
+        ...at(grid, column, local),
         ...(place.front === undefined ? {} : { html: place.front }),
       });
       const mirrored =
         deck.duplexFlip === "short-edge"
-          ? at(grid, column, grid.rows - 1 - row)
-          : at(grid, grid.columns - 1 - column, row);
+          ? at(grid, column, grid.rows - 1 - local)
+          : at(grid, grid.columns - 1 - column, local);
       sheet.back.push({
         ...common,
         side: "back",
@@ -209,11 +210,7 @@ export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
         ...(place.back === undefined ? {} : { html: place.back }),
       });
     });
-    used += fold.length;
-    if (used === panels) {
-      strip++;
-      used = 0;
-    }
+    used += piece.length;
   }
 
   const pages: Page[] = [];
@@ -233,7 +230,7 @@ function page(side: "front" | "back", cells: Cell[], grid: Grid, marks: CutMarks
   };
 }
 
-/** One place of a fold — or a whole card, when nothing folds — with the faces that go on it. */
+/** One place on the paper — a card, or a panel of a fold — with the faces that go on it. */
 interface Place {
   index: number;
   name: string;
@@ -244,48 +241,95 @@ interface Place {
 }
 
 /**
- * The deck's cards as folds: each note printing's cards — one `group` —
- * cut into runs of `panels`, the last run shorter. A run of one is a card
- * as it is. In a longer run the faces, numbered in reading order (the
- * first card's front and back, then the second's), go where `order`
- * says: `pairs` keeps each card on its panel; `leporello` puts the first
- * half across the front, left to right, and the rest behind them, so that
- * turned over like a page they read on.
+ * The deck's cards as pieces of paper, each a run of places side by side.
+ * A note printing's cards — one `group` — fold together; a run of one is a
+ * card as it is, whatever the fold, and with `off` every card is. The
+ * faces are numbered in reading order, the first card's front 1, its back
+ * 2, the second card's front 3, and on:
+ *
+ * - `strip` reads 1 to `k` across the front, page 1 on the left with its
+ *   fold on the right, and turned over like a page, on across the back —
+ *   unfolded, a strip with a front and a back;
+ * - `cover` puts page 1 on the right with its fold on the left, the last
+ *   pages before it — `k + 2` to `2k`, then 1 — and 2 to `k + 1` across
+ *   the back, so that folded inwards page 1 is a cover and the last page
+ *   lies behind it;
+ *
+ * both as far as a row reaches, the rest a further piece. `booklet` is a
+ * printer's booklet: the faces padded with blank pages to a multiple of
+ * four, then sheets of two panels, nested — of eight, the outer sheet
+ * 8 | 1 with 2 | 7 behind it, the inner 6 | 3 with 4 | 5.
  */
-function foldChunks(
+function foldPieces(
   cards: readonly PhysicalCard[],
-  panels: number,
-  order: FoldOrder
+  fold: Fold,
+  columns: number
 ): Place[][] {
   const out: Place[][] = [];
+  let index = 0;
+  const place = (
+    card: PhysicalCard,
+    front: string | undefined,
+    back: string | undefined,
+    panel: number,
+    panels: number
+  ): Place => ({
+    index: index++,
+    name: card.name,
+    cardTypeId: card.cardTypeId,
+    ...(front === undefined ? {} : { front }),
+    ...(back === undefined ? {} : { back }),
+    ...(panels > 1 ? { fold: { chunk: out.length, panel, panels } } : {}),
+  });
+
   for (let start = 0; start < cards.length;) {
+    const reach = fold === "off" ? 1 : fold === "booklet" ? Infinity : columns;
     let end = start + 1;
     while (
       end < cards.length &&
-      end - start < panels &&
+      end - start < reach &&
       cards[end]!.group === cards[start]!.group
     ) {
       end++;
     }
     const run = cards.slice(start, end);
-    const count = run.length;
-    const faces = run.flatMap((card) => [card.front, card.back]);
-    const chunk = out.length;
-    out.push(
-      run.map((card, i) => {
-        const front = order === "leporello" ? faces[i] : faces[2 * i];
-        const back = order === "leporello" ? faces[2 * count - 1 - i] : faces[2 * i + 1];
-        return {
-          index: start + i,
-          name: card.name,
-          cardTypeId: card.cardTypeId,
-          ...(front === undefined ? {} : { front }),
-          ...(back === undefined ? {} : { back }),
-          ...(count > 1 ? { fold: { chunk, panel: i + 1, panels: count } } : {}),
-        };
-      })
-    );
     start = end;
+    const faces = run.flatMap((card) => [card.front, card.back]);
+    const count = run.length;
+
+    if (count === 1) {
+      out.push([place(run[0]!, faces[0], faces[1], 1, 1)]);
+    } else if (fold === "booklet") {
+      const pages = 4 * Math.ceil(count / 2);
+      const face = (n: number) => faces[n - 1];
+      for (let sheet = 0; sheet < pages / 4; sheet++) {
+        const card = run[0]!;
+        const outer = pages - 2 * sheet;
+        const inner = 1 + 2 * sheet;
+        out.push([
+          place(card, face(outer), face(outer - 1), 1, 2),
+          place(card, face(inner), face(inner + 1), 2, 2),
+        ]);
+      }
+    } else {
+      // Panel `n` of `count`, counted from the left on the front; what lies
+      // behind it shows mirrored when the strip is turned over.
+      const face = (n: number) => faces[n - 1];
+      out.push(
+        run.map((card, i) => {
+          const n = i + 1;
+          return fold === "cover"
+            ? place(
+                card,
+                face(n < count ? count + 1 + n : 1),
+                face(count + 2 - n),
+                n,
+                count
+              )
+            : place(card, face(n), face(2 * count + 1 - n), n, count);
+        })
+      );
+    }
   }
   return out;
 }
@@ -303,8 +347,7 @@ export function composeDeck(deck: Deck): { pages: Page[]; grid: Grid } {
     pageMargin: settings.pageMargin ?? 0,
     duplexFlip: settings.duplexFlip ?? "long-edge",
     cutMarks: settings.cutMarks ?? {},
-    foldPanels: settings.foldPanels ?? 1,
-    foldOrder: settings.foldOrder ?? "pairs",
+    fold: settings.fold ?? "off",
   });
 }
 
@@ -495,7 +538,7 @@ export function mm(value: number): string {
  */
 export function compositionText(pages: readonly Page[], grid: Grid): string {
   const lines = [
-    `${pages.length} ${pages.length === 1 ? "page" : "pages"} · ${mm(grid.paper.width)} × ${mm(grid.paper.height)} mm · ${grid.columns} × ${grid.rows} of ${mm(grid.card.width)} × ${mm(grid.card.height)} mm at ${mm(grid.originX)}, ${mm(grid.originY)}${grid.panels > 1 ? ` · strips of ${grid.panels}` : ""}`,
+    `${pages.length} ${pages.length === 1 ? "page" : "pages"} · ${mm(grid.paper.width)} × ${mm(grid.paper.height)} mm · ${grid.columns} × ${grid.rows} of ${mm(grid.card.width)} × ${mm(grid.card.height)} mm at ${mm(grid.originX)}, ${mm(grid.originY)}`,
   ];
   pages.forEach((page, i) => {
     lines.push(

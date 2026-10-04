@@ -79,24 +79,12 @@ describe("the deck-setting fold", () => {
     expect(diagnostics.matching("plain-everywhere")).toHaveLength(1);
   });
 
-  it("reads a fold as a count of panels and one of two orders, and keeps the layer below for anything else", () => {
+  it("knows four folds and no fifth, keeping the layer below for anything else", () => {
     const diagnostics = collectDiagnostics();
-    expect(
-      resolve([
-        "fold-panels: 1\nfold-order: pairs",
-        "fold-panels: 3\nfold-order: leporello",
-      ])
-    ).toEqual({
-      foldPanels: 3,
-      foldOrder: "leporello",
-    });
-    expect(
-      resolve(
-        ["fold-panels: 1\nfold-order: pairs", "fold-panels: 0\nfold-order: book"],
-        diagnostics
-      )
-    ).toEqual({ foldPanels: 1, foldOrder: "pairs" });
-    expect(diagnostics.matching("fold-panels")).toHaveLength(1);
+    for (const fold of ["off", "strip", "cover", "booklet"]) {
+      expect(resolve(["fold: off", `fold: ${fold}`]).fold).toBe(fold);
+    }
+    expect(resolve(["fold: off", "fold: book"], diagnostics).fold).toBe("off");
     expect(diagnostics.matching("book")).toHaveLength(1);
   });
 

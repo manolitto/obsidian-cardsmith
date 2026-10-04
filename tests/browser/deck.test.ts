@@ -95,10 +95,10 @@ describe("buildDeck over the fixture folders", () => {
     const { built } = await build("dragonbane");
     const { pages, grid } = composeDeck({
       ...built,
-      settings: { ...built.settings, foldPanels: 2 },
+      settings: { ...built.settings, fold: "strip" },
     });
-    // The deck writes `A4 portrait`: one strip across, three down.
-    expect(grid).toMatchObject({ paper: { width: 210 }, panels: 2, columns: 2, rows: 3 });
+    // The deck writes `A4 portrait`: three across, three down.
+    expect(grid).toMatchObject({ paper: { width: 210 }, columns: 3, rows: 3 });
     const folded = pages
       .filter((page) => page.side === "front")
       .flatMap((page) => page.cells)
@@ -112,8 +112,9 @@ describe("buildDeck over the fixture folders", () => {
       "Nebelweberei 1/2",
       "Nebelweberei 2/2",
     ]);
-    // A fold that does not fit what is left of a strip starts the next one.
-    expect(pages.map((page) => page.cells.length)).toEqual([5, 5, 5, 5, 3, 3]);
+    // Moorschleicher does not fit beside Knochensammler and opens the next row;
+    // Glutfunken, a single card, takes the place beside it.
+    expect(pages.map((page) => page.cells.length)).toEqual([8, 8, 5, 5]);
   });
 
   it("eiserne-zeit: the German cards only, plain paper, no cut marks", async () => {

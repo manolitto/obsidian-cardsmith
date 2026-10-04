@@ -32,10 +32,8 @@ export interface DeckSettings {
   pageMargin?: number;
   /** Which paper edge is the binding, so fronts and backs align after a flip. */
   duplexFlip?: DuplexFlip;
-  /** How many of a note's physical cards print side by side, uncut, to be folded. 1 folds nothing. */
-  foldPanels?: number;
-  /** Which face of a fold goes where — see `FoldOrder`. */
-  foldOrder?: FoldOrder;
+  /** Whether a note's physical cards print side by side, uncut, to be folded, and which face goes where. */
+  fold?: Fold;
   /** Alignment marks at each card's corners. Fields merge, so one can change alone. */
   cutMarks?: CutMarks;
   /** Whether to print the system's background textures. Defaults from the settings, which also govern the card shown in its note. */
@@ -49,14 +47,18 @@ export interface DeckSettings {
 export type DuplexFlip = "long-edge" | "short-edge";
 
 /**
- * Where the faces of a folded card go, numbered in reading order — the
- * first card's front and back, then the second's, and on.
+ * Whether, and how, a note's cards fold. The faces are numbered in reading
+ * order — the first card's front and back, then the second's, and on.
  */
-export type FoldOrder =
-  /** Each panel is one card as laid out: 1 and 3 side by side, 2 behind 1, 4 behind 3. */
-  | "pairs"
-  /** Read across, then turned over like a page: 1, 2, 3 on one side, 4, 5, 6 on the other. */
-  | "leporello";
+export type Fold =
+  /** Every card is cut out on its own. */
+  | "off"
+  /** Page 1 on the left, its fold on the right: 1, 2, 3 across the front, 4, 5, 6 across the back — unfolded, a strip with a front and a back. */
+  | "strip"
+  /** Page 1 on the right, its fold on the left: 5, 6, 1 across the front, 2, 3, 4 across the back — folded inwards, page 1 is a cover with the last page behind it. */
+  | "cover"
+  /** Sheets of two, nested and folded down the middle like a printed booklet: 8 | 1 and 2 | 7, then 6 | 3 and 4 | 5. */
+  | "booklet";
 
 export type PaperBackground =
   /** Use the system's background images. */
@@ -87,8 +89,7 @@ const DECK_SETTINGS: SettingTable<DeckSettings> = {
   paperSize: { key: "paper-size", parse: parsePaperSize },
   pageMargin: { key: "page-margin", parse: nonNegativeNumber },
   duplexFlip: { key: "duplex-flip", parse: oneOf(["long-edge", "short-edge"]) },
-  foldPanels: { key: "fold-panels", parse: positiveInteger },
-  foldOrder: { key: "fold-order", parse: oneOf(["pairs", "leporello"]) },
+  fold: { key: "fold", parse: oneOf(["off", "strip", "cover", "booklet"]) },
   cutMarks: {
     key: "cut-marks",
     parse: parseCutMarks,
