@@ -219,10 +219,14 @@ makes free to reproduce; the German ones are translated from it.
 | <img src="images/cards/daggerheart/ancestry.webp" alt="daggerheart ancestry card, front and back" width="360"> | `ancestry` | the name, an italic line on the people, the ancestry features |
 | <img src="images/cards/daggerheart/community.webp" alt="daggerheart community card, front and back" width="360"> | `community` | the name, an italic line on where one grew up, the community feature |
 | <img src="images/cards/daggerheart/subclass.webp" alt="daggerheart subclass card, front and back" width="360"> | `subclass` | the class on the ribbon, the subclass as the title, foundation, specialization or mastery under it, the spellcast trait |
+| <img src="images/cards/daggerheart/adversary.webp" alt="daggerheart adversary card, front and back" width="360"> | `adversary` | the stat block for the GM: tier and role, the description, motives and tactics, Difficulty, thresholds, HP and Stress in a box, the standard attack, the experience, the features; a long block spills onto the back first |
 
 Poker; `en`, `de`, the German captions the terms of the official German
 edition — *Zauber*, *Fähigkeit*, *Zauberbuch*, *Rückruf*, *Basis*,
 *Zauber-Attribut*, the domains *Arkana* … *Mut*. A note may write a
 domain, a kind of card, a class, a subclass stage or a trait in English
-or in German; the card prints it in its own language. A long card spills
-onto further cards, never onto the back.
+or in German; the card prints it in its own language. A long character
+card spills onto further cards, never onto the back; an adversary uses
+its back first, and from its second face on shows the name and the
+features only. The German role names and "Motive & Taktiken" on the
+adversary are provisional.

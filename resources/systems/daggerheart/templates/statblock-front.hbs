@@ -1,0 +1,67 @@
+{{!--
+  Daggerheart — the stat-block front of the GM cards.
+
+  A head in the card's colour: the name, and under it the tier and the
+  role. Then, each only when the card type fills it:
+    front-subtitle      the one-line description, italic
+    front-motives       a captioned line (motives and tactics, impulses)
+    front-difficulty, front-thresholds, front-hp, front-stress
+                        the box of numbers, one cell each, caption over value
+    front-atk, front-attack, front-range, front-damage
+                        the standard attack on one line
+    front-experience    a captioned line
+    front-extra         a captioned line (potential adversaries)
+    front-body          the features, under a ruled caption
+  Every caption is the card type's `<place>-label`.
+
+  From the second face of a long block on (`cs-front-continued`, stamped
+  when the face is spawned, before it is measured) everything between
+  the head and the features stays out: the numbers are read from the
+  first face. At the foot the compatibility line, as on every front.
+--}}
+<div class="card-root card-front daggerheart {{card-type}}-card dh-statblock">
+
+  <div class="card-header dh-sb-head">
+    <div class="card-title dh-sb-title"><span class="text-scalable">{{slot "front-title"}}</span><span class="cs-overflow-counter"></span></div>
+    {{#if (or (slot "front-tier") (slot "front-role"))}}
+    <div class="dh-sb-tierline">{{#if (slot "front-tier")}}<span class="dh-sb-tier">{{slot-label "front-tier"}} {{slot "front-tier" plain=true}}</span>{{/if}}{{#if (slot "front-role")}}<span class="dh-sb-role">{{slot "front-role" glyph=true plain=true}}</span>{{/if}}</div>
+    {{/if}}
+  </div>
+
+  <div class="dh-sb-lead">
+    {{#if (slot "front-subtitle")}}<div class="dh-sb-blurb">{{slot "front-subtitle"}}</div>{{/if}}
+    {{#if (slot "front-motives")}}<div class="dh-sb-line"><span class="dh-sb-caption">{{slot-label "front-motives"}}</span> {{slot "front-motives"}}</div>{{/if}}
+
+    {{#if (or (slot "front-difficulty") (slot "front-thresholds") (slot "front-hp") (slot "front-stress"))}}
+    <div class="dh-sb-stats">
+      {{#if (slot "front-difficulty")}}<div class="dh-sb-stat"><span class="dh-sb-stat-label">{{slot-label "front-difficulty"}}</span><span class="dh-sb-stat-value">{{slot "front-difficulty" plain=true}}</span></div>{{/if}}
+      {{#if (slot "front-thresholds")}}<div class="dh-sb-stat"><span class="dh-sb-stat-label">{{slot-label "front-thresholds"}}</span><span class="dh-sb-stat-value">{{slot "front-thresholds" glyph=true plain=true}}</span></div>{{/if}}
+      {{#if (slot "front-hp")}}<div class="dh-sb-stat"><span class="dh-sb-stat-label">{{slot-label "front-hp"}}</span><span class="dh-sb-stat-value">{{slot "front-hp" plain=true}}</span></div>{{/if}}
+      {{#if (slot "front-stress")}}<div class="dh-sb-stat"><span class="dh-sb-stat-label">{{slot-label "front-stress"}}</span><span class="dh-sb-stat-value">{{slot "front-stress" plain=true}}</span></div>{{/if}}
+    </div>
+    {{/if}}
+
+    {{#if (or (slot "front-atk") (slot "front-attack"))}}
+    <div class="dh-sb-attack">
+      {{#if (slot "front-atk")}}<span class="dh-sb-caption">{{slot-label "front-atk"}}</span> <span class="dh-sb-part">{{slot "front-atk" signed=true plain=true}}</span>{{/if}}
+      {{#if (slot "front-attack")}}<span class="dh-sb-part">{{slot "front-attack"}}</span>{{/if}}
+      {{#if (slot "front-range")}}<span class="dh-sb-part">{{slot "front-range" glyph=true plain=true}}</span>{{/if}}
+      {{#if (slot "front-damage")}}<span class="dh-sb-part">{{slot "front-damage" plain=true}}</span>{{/if}}
+    </div>
+    {{/if}}
+
+    {{#if (slot "front-experience")}}<div class="dh-sb-line"><span class="dh-sb-caption">{{slot-label "front-experience"}}</span> {{slot "front-experience"}}</div>{{/if}}
+    {{#if (slot "front-extra")}}<div class="dh-sb-line"><span class="dh-sb-caption">{{slot-label "front-extra"}}</span> {{slot "front-extra"}}</div>{{/if}}
+  </div>
+
+  {{#if (slot-label "front-body")}}<div class="dh-sb-features-head"><span>{{slot-label "front-body"}}</span></div>{{/if}}
+
+  <div class="card-content-container dh-content dh-sb-content">
+    <div class="card-body-scalable">
+      <div class="dh-body">{{slot "front-body" markdown="block"}}</div>
+    </div>
+  </div>
+
+  <div class="card-footer dh-footer">Daggerheart™ Compatible. Terms at Daggerheart.com</div>
+
+</div>

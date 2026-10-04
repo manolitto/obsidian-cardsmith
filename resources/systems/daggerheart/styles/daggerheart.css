@@ -255,7 +255,9 @@
 
 .daggerheart .dh-title {
   display: flex;
-  justify-content: center;
+  /* `safe`: a title too wide starts at the left edge, so its whole
+     overflow shows in scrollWidth and the title scaler shrinks it. */
+  justify-content: safe center;
   align-items: baseline;
   gap: 0.4em;
   font-size: var(--dh-font-title);
@@ -299,6 +301,138 @@
   color: var(--dh-muted);
   text-align: center;
 }
+
+/* ── Stat-block front (the GM cards) ───────────────────────────── */
+
+/*
+ * A stat block is dense: the lead takes much of the card, so the features
+ * may shrink further than a player card's text before the block spills
+ * onto the back — a two-feature adversary stays on one face.
+ */
+.card-root.daggerheart.dh-statblock { --card-font-size-min: 1.9mm; }
+
+.card-root.daggerheart.adversary-card { --dh-accent: #7a2230; }
+
+/* The head: the name and the tier line on the card's colour. */
+.daggerheart .dh-sb-head {
+  flex: 0 0 auto;
+  padding: 4.5% 7% 3%;
+  background: var(--dh-accent);
+  color: var(--dh-paper);
+  text-align: center;
+}
+.daggerheart .dh-sb-title {
+  display: flex;
+  /* `safe`: a title too wide starts at the left edge, so its whole
+     overflow shows in scrollWidth and the title scaler shrinks it. */
+  justify-content: safe center;
+  align-items: baseline;
+  gap: 0.4em;
+  font-size: var(--dh-font-title);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.daggerheart .dh-sb-tierline {
+  margin-top: 0.2em;
+  font-size: 0.72em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  opacity: 0.9;
+}
+.daggerheart .dh-sb-tier + .dh-sb-role::before { content: " · "; }
+
+/* Everything between the head and the features: the description, the
+   captioned lines, the box of numbers, the attack. */
+.daggerheart .dh-sb-lead {
+  flex: 0 0 auto;
+  padding: 2.5% 7% 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+}
+.daggerheart .dh-sb-blurb {
+  font-style: italic;
+  color: var(--dh-muted);
+  text-align: center;
+  line-height: 1.25;
+}
+.daggerheart .dh-sb-line { line-height: 1.25; }
+.daggerheart .dh-sb-caption {
+  font-weight: 700;
+  color: var(--dh-accent);
+}
+
+/* The four numbers in a ruled box, the caption small over the value. */
+.daggerheart .dh-sb-stats {
+  display: flex;
+  margin: 0.15em 0;
+  border-top: 0.1em solid var(--dh-accent);
+  border-bottom: 0.1em solid var(--dh-accent);
+}
+.daggerheart .dh-sb-stat {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.25em 0 0.2em;
+}
+.daggerheart .dh-sb-stat + .dh-sb-stat {
+  border-left: 0.06em solid color-mix(in srgb, var(--dh-accent) 45%, transparent);
+}
+.daggerheart .dh-sb-stat-label {
+  font-size: 0.5em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--dh-accent);
+  white-space: nowrap;
+}
+.daggerheart .dh-sb-stat-value {
+  font-size: 1.15em;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.daggerheart .dh-sb-attack { line-height: 1.25; }
+.daggerheart .dh-sb-part + .dh-sb-part::before {
+  content: " | ";
+  color: var(--dh-muted);
+}
+
+/* The features under a caption between two rules. */
+.daggerheart .dh-sb-features-head {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin: 0.45em 7% 0.3em;
+  font-size: 0.62em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--dh-accent);
+}
+.daggerheart .dh-sb-features-head::before,
+.daggerheart .dh-sb-features-head::after {
+  content: "";
+  flex: 1 1 0;
+  border-top: 0.16em solid var(--dh-accent);
+}
+
+/* From the second face of a long block on, the head names the card and
+   the features go on: the numbers are on the first face. Keyed on the
+   hook stamped when the face is spawned, before it is measured. */
+.daggerheart.cs-front-continued .dh-sb-tierline,
+.daggerheart.cs-front-continued .dh-sb-lead {
+  display: none;
+}
+.daggerheart.cs-front-continued .dh-sb-head { padding-bottom: 2.5%; }
 
 /* ── Back ──────────────────────────────────────────────────────── */
 

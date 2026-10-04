@@ -1,0 +1,9 @@
+acid-burrower · 1 card · 2 faces · clipped: no
+1. front [cs-overflow-active cs-layout-default cs-front-first cs-front-has-next] scale 0.97
+   div.dh-body.cs-split-head
+     p "Relentless (3) – Passive: The Burrower …"
+     p "Earth Eruption – Action: Mark a …"
+2. back-as-front [cs-overflow-back-as-front cs-overflow-active cs-layout-default cs-front-continued] scale 0.97
+   div.dh-body.cs-split-continuation
+     p "Spit Acid – Action: Make an …"
+     p "Acid Bath – Reaction: When the …"
