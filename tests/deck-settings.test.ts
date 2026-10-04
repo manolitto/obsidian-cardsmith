@@ -79,6 +79,27 @@ describe("the deck-setting fold", () => {
     expect(diagnostics.matching("plain-everywhere")).toHaveLength(1);
   });
 
+  it("reads a fold as a count of panels and one of two orders, and keeps the layer below for anything else", () => {
+    const diagnostics = collectDiagnostics();
+    expect(
+      resolve([
+        "fold-panels: 1\nfold-order: pairs",
+        "fold-panels: 3\nfold-order: leporello",
+      ])
+    ).toEqual({
+      foldPanels: 3,
+      foldOrder: "leporello",
+    });
+    expect(
+      resolve(
+        ["fold-panels: 1\nfold-order: pairs", "fold-panels: 0\nfold-order: book"],
+        diagnostics
+      )
+    ).toEqual({ foldPanels: 1, foldOrder: "pairs" });
+    expect(diagnostics.matching("fold-panels")).toHaveLength(1);
+    expect(diagnostics.matching("book")).toHaveLength(1);
+  });
+
   it("says a card setting is not a deck setting", () => {
     // A deck block does carry card settings — as overrides for every card it
     // holds — but the deck parser hands those to the card chain. Here they

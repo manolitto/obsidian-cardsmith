@@ -35,6 +35,12 @@ card-type: simple
 # Which paper edge is the binding when printing duplex, so fronts and backs align: `long-edge` or `short-edge`.
 # duplex-flip: long-edge
 
+# How many of a note's cards print side by side, uncut, to be folded: 2 makes a card that opens, 3 a leaflet. 1 folds nothing.
+# fold-panels: 1
+
+# Which face of a fold goes where: `pairs` (1 and 3 side by side, 2 and 4 behind them) or `leporello` (1, 2, 3 on one side, 4, 5, 6 on the other).
+# fold-order: pairs
+
 # The cut marks at every card corner; the fields merge, so one can change alone.
 # cut-marks: {enabled: true, length: 3, margin: 0, color: '#aaaaaa', weight: 0.25}
 

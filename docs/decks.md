@@ -91,6 +91,8 @@ consecutively.
 | `page-margin` | Blank space around the card grid, in millimetres. The margin yields where the paper is too small for it — the card never does. |
 | `cut-marks` | `{enabled: true, length: 3, margin: 0, color: '#aaaaaa', weight: 0.25}` — a cross at every card corner, its arms along the cuts and `margin` mm clear of the corner, printed over the cards. An arm on a card is `length` mm long; an arm that leaves the block of cards runs on to the paper's edge, so a guillotine can be set against it. The fields merge, so one can change alone. A page that holds a single card gets none. |
 | `duplex-flip` | Which edge is the binding when printing duplex, `long-edge` or `short-edge`, so a back lands behind its front. |
+| `fold-panels` | How many of a note's cards print side by side, uncut, to be folded — see *Folded cards*. Default `1`, nothing folds. |
+| `fold-order` | Which face of a fold goes where: `pairs` (default) or `leporello`. |
 | `paper-background` | `textured` prints the system's background pictures, `plain` leaves them out. Default: the plugin setting. |
 
 The cards are packed without gaps on one grid and centred inside the
@@ -117,6 +119,44 @@ Pages come in print order: a sheet's front, then its back — when any card
 in the deck has one. On the back page every card sits where its front
 lands after the flip, so a duplex print aligns from the first sheet to the
 last. A deck without backs prints no blank sheets.
+
+## Folded cards
+
+A note whose text runs onto several cards can print them as one strip of
+paper instead, folded rather than cut apart. `fold-panels: 2` puts two of
+a note's cards side by side — a card that opens; `fold-panels: 3` three, a
+leaflet with two folds (three poker cards are 189 mm, which fits the width
+of A4 and Letter). The faces are numbered in reading order: the first
+card's front is 1, its back 2, the second card's front 3, and on.
+
+```
+fold-order: pairs                 fold-order: leporello
+
+front   [ 1 ][ 3 ][ 5 ]           front   [ 1 ][ 2 ][ 3 ]
+behind    2    4    6             behind    6    5    4
+```
+
+`pairs` keeps every card as it is, its back behind its front — the strip
+folds where the cards would have been cut. `leporello` reads across the
+front, and turned over like a page, on across the back: 4, 5, 6 from left
+to right.
+
+A note with fewer cards than `fold-panels` makes a shorter fold, and a
+note on one card is printed as a card; one with more makes several folds.
+Folds fill the strips in deck order, and two short ones share a strip —
+two single cards sit side by side and are cut apart as usual. A fold that
+does not fit what is left of a strip starts the next one; the gap stays
+empty, so the print order is the deck's order. Copies of a note are
+separate folds. With a fold, the deck picks the paper's orientation by how
+many strips it holds.
+
+The cut marks go round each piece of paper — a fold's panels together —
+and never along a crease. Each end of a crease gets a dashed fold mark
+instead, on, off, coloured and weighted with the cut marks.
+
+A folded card is two or three layers of paper, back to back, so the
+front and back of a duplex print have to meet more exactly than for a
+card that is cut out: print a test sheet first.
 
 ## The block in reading view
 
