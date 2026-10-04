@@ -99,13 +99,13 @@
    appears on the card back, making the front copy redundant. Worse,
    `.db-front-image-wrap`'s 6em min-height is an indivisible block the
    overflow splitter cannot paginate, forcing a min-scale clip on dense
-   monsters (e.g. Der Homunkulus). (The card-type declares two layout
-   candidates, `with-back` / `front-image`; see dragonbane.yaml.)
+   monsters (e.g. Der Homunkulus).
 
-   So hide the front image by default and reveal it only under the
-   `front-image` layout candidate (`.cs-layout-front-image`) — the even-parity
-   layout that forgoes a guaranteed back, where the front becomes the only place
-   the art can live. When shown, the wrap reserves at least 50% of the card
+   So hide the front image by default and reveal it only under a
+   `front-image` layout candidate (`.cs-layout-front-image`) — an even-parity
+   layout that forgoes the back, where the front becomes the only place the
+   art can live. The card type declares only `with-back`; a deck or a note
+   that would rather print fewer cards declares the second one itself. When shown, the wrap reserves at least 50% of the card
    height so the art reads as a deliberate illustration; when hidden it stays in
    flow as a `flex: 1 1 0` spacer (min-height collapsed to 0) so sparse
    monsters keep their bottom fill instead of gaining a gap. Scoped to

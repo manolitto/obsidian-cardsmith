@@ -28,7 +28,7 @@ data:
   # English original name, set small and upright along the card's left edge — the counterpart to the source reference on the right. Omitted when unset.
   english-original:
 
-  # Picture of the creature as a wikilink. Rendered on the back, and at the foot of the front when there is room for it.
+  # Picture of the creature as a wikilink. Rendered on the back.
   artwork:
 
   # Hit Points (HP) — the creature is taken out at 0.

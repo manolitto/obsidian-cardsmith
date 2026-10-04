@@ -79,6 +79,7 @@ describe("buildDeck over the fixture folders", () => {
       "creature/Knochensammler",
       "creature/Knochensammler",
       "creature/Moorschleicher",
+      "creature/Moorschleicher",
       "rule/Glutfunken",
       "rule/Nebelweberei",
       "rule/Nebelweberei",
