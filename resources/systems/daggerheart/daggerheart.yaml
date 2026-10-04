@@ -30,6 +30,13 @@ properties:
       en: "The card's name, shown as the title on the front. Falls back to the note's file name when unset."
       de: "Name der Karte, als Titel auf der Vorderseite. Fällt auf den Dateinamen zurück, wenn nicht gesetzt."
 
+  image:
+    slot: front-image
+    aliases: [bild, illustration]
+    description:
+      en: "A picture for the upper half of the front — a wikilink to an image in the vault. Without one the text moves up."
+      de: "Ein Bild für die obere Hälfte der Vorderseite — ein Wikilink auf ein Bild im Vault. Ohne Bild rückt der Text nach oben."
+
   # `body` last: it is also the note's own text before the first `##`
   # heading, and an alias is tried in declaration order.
   description:
@@ -39,23 +46,29 @@ properties:
       en: "The card's text — Markdown; a feature's name in bold, as the cards print it."
       de: "Der Kartentext — Markdown; der Name eines Merkmals fett, wie auf den Karten."
 
+translations:
+  en:
+    front-corner-label: "Recall"
+  de:
+    front-corner-label: "Rückruf"
+
+# The card's colour: a token per domain, whichever language the note
+# wrote it in; the stylesheet keys `dh-domain-<token>` on it. On the
+# system, so every card type that shares the front has it — one with no
+# domain gets `none`, the neutral ink.
+classifiers:
+  front-banner-label:
+    match:
+      - { pattern: "^(arcana|arkana)$",       token: arcana }
+      - { pattern: "^(blade|klinge)$",        token: blade }
+      - { pattern: "^(bone|knochen)$",        token: bone }
+      - { pattern: "^(codex|kodex)$",         token: codex }
+      - { pattern: "^(grace|anmut)$",         token: grace }
+      - { pattern: "^(midnight|mitternacht)$", token: midnight }
+      - { pattern: "^(sage|natur)$",          token: sage }
+      - { pattern: "^(splendor|leben)$",      token: splendor }
+      - { pattern: "^(valor|mut)$",           token: valor }
+    default: none
+
 card-types:
-  # A domain card: a spell, an ability or a grimoire of one of the nine
-  # domains, at a level from 1 to 10.
-  domain:
-    front-template: templates/front.hbs
-    back-template: templates/back.hbs
-    translations:
-      en:
-        back-label: "Domain"
-      de:
-        back-label: "Domäne"
-    properties:
-      name:
-        sample:
-          en: "Rune Ward"
-          de: "Runensiegel"
-      description:
-        sample:
-          en: "You have a deeply personal trinket that can be infused with protective magic and held as a ward by you or an ally. Describe what it is and why it's important to you. The ward's holder can spend a Hope to reduce incoming damage by 1d8.\n\nIf the Ward Die result is 8, the ward's power ends after it reduces damage this turn. It can be recharged for free on your next rest."
-          de: "Du besitzt ein sehr persönliches Schmuckstück, das mit Schutzmagie erfüllt werden kann und dir oder einem Verbündeten als Siegel dient. Beschreibe, was es ist und warum es dir so viel bedeutet. Wer das Siegel hält, kann 1 Hoffnung einsetzen, um eingehenden Schaden um 1W8 zu verringern.\n\nZeigt der Siegelwürfel eine 8, erlischt die Kraft des Siegels, nachdem es in diesem Zug Schaden verringert hat. Bei deiner nächsten Rast lässt es sich kostenlos wieder aufladen."
+  domain: card-types/domain.yaml

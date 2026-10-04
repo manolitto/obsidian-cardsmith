@@ -13,6 +13,21 @@ data:
   
     If the Ward Die result is 8, the ward's power ends after it reduces damage this turn. It can be recharged for free on your next rest.
 
+  # A picture for the upper half of the front — a wikilink to an image in the vault. Without one the text moves up.
+  image: # no sample
+
   # Empty boxes to tick off with a pen. A number (`20`), a labelled row (`{ count: 20, label: Arrows }`) or a list of such rows. `group` (default 5) sets how many boxes stand together.
   tracker: # no sample
+
+  # The card's level, 1 to 10 — the number in the banner.
+  level: 1
+
+  # The domain — Arcana, Blade, Bone, Codex, Grace, Midnight, Sage, Splendor or Valor; German names work too. Sets the card's colour.
+  domain: Arcana
+
+  # Spell, Ability or Grimoire — the word in the ribbon.
+  type: Spell
+
+  # The recall cost — the Stress it takes to swap the card in from the vault; the number in the corner badge.
+  recall-cost: 0
 ```

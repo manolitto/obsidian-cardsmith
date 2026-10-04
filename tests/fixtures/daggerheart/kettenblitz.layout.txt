@@ -1,0 +1,6 @@
+kettenblitz · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 0.96
+   div.dh-body
+     p "Markiere 2 Stress, um einen Zauberwurf …"
+     p "Weitere gegnerische Charaktere, die Kettenblitz noch …"
+2. back [cs-layout-default] scale —

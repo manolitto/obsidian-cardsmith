@@ -1,14 +1,50 @@
 {{!--
   Daggerheart — the front every player card shares.
-  The title, the text, and at the foot the compatibility line the
-  Darrington Press Community Gaming License asks every card to carry.
-  Header, content and footer are flex siblings under the root, so the
-  footer reappears on every continuation face.
+
+  One frame, filled differently by each card type:
+    front-banner        a number in the pennant at the top left (a level)
+    front-banner-label  the word under it, set upright down the pennant
+                        (a domain); its classifier picks the card's colour
+    front-corner        a number in the badge at the top right (a recall cost)
+    front-image         the picture across the top; without one the text
+                        moves up and the pennant stands on the paper
+    front-ribbon        the kind of card, in the band under the picture
+    front-title, front-subtitle, front-meta, front-body
+  A place a card type does not fill stays out.
+
+  At the foot the compatibility line the Darrington Press Community Gaming
+  License asks every card to carry. Header, content and footer are flex
+  siblings under the root, so the footer reappears on every continuation
+  face; the pennant and the badge are placed on the root.
 --}}
-<div class="card-root card-front daggerheart {{card-type}}-card">
+<div class="card-root card-front daggerheart {{card-type}}-card dh-domain-{{slot-class "front-banner-label"}}{{#if (slot "front-image")}} dh-has-image{{/if}}">
+
+  {{#if (or (slot "front-banner") (slot "front-banner-label"))}}
+  <div class="dh-banner">
+    {{#if (slot "front-banner")}}<span class="dh-banner-number">{{slot "front-banner" plain=true}}</span>{{/if}}
+    {{#if (slot "front-banner-label")}}<span class="dh-banner-label">{{slot "front-banner-label" glyph=true plain=true}}</span>{{/if}}
+  </div>
+  {{/if}}
+
+  {{#if (slot "front-corner")}}
+  <div class="dh-corner">
+    <span class="dh-corner-value">{{slot "front-corner" plain=true}}</span>
+    <span class="dh-corner-label">{{t "front-corner-label"}}</span>
+  </div>
+  {{/if}}
+
+  <div class="dh-top">
+    {{#if (slot "front-image")}}<img class="dh-image" src="{{slot "front-image" image=true}}" alt="" />{{/if}}
+  </div>
+
+  {{#if (slot "front-ribbon")}}
+  <div class="dh-ribbon"><span class="dh-ribbon-text">{{slot "front-ribbon" glyph=true plain=true}}</span></div>
+  {{/if}}
 
   <div class="card-header dh-header">
     <div class="card-title dh-title"><span class="text-scalable">{{slot "front-title"}}</span><span class="cs-overflow-counter"></span></div>
+    {{#if (slot "front-subtitle")}}<div class="dh-subtitle">{{slot "front-subtitle"}}</div>{{/if}}
+    {{#if (slot "front-meta")}}<div class="dh-meta">{{slot "front-meta"}}</div>{{/if}}
   </div>
 
   <div class="card-content-container dh-content">

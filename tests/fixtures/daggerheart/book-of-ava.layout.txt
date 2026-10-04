@@ -1,0 +1,7 @@
+book-of-ava · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   div.dh-body
+     p "Power Push: Make a Spellcast Roll …"
+     p "Tava's Armor: Spend a Hope to …"
+     p "Ice Spike: Make a Spellcast Roll …"
+2. back [cs-layout-default] scale —

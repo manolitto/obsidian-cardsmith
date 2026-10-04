@@ -75,11 +75,156 @@
 .card-root.daggerheart em,
 .card-root.daggerheart i { font-style: italic; }
 
-/* ── Front ─────────────────────────────────────────────────────── */
+/* ── Domain colours ────────────────────────────────────────────── */
+
+/*
+ * One accent per domain, set on the root by the domain's classifier
+ * token. The hue families follow the game's colour coding, which players
+ * sort their cards by; the values are this design's. Each carries white
+ * type at the banner's size. `none` — a card with no domain — is ink.
+ */
+.card-root.daggerheart                { --dh-accent: #4a4652; }
+.card-root.daggerheart.dh-domain-arcana   { --dh-accent: #6a3d9a; }
+.card-root.daggerheart.dh-domain-blade    { --dh-accent: #b0302a; }
+.card-root.daggerheart.dh-domain-bone     { --dh-accent: #6f7681; }
+.card-root.daggerheart.dh-domain-codex    { --dh-accent: #2c5a9e; }
+.card-root.daggerheart.dh-domain-grace    { --dh-accent: #b23a7e; }
+.card-root.daggerheart.dh-domain-midnight { --dh-accent: #252a3a; }
+.card-root.daggerheart.dh-domain-sage     { --dh-accent: #3c7a3a; }
+.card-root.daggerheart.dh-domain-splendor { --dh-accent: #a67c12; }
+.card-root.daggerheart.dh-domain-valor    { --dh-accent: #c45a1c; }
+
+/* ── Front: the top ────────────────────────────────────────────── */
+
+/*
+ * The picture across the top, or — without one — a strip of paper as
+ * tall as the pennant needs, tinted faintly in the accent so the card
+ * still reads as its domain's.
+ */
+.daggerheart .dh-top {
+  flex: 0 0 19%;
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--dh-accent) 9%, var(--dh-paper));
+  border-bottom: 0.12em solid var(--dh-accent);
+}
+.daggerheart.dh-has-image .dh-top {
+  flex-basis: 42%;
+  background: none;
+}
+.daggerheart .dh-image {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/*
+ * The pennant, hung from the top edge at the left: the number set large,
+ * the word under it running down the pennant, a notch cut into its foot.
+ */
+.daggerheart .dh-banner {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 7%;
+  width: 15%;
+  min-height: 21%;
+  padding: 0.35em 0 1.1em;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25em;
+  background: var(--dh-accent);
+  color: #fff;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 0.8em), 0 100%);
+}
+.daggerheart .dh-banner-number {
+  font-size: 2.1em;
+  font-weight: 700;
+  line-height: 1;
+}
+.daggerheart .dh-banner-label {
+  writing-mode: vertical-rl;
+  font-size: 0.7em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  line-height: 1;
+}
+
+/* The recall-cost badge: a ring in the accent, the number inside, the
+   caption under it. */
+.daggerheart .dh-corner {
+  position: absolute;
+  z-index: 2;
+  top: 3.5%;
+  right: 7%;
+  width: 12%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15em;
+}
+.daggerheart .dh-corner-value {
+  width: 100%;
+  aspect-ratio: 1;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0.14em solid var(--dh-accent);
+  border-radius: 50%;
+  background: var(--dh-paper);
+  font-size: 1.25em;
+  font-weight: 700;
+  line-height: 1;
+}
+.daggerheart .dh-corner-label {
+  font-size: 0.5em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--dh-accent);
+}
+.daggerheart.dh-has-image .dh-corner-label {
+  padding: 0 0.3em;
+  background: var(--dh-paper);
+  border-radius: 0.3em;
+}
+
+/* ── Front: ribbon, title, text ────────────────────────────────── */
+
+/* The kind of card on a band with swallowtail ends, laid over the edge
+   of the picture. */
+.daggerheart .dh-ribbon {
+  flex: 0 0 auto;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  margin-top: -0.75em;
+}
+.daggerheart .dh-ribbon-text {
+  padding: 0.3em 1.7em;
+  background: var(--dh-accent);
+  color: #fff;
+  font-size: 0.7em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  clip-path: polygon(0 0, 100% 0, calc(100% - 0.7em) 50%, 100% 100%, 0 100%, 0.7em 50%);
+}
 
 .daggerheart .dh-header {
   flex: 0 0 auto;
-  padding: 6% 7% 2%;
+  padding: 2.5% 7% 2%;
+  text-align: center;
 }
 
 .daggerheart .dh-title {
@@ -91,9 +236,21 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  text-align: center;
+  line-height: 1.1;
   white-space: nowrap;
   overflow: hidden;
+}
+
+.daggerheart .dh-subtitle {
+  font-style: italic;
+  color: var(--dh-muted);
+}
+.daggerheart .dh-meta {
+  margin-top: 0.15em;
+  font-weight: 700;
+  font-size: 0.85em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .daggerheart .dh-content {
@@ -106,12 +263,13 @@
 .daggerheart .dh-body p { margin: 0 0 0.45em; }
 .daggerheart .dh-body p:last-child { margin-bottom: 0; }
 .daggerheart .dh-body ul { margin: 0 0 0.45em; padding-left: 1.1em; }
+.daggerheart .dh-body li { margin: 0 0 0.15em; }
 
 /* The licence's compatibility line, small and quiet at the foot. */
 .daggerheart .dh-footer {
   flex: 0 0 auto;
   padding: 2% 7% 4%;
-  font-size: 0.62em;
+  font-size: 0.6em;
   color: var(--dh-muted);
   text-align: center;
 }
