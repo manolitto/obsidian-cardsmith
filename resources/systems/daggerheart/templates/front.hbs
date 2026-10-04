@@ -15,16 +15,11 @@
   At the foot the compatibility line the Darrington Press Community Gaming
   License asks every card to carry. Header, content and footer are flex
   siblings under the root, so the footer reappears on every continuation
-  face; the pennant and the badge are placed on the root.
+  face. The pennant hangs in the top and always overhangs the top's rule
+  by the depth of its notch (see the stylesheet); the badge is placed on
+  the root.
 --}}
 <div class="card-root card-front daggerheart {{card-type}}-card dh-domain-{{slot-class "front-banner-label"}}{{#if (slot "front-image")}} dh-has-image{{/if}}">
-
-  {{#if (or (slot "front-banner") (slot "front-banner-label"))}}
-  <div class="dh-banner">
-    {{#if (slot "front-banner")}}<span class="dh-banner-number">{{slot "front-banner" plain=true}}</span>{{/if}}
-    {{#if (slot "front-banner-label")}}<span class="dh-banner-label">{{slot "front-banner-label" glyph=true plain=true}}</span>{{/if}}
-  </div>
-  {{/if}}
 
   {{#if (slot "front-corner")}}
   <div class="dh-corner">
@@ -35,6 +30,12 @@
 
   <div class="dh-top">
     {{#if (slot "front-image")}}<img class="dh-image" src="{{slot "front-image" image=true}}" alt="" />{{/if}}
+    {{#if (or (slot "front-banner") (slot "front-banner-label"))}}
+    <div class="dh-banner">
+      {{#if (slot "front-banner")}}<span class="dh-banner-number">{{slot "front-banner" plain=true}}</span>{{/if}}
+      {{#if (slot "front-banner-label")}}<span class="dh-banner-label">{{slot "front-banner-label" glyph=true plain=true}}</span>{{/if}}
+    </div>
+    {{/if}}
   </div>
 
   {{#if (slot "front-ribbon")}}
