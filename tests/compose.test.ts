@@ -8,6 +8,7 @@ import {
   cutMarks,
   cutMarksSvg,
   layoutGrid,
+  type Cell,
   type Composable,
   type Page,
   hingesSvg,
@@ -256,20 +257,43 @@ describe("cut marks", () => {
       deck({ cards: cards(1), cutMarks: { enabled: true, length: 4, margin: 1 } })
     );
     const front = pages[0]!.marks;
-    // Four corners; no arm runs on below the card or to its right, where no
-    // other card is cut: 4 × 4 arms less the two down and the two right.
-    expect(front).toHaveLength(4 * 4 - 4);
+    // Four corners; no arm runs to its right, where no other card is cut, and
+    // the cut along its foot runs down into the margin, as the last row's does:
+    // 4 × 4 arms less the two right.
+    expect(front).toHaveLength(4 * 4 - 2);
     expect(front.find((l) => l.x1 === 7 && l.y2 === 8 - 1)).toMatchObject({ y1: 0 });
     expect(front.find((l) => l.x1 === 7 && l.y1 === 8 + 1)).toMatchObject({ y2: 8 + 5 });
-    // A lower corner inside the block: its arm runs up the card's own edge, not down.
+    // A lower corner: its arm runs up the card's own edge, and down to the paper's.
     expect(front.find((l) => l.x1 === 7 && l.y2 === 96 - 1)).toMatchObject({
       y1: 96 - 5,
     });
-    expect(front.find((l) => l.x1 === 7 && l.y1 === 96 + 1)).toBeUndefined();
+    expect(front.find((l) => l.x1 === 7 && l.y1 === 96 + 1)).toMatchObject({ y2: 280 });
     // The one card's back sits in the other column, and its marks with it.
     const back = pages[1]!.marks;
     const xs = [...new Set(back.filter((l) => l.x1 === l.x2).map((l) => l.x1))];
     expect(xs.sort((a, b) => a - b)).toEqual([70, 133]);
+  });
+
+  it("run into the margin below a part-filled sheet's last row, and above it on a back turned about the short edge", () => {
+    // Two cards in the top row of a sheet three rows high.
+    const long = composePages(deck({ cards: cards(2) }));
+    const down = (page: Page) => page.marks.filter((l) => l.x1 === l.x2 && l.y2 === 280);
+    expect(down(long.pages[0]!).map((l) => [l.x1, l.y1])).toEqual([
+      [7, 96],
+      [70, 96],
+      [133, 96],
+    ]);
+    // Turned about the short edge, the backs sit in the bottom row: the cuts leave
+    // them at the top, where the front's run along the block.
+    const short = composePages(deck({ cards: cards(2), duplexFlip: "short-edge" }));
+    const back = short.pages[1]!;
+    expect(back.cells.every((c) => c.y === 184)).toBe(true);
+    const up = back.marks.filter((l) => l.x1 === l.x2 && l.y1 === 0);
+    expect(up.map((l) => [l.x1, l.y2])).toEqual([
+      [7, 184],
+      [70, 184],
+      [133, 184],
+    ]);
   });
 
   it("are none on a page that holds one card, and still there on a part-filled last page", () => {
@@ -279,7 +303,7 @@ describe("cut marks", () => {
 
     const last = composePages(deck({ cards: cards(7) })).pages.at(-1)!;
     expect(last.cells).toHaveLength(1);
-    expect(last.marks).toHaveLength(12);
+    expect(last.marks).toHaveLength(14);
   });
 
   it("draw no outward arm where the block is flush with the paper's edge", () => {
@@ -331,10 +355,10 @@ describe("compositionText", () => {
     expect(compositionText(pages, grid)).toBe(
       [
         "2 pages · 140 × 280 mm · 2 × 3 of 63 × 88 mm at 7, 8",
-        "1. front · 21 marks",
+        "1. front · 24 marks",
         "   front #1 at 7, 8 gear/Card 1",
         "   front #2 at 70, 8 gear/Card 1",
-        "2. back · 21 marks",
+        "2. back · 24 marks",
         "   back #1 at 70, 8 (empty) gear/Card 1",
         "   back #2 at 7, 8 gear/Card 1",
         "",
@@ -469,24 +493,52 @@ describe("folding", () => {
 
   it("folds a note as far as a row reaches, and goes on in a further piece", () => {
     const { pages } = composePages(deck({ cards: notes(3), fold: "strip" }));
-    expect(faces(pages[0]!)).toEqual(["A1f@7,8", "A1b@70,8", "A3f@7,96"]);
-    expect(pages[0]!.cells.map((c) => c.fold?.panels)).toEqual([2, 2, undefined]);
+    expect(faces(pages[0]!)).toEqual(["A1f@7,8", "A1b@70,8"]);
+    expect(pages[0]!.cells.map((c) => c.fold?.panels)).toEqual([2, 2]);
+    // The rest is a single card, and goes with the single cards.
+    expect(faces(pages[2]!)).toEqual(["A3f@7,8"]);
   });
 
-  it("fills rows in deck order: a fold that does not fit what is left starts the next row", () => {
-    // Three across: B's two cards do not fit beside A's, so they open row two and the
-    // gap stays; C, a single card, follows B rather than filling it.
+  it("groups the pieces by shape, in the order the deck first reaches each, a shape to a sheet", () => {
+    // Three across, three down: A, C and E are single cards, B and D two-card folds.
+    // The singles share a sheet, the folds take the next, a row each; the places
+    // count in print order.
+    const { pages } = composePages(
+      deck({ cards: notes(1, 2, 1, 2, 1), paperSize: wide, fold: "strip" })
+    );
+    expect(faces(pages[0]!)).toEqual(["A1f@0,0", "C1f@63,0", "E1f@126,0"]);
+    expect(faces(pages[2]!)).toEqual(["B1f@0,0", "B1b@63,0", "D1f@0,88", "D1b@63,88"]);
+    expect(
+      pages
+        .filter((p) => p.side === "front")
+        .flatMap((p) => p.cells.map((c) => c.index + 1))
+    ).toEqual([1, 2, 3, 4, 5, 6, 7]);
+  });
+
+  it("starts a new shape on a new sheet even where the last has rows to spare", () => {
+    // A third row stands empty on the folds' sheet; C, a single card, opens the next.
     const { pages } = composePages(
       deck({ cards: notes(2, 2, 1), paperSize: wide, fold: "strip" })
     );
-    expect(faces(pages[0]!)).toEqual([
-      "A1f@0,0",
-      "A1b@63,0",
-      "B1f@0,88",
-      "B1b@63,88",
-      "C1f@126,88",
+    expect(faces(pages[0]!)).toEqual(["A1f@0,0", "A1b@63,0", "B1f@0,88", "B1b@63,88"]);
+    expect(faces(pages[2]!)).toEqual(["C1f@0,0"]);
+  });
+
+  it("keeps the deck's order within a shape, and a deck of one shape as it comes", () => {
+    const { pages } = composePages(
+      deck({ cards: notes(2, 2, 2, 2), paperSize: paper("A4 landscape"), fold: "strip" })
+    );
+    expect(pages[0]!.cells.map((c) => c.name)).toEqual([
+      "A",
+      "A",
+      "B",
+      "B",
+      "C",
+      "C",
+      "D",
+      "D",
     ]);
-    expect(pages[0]!.cells.map((c) => c.index + 1)).toEqual([1, 2, 3, 4, 5]);
+    expect(pages[0]!.cells.map((c) => c.index)).toEqual([0, 1, 2, 3, 4, 5, 6, 7]);
   });
 
   it("prints a note on one card as a card, and never folds two copies together", () => {
@@ -505,24 +557,29 @@ describe("folding", () => {
   it("marks a fold's corners, not its crease, and puts a dashed fold mark where the crease meets the block's edge", () => {
     const { pages } = composePages(deck({ cards: notes(2), fold: "strip" }));
     const { marks, folds } = pages[0]!;
-    // One piece of paper: four corners, nothing at the crease, and no arm down
-    // from its lower corners, where no card follows.
-    expect(marks).toHaveLength(14);
+    // One piece of paper: four corners, nothing at the crease, its foot cut on
+    // into the margin as the page's last row.
+    expect(marks).toHaveLength(16);
     expect(marks.some((l) => l.x1 === 70 || l.x2 === 70)).toBe(false);
-    // Up to the paper's edge at the block's top; its foot ends against the next
-    // row's cards, and a mark there would lie on them.
-    expect(folds).toEqual([{ x1: 70, y1: 0, x2: 70, y2: 8 }]);
+    // Out to the paper's edge at both ends: the fold is the page's only row.
+    expect(folds).toEqual([
+      { x1: 70, y1: 0, x2: 70, y2: 8 },
+      { x1: 70, y1: 96, x2: 70, y2: 280 },
+    ]);
     // The back page's crease sits where the panels' backs meet.
-    expect(pages[1]!.folds.map((l) => l.x1)).toEqual([70]);
+    expect(pages[1]!.folds.map((l) => l.x1)).toEqual([70, 70]);
   });
 
-  it("draws no cut arm along a crease, and no fold mark where a cut meets it", () => {
-    // A fold above two single cards: their corner sits on the crease's foot.
-    const { pages } = composePages(deck({ cards: notes(2, 1, 1), fold: "strip" }));
+  it("draws no cut arm along a crease, and a fold mark only where it leaves the printed rows", () => {
+    // Two folds, one above the other, on a sheet three rows high: the crease runs
+    // through both, no mark between them, and out at the top and below the second.
+    const { pages } = composePages(deck({ cards: notes(2, 2), fold: "strip" }));
     const { marks, folds } = pages[0]!;
-    expect(marks.some((l) => l.x1 === 70 && l.x2 === 70 && l.y2 <= 96)).toBe(false);
-    expect(marks.some((l) => l.x1 === 70 && l.x2 === 70 && l.y1 >= 96)).toBe(true);
-    expect(folds).toEqual([{ x1: 70, y1: 0, x2: 70, y2: 8 }]);
+    expect(marks.some((l) => l.x1 === 70 && l.x2 === 70)).toBe(false);
+    expect(folds).toEqual([
+      { x1: 70, y1: 0, x2: 70, y2: 8 },
+      { x1: 70, y1: 184, x2: 70, y2: 280 },
+    ]);
   });
 
   it("follows the cut marks off", () => {
@@ -541,7 +598,7 @@ describe("folding", () => {
     expect(cutMarksSvg({ ...pages[0]!, marks: [] }, grid, {})).toContain("cs-fold-marks");
     expect(compositionText(pages, grid).split("\n").slice(0, 4)).toEqual([
       "2 pages · 140 × 280 mm · 2 × 3 of 63 × 88 mm at 7, 8",
-      "1. front · 14 marks · 1 fold marks",
+      "1. front · 16 marks · 2 fold marks",
       "   front #1 at 7, 8 panel 1/2 gear/A",
       "   front #2 at 70, 8 panel 2/2 gear/A",
     ]);
@@ -585,13 +642,13 @@ describe("fold gaps", () => {
       "B1f@73.5,16.5",
       "C1f@136.5,16.5",
     ]);
-    // 126 + 1.5 + 63 = 190.5 mm against 190: the single card opens the next row.
+    // A fold and a card are two shapes, two sheets, each block centred.
     const mixed = composePages(deck({ ...a4, cards: notes(2, 1), fold: "strip" }));
     expect(faces(mixed.pages[0]!).map((f) => f.split("@")[1])).toEqual([
       "10.5,16.5",
       "75,16.5",
-      "10.5,104.5",
     ]);
+    expect(faces(mixed.pages[2]!).map((f) => f.split("@")[1])).toEqual(["10.5,16.5"]);
   });
 
   it("prints a hinge between the panels of one fold, on the front page only", () => {
@@ -638,7 +695,7 @@ describe("fold gaps", () => {
     const { pages, grid } = hinged();
     expect(compositionText(pages, grid).split("\n").slice(0, 2)).toEqual([
       "2 pages · 140 × 280 mm · 2 × 3 of 63 × 88 mm at 5.5, 8",
-      "1. front · 28 marks · 1 hinge (3 mm)",
+      "1. front · 32 marks · 1 hinge (3 mm)",
     ]);
   });
 
@@ -748,8 +805,11 @@ describe("fold gaps", () => {
       })
     );
     // The third card folds along a crease: no hinge, a dashed fold mark instead.
-    expect(pages[0]!.hinges.map((h) => h.width)).toEqual([0.5, 1]);
-    expect(pages[0]!.folds.length).toBeGreaterThan(0);
+    // Three widths, three shapes, three sheets.
+    expect(
+      pages.filter((p) => p.side === "front").map((p) => p.hinges.map((h) => h.width))
+    ).toEqual([[0.5], [1], []]);
+    expect(pages[4]!.folds.length).toBeGreaterThan(0);
   });
 
   it("keeps a strip that is not cut out as the fold's spine: one piece, a fold mark at each edge", () => {
@@ -760,17 +820,19 @@ describe("fold gaps", () => {
     // The strip is still printed, between the panels.
     expect(hinges).toEqual([{ x: 68.5, y: 8, width: 3, height: 88, color: "#ffffff" }]);
     // One piece of paper: four corners, no cut along either edge of the strip.
-    expect(marks).toHaveLength(14);
+    expect(marks).toHaveLength(16);
     expect(marks.some((l) => l.x1 === l.x2 && (l.x1 === 68.5 || l.x1 === 71.5))).toBe(
       false
     );
     // Dashed fold marks at both edges, out into the paper's margin, to score along.
     expect(folds).toEqual([
       { x1: 68.5, y1: 0, x2: 68.5, y2: 8 },
+      { x1: 68.5, y1: 96, x2: 68.5, y2: 280 },
       { x1: 71.5, y1: 0, x2: 71.5, y2: 8 },
+      { x1: 71.5, y1: 96, x2: 71.5, y2: 280 },
     ]);
     expect(compositionText(pages, grid).split("\n")[1]).toBe(
-      "1. front · 14 marks · 2 fold marks · 1 hinge (3 mm)"
+      "1. front · 16 marks · 4 fold marks · 1 hinge (3 mm)"
     );
   });
 
@@ -804,29 +866,128 @@ describe("fold gaps", () => {
     );
   });
 
-  it("marks only cuts that are there, where a hinge shifts one row against the next", () => {
-    // A4 across, poker: a card, a fold with a 2 mm strip that stays, a card —
-    // then a row of four single cards, which the strip does not shift.
+  it("tells shapes apart by their hinges' widths and by whether they are cut out", () => {
+    const shaped = (group: number, hinge: PhysicalCard["hinge"]): PhysicalCard[] =>
+      notes(2).map((c) => ({
+        ...c,
+        name: String.fromCharCode(65 + group),
+        group,
+        hinge,
+      }));
     const { pages } = composePages(
       deck({
-        cards: notes(1, 2, 1, 1, 1, 1, 1),
+        cards: [
+          ...shaped(0, { gap: 1.5 }),
+          ...shaped(1, { gap: 1.5, cutOut: true }),
+          ...shaped(2, { gap: 1.5, color: "#d9c5a8", sides: "both" }),
+          ...shaped(3, { gap: 2 }),
+        ],
+        fold: "strip",
+        paperSize: paper("A4 landscape"),
+        pageMargin: 10,
+      })
+    );
+    // A and C share a row — the strip's colour and sides are no part of its shape;
+    // B, cut out, and D, wider, take sheets of their own.
+    const rows = (page: Page) =>
+      [...new Set(page.cells.map((c) => c.y))].map((y) =>
+        page.cells
+          .filter((c) => c.y === y)
+          .map((c) => c.name)
+          .join("")
+      );
+    expect(rows(pages[0]!)).toEqual(["AACC"]);
+    expect(rows(pages[2]!)).toEqual(["BB"]);
+    expect(rows(pages[4]!)).toEqual(["DD"]);
+  });
+
+  it("cuts and folds the rows of one shape along the same lines, through the sheet", () => {
+    // A4 across, poker, two-card folds with a 2 mm strip that stays: two folds a row,
+    // two rows, every edge and every crease of the top row on the bottom row's too.
+    const { pages } = composePages(
+      deck({
+        cards: notes(2, 2, 2, 2),
         fold: "strip",
         gap: 2,
         paperSize: paper("A4 landscape"),
         pageMargin: 10,
       })
     );
-    const { cells, marks } = pages[0]!;
-    expect(cells.map((c) => `${c.x},${c.y}`)).toEqual([
-      "21.5,17",
-      "84.5,17",
-      "149.5,17",
-      "212.5,17",
-      "21.5,105",
-      "84.5,105",
-      "147.5,105",
-      "210.5,105",
-    ]);
+    const { cells, marks, folds } = pages[0]!;
+    const xs = (y: number) => cells.filter((c) => c.y === y).map((c) => c.x);
+    expect(xs(17)).toEqual(xs(105));
+    // Each piece's outer edges are cut above and below the row line between them.
+    const vertical = (x: number) => marks.filter((l) => l.x1 === x && l.x2 === x);
+    for (const x of [20.5, 148.5, 276.5]) {
+      expect(vertical(x).filter((l) => l.y2 <= 105 && l.y1 > 0)).not.toEqual([]);
+      expect(vertical(x).filter((l) => l.y1 >= 105 && l.y2 < 210)).not.toEqual([]);
+    }
+    // Every crease reaches the block's top and its bottom: a fold mark at both ends.
+    for (const x of [83.5, 85.5, 211.5, 213.5]) {
+      expect(folds.filter((l) => l.x1 === x && l.y1 === 0)).toHaveLength(1);
+      expect(folds.filter((l) => l.x1 === x && l.y2 === 210)).toHaveLength(1);
+    }
+  });
+
+  it("centres each sheet on its own widest row, so a sheet of single cards sits mid-paper", () => {
+    // Eight single cards, then two folds with a 0.5 mm strip: 253 mm a row of folds,
+    // 252 a row of cards. The cards' sheet does not move over for the folds' sheet.
+    const { pages } = composePages(
+      deck({
+        cards: notes(1, 1, 1, 1, 1, 1, 1, 1, 2, 2),
+        fold: "cover",
+        gap: 0.5,
+        paperSize: paper("A4 landscape"),
+        pageMargin: 10,
+      })
+    );
+    const lefts = (page: Page) => [...new Set(page.cells.map((c) => c.x))];
+    expect(lefts(pages[0]!)).toEqual([22.5, 85.5, 148.5, 211.5]);
+    // Behind them, the same places: the block is symmetric on the paper.
+    expect(lefts(pages[1]!).sort((a, b) => a - b)).toEqual([22.5, 85.5, 148.5, 211.5]);
+    expect(Math.min(...pages[2]!.cells.map((c) => c.x))).toBe(22);
+    // Every row line runs into both margins, on the front and behind it.
+    for (const sheet of [pages[0]!, pages[1]!]) {
+      for (const y of [17, 105, 193]) {
+        const row = sheet.marks.filter((l) => l.y1 === y && l.y2 === y);
+        expect(row.some((l) => l.x1 === 0)).toBe(true);
+        expect(row.some((l) => l.x2 === 297)).toBe(true);
+      }
+    }
+  });
+
+  it("marks only cuts that are there, where a hinge shifts one row against the next", () => {
+    // A folding deck composes no such page any more; a page placed by hand still can be
+    // — a card, a fold with a 2 mm strip that stays, a card, then four single cards.
+    const { grid } = composePages(
+      deck({
+        cards: notes(1, 2, 1),
+        fold: "strip",
+        gap: 2,
+        paperSize: paper("A4 landscape"),
+        pageMargin: 10,
+      })
+    );
+    const at = (name: string, x: number, y: number, panel?: number): Cell => ({
+      index: 0,
+      side: "front",
+      name,
+      cardTypeId: "gear",
+      x,
+      y,
+      html: name,
+      ...(panel === undefined
+        ? {}
+        : { fold: { chunk: 1, panel, panels: 2, hinged: true, cutOut: false } }),
+    });
+    const cells = [
+      at("A", 21.5, 17),
+      at("B", 84.5, 17, 1),
+      at("B", 149.5, 17, 2),
+      at("C", 212.5, 17),
+      ...["D", "E", "F", "G"].map((name, i) => at(name, 21.5 + 63 * i, 105)),
+    ];
+    const marks = cutMarks(cells, grid, deck().cutMarks);
     const vertical = (x: number) => marks.filter((l) => l.x1 === x && l.x2 === x);
     const above = (x: number) => vertical(x).filter((l) => l.y2 <= 105);
     const below = (x: number) => vertical(x).filter((l) => l.y1 >= 105);
