@@ -43,12 +43,20 @@ export function listFixtures(): Fixture[] {
     .filter((fixture) => !fixture.name.startsWith("_"));
 }
 
-/** The deck note of a system's fixture folder, `_deck.md`, as text with its path. */
-export async function deckNote(system: string): Promise<{ text: string; path: string }> {
-  const path = `../../fixtures/${system}/_deck.md`;
+/**
+ * A fixture deck note as text with its path. A system's name is its folder's
+ * `_deck.md`; a further deck beside it is named by its file,
+ * `5e_2024/_deck-spells`. `file` is that file without `.md`, relative to the
+ * fixture root — the stem the deck's goldens and exports are written under.
+ */
+export async function deckNote(
+  deck: string
+): Promise<{ text: string; path: string; file: string }> {
+  const file = deck.includes("/") ? deck : `${deck}/_deck`;
+  const path = `../../fixtures/${file}.md`;
   const load = notes[path];
   if (!load) throw new Error(`${path}: no deck note`);
-  return { text: await load(), path };
+  return { text: await load(), path, file };
 }
 
 /**

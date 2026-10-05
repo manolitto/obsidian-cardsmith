@@ -87,12 +87,13 @@ The block shows how many cards it found and three buttons: *Preview*,
 backs on alternating pages, so a duplex print comes out aligned — and
 opens in a new pane.
 
-The sheets come out like this — nine cards on A4 with cut marks:
+The sheets come out like this — nine spell, item and feature cards on A4
+with cut marks:
 
-![A printed sheet: nine cards on A4 with cut marks](docs/images/sheet-front.png)
+![A printed sheet: nine 5E spell, item and feature cards on A4 with cut marks](docs/images/sheet-front.png)
 
-The back of the same sheet, mirrored for duplex printing — the last card
-spilled onto a second one, and the sheet knows:
+The back of the same sheet, mirrored for duplex printing — the long spell
+spilled onto a second card, and both say so:
 
 ![The sheet's back page](docs/images/sheet-back.png)
 

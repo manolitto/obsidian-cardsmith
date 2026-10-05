@@ -1,0 +1,26 @@
+Wildfire-Storm · 2 cards · 4 faces · clipped: no
+1. front [cs-overflow-active cs-layout-default cs-front-first cs-front-has-next] scale 0.73
+   p.ff-subtitle "Level 3 Evocation (Druid, Sorcerer)"
+   div.ff-block.ff-spell-lines
+     p.ff-line "Casting Time: Action"
+     p.ff-line "Range: 120 feet"
+     p.ff-line "Components: V, S, M (a burnt …"
+     p.ff-line "Duration: Concentration, up to 1 minute"
+   div.ff-text.cs-split-head
+     p "A roaring storm of embers fills …"
+     p "Until the spell ends, the Cylinder …"
+     p "Spreading Flames. At the end of …"
+     p "Fanning the Fire. As a Bonus …"
+     p "Smoke and Heat. A creature that …"
+2. back [cs-layout-default cs-overflow-active] scale —
+3. front [cs-overflow-active cs-layout-default cs-front-continued] scale 0.73
+   div.ff-text.cs-split-continuation
+     p "Feeding the Storm. When a creature …"
+     p "Calling the Storm Down. As a …"
+     p "Sheltering. A creature that has Total …"
+     p "Embers on the Wind. Whenever a …"
+     p "Rain. Heavy rain or a body …"
+     p "Ashfall. When the spell ends, the …"
+     ul (3 items) "Plants there are burnt away and …"
+   p.ff-entry "Using a Higher-Level Spell Slot The …"
+4. back [cs-layout-default cs-overflow-active] scale —

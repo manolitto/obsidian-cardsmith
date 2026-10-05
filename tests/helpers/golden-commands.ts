@@ -58,15 +58,17 @@ export const orphanLayoutGoldens: BrowserCommand<[keep: string[]]> = (
 
 /**
  * The text a fixture deck's composition is compared against —
- * `tests/fixtures/<system>/_deck.compose.txt`; the same switch as
- * `layoutGolden`. One per system, always produced, so no orphan check.
+ * `tests/fixtures/<system>/_deck.compose.txt`, or `_deck-<name>.compose.txt`
+ * beside a further deck; `file` is the deck note's path without `.md`. The
+ * same switch as `layoutGolden`. One per deck, always produced, so no orphan
+ * check.
  */
-export const deckGolden: BrowserCommand<[system: string, actual: string]> = (
+export const deckGolden: BrowserCommand<[file: string, actual: string]> = (
   _ctx,
-  system,
+  file,
   actual
 ): string | undefined => {
-  const path = join(FIXTURES_DIR, system, "_deck.compose.txt");
+  const path = join(FIXTURES_DIR, `${file}.compose.txt`);
   if (UPDATE) {
     writeFileSync(path, actual);
     return actual;

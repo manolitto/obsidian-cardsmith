@@ -1,0 +1,12 @@
+Hearthward · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   p.ff-subtitle "Level 1 Abjuration (Cleric, Druid, Ranger)"
+   div.ff-block.ff-spell-lines
+     p.ff-line "Casting Time: 10 minutes or Ritual"
+     p.ff-line "Range: 30 feet"
+     p.ff-line "Components: V, S, M (a coal …"
+     p.ff-line "Duration: 8 hours"
+   div.ff-text
+     p "You set a ring of warding …"
+     ul (3 items) "The area stays comfortably warm, whatever …"
+2. back [cs-layout-default] scale —

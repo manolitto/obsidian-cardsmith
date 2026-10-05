@@ -1,0 +1,21 @@
+2 pages · 210 × 297 mm · 3 × 3 of 63 × 88 mm at 10.5, 16.5
+1. front · 64 marks
+   front #1 at 10.5, 16.5 spell/Ash-Spark
+   front #2 at 73.5, 16.5 spell/Cinder-Shield
+   front #3 at 136.5, 16.5 spell/Ember-Lance
+   front #4 at 10.5, 104.5 spell/Hearthward
+   front #5 at 73.5, 104.5 spell/Smoke-Veil
+   front #6 at 136.5, 104.5 spell/Wildfire-Storm
+   front #7 at 10.5, 192.5 spell/Wildfire-Storm
+   front #8 at 73.5, 192.5 item/Wardens-Brand
+   front #9 at 136.5, 192.5 generic/Ember-Step
+2. back · 64 marks
+   back #1 at 136.5, 16.5 spell/Ash-Spark
+   back #2 at 73.5, 16.5 spell/Cinder-Shield
+   back #3 at 10.5, 16.5 spell/Ember-Lance
+   back #4 at 136.5, 104.5 spell/Hearthward
+   back #5 at 73.5, 104.5 spell/Smoke-Veil
+   back #6 at 10.5, 104.5 spell/Wildfire-Storm
+   back #7 at 136.5, 192.5 spell/Wildfire-Storm
+   back #8 at 73.5, 192.5 item/Wardens-Brand
+   back #9 at 10.5, 192.5 generic/Ember-Step

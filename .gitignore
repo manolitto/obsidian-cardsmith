@@ -156,8 +156,8 @@ vite.config.ts.timestamp-*
 /tests/fixtures/*/_layout-preview.html
 
 # --- Fixture-deck exports, written by UPDATE_GOLDENS=1 for looking at ---
-/tests/fixtures/*/_deck.html
-/tests/fixtures/*/_deck.pdf
+/tests/fixtures/*/_deck*.html
+/tests/fixtures/*/_deck*.pdf
 
 # --- Failure screenshots of the browser test project ---
 /tests/**/__screenshots__/

@@ -10,7 +10,7 @@ import { deckNote, fixtureDeckSource, fixtureRenderer } from "./helpers/fixtures
 
 declare module "vitest/browser" {
   interface BrowserCommands {
-    deckGolden(system: string, actual: string): Promise<string | undefined>;
+    deckGolden(file: string, actual: string): Promise<string | undefined>;
   }
 }
 
@@ -23,12 +23,12 @@ declare module "vitest/browser" {
 
 const systems = { get: (id: string) => loadedSystem(id) };
 
-async function build(system: string, text?: string, progress?: DeckProgress) {
-  const deck = await deckNote(system);
+async function build(deck: string, text?: string, progress?: DeckProgress) {
+  const note = await deckNote(deck);
   const diagnostics = collectDiagnostics();
   const built = await buildDeck(
-    text ?? deck.text,
-    deck.path,
+    text ?? note.text,
+    note.path,
     fixtureDeckSource,
     systems,
     fixtureRenderer(),
@@ -283,7 +283,8 @@ describe("buildDeck over the fixture folders", () => {
 
 /**
  * The composition goldens: each fixture deck onto pages, as text —
- * `tests/fixtures/<system>/_deck.compose.txt`. Page count, then per page
+ * `tests/fixtures/<system>/_deck.compose.txt`, and beside a further deck
+ * `_deck-<name>.compose.txt`. Page count, then per page
  * each cell's side, place and name, so a card that moved reads as one
  * line. `UPDATE_GOLDENS=1` rewrites them.
  */
@@ -302,15 +303,17 @@ describe.each([
   "5e_2024",
   "dftq",
   "daggerheart",
-])("the %s deck composes", (system) => {
+  "5e_2024/_deck-spells",
+])("the %s deck composes", (deck) => {
   it("as its composition golden says", async () => {
-    const { built } = await build(system);
+    const { built } = await build(deck);
     const { pages, grid } = composeDeck(built);
     const actual = compositionText(pages, grid);
-    const golden = await commands.deckGolden(system, actual);
+    const { file } = await deckNote(deck);
+    const golden = await commands.deckGolden(file, actual);
     expect(
       golden,
-      `${system}/_deck.compose.txt is missing — run with UPDATE_GOLDENS=1 to write it`
+      `${file}.compose.txt is missing — run with UPDATE_GOLDENS=1 to write it`
     ).toBeDefined();
     expect(actual).toBe(golden);
   });
