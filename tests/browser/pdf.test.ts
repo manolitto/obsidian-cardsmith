@@ -16,7 +16,7 @@ import { deckNote, fixtureDeckSource, fixtureRenderer } from "./helpers/fixtures
 
 declare module "vitest/browser" {
   interface BrowserCommands {
-    printPdf(system: string, html: string): Promise<PrintedPdf>;
+    printPdf(file: string, html: string): Promise<PrintedPdf>;
   }
 }
 
@@ -38,9 +38,10 @@ describe.each([
   "5e_2024",
   "dftq",
   "daggerheart",
-])("the %s deck prints", (system) => {
+  "5e_2024/_deck-spells",
+])("the %s deck prints", (id) => {
   it("to as many pages as it composed, on the paper it said", async () => {
-    const deck = await deckNote(system);
+    const deck = await deckNote(id);
     const built = await buildDeck(
       deck.text,
       deck.path,
@@ -50,8 +51,8 @@ describe.each([
       document,
       collectDiagnostics()
     );
-    const out = deckDocument(built, `${system} deck`);
-    const pdf = await commands.printPdf(system, out.html);
+    const out = deckDocument(built, `${id} deck`);
+    const pdf = await commands.printPdf(deck.file, out.html);
     expect(pdf.pageCount).toBe(out.pageCount);
     expect(pdf.mediaBox.width).toBeCloseTo(out.paper.width * POINTS_PER_MM, 0);
     expect(pdf.mediaBox.height).toBeCloseTo(out.paper.height * POINTS_PER_MM, 0);

@@ -1,0 +1,13 @@
+Cinder-Shield · 1 card · 2 faces · clipped: no
+1. front [cs-layout-default cs-front-first] scale 1.00
+   p.ff-subtitle "Level 1 Abjuration (Sorcerer, Warlock, Wizard)"
+   div.ff-block.ff-spell-lines
+     p.ff-line "Casting Time: Reaction, which you take …"
+     p.ff-line "Range: Self"
+     p.ff-line "Components: V, S"
+     p.ff-line "Duration: 1 round"
+   div.ff-text
+     p "A swirl of glowing cinders wraps …"
+     p "The first creature that hits you …"
+   p.ff-entry "Using a Higher-Level Spell Slot The …"
+2. back [cs-layout-default] scale —

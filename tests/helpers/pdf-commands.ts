@@ -10,8 +10,8 @@ import type { BrowserCommand } from "vitest/node";
  * and the test can hold its page count and its paper to the composition.
  *
  * Under `UPDATE_GOLDENS=1` the PDF is also written beside the fixture
- * deck, gitignored, as `_deck.pdf` — the file to look at, and the input of
- * the Quartz check.
+ * deck, gitignored, as `_deck.pdf` (`_deck-<name>.pdf` beside a further
+ * deck) — the file to look at, and the input of the Quartz check.
  */
 
 const UPDATE = process.env["UPDATE_GOLDENS"] === "1";
@@ -27,11 +27,11 @@ export interface PrintedPdf {
 /**
  * Print `html` as the PDF its `@page` rule asks for — the paper the document
  * says, no margins, backgrounds on — once its fonts have loaded and every
- * picture has decoded.
+ * picture has decoded. `file` is the deck note's path without `.md`.
  */
-export const printPdf: BrowserCommand<[system: string, html: string]> = async (
+export const printPdf: BrowserCommand<[file: string, html: string]> = async (
   _ctx,
-  system,
+  file,
   html
 ): Promise<PrintedPdf> => {
   // A Chromium per print, closed after it: one kept open across the run
@@ -49,7 +49,7 @@ export const printPdf: BrowserCommand<[system: string, html: string]> = async (
       );
     });
     const pdf = await page.pdf({ preferCSSPageSize: true, printBackground: true });
-    if (UPDATE) writeFileSync(join(FIXTURES_DIR, system, "_deck.pdf"), pdf);
+    if (UPDATE) writeFileSync(join(FIXTURES_DIR, `${file}.pdf`), pdf);
     return { ...describePdf(pdf), bytes: pdf.byteLength };
   } finally {
     await browser.close();
