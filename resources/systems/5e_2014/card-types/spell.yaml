@@ -12,7 +12,8 @@
 # lists, which this edition does not print, are declared without a place.
 #
 # The back's top line names the school after the label — `Zauber /
-# Hervorrufung` — as the note writes it, so a deck of spells read
+# Hervorrufung` — spelt out by its own glyph table, in the nominative
+# and capitalised whatever the note wrote, so a deck of spells read
 # from behind sorts by school; the name stands below the picture.
 
 front-template: templates/spell-front.hbs
@@ -208,3 +209,20 @@ glyphs:
     nekromantie: { en: Necromancy, de: "der Nekromantie" }
     transmutation: { en: Transmutation, de: "der Verwandlung" }
     verwandlung: { en: Transmutation, de: "der Verwandlung" }
+  back-origin:
+    abjuration: { en: Abjuration, de: Bannmagie }
+    bannmagie: { en: Abjuration, de: Bannmagie }
+    conjuration: { en: Conjuration, de: Beschwörung }
+    beschwörung: { en: Conjuration, de: Beschwörung }
+    divination: { en: Divination, de: Erkenntnismagie }
+    erkenntnis: { en: Divination, de: Erkenntnismagie }
+    erkenntnismagie: { en: Divination, de: Erkenntnismagie }
+    enchantment: { en: Enchantment, de: Verzauberung }
+    verzauberung: { en: Enchantment, de: Verzauberung }
+    evocation: { en: Evocation, de: Hervorrufung }
+    hervorrufung: { en: Evocation, de: Hervorrufung }
+    illusion: { en: Illusion, de: Illusion }
+    necromancy: { en: Necromancy, de: Nekromantie }
+    nekromantie: { en: Necromancy, de: Nekromantie }
+    transmutation: { en: Transmutation, de: Verwandlung }
+    verwandlung: { en: Transmutation, de: Verwandlung }
