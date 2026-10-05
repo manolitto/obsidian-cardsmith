@@ -46,10 +46,6 @@ export interface Grid {
   width: number;
   /** The width the margin leaves for a row. */
   usable: number;
-  /** The hinge between two panels of a fold, in millimetres; 0 folds along a crease. */
-  gap: number;
-  /** A `cover`'s outer hinge, between the cover and the last page, when it wraps panels folded inside. */
-  gapOuter: number;
 }
 
 /** One side of one card at one place on a page. */
@@ -63,8 +59,8 @@ export interface Cell {
   y: number;
   /** The settled face; absent for the back of a card that has none — the place stays empty. */
   html?: string;
-  /** Set when the place is a panel of a fold: which fold, and which of its panels, counted from 1. */
-  fold?: { chunk: number; panel: number; panels: number };
+  /** Set when the place is a panel of a fold: which fold, which of its panels counted from 1, and whether hinges stand between them. */
+  fold?: { chunk: number; panel: number; panels: number; hinged?: boolean };
 }
 
 export interface Page {
@@ -107,10 +103,6 @@ export interface Composable {
   cutMarks: CutMarks;
   /** Absent: `off`. */
   fold?: Fold;
-  /** Millimetres between the panels of a fold; absent or under `off`, none. */
-  foldGap?: number;
-  /** A `cover`'s outer hinge, when it wraps panels folded inside; absent, `foldGap`. Needs a `foldGap`. */
-  foldGapOuter?: number;
 }
 
 /**
@@ -176,8 +168,6 @@ function fit(
     originY: marginY + (usableHeight - rows * card.height) / 2,
     width: columns * card.width,
     usable: usableWidth,
-    gap: 0,
-    gapOuter: 0,
   };
 }
 
@@ -205,40 +195,54 @@ export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
     deck.pageMargin,
     fold === "off" ? 1 : 2
   );
-  const gap = fold === "off" ? 0 : (deck.foldGap ?? 0);
-  const gapOuter = gap > 0 ? (deck.foldGapOuter ?? gap) : 0;
   const card = plain.card.width;
-  const hinges = (count: number) => foldHinges(count, fold, gap, gapOuter);
-  const widthOf = (count: number) =>
-    count * card + hinges(count).reduce((sum, h) => sum + h, 0);
+  // A card's hinges, from its own chain: none where the deck does not fold,
+  // the outer one only where there is an inner one to go with it.
+  const hingesOf = (count: number, source: PhysicalCard): number[] => {
+    const gap = fold === "off" ? 0 : (source.foldGap ?? 0);
+    const outer = gap > 0 ? (source.foldGapOuter ?? gap) : 0;
+    return foldHinges(count, fold, gap, outer);
+  };
+  const widthOf = (count: number, source: PhysicalCard) =>
+    count * card + hingesOf(count, source).reduce((sum, h) => sum + h, 0);
 
   // A fold reaches as far as its panels and hinges fit a row.
-  let reach = 1;
-  while (fold !== "off" && widthOf(reach + 1) <= plain.usable + 1e-9) reach++;
-  if (fold !== "off" && reach < 2) {
-    throw new Error(
-      `A fold needs 2 ${plain.card.width} × ${plain.card.height} mm cards side by side with a ${mm(gap)} mm hinge, and ${plain.paper.width} × ${plain.paper.height} mm paper holds 1`
-    );
-  }
-  const pieces = foldPieces(deck.cards, fold, reach);
+  const reachOf = (source: PhysicalCard): number => {
+    let reach = 1;
+    while (widthOf(reach + 1, source) <= plain.usable + 1e-9) reach++;
+    if (reach < 2) {
+      throw new Error(
+        `A fold needs 2 ${plain.card.width} × ${plain.card.height} mm cards side by side with a ${mm(source.foldGap ?? 0)} mm hinge, and ${plain.paper.width} × ${plain.paper.height} mm paper holds 1`
+      );
+    }
+    return reach;
+  };
+  const pieces = foldPieces(deck.cards, fold, reachOf);
 
   // Rows in millimetres: each piece where it fits what is left of its row,
   // else at the start of the next; the deck's order is the print order.
-  const placed: { piece: Place[]; row: number; x: number; offsets: number[] }[] = [];
+  const placed: {
+    piece: Place[];
+    row: number;
+    x: number;
+    offsets: number[];
+    hinged: boolean;
+  }[] = [];
   let row = 0;
   let cursor = 0;
   let widest = 0;
   for (const piece of pieces) {
-    const width = widthOf(piece.length);
+    const source = piece[0]!.source;
+    const hinges = hingesOf(piece.length, source);
+    const width = widthOf(piece.length, source);
     if (cursor > 0 && cursor + width > plain.usable + 1e-9) {
       row++;
       cursor = 0;
     }
     // Each panel's left edge within the piece: the cards and hinges before it.
     const offsets = [0];
-    for (const hinge of hinges(piece.length))
-      offsets.push(offsets.at(-1)! + card + hinge);
-    placed.push({ piece, row, x: cursor, offsets });
+    for (const hinge of hinges) offsets.push(offsets.at(-1)! + card + hinge);
+    placed.push({ piece, row, x: cursor, offsets, hinged: hinges.some((h) => h > 0) });
     cursor += width;
     widest = Math.max(widest, cursor);
   }
@@ -250,8 +254,6 @@ export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
     ...plain,
     originX: plain.originX - (width - plain.width) / 2,
     width,
-    gap,
-    gapOuter,
   };
   const withBacks = pieces.some((piece) =>
     piece.some((place) => place.back !== undefined)
@@ -259,7 +261,7 @@ export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
   const sheets: { front: Cell[]; back: Cell[]; hinges: Hinge[]; backHinges: Hinge[] }[] =
     [];
 
-  for (const { piece, row, x, offsets } of placed) {
+  for (const { piece, row, x, offsets, hinged } of placed) {
     const local = row % grid.rows;
     const sheet = (sheets[Math.floor(row / grid.rows)] ??= {
       front: [],
@@ -274,7 +276,9 @@ export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
         index: place.index,
         name: place.name,
         cardTypeId: place.cardTypeId,
-        ...(place.fold === undefined ? {} : { fold: place.fold }),
+        ...(place.fold === undefined
+          ? {}
+          : { fold: hinged ? { ...place.fold, hinged } : place.fold }),
       };
       sheet.front.push({
         ...common,
@@ -294,7 +298,7 @@ export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
         ...(place.back === undefined ? {} : { html: place.back }),
       });
       const next = offsets[i + 1];
-      if (gap > 0 && next !== undefined) {
+      if (hinged && next !== undefined) {
         const hinge = {
           x: left + card,
           y,
@@ -369,6 +373,8 @@ interface Place {
   hingeColor?: string;
   /** Whether that hinge is printed behind itself on the back page too. */
   hingeSides?: "front" | "both";
+  /** The physical card the place was made from, whose chain says how wide its hinges are. */
+  source: PhysicalCard;
 }
 
 /**
@@ -394,7 +400,7 @@ interface Place {
 function foldPieces(
   cards: readonly PhysicalCard[],
   fold: Fold,
-  reach: number
+  reachOf: (card: PhysicalCard) => number
 ): Place[][] {
   const out: Place[][] = [];
   let index = 0;
@@ -408,6 +414,7 @@ function foldPieces(
     index: index++,
     name: card.name,
     cardTypeId: card.cardTypeId,
+    source: card,
     ...(front === undefined ? {} : { front }),
     ...(back === undefined ? {} : { back }),
     ...(card.hingeColor === undefined ? {} : { hingeColor: card.hingeColor }),
@@ -416,7 +423,10 @@ function foldPieces(
   });
 
   for (let start = 0; start < cards.length;) {
-    const longest = fold === "off" ? 1 : fold === "booklet" ? Infinity : reach;
+    // Asked for a booklet too, which is always sheets of two: it says
+    // whether two cards and their hinge fit a row at all.
+    const reach = fold === "off" ? 1 : reachOf(cards[start]!);
+    const longest = fold === "booklet" ? Infinity : reach;
     let end = start + 1;
     while (
       end < cards.length &&
@@ -481,10 +491,6 @@ export function composeDeck(deck: Deck): { pages: Page[]; grid: Grid } {
     duplexFlip: settings.duplexFlip ?? "long-edge",
     cutMarks: settings.cutMarks ?? {},
     fold: settings.fold ?? "off",
-    foldGap: settings.foldGap ?? 0,
-    ...(settings.foldGapOuter === undefined
-      ? {}
-      : { foldGapOuter: settings.foldGapOuter }),
   });
 }
 
@@ -618,7 +624,7 @@ function paperPieces(
   const creases: Line[] = [];
   const folds = new Map<number, Cell[]>();
   for (const cell of cells) {
-    if (cell.fold === undefined || grid.gap > 0) {
+    if (cell.fold === undefined || cell.fold.hinged) {
       pieces.push({ x: cell.x, y: cell.y, width });
       continue;
     }
@@ -695,11 +701,11 @@ export function mm(value: number): string {
  */
 export function compositionText(pages: readonly Page[], grid: Grid): string {
   const lines = [
-    `${pages.length} ${pages.length === 1 ? "page" : "pages"} · ${mm(grid.paper.width)} × ${mm(grid.paper.height)} mm · ${grid.columns} × ${grid.rows} of ${mm(grid.card.width)} × ${mm(grid.card.height)} mm at ${mm(grid.originX)}, ${mm(grid.originY)}${grid.gap > 0 ? ` · gap ${mm(grid.gap)} mm${grid.gapOuter !== grid.gap ? `, outer ${mm(grid.gapOuter)} mm` : ""}` : ""}`,
+    `${pages.length} ${pages.length === 1 ? "page" : "pages"} · ${mm(grid.paper.width)} × ${mm(grid.paper.height)} mm · ${grid.columns} × ${grid.rows} of ${mm(grid.card.width)} × ${mm(grid.card.height)} mm at ${mm(grid.originX)}, ${mm(grid.originY)}`,
   ];
   pages.forEach((page, i) => {
     lines.push(
-      `${i + 1}. ${page.side} · ${page.marks.length} marks${page.folds.length > 0 ? ` · ${page.folds.length} fold marks` : ""}${page.hinges.length > 0 ? ` · ${page.hinges.length} ${page.hinges.length === 1 ? "hinge" : "hinges"}` : ""}`
+      `${i + 1}. ${page.side} · ${page.marks.length} marks${page.folds.length > 0 ? ` · ${page.folds.length} fold marks` : ""}${page.hinges.length > 0 ? ` · ${page.hinges.length} ${page.hinges.length === 1 ? "hinge" : "hinges"} (${[...new Set(page.hinges.map((h) => mm(h.width)))].join(", ")} mm)` : ""}`
     );
     for (const cell of page.cells) {
       const panel = cell.fold ? `panel ${cell.fold.panel}/${cell.fold.panels} ` : "";

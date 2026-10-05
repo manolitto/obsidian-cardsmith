@@ -20,6 +20,9 @@ export interface PhysicalCard {
   hingeColor?: string;
   /** `both` prints that hinge behind itself on the back page too; absent, the front only. */
   hingeSides?: "front" | "both";
+  /** Millimetres between the panels of its fold, and of a cover's outer hinge — from its chain. */
+  foldGap?: number;
+  foldGapOuter?: number;
   front?: string;
   back?: string;
 }
@@ -75,6 +78,12 @@ export function applyCopies(
           ...(card.settings.hingeSides === undefined
             ? {}
             : { hingeSides: card.settings.hingeSides }),
+          ...(card.settings.foldGap === undefined
+            ? {}
+            : { foldGap: card.settings.foldGap }),
+          ...(card.settings.foldGapOuter === undefined
+            ? {}
+            : { foldGapOuter: card.settings.foldGapOuter }),
           ...(faces.front === undefined || side === "back" ? {} : { front: faces.front }),
           ...(faces.back === undefined || side === "front" ? {} : { back: faces.back }),
         });

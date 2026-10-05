@@ -118,14 +118,21 @@ describe("buildDeck over the fixture folders", () => {
   });
 
   it("dragonbane folded with a gap: a hinge between the panels of each fold", async () => {
-    const { built } = await build("dragonbane");
-    const { pages, grid } = composeDeck({
-      ...built,
-      settings: { ...built.settings, fold: "cover", foldGap: 3 },
-    });
+    // The gap is a card setting: written in the deck block, it reaches every
+    // card through the chain, and the composer reads it off the cards.
+    const deck = await deckNote("dragonbane");
+    const { built } = await build(
+      "dragonbane",
+      deck.text.replace(
+        "```cardsmith-deck\n",
+        "```cardsmith-deck\nfold: cover\nfold-gap: 3\n"
+      )
+    );
+    expect(built.cards.every((c) => c.foldGap === 3)).toBe(true);
+    const { pages, grid } = composeDeck(built);
     // `A4 portrait` inside 10 mm: three cards across, edge to edge, where a row holds no
     // fold; a two-card fold with its 3 mm hinge leaves no room for a card beside it.
-    expect(grid).toMatchObject({ paper: { width: 210 }, columns: 3, gap: 3 });
+    expect(grid).toMatchObject({ paper: { width: 210 }, columns: 3 });
     expect(pages.map((page) => page.cells.length)).toEqual([7, 7, 6, 6]);
     const hinges = pages.filter((page) => page.side === "front").flatMap((p) => p.hinges);
     expect(hinges).toHaveLength(3);

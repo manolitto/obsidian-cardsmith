@@ -38,12 +38,6 @@ card-type: [gear, creature]
 # A note's cards side by side, uncut, folded instead of cut apart: `strip` (1, 2, 3 across the front, 4, 5, 6 across the back), `cover` (5, 6, 1 across the front, page 1 a cover with the last page behind it), `booklet` (nested sheets of two, like a printer's booklet) or `off`.
 # fold: 'off'
 
-# Millimetres between the panels of a fold, printed as a grey strip: a hinge to cut out before laminating. 1.5 suits a single fold, 0 folds along a crease.
-# fold-gap: 0
-
-# Millimetres of a `cover`'s outer hinge, between the cover and the last page, where three panels or more fold inside it. Default: `fold-gap`.
-# fold-gap-outer:
-
 # The cut marks at every card corner; the fields merge, so one can change alone.
 # cut-marks: {enabled: true, length: 3, margin: 0, color: '#aaaaaa', weight: 0.25}
 
@@ -85,6 +79,12 @@ card-type: [gear, creature]
 
 # Where a hinge strip is printed: `front` (the side you cut from) or `both`, behind itself on the back too.
 # hinge-sides: front
+
+# Millimetres between the panels of a fold, printed as a grey strip: a hinge to cut out before laminating. 1.5 suits a single fold, 0 folds along a crease.
+# fold-gap: 0
+
+# Millimetres of a `cover`'s outer hinge, between the cover and the last page, where three panels or more fold inside it. Default: `fold-gap`.
+# fold-gap-outer:
 
 # The language the card is printed in — which translation table its captions come from.
 # language:

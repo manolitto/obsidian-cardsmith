@@ -4,6 +4,7 @@ import {
   booleanValue,
   isMapping,
   nonEmptyString,
+  nonNegativeNumber,
   oneOf,
   positiveInteger,
   positiveNumber,
@@ -55,6 +56,14 @@ export interface CardSettings {
   hingeColor?: string;
   /** Whether a hinge is printed on the front of the sheet only, or behind it on the back as well. */
   hingeSides?: HingeSides;
+  /**
+   * Millimetres between the panels of a fold, where the deck folds this card:
+   * a strip — a hinge — rather than a crease. A card setting, so that a
+   * system may set the width its paper wants; 0 folds along a crease.
+   */
+  foldGap?: number;
+  /** Millimetres of a `cover`'s outer hinge, where three panels or more fold inside it; absent, `foldGap`, which it needs. */
+  foldGapOuter?: number;
   /**
    * The language the card is printed in — which translation table captions
    * come from, and the `lang` its root carries. A setting rather than a
@@ -116,6 +125,8 @@ const CARD_SETTINGS: SettingTable<CardSettings> = {
   expandByRoll: { key: "expand-by-roll", parse: booleanValue },
   hingeColor: { key: "hinge-color", parse: nonEmptyString },
   hingeSides: { key: "hinge-sides", parse: oneOf(["front", "both"]) },
+  foldGap: { key: "fold-gap", parse: nonNegativeNumber },
+  foldGapOuter: { key: "fold-gap-outer", parse: nonNegativeNumber },
   language: { key: "language", parse: languageCode },
 };
 
