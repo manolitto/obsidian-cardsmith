@@ -1,7 +1,8 @@
 # Wildfire Storm
 
 A third-level spell too long for one card: the note asks for extra
-cards, and the description runs onto a second one. Invented for this
+cards, and the description runs onto a second one — well past the type
+floor, so the count holds on every platform. Invented for this
 deck.
 
 ```cardsmith
@@ -39,6 +40,10 @@ data:
     **Embers on the Wind.** Whenever a creature fails a saving throw against the storm by 5 or more, a burning ember lodges in its clothing or fur. At the start of each of its turns, it takes 1d4 Fire damage until it or a creature within 5 feet of it takes an action to brush the ember off.
 
     **Rain.** Heavy rain or a body of water the Cylinder moves over halves its damage, and steam rising from it makes the area within 10 feet of the Cylinder Lightly Obscured as well.
+
+    **The Eye of the Storm.** You can choose any number of creatures you can see when you cast the spell. The storm parts around them: they take no damage from it, and the Cylinder isn't Difficult Terrain for them.
+
+    **Smouldering Ground.** A creature that ends its turn on ground the Cylinder covered since the start of that turn takes 1d4 Fire damage, and its footprints glow faintly for 1 hour, shedding Dim Light in a 5-foot radius.
 
     **Ashfall.** When the spell ends, the Cylinder collapses into drifting ash. For 1 hour, the ground it covered is scorched black:
 
