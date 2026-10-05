@@ -73,6 +73,10 @@ const en = {
   "card-key.copies": "How many times the card is printed in a deck.",
   "card-key.expand-by-roll":
     "Print one card per value of the roll range between `roll-min` and `roll-max`.",
+  "card-key.hinge-color":
+    "The colour of the strip printed for a hinge, where the card folds with a gap. Any CSS colour.",
+  "card-key.hinge-sides":
+    "Where a hinge strip is printed: `front` (the side you cut from) or `both`, behind itself on the back too.",
   "card-key.language":
     "The language the card is printed in — which translation table its captions come from.",
 
@@ -281,6 +285,10 @@ const de: Strings = {
   "card-key.copies": "Wie oft die Karte in einem Deck gedruckt wird.",
   "card-key.expand-by-roll":
     "Eine Karte je Wert des Würfelbereichs zwischen `roll-min` und `roll-max` drucken.",
+  "card-key.hinge-color":
+    "Die Farbe des Streifens, der für ein Scharnier gedruckt wird, wenn die Karte mit Lücke gefaltet wird. Eine beliebige CSS-Farbe.",
+  "card-key.hinge-sides":
+    "Wo ein Scharnierstreifen gedruckt wird: `front` (die Seite, von der aus geschnitten wird) oder `both`, auch dahinter auf der Rückseite.",
   "card-key.language":
     "Die Sprache, in der die Karte gedruckt wird — aus welcher Übersetzungstabelle ihre Beschriftungen kommen.",
 

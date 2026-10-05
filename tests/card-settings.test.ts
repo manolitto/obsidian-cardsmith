@@ -14,6 +14,25 @@ const resolve = (sources: string[], diagnostics = collectDiagnostics()) =>
   mergeCardSettings(sources.map((source) => layer(source, diagnostics)));
 
 describe("the card-setting chain", () => {
+  it("resolves the hinge colour like any other key: system, card type, deck, note", () => {
+    const chain = [
+      'hinge-color: "#cccccc"',
+      "hinge-color: tan",
+      "{}",
+      'hinge-color: "#336699"',
+      "{}",
+    ];
+    expect(resolve(chain).hingeColor).toBe("#336699");
+    expect(resolve(chain.slice(0, 2)).hingeColor).toBe("tan");
+    expect(resolve([...chain.slice(0, 4), "hinge-color: red"]).hingeColor).toBe("red");
+    const diagnostics = collectDiagnostics();
+    expect(resolve(["hinge-sides: front", "hinge-sides: both"]).hingeSides).toBe("both");
+    expect(
+      resolve(["hinge-sides: front", "hinge-sides: back"], diagnostics).hingeSides
+    ).toBe("front");
+    expect(diagnostics.matching("hinge-sides")).toHaveLength(1);
+  });
+
   it("lets every layer set every key, highest wins, values typed", () => {
     // baseline → system → card type → deck → note, and no per-key permission:
     // a deck overriding a card's size for one print run is the whole point of

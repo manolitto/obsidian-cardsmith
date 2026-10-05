@@ -80,6 +80,12 @@ card-type: simple
 # Eine Karte je Wert des Würfelbereichs zwischen `roll-min` und `roll-max` drucken.
 # expand-by-roll: false
 
+# Die Farbe des Streifens, der für ein Scharnier gedruckt wird, wenn die Karte mit Lücke gefaltet wird. Eine beliebige CSS-Farbe.
+# hinge-color: '#cccccc'
+
+# Wo ein Scharnierstreifen gedruckt wird: `front` (die Seite, von der aus geschnitten wird) oder `both`, auch dahinter auf der Rückseite.
+# hinge-sides: front
+
 # Die Sprache, in der die Karte gedruckt wird — aus welcher Übersetzungstabelle ihre Beschriftungen kommen.
 # language:
 ```

@@ -80,6 +80,12 @@ card-type: simple
 # Print one card per value of the roll range between `roll-min` and `roll-max`.
 # expand-by-roll: false
 
+# The colour of the strip printed for a hinge, where the card folds with a gap. Any CSS colour.
+# hinge-color: '#cccccc'
+
+# Where a hinge strip is printed: `front` (the side you cut from) or `both`, behind itself on the back too.
+# hinge-sides: front
+
 # The language the card is printed in — which translation table its captions come from.
 # language:
 ```

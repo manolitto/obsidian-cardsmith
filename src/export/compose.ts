@@ -74,8 +74,13 @@ export interface Page {
   marks: Line[];
   /** The fold marks, likewise. */
   folds: Line[];
-  /** The hinges to cut out, on a front page whose deck folds with a gap. */
-  hinges: Rect[];
+  /** The hinges to cut out where a deck folds with a gap — on a front page, and behind them where their cards ask for both sides. */
+  hinges: Hinge[];
+}
+
+/** A strip to cut out between two panels of a fold, in the colour its card says. */
+export interface Hinge extends Rect {
+  color: string;
 }
 
 export interface Rect {
@@ -251,7 +256,8 @@ export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
   const withBacks = pieces.some((piece) =>
     piece.some((place) => place.back !== undefined)
   );
-  const sheets: { front: Cell[]; back: Cell[]; hinges: Rect[] }[] = [];
+  const sheets: { front: Cell[]; back: Cell[]; hinges: Hinge[]; backHinges: Hinge[] }[] =
+    [];
 
   for (const { piece, row, x, offsets } of placed) {
     const local = row % grid.rows;
@@ -259,6 +265,7 @@ export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
       front: [],
       back: [],
       hinges: [],
+      backHinges: [],
     });
     const y = grid.originY + local * grid.card.height;
     piece.forEach((place, i) => {
@@ -288,20 +295,31 @@ export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
       });
       const next = offsets[i + 1];
       if (gap > 0 && next !== undefined) {
-        sheet.hinges.push({
+        const hinge = {
           x: left + card,
           y,
           width: next - offsets[i]! - card,
           height: grid.card.height,
-        });
+          color: place.hingeColor ?? DEFAULT_HINGE_COLOR,
+        };
+        sheet.hinges.push(hinge);
+        // Behind itself, where the card asks for both sides: mirrored as a
+        // place is, so the two strips meet through the paper.
+        if (place.hingeSides === "both") {
+          sheet.backHinges.push(
+            deck.duplexFlip === "short-edge"
+              ? { ...hinge, y: grid.originY + (grid.rows - 1 - local) * grid.card.height }
+              : { ...hinge, x: grid.paper.width - hinge.x - hinge.width }
+          );
+        }
       }
     });
   }
 
   const pages: Page[] = [];
-  for (const { front, back, hinges } of sheets) {
+  for (const { front, back, hinges, backHinges } of sheets) {
     pages.push(page("front", front, grid, deck.cutMarks, hinges));
-    if (withBacks) pages.push(page("back", back, grid, deck.cutMarks, []));
+    if (withBacks) pages.push(page("back", back, grid, deck.cutMarks, backHinges));
   }
   return { pages, grid };
 }
@@ -311,14 +329,15 @@ function page(
   cells: Cell[],
   grid: Grid,
   marks: CutMarks,
-  hinges: Rect[]
+  hinges: Hinge[]
 ): Page {
   return {
     side,
     cells,
     marks: cutMarks(cells, grid, marks),
     folds: foldMarks(cells, grid, marks),
-    // The knife works from the front; behind a hinge there is no paper left.
+    // The knife works from the front; a back page carries the hinges whose
+    // cards ask for both sides.
     hinges,
   };
 }
@@ -335,6 +354,9 @@ function foldHinges(count: number, fold: Fold, gap: number, gapOuter: number): n
   );
 }
 
+/** A hinge's colour where no layer of its card's chain gives one. */
+const DEFAULT_HINGE_COLOR = "#cccccc";
+
 /** One place on the paper — a card, or a panel of a fold — with the faces that go on it. */
 interface Place {
   index: number;
@@ -343,6 +365,10 @@ interface Place {
   front?: string;
   back?: string;
   fold?: { chunk: number; panel: number; panels: number };
+  /** The colour of the hinge to the right of this panel. */
+  hingeColor?: string;
+  /** Whether that hinge is printed behind itself on the back page too. */
+  hingeSides?: "front" | "both";
 }
 
 /**
@@ -384,6 +410,8 @@ function foldPieces(
     cardTypeId: card.cardTypeId,
     ...(front === undefined ? {} : { front }),
     ...(back === undefined ? {} : { back }),
+    ...(card.hingeColor === undefined ? {} : { hingeColor: card.hingeColor }),
+    ...(card.hingeSides === undefined ? {} : { hingeSides: card.hingeSides }),
     ...(panels > 1 ? { fold: { chunk: out.length, panel, panels } } : {}),
   });
 
@@ -611,9 +639,9 @@ function paperPieces(
 
 /**
  * The marks of a page as an SVG the size of the paper, its units
- * millimetres: the hinges first, filled light in the marks' colour —
- * drawn whether or not the marks are, being what to cut out rather than a
- * mark — then the cut marks, then the fold marks dashed.
+ * millimetres: the hinges first, each filled in its card's colour — drawn
+ * whether or not the marks are, being what to cut out rather than a mark —
+ * then the cut marks, then the fold marks dashed.
  */
 export function cutMarksSvg(page: Page, grid: Grid, marks: CutMarks): string {
   if (page.marks.length === 0 && page.folds.length === 0 && page.hinges.length === 0)
@@ -626,10 +654,10 @@ export function cutMarksSvg(page: Page, grid: Grid, marks: CutMarks): string {
   const lines: string[] = [];
   if (page.hinges.length > 0) {
     lines.push(
-      `<g class="cs-hinges" fill="${stroke}" fill-opacity="0.6" stroke="none">`,
+      `<g class="cs-hinges" stroke="none">`,
       ...page.hinges.map(
         (r) =>
-          `<rect x="${mm(r.x)}" y="${mm(r.y)}" width="${mm(r.width)}" height="${mm(r.height)}"/>`
+          `<rect x="${mm(r.x)}" y="${mm(r.y)}" width="${mm(r.width)}" height="${mm(r.height)}" fill="${attribute(r.color)}"/>`
       ),
       "</g>"
     );
@@ -648,6 +676,11 @@ export function cutMarksSvg(page: Page, grid: Grid, marks: CutMarks): string {
     lines.join("") +
     `</svg>`
   );
+}
+
+/** A colour from a note or a system, safe inside a double-quoted attribute. */
+function attribute(value: string): string {
+  return value.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
 }
 
 /** A millimetre value as an attribute: three decimals at most, no trailing zeros. */

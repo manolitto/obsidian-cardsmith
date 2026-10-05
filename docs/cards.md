@@ -230,6 +230,8 @@ note, then the deck it is printed in, then the card type, then the system.
 | `language` | The language the card prints in — which translation table its captions come from. |
 | `display-height` | Height of the in-note preview, in pixels. |
 | `expand-by-roll` | One card per value of the roll range between `roll-min` and `roll-max`. |
+| `hinge-color` | The colour of the strip printed for a hinge when a deck folds the card with a gap — see [Laminating a folded card](decks.md#laminating-a-folded-card). Any CSS colour; default a light grey. |
+| `hinge-sides` | Where that strip is printed: `front` (default) or `both`, behind itself on the back of the sheet too. |
 | `layouts`, `layout-decision` | The named ways a card may be laid out and how the winner is chosen — a design's concern, set by the system. |
 
 Before it prints, every card is laid out: the type is scaled down towards

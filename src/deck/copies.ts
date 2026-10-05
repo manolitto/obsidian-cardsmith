@@ -16,6 +16,10 @@ export interface PhysicalCard {
    * own. What a fold keeps together.
    */
   group: number;
+  /** The colour of a hinge beside this card, when its fold has one; absent, the plain default. */
+  hingeColor?: string;
+  /** `both` prints that hinge behind itself on the back page too; absent, the front only. */
+  hingeSides?: "front" | "both";
   front?: string;
   back?: string;
 }
@@ -65,6 +69,12 @@ export function applyCopies(
           name: card.name,
           cardTypeId: card.cardTypeId,
           group,
+          ...(card.settings.hingeColor === undefined
+            ? {}
+            : { hingeColor: card.settings.hingeColor }),
+          ...(card.settings.hingeSides === undefined
+            ? {}
+            : { hingeSides: card.settings.hingeSides }),
           ...(faces.front === undefined || side === "back" ? {} : { front: faces.front }),
           ...(faces.back === undefined || side === "front" ? {} : { back: faces.back }),
         });

@@ -567,7 +567,9 @@ describe("fold gaps", () => {
 
   it("prints a hinge between the panels of one fold, on the front page only", () => {
     const { pages } = hinged();
-    expect(pages[0]!.hinges).toEqual([{ x: 68.5, y: 8, width: 3, height: 88 }]);
+    expect(pages[0]!.hinges).toEqual([
+      { x: 68.5, y: 8, width: 3, height: 88, color: "#cccccc" },
+    ]);
     expect(pages[1]!.hinges).toEqual([]);
     // Two single cards side by side: the gap between them is paper, cut through later.
     expect(hinged({ cards: notes(1, 1) }).pages[0]!.hinges).toEqual([]);
@@ -589,7 +591,7 @@ describe("fold gaps", () => {
     const { pages, grid } = hinged({ cutMarks: { enabled: false } });
     expect(pages[0]!.marks).toEqual([]);
     expect(cutMarksSvg(pages[0]!, grid, { enabled: false })).toContain(
-      '<g class="cs-hinges" fill="#aaaaaa" fill-opacity="0.6" stroke="none"><rect x="68.5" y="8" width="3" height="88"/></g>'
+      '<g class="cs-hinges" stroke="none"><rect x="68.5" y="8" width="3" height="88" fill="#cccccc"/></g>'
     );
   });
 
@@ -615,8 +617,8 @@ describe("fold gaps", () => {
     // 189 + 1.5 + 2.5 = 193 mm, centred on 200: 5, 6 | 1 with the wide hinge before the cover.
     expect(faces(pages[0]!)).toEqual(["A3f@3.5,0", "A3b@68,0", "A1f@133.5,0"]);
     expect(pages[0]!.hinges).toEqual([
-      { x: 66.5, y: 0, width: 1.5, height: 88 },
-      { x: 131, y: 0, width: 2.5, height: 88 },
+      { x: 66.5, y: 0, width: 1.5, height: 88, color: "#cccccc" },
+      { x: 131, y: 0, width: 2.5, height: 88, color: "#cccccc" },
     ]);
     // Behind each panel, mirrored about the paper's centre — the hinges are uneven, so the
     // middle panel's back lands a millimetre off its front's x, and exactly behind it.
@@ -648,5 +650,57 @@ describe("fold gaps", () => {
       })
     );
     expect(pages[0]!.hinges).toEqual([]);
+  });
+
+  it("paints each hinge in its own card's colour, escaped for the attribute", () => {
+    const tinted = (color: string, group: number): PhysicalCard[] =>
+      notes(2).map((c) => ({ ...c, group, hingeColor: color }));
+    const { pages, grid } = composePages(
+      deck({
+        cards: [...tinted("#ff0000", 0), ...tinted('red" onload="x', 1)],
+        fold: "strip",
+        foldGap: 1.5,
+      })
+    );
+    expect(pages[0]!.hinges.map((h) => h.color)).toEqual(["#ff0000", 'red" onload="x']);
+    const svg = cutMarksSvg(pages[0]!, grid, {});
+    expect(svg).toContain('fill="#ff0000"/>');
+    expect(svg).toContain('fill="red&quot; onload=&quot;x"/>');
+  });
+
+  it("prints a hinge behind itself on the back page where its card asks for both sides", () => {
+    const both = notes(2).map((c) => ({ ...c, hingeSides: "both" as const }));
+    const long = composePages(deck({ cards: both, fold: "strip", foldGap: 3 }));
+    expect(long.pages[0]!.hinges.map((h) => h.x)).toEqual([68.5]);
+    // 140 − 68.5 − 3: the strip lands behind itself, between the panels' backs.
+    expect(long.pages[1]!.hinges).toEqual([
+      { x: 68.5, y: 8, width: 3, height: 88, color: "#cccccc" },
+    ]);
+    const short = composePages(
+      deck({ cards: both, fold: "strip", foldGap: 3, duplexFlip: "short-edge" })
+    );
+    expect(short.pages[1]!.hinges.map((h) => [h.x, h.y])).toEqual([[68.5, 184]]);
+    // A card that says nothing keeps its back clean.
+    expect(
+      composePages(deck({ cards: notes(2), fold: "strip", foldGap: 3 })).pages[1]!.hinges
+    ).toEqual([]);
+  });
+
+  it("puts uneven hinges behind themselves too", () => {
+    const both = notes(3).map((c) => ({ ...c, hingeSides: "both" as const }));
+    const { pages } = composePages(
+      deck({
+        cards: both,
+        fold: "cover",
+        foldGap: 1.5,
+        foldGapOuter: 2.5,
+        paperSize: paper("200 x 88"),
+      })
+    );
+    // Front hinges at 66.5 (1.5) and 131 (2.5); behind them at 200 − x − width.
+    expect(pages[1]!.hinges.map((h) => [h.x, h.width])).toEqual([
+      [132, 1.5],
+      [66.5, 2.5],
+    ]);
   });
 });
