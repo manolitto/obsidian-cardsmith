@@ -1,5 +1,5 @@
 Wildfire-Storm · 2 cards · 4 faces · clipped: no
-1. front [cs-overflow-active cs-layout-default cs-front-first cs-front-has-next] scale 0.73
+1. front [cs-overflow-active cs-layout-default cs-front-first cs-front-has-next] scale 0.70
    p.ff-subtitle "Level 3 Evocation (Druid, Sorcerer)"
    div.ff-block.ff-spell-lines
      p.ff-line "Casting Time: Action"
@@ -12,14 +12,16 @@ Wildfire-Storm · 2 cards · 4 faces · clipped: no
      p "Spreading Flames. At the end of …"
      p "Fanning the Fire. As a Bonus …"
      p "Smoke and Heat. A creature that …"
-2. back [cs-layout-default cs-overflow-active] scale —
-3. front [cs-overflow-active cs-layout-default cs-front-continued] scale 0.73
-   div.ff-text.cs-split-continuation
      p "Feeding the Storm. When a creature …"
+2. back [cs-layout-default cs-overflow-active] scale —
+3. front [cs-overflow-active cs-layout-default cs-front-continued] scale 0.70
+   div.ff-text.cs-split-continuation
      p "Calling the Storm Down. As a …"
      p "Sheltering. A creature that has Total …"
      p "Embers on the Wind. Whenever a …"
      p "Rain. Heavy rain or a body …"
+     p "The Eye of the Storm. You …"
+     p "Smouldering Ground. A creature that ends …"
      p "Ashfall. When the spell ends, the …"
      ul (3 items) "Plants there are burnt away and …"
    p.ff-entry "Using a Higher-Level Spell Slot The …"
