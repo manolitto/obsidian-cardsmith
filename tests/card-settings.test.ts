@@ -20,13 +20,14 @@ describe("the card-setting chain", () => {
       "hinge: { gap: 0.5, outer-gap: 1, color: tan, sides: both }",
       "{}",
       "hinge: { gap: 1.5 }",
-      'hinge: { color: "#336699" }',
+      'hinge: { color: "#336699", cut-out: true }',
     ]);
     expect(settings.hinge).toEqual({
       gap: 1.5,
       outerGap: 1,
       color: "#336699",
       sides: "both",
+      cutOut: true,
     });
   });
 
@@ -36,12 +37,13 @@ describe("the card-setting chain", () => {
       "hinge: { gap: -2 }",
       "hinge: { sides: back }",
       "hinge: { width: 2 }",
+      "hinge: { cut-out: maybe }",
     ]) {
       expect(resolve(["hinge: { gap: 0.5 }", bad], diagnostics).hinge).toEqual({
         gap: 0.5,
       });
     }
-    expect(diagnostics.matching("hinge")).toHaveLength(3);
+    expect(diagnostics.matching("hinge")).toHaveLength(4);
   });
 
   it("lets every layer set every key, highest wins, values typed", () => {

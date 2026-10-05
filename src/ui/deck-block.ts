@@ -2,22 +2,15 @@ import { Platform, TFile, type App, type MarkdownPostProcessorContext } from "ob
 import { parseDeckBlock } from "../deck/block";
 import { selectNotes } from "../deck/select";
 import { listDeckNotes, type DeckSource } from "../deck/source";
-import {
-  cardSettingEntries,
-  type LayoutDecision,
-  type LayoutCandidate,
-} from "../definitions/card-settings";
-import {
-  deckSettingEntries,
-  type CardCopies,
-  type CutMarks,
-} from "../definitions/deck-settings";
+import { cardSettingEntries } from "../definitions/card-settings";
+import { deckSettingEntries } from "../definitions/deck-settings";
 import { collectDiagnostics } from "../definitions/diagnostics";
 import type { BuiltDeck, DeckExporter, ExportFormat } from "../export/exporter";
 import type { PaperSize } from "../model/paper-size";
 import { noteCardTypeId } from "../render/card";
 import type { LoadedSystem } from "../systems/loader";
 import { notice, runExport } from "./export-run";
+import { settingText } from "./setting-text";
 import { t, type StringKey } from "./strings";
 
 /*
@@ -121,6 +114,8 @@ export function deckBlockProcessor(context: DeckBlockContext) {
       }
       row("deck.card-size", [...sizes].join(", "));
       if (cardLayer.side) row("deck.sides", t(`deck.sides.${cardLayer.side}`));
+      if (deckLayer.fold) row("deck.fold", deckLayer.fold);
+      if (cardLayer.hinge) row("deck.hinge", settingText("hinge", cardLayer.hinge));
       for (const [key, value] of [
         ...deckSettingEntries(deckLayer),
         ...cardSettingEntries(cardLayer),
@@ -182,33 +177,14 @@ export function deckBlockProcessor(context: DeckBlockContext) {
 }
 
 /** The settings with a row of their own above; the rest are listed by key. */
-const SHOWN_ABOVE = new Set(["paper-size", "folder-recursive", "card-size", "side"]);
-
-/** A setting's value in the block's own words: `short-edge`, `Beil × 3`, `enabled: false`. */
-function settingText(key: string, value: unknown): string {
-  switch (key) {
-    case "page-margin":
-      return `${String(value)} mm`;
-    case "display-height":
-      return `${String(value)} px`;
-    case "cut-marks":
-      return Object.entries(value as CutMarks)
-        .map(([field, v]) => `${field}: ${String(v)}`)
-        .join(", ");
-    case "card-copies":
-      return (value as CardCopies[])
-        .map(({ name, copies }) => `${name} × ${copies}`)
-        .join(", ");
-    case "layouts":
-      return (value as LayoutCandidate[]).map(({ name }) => name).join(", ");
-    case "layout-decision":
-      return (value as LayoutDecision).order
-        .map(({ metric, direction }) => `${metric} ${direction}`)
-        .join(", ");
-    default:
-      return String(value);
-  }
-}
+const SHOWN_ABOVE = new Set([
+  "paper-size",
+  "folder-recursive",
+  "card-size",
+  "side",
+  "fold",
+  "hinge",
+]);
 
 /** "24 notes — 20 gear, 4 npc", or that none matches. */
 function breakdown(cardTypes: readonly string[]): string {

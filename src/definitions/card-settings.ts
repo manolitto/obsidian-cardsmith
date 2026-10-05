@@ -77,6 +77,12 @@ export interface Hinge {
   color?: string;
   /** The front of the sheet only, or behind itself on the back as well. */
   sides?: "front" | "both";
+  /**
+   * Whether the strip is cut out — for a laminated card, whose film seals
+   * in the slot — or stays as the fold's spine. Staying, the fold is one
+   * piece of paper: no cut marks along the strip, a fold mark at each edge.
+   */
+  cutOut?: boolean;
 }
 
 /**
@@ -161,7 +167,7 @@ export function mergeCardSettings(
 
 // ── Hinge ───────────────────────────────────────────────────────────
 
-/** `{ gap, outer-gap, color, sides }`, any of them; an unknown or invalid field refuses the layer, as `cut-marks` does. */
+/** `{ gap, outer-gap, color, sides, cut-out }`, any of them; an unknown or invalid field refuses the layer, as `cut-marks` does. */
 function parseHinge(raw: unknown): Hinge | undefined {
   if (!isMapping(raw)) return undefined;
   const out: Hinge = {};
@@ -178,6 +184,12 @@ function parseHinge(raw: unknown): Hinge | undefined {
         const v = nonEmptyString(value);
         if (v === undefined) return undefined;
         out.color = v;
+        break;
+      }
+      case "cut-out": {
+        const v = booleanValue(value);
+        if (v === undefined) return undefined;
+        out.cutOut = v;
         break;
       }
       case "sides": {
