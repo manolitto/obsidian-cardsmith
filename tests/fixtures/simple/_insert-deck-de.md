@@ -74,8 +74,8 @@ card-type: simple
 # Eine Karte je Wert des Würfelbereichs zwischen `roll-min` und `roll-max` drucken.
 # expand-by-roll: false
 
-# Wo ein Deck die Karte faltet, der Streifen zwischen zwei Teilen: `{ gap: 1.5, outer-gap: 2.5, color: '#cccccc', sides: front, cut-out: true }`. `gap` 0 falzt ohne Streifen; `cut-out: true` für eine laminierte Karte. Die Felder verschmelzen, eines lässt sich allein ändern.
-# hinge: {gap: 0, color: '#cccccc', sides: front, cut-out: false}
+# Wo ein Deck die Karte faltet, der Streifen zwischen zwei Teilen: `{ gap: 1.5, outer-gap: 2.5, color: '#ffffff', sides: front, cut-out: true }`. `gap` 0 falzt ohne Streifen; `cut-out: true` für eine laminierte Karte. Die Felder verschmelzen, eines lässt sich allein ändern.
+# hinge: {gap: 0, color: '#ffffff', sides: front, cut-out: false}
 
 # Die Sprache, in der die Karte gedruckt wird — aus welcher Übersetzungstabelle ihre Beschriftungen kommen.
 # language:

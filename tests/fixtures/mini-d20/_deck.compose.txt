@@ -19,7 +19,7 @@
    back #7 at 136.5, 192.5 equipment/Heiltrank
    back #8 at 73.5, 192.5 equipment/Kurzschwert
    back #9 at 10.5, 192.5 quirk/Eigenheit-07
-3. front · 16 marks
+3. front · 12 marks
    front #10 at 10.5, 16.5 generic/Hausregel
-4. back · 16 marks
+4. back · 12 marks
    back #10 at 136.5, 16.5 generic/Hausregel

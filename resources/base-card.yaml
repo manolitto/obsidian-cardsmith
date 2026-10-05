@@ -126,7 +126,8 @@ expand-by-roll: false
 #              not laminated, 0.5 is plenty.
 #   outer-gap  millimetres of a `cover`'s outer hinge, which goes round three
 #              panels or more folded inside it. Absent: `gap`.
-#   color      the strip's colour, any CSS colour.
+#   color      the strip's colour, any CSS colour; white, the paper's own,
+#              unless a system, card type, deck or note says otherwise.
 #   sides      `front`, the side a knife works from, or `both`, behind itself
 #              on the back of the sheet as well.
 #   cut-out    `true` for a laminated card: the strip is cut out and the film
@@ -134,7 +135,7 @@ expand-by-roll: false
 #              the fold's spine, with a fold mark at each edge.
 hinge:
   gap: 0
-  color: "#cccccc"
+  color: "#ffffff"
   sides: front
   cut-out: false
 

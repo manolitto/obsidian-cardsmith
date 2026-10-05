@@ -59,7 +59,7 @@
    back #25 at 136.5, 192.5 adversary/schreckenswolf
    back #26 at 73.5, 192.5 environment/abandoned-grove
    back #27 at 10.5, 192.5 environment/ambushed
-7. front · 16 marks
+7. front · 12 marks
    front #28 at 10.5, 16.5 environment/hinterhalt
-8. back · 16 marks
+8. back · 12 marks
    back #28 at 136.5, 16.5 environment/hinterhalt
