@@ -127,6 +127,15 @@ hinge-color: "#cccccc"
 # or `both`, behind itself on the back of the sheet as well.
 hinge-sides: front
 
+# Millimetres between the panels of a fold, where a deck folds the card:
+# a strip — a hinge — rather than a crease. Cut the strips out and laminate
+# the whole sheet, and the film seals there and folds easily (1.5 suits a
+# single fold); or leave them standing on paper that is not laminated (half a
+# millimetre is plenty). A `cover` of three panels or more may give its outer
+# hinge, which goes round the panels folded inside, a width of its own:
+# `fold-gap-outer`. 0 folds along a crease. A system may set its own.
+fold-gap: 0
+
 # ── Deck settings ────────────────────────────────────────────────────
 
 # Paper the deck is imposed on. A sheet (`A4`, `Letter`, …), a card size
@@ -155,14 +164,6 @@ duplex-flip: long-edge
 # `booklet`: sheets of two cards, nested and folded down the middle like a
 # printer's booklet. `off` cuts every card out.
 fold: off
-
-# Millimetres between the panels of a fold, printed as a grey strip — a
-# hinge: cut the strips out, laminate the whole sheet, and the film seals to
-# itself there and folds easily. 1.5 suits a single fold. A `cover` of three
-# panels or more may give its outer hinge, which goes round the panels folded
-# inside, a width of its own: `fold-gap-outer`. 0 folds along a crease, as for
-# a card that is not laminated.
-fold-gap: 0
 
 # Alignment marks at each card's outer corners; a page that holds a single
 # card gets none. The fields merge across layers, so a deck can change the

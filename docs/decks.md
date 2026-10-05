@@ -92,8 +92,6 @@ consecutively.
 | `cut-marks` | `{enabled: true, length: 3, margin: 0, color: '#aaaaaa', weight: 0.25}` — a cross at every card corner, its arms along the cuts and `margin` mm clear of the corner, printed over the cards. An arm on a card is `length` mm long; an arm that leaves the block of cards runs on to the paper's edge, so a guillotine can be set against it. The fields merge, so one can change alone. A page that holds a single card gets none. |
 | `duplex-flip` | Which edge is the binding when printing duplex, `long-edge` or `short-edge`, so a back lands behind its front. |
 | `fold` | `off` (default), `strip`, `cover` or `booklet`: a note's cards printed side by side, uncut, and folded instead of cut apart — see *Folded cards*. |
-| `fold-gap` | Millimetres between the panels of a fold, so that a folded card can be laminated with a hinge — see *Laminating a folded card*. Default `0`, a crease. |
-| `fold-gap-outer` | Millimetres of a `cover`'s outer hinge, between the cover and the last page, where three panels or more fold inside it. Default: `fold-gap`. |
 | `paper-background` | `textured` prints the system's background pictures, `plain` leaves them out. Default: the plugin setting. |
 
 The cards are packed without gaps on one grid and centred inside the
@@ -194,6 +192,18 @@ stand 1.5 mm apart and the gap between them is printed as a grey strip.
 1.5 mm has proved itself for a single fold on 120 g paper in 80 µm film;
 thicker paper or film wants a little more, and thin film folds more easily
 than thick.
+
+**A strip on paper that is not laminated.** The strips may also be left
+standing: then the strip is the spine of the folded card, and half a
+millimetre (`fold-gap: 0.5`, `fold-gap-outer: 1`) lets 120 g paper fold
+flat without cracking the print at the edge — score along both edges of
+the strip first. Print the strip in the card's own colour on both sides
+(`hinge-color`, `hinge-sides: both`) and the fold reads as one card.
+
+`fold-gap` — and everything below about hinges — are card settings, not
+the deck's: a system or a card type may set the widths its paper wants, a
+deck block or a note may override them, and every fold takes them from its
+own card.
 
 A `cover` of three panels or more folds its cover round the rest, which
 folds accordion-wise inside it — so its outer hinge, between the cover and

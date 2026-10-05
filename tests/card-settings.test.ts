@@ -14,6 +14,16 @@ const resolve = (sources: string[], diagnostics = collectDiagnostics()) =>
   mergeCardSettings(sources.map((source) => layer(source, diagnostics)));
 
 describe("the card-setting chain", () => {
+  it("reads the fold gaps in millimetres, a negative one keeping the layer below", () => {
+    const diagnostics = collectDiagnostics();
+    expect(resolve(["fold-gap: 0", "fold-gap: 0.5\nfold-gap-outer: 1"])).toMatchObject({
+      foldGap: 0.5,
+      foldGapOuter: 1,
+    });
+    expect(resolve(["fold-gap: 0", "fold-gap: -2"], diagnostics).foldGap).toBe(0);
+    expect(diagnostics.matching("fold-gap")).toHaveLength(1);
+  });
+
   it("resolves the hinge colour like any other key: system, card type, deck, note", () => {
     const chain = [
       'hinge-color: "#cccccc"',
