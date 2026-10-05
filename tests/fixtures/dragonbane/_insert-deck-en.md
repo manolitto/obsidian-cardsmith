@@ -74,17 +74,8 @@ card-type: [gear, creature]
 # Print one card per value of the roll range between `roll-min` and `roll-max`.
 # expand-by-roll: false
 
-# The colour of the strip printed for a hinge, where the card folds with a gap. Any CSS colour.
-# hinge-color: '#cccccc'
-
-# Where a hinge strip is printed: `front` (the side you cut from) or `both`, behind itself on the back too.
-# hinge-sides: front
-
-# Millimetres between the panels of a fold, printed as a grey strip: a hinge to cut out before laminating. 1.5 suits a single fold, 0 folds along a crease.
-# fold-gap: 0
-
-# Millimetres of a `cover`'s outer hinge, between the cover and the last page, where three panels or more fold inside it. Default: `fold-gap`.
-# fold-gap-outer:
+# Where a deck folds the card, the strip between two panels: `{ gap: 1.5, outer-gap: 2.5, color: '#cccccc', sides: front }`. `gap` 0 folds along a crease; the fields merge, so one can change alone.
+# hinge: {gap: 0, color: '#cccccc', sides: front}
 
 # The language the card is printed in — which translation table its captions come from.
 # language:

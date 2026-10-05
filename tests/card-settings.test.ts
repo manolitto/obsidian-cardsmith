@@ -14,33 +14,34 @@ const resolve = (sources: string[], diagnostics = collectDiagnostics()) =>
   mergeCardSettings(sources.map((source) => layer(source, diagnostics)));
 
 describe("the card-setting chain", () => {
-  it("reads the fold gaps in millimetres, a negative one keeping the layer below", () => {
-    const diagnostics = collectDiagnostics();
-    expect(resolve(["fold-gap: 0", "fold-gap: 0.5\nfold-gap-outer: 1"])).toMatchObject({
-      foldGap: 0.5,
-      foldGapOuter: 1,
+  it("merges the hinge field by field: system, card type, deck, note", () => {
+    const settings = resolve([
+      'hinge: { gap: 0, color: "#cccccc", sides: front }',
+      "hinge: { gap: 0.5, outer-gap: 1, color: tan, sides: both }",
+      "{}",
+      "hinge: { gap: 1.5 }",
+      'hinge: { color: "#336699" }',
+    ]);
+    expect(settings.hinge).toEqual({
+      gap: 1.5,
+      outerGap: 1,
+      color: "#336699",
+      sides: "both",
     });
-    expect(resolve(["fold-gap: 0", "fold-gap: -2"], diagnostics).foldGap).toBe(0);
-    expect(diagnostics.matching("fold-gap")).toHaveLength(1);
   });
 
-  it("resolves the hinge colour like any other key: system, card type, deck, note", () => {
-    const chain = [
-      'hinge-color: "#cccccc"',
-      "hinge-color: tan",
-      "{}",
-      'hinge-color: "#336699"',
-      "{}",
-    ];
-    expect(resolve(chain).hingeColor).toBe("#336699");
-    expect(resolve(chain.slice(0, 2)).hingeColor).toBe("tan");
-    expect(resolve([...chain.slice(0, 4), "hinge-color: red"]).hingeColor).toBe("red");
+  it("refuses a hinge with a field it does not know or cannot read, keeping the layer below", () => {
     const diagnostics = collectDiagnostics();
-    expect(resolve(["hinge-sides: front", "hinge-sides: both"]).hingeSides).toBe("both");
-    expect(
-      resolve(["hinge-sides: front", "hinge-sides: back"], diagnostics).hingeSides
-    ).toBe("front");
-    expect(diagnostics.matching("hinge-sides")).toHaveLength(1);
+    for (const bad of [
+      "hinge: { gap: -2 }",
+      "hinge: { sides: back }",
+      "hinge: { width: 2 }",
+    ]) {
+      expect(resolve(["hinge: { gap: 0.5 }", bad], diagnostics).hinge).toEqual({
+        gap: 0.5,
+      });
+    }
+    expect(diagnostics.matching("hinge")).toHaveLength(3);
   });
 
   it("lets every layer set every key, highest wins, values typed", () => {

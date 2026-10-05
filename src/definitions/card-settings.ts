@@ -49,21 +49,12 @@ export interface CardSettings {
   /** Print one card per value of the roll range — a property of the kind of card. */
   expandByRoll?: boolean;
   /**
-   * The colour a hinge is printed in, where this card folds with a gap — a
-   * CSS colour. A card setting rather than the deck's: every hinge belongs
-   * to one card, so a system or a card type may give its own.
+   * Where the deck folds this card: the strip between its panels. A card
+   * setting rather than the deck's — every hinge belongs to one card, so a
+   * system may set what its paper wants — and a mapping whose fields merge
+   * across the layers, so a deck can change one of them alone.
    */
-  hingeColor?: string;
-  /** Whether a hinge is printed on the front of the sheet only, or behind it on the back as well. */
-  hingeSides?: HingeSides;
-  /**
-   * Millimetres between the panels of a fold, where the deck folds this card:
-   * a strip — a hinge — rather than a crease. A card setting, so that a
-   * system may set the width its paper wants; 0 folds along a crease.
-   */
-  foldGap?: number;
-  /** Millimetres of a `cover`'s outer hinge, where three panels or more fold inside it; absent, `foldGap`, which it needs. */
-  foldGapOuter?: number;
+  hinge?: Hinge;
   /**
    * The language the card is printed in — which translation table captions
    * come from, and the `lang` its root carries. A setting rather than a
@@ -76,7 +67,17 @@ export interface CardSettings {
 
 export type OverflowMode = "none" | "extra-cards" | "back-then-cards";
 export type CardSide = "front" | "back" | "both";
-export type HingeSides = "front" | "both";
+/** Every field optional, because the chain merges them field by field. */
+export interface Hinge {
+  /** Millimetres between two panels of a fold; 0 folds along a crease. */
+  gap?: number;
+  /** Millimetres of a `cover`'s outer hinge, where three panels or more fold inside it; absent, `gap`, which it needs. */
+  outerGap?: number;
+  /** A CSS colour. */
+  color?: string;
+  /** The front of the sheet only, or behind itself on the back as well. */
+  sides?: "front" | "both";
+}
 
 /**
  * One way of laying a card out. The layout engine produces every candidate,
@@ -123,10 +124,11 @@ const CARD_SETTINGS: SettingTable<CardSettings> = {
   displayHeight: { key: "display-height", parse: positiveNumber },
   copies: { key: "copies", parse: positiveInteger },
   expandByRoll: { key: "expand-by-roll", parse: booleanValue },
-  hingeColor: { key: "hinge-color", parse: nonEmptyString },
-  hingeSides: { key: "hinge-sides", parse: oneOf(["front", "both"]) },
-  foldGap: { key: "fold-gap", parse: nonNegativeNumber },
-  foldGapOuter: { key: "fold-gap-outer", parse: nonNegativeNumber },
+  hinge: {
+    key: "hinge",
+    parse: parseHinge,
+    merge: (base, layer) => ({ ...base, ...layer }),
+  },
   language: { key: "language", parse: languageCode },
 };
 
@@ -155,6 +157,40 @@ export function mergeCardSettings(
   layers: readonly (CardSettings | undefined)[]
 ): CardSettings {
   return mergeSettings(CARD_SETTINGS, layers);
+}
+
+// ── Hinge ───────────────────────────────────────────────────────────
+
+/** `{ gap, outer-gap, color, sides }`, any of them; an unknown or invalid field refuses the layer, as `cut-marks` does. */
+function parseHinge(raw: unknown): Hinge | undefined {
+  if (!isMapping(raw)) return undefined;
+  const out: Hinge = {};
+  for (const [key, value] of Object.entries(raw)) {
+    switch (key) {
+      case "gap":
+      case "outer-gap": {
+        const v = nonNegativeNumber(value);
+        if (v === undefined) return undefined;
+        out[key === "gap" ? "gap" : "outerGap"] = v;
+        break;
+      }
+      case "color": {
+        const v = nonEmptyString(value);
+        if (v === undefined) return undefined;
+        out.color = v;
+        break;
+      }
+      case "sides": {
+        const v = oneOf(["front", "both"] as const)(value);
+        if (v === undefined) return undefined;
+        out.sides = v;
+        break;
+      }
+      default:
+        return undefined;
+    }
+  }
+  return out;
 }
 
 // ── Layout candidates ───────────────────────────────────────────────

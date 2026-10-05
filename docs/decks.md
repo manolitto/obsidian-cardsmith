@@ -177,11 +177,29 @@ A folded card is two or more layers of paper, back to back, so the front
 and back of a duplex print have to meet more exactly than for a card
 that is cut out: print a test sheet first.
 
-### Laminating a folded card
+### Hinges: laminating, or a fold on plain paper
 
 Laminated along a crease, paper and film fold stiffly and the card springs
-open. A **hinge** folds instead: with `fold-gap: 1.5`, the panels of a fold
-stand 1.5 mm apart and the gap between them is printed as a grey strip.
+open. A **hinge** folds instead: a strip between the panels of a fold,
+which the card's `hinge` setting describes.
+
+```yaml
+fold: cover
+hinge:
+  gap: 1.5          # millimetres between two panels; 0 folds along a crease
+  outer-gap: 2.5    # a cover's outer hinge, see below; default: gap
+  color: "#cccccc"  # the strip's colour, any CSS colour
+  sides: front      # front, or both: behind itself on the back too
+```
+
+`hinge` is a card setting, not the deck's: a system or a card type may set
+what its paper wants, a deck block or a note may override it, and every
+fold takes it from its own card. Its fields merge across those layers, so
+a deck block that writes `hinge: { gap: 1.5 }` keeps the system's colour
+and sides.
+
+**Laminated.** With `gap: 1.5` the panels stand 1.5 mm apart and the gap
+between them is printed as a grey strip.
 
 1. Cut the grey strips out with a craft knife, along the cut marks either
    side. Cut nothing else — the sheet stays in one piece.
@@ -193,49 +211,25 @@ stand 1.5 mm apart and the gap between them is printed as a grey strip.
 thicker paper or film wants a little more, and thin film folds more easily
 than thick.
 
-**A strip on paper that is not laminated.** The strips may also be left
-standing: then the strip is the spine of the folded card, and half a
-millimetre (`fold-gap: 0.5`, `fold-gap-outer: 1`) lets 120 g paper fold
-flat without cracking the print at the edge — score along both edges of
-the strip first. Print the strip in the card's own colour on both sides
-(`hinge-color`, `hinge-sides: both`) and the fold reads as one card.
+**Not laminated.** The strips may also be left standing: then the strip is
+the spine of the folded card, and half a millimetre
+(`hinge: { gap: 0.5, outer-gap: 1 }`) lets 120 g paper fold flat without
+cracking the print at the edge — score along both edges of the strip
+first. Print the strip in the card's own colour on both sides
+(`color: "#d9c5a8"`, `sides: both` for a parchment card) and the fold reads
+as one card.
 
-`fold-gap` — and everything below about hinges — are card settings, not
-the deck's: a system or a card type may set the widths its paper wants, a
-deck block or a note may override them, and every fold takes them from its
-own card.
-
-A `cover` of three panels or more folds its cover round the rest, which
-folds accordion-wise inside it — so its outer hinge, between the cover and
-the last page, goes round a stack. Give it a width of its own:
-
-```yaml
-fold: cover
-fold-gap: 1.5
-fold-gap-outer: 2.5
-```
-
-A greeting card, a `strip` and a `booklet` fold nothing inside a hinge and
-use `fold-gap` throughout.
+**A cover's outer hinge.** A `cover` of three panels or more folds its
+cover round the rest, which folds accordion-wise inside it — so its outer
+hinge, between the cover and the last page, goes round a stack and wants
+more room: `outer-gap`. A greeting card, a `strip` and a `booklet` fold
+nothing inside a hinge and use `gap` throughout.
 
 Only a fold has gaps: separate cards stand edge to edge, as without a
 fold. A row is laid out by the millimetre, so a row with a fold and its
 hinges may hold one card fewer than a row of single cards — and the
 vertical cuts of two rows need not line up, which is why the rows are cut
-apart first. The grey strips are printed even with the cut marks off.
-
-Two card settings shape the strips, so a system or a card type may give
-its folds a look of its own, and a deck block or a single note may
-override it:
-
-- `hinge-color` — light grey unless something says otherwise; any CSS
-  colour: `"#e8d9b5"` for a strip that disappears against a
-  parchment-coloured card edge, or a strong colour that is easy to see
-  while cutting.
-- `hinge-sides` — `front` (the default), the side you cut from, or `both`,
-  which prints the strip behind itself on the back of the sheet too, for a
-  hinge that is coloured through when it is not cut out, or when a sliver
-  is left at its edge.
+apart first. The strips are printed even with the cut marks off.
 
 ## The block in reading view
 

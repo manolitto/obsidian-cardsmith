@@ -118,23 +118,21 @@ side: both
 # `true` once; every other card is printed as it is.
 expand-by-roll: false
 
-# The colour of the strip printed for a hinge — the gap to cut out between
-# the panels of a fold, when a deck folds with a `fold-gap`. Any CSS colour;
-# a system, a card type, a deck or a note may give its own.
-hinge-color: "#cccccc"
-
-# Where the hinge strip is printed: `front`, the side the knife works from,
-# or `both`, behind itself on the back of the sheet as well.
-hinge-sides: front
-
-# Millimetres between the panels of a fold, where a deck folds the card:
-# a strip — a hinge — rather than a crease. Cut the strips out and laminate
-# the whole sheet, and the film seals there and folds easily (1.5 suits a
-# single fold); or leave them standing on paper that is not laminated (half a
-# millimetre is plenty). A `cover` of three panels or more may give its outer
-# hinge, which goes round the panels folded inside, a width of its own:
-# `fold-gap-outer`. 0 folds along a crease. A system may set its own.
-fold-gap: 0
+# Where a deck folds the card (`fold:` in its block), the strip between two
+# panels — a hinge — rather than a crease. The fields merge across layers, so
+# a deck can change one alone:
+#   gap        millimetres between two panels; 0 folds along a crease. Cut out
+#              and laminated, 1.5 folds well; left standing on paper that is
+#              not laminated, 0.5 is plenty.
+#   outer-gap  millimetres of a `cover`'s outer hinge, which goes round three
+#              panels or more folded inside it. Absent: `gap`.
+#   color      the strip's colour, any CSS colour.
+#   sides      `front`, the side a knife works from, or `both`, behind itself
+#              on the back of the sheet as well.
+hinge:
+  gap: 0
+  color: "#cccccc"
+  sides: front
 
 # ── Deck settings ────────────────────────────────────────────────────
 
