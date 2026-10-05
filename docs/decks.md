@@ -188,7 +188,7 @@ fold: cover
 hinge:
   gap: 1.5          # millimetres between two panels; 0 folds along a crease
   outer-gap: 2.5    # a cover's outer hinge, see below; default: gap
-  color: "#cccccc"  # the strip's colour, any CSS colour
+  color: "#ffffff"  # the strip's colour, any CSS colour; white unless set
   sides: front      # front, or both: behind itself on the back too
   cut-out: false    # true: the strip is cut out, for a laminated card
 ```
@@ -200,10 +200,11 @@ a deck block that writes `hinge: { gap: 1.5 }` keeps the system's colour
 and sides.
 
 **Laminated.** With `gap: 1.5` and `cut-out: true` the panels stand
-1.5 mm apart, the gap between them is printed as a grey strip, and cut
+1.5 mm apart, the gap between them is printed as a strip — white unless
+`color` says otherwise, so give it a colour that shows where to cut — and cut
 marks stand at both its edges.
 
-1. Cut the grey strips out with a craft knife, along the cut marks either
+1. Cut the strips out with a craft knife, along the cut marks either
    side. Cut nothing else — the sheet stays in one piece.
 2. Laminate the whole sheet. Where a strip was, the film seals to itself.
 3. Cut the rows apart, then the cards out of each row. Each fold now bends

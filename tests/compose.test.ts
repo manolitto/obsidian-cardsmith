@@ -256,16 +256,16 @@ describe("cut marks", () => {
       deck({ cards: cards(1), cutMarks: { enabled: true, length: 4, margin: 1 } })
     );
     const front = pages[0]!.marks;
-    expect(front).toHaveLength(4 * 4);
+    // Four corners; no arm runs on below the card or to its right, where no
+    // other card is cut: 4 × 4 arms less the two down and the two right.
+    expect(front).toHaveLength(4 * 4 - 4);
     expect(front.find((l) => l.x1 === 7 && l.y2 === 8 - 1)).toMatchObject({ y1: 0 });
     expect(front.find((l) => l.x1 === 7 && l.y1 === 8 + 1)).toMatchObject({ y2: 8 + 5 });
-    // The card's lower corners sit inside the block: their arms are `length` long both ways.
+    // A lower corner inside the block: its arm runs up the card's own edge, not down.
     expect(front.find((l) => l.x1 === 7 && l.y2 === 96 - 1)).toMatchObject({
       y1: 96 - 5,
     });
-    expect(front.find((l) => l.x1 === 7 && l.y1 === 96 + 1)).toMatchObject({
-      y2: 96 + 5,
-    });
+    expect(front.find((l) => l.x1 === 7 && l.y1 === 96 + 1)).toBeUndefined();
     // The one card's back sits in the other column, and its marks with it.
     const back = pages[1]!.marks;
     const xs = [...new Set(back.filter((l) => l.x1 === l.x2).map((l) => l.x1))];
@@ -279,7 +279,7 @@ describe("cut marks", () => {
 
     const last = composePages(deck({ cards: cards(7) })).pages.at(-1)!;
     expect(last.cells).toHaveLength(1);
-    expect(last.marks).toHaveLength(16);
+    expect(last.marks).toHaveLength(12);
   });
 
   it("draw no outward arm where the block is flush with the paper's edge", () => {
@@ -331,10 +331,10 @@ describe("compositionText", () => {
     expect(compositionText(pages, grid)).toBe(
       [
         "2 pages · 140 × 280 mm · 2 × 3 of 63 × 88 mm at 7, 8",
-        "1. front · 24 marks",
+        "1. front · 21 marks",
         "   front #1 at 7, 8 gear/Card 1",
         "   front #2 at 70, 8 gear/Card 1",
-        "2. back · 24 marks",
+        "2. back · 21 marks",
         "   back #1 at 70, 8 (empty) gear/Card 1",
         "   back #2 at 7, 8 gear/Card 1",
         "",
@@ -505,8 +505,9 @@ describe("folding", () => {
   it("marks a fold's corners, not its crease, and puts a dashed fold mark where the crease meets the block's edge", () => {
     const { pages } = composePages(deck({ cards: notes(2), fold: "strip" }));
     const { marks, folds } = pages[0]!;
-    // One piece of paper: four corners, four arms each, nothing at the crease.
-    expect(marks).toHaveLength(16);
+    // One piece of paper: four corners, nothing at the crease, and no arm down
+    // from its lower corners, where no card follows.
+    expect(marks).toHaveLength(14);
     expect(marks.some((l) => l.x1 === 70 || l.x2 === 70)).toBe(false);
     // Up to the paper's edge at the block's top; its foot ends against the next
     // row's cards, and a mark there would lie on them.
@@ -540,7 +541,7 @@ describe("folding", () => {
     expect(cutMarksSvg({ ...pages[0]!, marks: [] }, grid, {})).toContain("cs-fold-marks");
     expect(compositionText(pages, grid).split("\n").slice(0, 4)).toEqual([
       "2 pages · 140 × 280 mm · 2 × 3 of 63 × 88 mm at 7, 8",
-      "1. front · 16 marks · 1 fold marks",
+      "1. front · 14 marks · 1 fold marks",
       "   front #1 at 7, 8 panel 1/2 gear/A",
       "   front #2 at 70, 8 panel 2/2 gear/A",
     ]);
@@ -596,7 +597,7 @@ describe("fold gaps", () => {
   it("prints a hinge between the panels of one fold, on the front page only", () => {
     const { pages } = hinged();
     expect(pages[0]!.hinges).toEqual([
-      { x: 68.5, y: 8, width: 3, height: 88, color: "#cccccc" },
+      { x: 68.5, y: 8, width: 3, height: 88, color: "#ffffff" },
     ]);
     expect(pages[1]!.hinges).toEqual([]);
     // Two single cards side by side: the gap between them is paper, cut through later.
@@ -620,7 +621,7 @@ describe("fold gaps", () => {
     expect(pages[0]!.marks).toEqual([]);
     // Half a millimetre under the cards either side, so no seam of white shows.
     expect(hingesSvg(pages[0]!, grid)).toContain(
-      '<rect x="68" y="8" width="4" height="88" fill="#cccccc"/>'
+      '<rect x="68" y="8" width="4" height="88" fill="#ffffff"/>'
     );
     expect(cutMarksSvg(pages[0]!, grid, { enabled: false })).toBe("");
   });
@@ -637,7 +638,7 @@ describe("fold gaps", () => {
     const { pages, grid } = hinged();
     expect(compositionText(pages, grid).split("\n").slice(0, 2)).toEqual([
       "2 pages · 140 × 280 mm · 2 × 3 of 63 × 88 mm at 5.5, 8",
-      "1. front · 32 marks · 1 hinge (3 mm)",
+      "1. front · 28 marks · 1 hinge (3 mm)",
     ]);
   });
 
@@ -649,8 +650,8 @@ describe("fold gaps", () => {
     // 189 + 1.5 + 2.5 = 193 mm, centred on 200: 5, 6 | 1 with the wide hinge before the cover.
     expect(faces(pages[0]!)).toEqual(["A3f@3.5,0", "A3b@68,0", "A1f@133.5,0"]);
     expect(pages[0]!.hinges).toEqual([
-      { x: 66.5, y: 0, width: 1.5, height: 88, color: "#cccccc" },
-      { x: 131, y: 0, width: 2.5, height: 88, color: "#cccccc" },
+      { x: 66.5, y: 0, width: 1.5, height: 88, color: "#ffffff" },
+      { x: 131, y: 0, width: 2.5, height: 88, color: "#ffffff" },
     ]);
     // Behind each panel, mirrored about the paper's centre — the hinges are uneven, so the
     // middle panel's back lands a millimetre off its front's x, and exactly behind it.
@@ -706,7 +707,7 @@ describe("fold gaps", () => {
     expect(long.pages[0]!.hinges.map((h) => h.x)).toEqual([68.5]);
     // 140 − 68.5 − 3: the strip lands behind itself, between the panels' backs.
     expect(long.pages[1]!.hinges).toEqual([
-      { x: 68.5, y: 8, width: 3, height: 88, color: "#cccccc" },
+      { x: 68.5, y: 8, width: 3, height: 88, color: "#ffffff" },
     ]);
     const short = composePages(
       deck({ cards: both, fold: "strip", gap: 3, duplexFlip: "short-edge" })
@@ -757,9 +758,9 @@ describe("fold gaps", () => {
     );
     const { marks, folds, hinges } = pages[0]!;
     // The strip is still printed, between the panels.
-    expect(hinges).toEqual([{ x: 68.5, y: 8, width: 3, height: 88, color: "#cccccc" }]);
+    expect(hinges).toEqual([{ x: 68.5, y: 8, width: 3, height: 88, color: "#ffffff" }]);
     // One piece of paper: four corners, no cut along either edge of the strip.
-    expect(marks).toHaveLength(16);
+    expect(marks).toHaveLength(14);
     expect(marks.some((l) => l.x1 === l.x2 && (l.x1 === 68.5 || l.x1 === 71.5))).toBe(
       false
     );
@@ -769,7 +770,7 @@ describe("fold gaps", () => {
       { x1: 71.5, y1: 0, x2: 71.5, y2: 8 },
     ]);
     expect(compositionText(pages, grid).split("\n")[1]).toBe(
-      "1. front · 16 marks · 2 fold marks · 1 hinge (3 mm)"
+      "1. front · 14 marks · 2 fold marks · 1 hinge (3 mm)"
     );
   });
 
@@ -801,5 +802,47 @@ describe("fold gaps", () => {
     expect(page.indexOf('class="cs-cell"')).toBeLessThan(
       page.indexOf('class="cs-cut-marks"')
     );
+  });
+
+  it("marks only cuts that are there, where a hinge shifts one row against the next", () => {
+    // A4 across, poker: a card, a fold with a 2 mm strip that stays, a card —
+    // then a row of four single cards, which the strip does not shift.
+    const { pages } = composePages(
+      deck({
+        cards: notes(1, 2, 1, 1, 1, 1, 1),
+        fold: "strip",
+        gap: 2,
+        paperSize: paper("A4 landscape"),
+        pageMargin: 10,
+      })
+    );
+    const { cells, marks } = pages[0]!;
+    expect(cells.map((c) => `${c.x},${c.y}`)).toEqual([
+      "21.5,17",
+      "84.5,17",
+      "149.5,17",
+      "212.5,17",
+      "21.5,105",
+      "84.5,105",
+      "147.5,105",
+      "210.5,105",
+    ]);
+    const vertical = (x: number) => marks.filter((l) => l.x1 === x && l.x2 === x);
+    const above = (x: number) => vertical(x).filter((l) => l.y2 <= 105);
+    const below = (x: number) => vertical(x).filter((l) => l.y1 >= 105);
+    // 147.5: a cut in the lower row only — the upper row's strip begins there.
+    expect(above(147.5)).toEqual([]);
+    expect(below(147.5)).not.toEqual([]);
+    // 149.5: the strip's other edge, a crease — no cut in either row.
+    expect(vertical(149.5)).toEqual([]);
+    // 212.5 is cut in the upper row only, 210.5 in the lower row only.
+    expect(below(212.5)).toEqual([]);
+    expect(above(212.5)).not.toEqual([]);
+    expect(above(210.5).filter((l) => l.y1 > 0)).toEqual([]);
+    // The lower row ends 2 mm short of the upper: its corner's arm to the right
+    // stops where the upper row's cut along the same line stops.
+    expect(
+      marks.filter((l) => l.y1 === 105 && l.y2 === 105 && l.x1 === 273.5).map((l) => l.x2)
+    ).toEqual([275.5]);
   });
 });

@@ -273,8 +273,16 @@ export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
   const withBacks = pieces.some((piece) =>
     piece.some((place) => place.back !== undefined)
   );
-  const sheets: { front: Cell[]; back: Cell[]; hinges: Hinge[]; backHinges: Hinge[] }[] =
-    [];
+  // Per sheet: the cells, the strips each side prints, and the strips cut
+  // out — whose ends are cuts too, on both sides of the paper.
+  const sheets: {
+    front: Cell[];
+    back: Cell[];
+    hinges: Hinge[];
+    backHinges: Hinge[];
+    slots: Rect[];
+    backSlots: Rect[];
+  }[] = [];
 
   for (const { piece, row, x, offsets, hinged, cutOut } of placed) {
     const local = row % grid.rows;
@@ -283,6 +291,8 @@ export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
       back: [],
       hinges: [],
       backHinges: [],
+      slots: [],
+      backSlots: [],
     });
     const y = grid.originY + local * grid.card.height;
     piece.forEach((place, i) => {
@@ -321,24 +331,27 @@ export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
           height: grid.card.height,
           color: place.source.hinge?.color ?? DEFAULT_HINGE_COLOR,
         };
+        // Behind itself: mirrored as a place is, so the two meet through
+        // the paper.
+        const behind =
+          deck.duplexFlip === "short-edge"
+            ? { ...hinge, y: grid.originY + (grid.rows - 1 - local) * grid.card.height }
+            : { ...hinge, x: grid.paper.width - hinge.x - hinge.width };
         sheet.hinges.push(hinge);
-        // Behind itself, where the card asks for both sides: mirrored as a
-        // place is, so the two strips meet through the paper.
-        if (place.source.hinge?.sides === "both") {
-          sheet.backHinges.push(
-            deck.duplexFlip === "short-edge"
-              ? { ...hinge, y: grid.originY + (grid.rows - 1 - local) * grid.card.height }
-              : { ...hinge, x: grid.paper.width - hinge.x - hinge.width }
-          );
+        if (place.source.hinge?.sides === "both") sheet.backHinges.push(behind);
+        if (cutOut) {
+          sheet.slots.push(hinge);
+          sheet.backSlots.push(behind);
         }
       }
     });
   }
 
   const pages: Page[] = [];
-  for (const { front, back, hinges, backHinges } of sheets) {
-    pages.push(page("front", front, grid, deck.cutMarks, hinges));
-    if (withBacks) pages.push(page("back", back, grid, deck.cutMarks, backHinges));
+  for (const { front, back, hinges, backHinges, slots, backSlots } of sheets) {
+    pages.push(page("front", front, grid, deck.cutMarks, hinges, slots));
+    if (withBacks)
+      pages.push(page("back", back, grid, deck.cutMarks, backHinges, backSlots));
   }
   return { pages, grid };
 }
@@ -348,12 +361,13 @@ function page(
   cells: Cell[],
   grid: Grid,
   marks: CutMarks,
-  hinges: Hinge[]
+  hinges: Hinge[],
+  slots: Rect[]
 ): Page {
   return {
     side,
     cells,
-    marks: cutMarks(cells, grid, marks),
+    marks: cutMarks(cells, grid, marks, slots),
     folds: foldMarks(cells, grid, marks),
     // The knife works from the front; a back page carries the hinges whose
     // cards ask for both sides.
@@ -374,7 +388,7 @@ function foldHinges(count: number, fold: Fold, gap: number, gapOuter: number): n
 }
 
 /** A hinge's colour where no layer of its card's chain gives one. */
-const DEFAULT_HINGE_COLOR = "#cccccc";
+const DEFAULT_HINGE_COLOR = "#ffffff";
 
 /** One place on the paper — a card, or a panel of a fold — with the faces that go on it. */
 interface Place {
@@ -504,38 +518,46 @@ export function composeDeck(deck: Deck): { pages: Page[]; grid: Grid } {
 }
 
 /**
- * Cut marks for a page: a cross at every corner of every card — four arms
- * along the two cuts that meet there, each `margin` clear of the corner.
- * An arm on a face is `length` long; an arm that leaves the block runs on
- * to the paper's edge, so every cut shows where it meets the edge and a
- * guillotine's gauge can be set against the line itself. At the block's
- * edge two arms go out and two lie on the faces; inside the block all four
- * lie on the faces, where a corner marks the only place a cut can be found
- * between cards packed without a gap. The document paints the marks over
- * the cards, so what stays on a cut card is a stub of each arm at each
- * corner, the same on every card wherever it printed. A corner shared by
- * several cards is marked once. Positions come from the cells as placed,
- * so a back page's marks mirror with its cards; the block is centred, so
- * its edges are the same either way round.
+ * Cut marks for a page: a cross at every corner of every piece of paper,
+ * its arms `margin` clear of the corner and `length` long — but an arm only
+ * where a cut actually runs. The cuts are the pieces' edges; an arm follows
+ * one of them, or the line one of them makes out to the paper's edge, and
+ * nothing else. Where the cards are packed in a grid every arm lies on a
+ * neighbour's edge, as the corners between cards packed without a gap need;
+ * where rows are laid out differently — a fold's hinges shift what follows
+ * them — an arm that would point along a line no cut follows is left out,
+ * and one that would run past the end of its cut stops there.
+ *
+ * At the block's edge the arms leaving it run on to the paper's edge, so
+ * every cut shows where it meets the edge and a guillotine's gauge can be
+ * set against the line itself. The document paints the marks over the
+ * cards, so what stays on a cut card is a stub of each arm at each corner.
+ * A corner shared by several pieces is marked once. Positions come from the
+ * cells as placed, so a back page's marks mirror with its cards.
  *
  * A grid that holds one card gets no marks: that page is the card, or as
  * good as — a sheet for a screen, not for the guillotine. The rule reads
  * the grid, not the page, so the last page of a deck, part-filled, is
  * marked like the ones before it.
  *
- * A fold is one piece of paper: its corners are marked, the ends of its
- * creases are not, and an arm that would run along a crease is left out
- * — it would say "cut here" where the paper is folded. A fold with a gap
- * is a card per panel again, every corner marked: the crosses either side
- * of a hinge are the four cuts that take it out.
+ * A fold is one piece of paper: its corners are marked, and its creases —
+ * not being edges — carry no arm. A fold whose hinges are cut out is a
+ * piece per panel again, every corner marked, and the strip's ends — the
+ * `slots` — are cuts across it: the crosses either side of a hinge are the
+ * four cuts that take it out.
  */
-export function cutMarks(cells: readonly Cell[], grid: Grid, marks: CutMarks): Line[] {
+export function cutMarks(
+  cells: readonly Cell[],
+  grid: Grid,
+  marks: CutMarks,
+  slots: readonly Rect[] = []
+): Line[] {
   if (!marks.enabled || cells.length === 0) return [];
   if (grid.columns * grid.rows < 2) return [];
   const length = marks.length ?? 3;
   const gap = marks.margin ?? 0;
   const { height } = grid.card;
-  const { pieces, creases } = paperPieces(cells, grid);
+  const { pieces } = paperPieces(cells, grid);
 
   // Keyed on the printed value: a corner reached from two pieces is the
   // same corner, whatever the last bit of the arithmetic said.
@@ -548,12 +570,23 @@ export function cutMarks(cells: readonly Cell[], grid: Grid, marks: CutMarks): L
       }
     }
   }
-  // A crease end, with the way the crease runs from it.
-  const alongCrease = new Set<string>();
-  for (const c of creases) {
-    alongCrease.add(`${mm(c.x1)},${mm(c.y1)},down`);
-    alongCrease.add(`${mm(c.x2)},${mm(c.y2)},up`);
-  }
+  const vertical = cutLines(
+    pieces.flatMap(({ x, y, width }) => [
+      [x, y, y + height],
+      [x + width, y, y + height],
+    ])
+  );
+  const horizontal = cutLines([
+    ...pieces.flatMap(({ x, y, width }) => [
+      [y, x, x + width],
+      [y + height, x, x + width],
+    ]),
+    // A strip cut out between two panels: its ends are cut across.
+    ...slots.flatMap(({ x, y, width, height: tall }) => [
+      [y, x, x + width],
+      [y + tall, x, x + width],
+    ]),
+  ]);
 
   const block = {
     left: mm(grid.originX),
@@ -564,22 +597,78 @@ export function cutMarks(cells: readonly Cell[], grid: Grid, marks: CutMarks): L
   const out: Line[] = [];
   const arm = (line: Line) => {
     // An arm that would start on or past its end — a block flush with the
-    // paper's edge, a gap wider than the margin — is nothing to draw.
+    // paper's edge, a gap wider than the margin, a cut shorter than the
+    // gap — is nothing to draw.
     if (line.x1 === line.x2 ? line.y1 < line.y2 : line.x1 < line.x2) out.push(line);
   };
   for (const { x, y } of corners.values()) {
-    const up = mm(y) === block.top ? 0 : y - gap - length;
-    const down = mm(y) === block.bottom ? grid.paper.height : y + gap + length;
-    const left = mm(x) === block.left ? 0 : x - gap - length;
-    const right = mm(x) === block.right ? grid.paper.width : x + gap + length;
-    const key = `${mm(x)},${mm(y)}`;
-    if (!alongCrease.has(`${key},up`)) arm({ x1: x, y1: up, x2: x, y2: y - gap });
-    if (!alongCrease.has(`${key},down`)) arm({ x1: x, y1: y + gap, x2: x, y2: down });
-    arm({ x1: left, y1: y, x2: x - gap, y2: y });
-    arm({ x1: x + gap, y1: y, x2: right, y2: y });
+    const v = vertical.get(mm(x)) ?? [];
+    const h = horizontal.get(mm(y)) ?? [];
+    if (mm(y) === block.top) arm({ x1: x, y1: 0, x2: x, y2: y - gap });
+    else {
+      const end = cutRuns(v, y, -1);
+      if (end !== undefined)
+        arm({ x1: x, y1: Math.max(end, y - gap - length), x2: x, y2: y - gap });
+    }
+    if (mm(y) === block.bottom) arm({ x1: x, y1: y + gap, x2: x, y2: grid.paper.height });
+    else {
+      const end = cutRuns(v, y, 1);
+      if (end !== undefined)
+        arm({ x1: x, y1: y + gap, x2: x, y2: Math.min(end, y + gap + length) });
+    }
+    if (mm(x) === block.left) arm({ x1: 0, y1: y, x2: x - gap, y2: y });
+    else {
+      const end = cutRuns(h, x, -1);
+      if (end !== undefined)
+        arm({ x1: Math.max(end, x - gap - length), y1: y, x2: x - gap, y2: y });
+    }
+    if (mm(x) === block.right) arm({ x1: x + gap, y1: y, x2: grid.paper.width, y2: y });
+    else {
+      const end = cutRuns(h, x, 1);
+      if (end !== undefined)
+        arm({ x1: x + gap, y1: y, x2: Math.min(end, x + gap + length), y2: y });
+    }
   }
   return out;
 }
+
+/** Edges as `[line, from, to]`, merged into the stretches each line is cut along, keyed on the line's printed value. */
+function cutLines(edges: number[][]): Map<string, [number, number][]> {
+  const byLine = new Map<string, [number, number][]>();
+  for (const [line, from, to] of edges) {
+    const key = mm(line!);
+    const list = byLine.get(key) ?? [];
+    list.push([from!, to!]);
+    byLine.set(key, list);
+  }
+  for (const [key, list] of byLine) {
+    list.sort((a, b) => a[0] - b[0]);
+    const merged: [number, number][] = [];
+    for (const [from, to] of list) {
+      const last = merged.at(-1);
+      if (last && from <= last[1] + EPSILON) last[1] = Math.max(last[1], to);
+      else merged.push([from, to]);
+    }
+    byLine.set(key, merged);
+  }
+  return byLine;
+}
+
+/** How far a cut runs from `at` the way `direction` points along its line — its far end — or `undefined` when no cut leaves `at` that way. */
+function cutRuns(
+  stretches: readonly [number, number][],
+  at: number,
+  direction: 1 | -1
+): number | undefined {
+  for (const [from, to] of stretches) {
+    if (direction === 1 && from <= at + EPSILON && to > at + EPSILON) return to;
+    if (direction === -1 && from < at - EPSILON && to >= at - EPSILON) return from;
+  }
+  return undefined;
+}
+
+/** A thousandth of a millimetre: two positions closer than this are one. */
+const EPSILON = 0.001;
 
 /**
  * Fold marks for a page: where a crease meets the block's top or bottom
