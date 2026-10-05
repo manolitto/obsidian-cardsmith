@@ -199,8 +199,8 @@ export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
   // A card's hinges, from its own chain: none where the deck does not fold,
   // the outer one only where there is an inner one to go with it.
   const hingesOf = (count: number, source: PhysicalCard): number[] => {
-    const gap = fold === "off" ? 0 : (source.foldGap ?? 0);
-    const outer = gap > 0 ? (source.foldGapOuter ?? gap) : 0;
+    const gap = fold === "off" ? 0 : (source.hinge?.gap ?? 0);
+    const outer = gap > 0 ? (source.hinge?.outerGap ?? gap) : 0;
     return foldHinges(count, fold, gap, outer);
   };
   const widthOf = (count: number, source: PhysicalCard) =>
@@ -212,7 +212,7 @@ export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
     while (widthOf(reach + 1, source) <= plain.usable + 1e-9) reach++;
     if (reach < 2) {
       throw new Error(
-        `A fold needs 2 ${plain.card.width} × ${plain.card.height} mm cards side by side with a ${mm(source.foldGap ?? 0)} mm hinge, and ${plain.paper.width} × ${plain.paper.height} mm paper holds 1`
+        `A fold needs 2 ${plain.card.width} × ${plain.card.height} mm cards side by side with a ${mm(source.hinge?.gap ?? 0)} mm hinge, and ${plain.paper.width} × ${plain.paper.height} mm paper holds 1`
       );
     }
     return reach;
@@ -304,12 +304,12 @@ export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
           y,
           width: next - offsets[i]! - card,
           height: grid.card.height,
-          color: place.hingeColor ?? DEFAULT_HINGE_COLOR,
+          color: place.source.hinge?.color ?? DEFAULT_HINGE_COLOR,
         };
         sheet.hinges.push(hinge);
         // Behind itself, where the card asks for both sides: mirrored as a
         // place is, so the two strips meet through the paper.
-        if (place.hingeSides === "both") {
+        if (place.source.hinge?.sides === "both") {
           sheet.backHinges.push(
             deck.duplexFlip === "short-edge"
               ? { ...hinge, y: grid.originY + (grid.rows - 1 - local) * grid.card.height }
@@ -369,11 +369,7 @@ interface Place {
   front?: string;
   back?: string;
   fold?: { chunk: number; panel: number; panels: number };
-  /** The colour of the hinge to the right of this panel. */
-  hingeColor?: string;
-  /** Whether that hinge is printed behind itself on the back page too. */
-  hingeSides?: "front" | "both";
-  /** The physical card the place was made from, whose chain says how wide its hinges are. */
+  /** The physical card the place was made from, whose hinge — width, colour, sides — its chain set. */
   source: PhysicalCard;
 }
 
@@ -417,8 +413,6 @@ function foldPieces(
     source: card,
     ...(front === undefined ? {} : { front }),
     ...(back === undefined ? {} : { back }),
-    ...(card.hingeColor === undefined ? {} : { hingeColor: card.hingeColor }),
-    ...(card.hingeSides === undefined ? {} : { hingeSides: card.hingeSides }),
     ...(panels > 1 ? { fold: { chunk: out.length, panel, panels } } : {}),
   });
 

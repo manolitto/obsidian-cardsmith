@@ -74,17 +74,8 @@ card-type: [gear, creature]
 # Eine Karte je Wert des Würfelbereichs zwischen `roll-min` und `roll-max` drucken.
 # expand-by-roll: false
 
-# Die Farbe des Streifens, der für ein Scharnier gedruckt wird, wenn die Karte mit Lücke gefaltet wird. Eine beliebige CSS-Farbe.
-# hinge-color: '#cccccc'
-
-# Wo ein Scharnierstreifen gedruckt wird: `front` (die Seite, von der aus geschnitten wird) oder `both`, auch dahinter auf der Rückseite.
-# hinge-sides: front
-
-# Millimeter zwischen den Teilen einer Faltkarte, als grauer Streifen gedruckt: ein Scharnier, das vor dem Laminieren herausgeschnitten wird. 1,5 passt für eine einfache Faltung, 0 falzt ohne Lücke.
-# fold-gap: 0
-
-# Millimeter des äußeren Scharniers einer `cover`-Karte, zwischen Umschlag und letzter Seite, wenn drei Teile oder mehr darin eingefaltet sind. Standard: `fold-gap`.
-# fold-gap-outer:
+# Wo ein Deck die Karte faltet, der Streifen zwischen zwei Teilen: `{ gap: 1.5, outer-gap: 2.5, color: '#cccccc', sides: front }`. `gap` 0 falzt ohne Streifen; die Felder verschmelzen, eines lässt sich allein ändern.
+# hinge: {gap: 0, color: '#cccccc', sides: front}
 
 # Die Sprache, in der die Karte gedruckt wird — aus welcher Übersetzungstabelle ihre Beschriftungen kommen.
 # language:

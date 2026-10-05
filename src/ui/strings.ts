@@ -73,10 +73,8 @@ const en = {
   "card-key.copies": "How many times the card is printed in a deck.",
   "card-key.expand-by-roll":
     "Print one card per value of the roll range between `roll-min` and `roll-max`.",
-  "card-key.hinge-color":
-    "The colour of the strip printed for a hinge, where the card folds with a gap. Any CSS colour.",
-  "card-key.hinge-sides":
-    "Where a hinge strip is printed: `front` (the side you cut from) or `both`, behind itself on the back too.",
+  "card-key.hinge":
+    "Where a deck folds the card, the strip between two panels: `{ gap: 1.5, outer-gap: 2.5, color: '#cccccc', sides: front }`. `gap` 0 folds along a crease; the fields merge, so one can change alone.",
   "card-key.language":
     "The language the card is printed in — which translation table its captions come from.",
 
@@ -145,10 +143,6 @@ const en = {
     "Which paper edge is the binding when printing duplex, so fronts and backs align: `long-edge` or `short-edge`.",
   "deck-key.fold":
     "A note's cards side by side, uncut, folded instead of cut apart: `strip` (1, 2, 3 across the front, 4, 5, 6 across the back), `cover` (5, 6, 1 across the front, page 1 a cover with the last page behind it), `booklet` (nested sheets of two, like a printer's booklet) or `off`.",
-  "card-key.fold-gap":
-    "Millimetres between the panels of a fold, printed as a grey strip: a hinge to cut out before laminating. 1.5 suits a single fold, 0 folds along a crease.",
-  "card-key.fold-gap-outer":
-    "Millimetres of a `cover`'s outer hinge, between the cover and the last page, where three panels or more fold inside it. Default: `fold-gap`.",
   "deck-key.cut-marks":
     "The cut marks at every card corner; the fields merge, so one can change alone.",
   "deck-key.paper-background":
@@ -285,10 +279,8 @@ const de: Strings = {
   "card-key.copies": "Wie oft die Karte in einem Deck gedruckt wird.",
   "card-key.expand-by-roll":
     "Eine Karte je Wert des Würfelbereichs zwischen `roll-min` und `roll-max` drucken.",
-  "card-key.hinge-color":
-    "Die Farbe des Streifens, der für ein Scharnier gedruckt wird, wenn die Karte mit Lücke gefaltet wird. Eine beliebige CSS-Farbe.",
-  "card-key.hinge-sides":
-    "Wo ein Scharnierstreifen gedruckt wird: `front` (die Seite, von der aus geschnitten wird) oder `both`, auch dahinter auf der Rückseite.",
+  "card-key.hinge":
+    "Wo ein Deck die Karte faltet, der Streifen zwischen zwei Teilen: `{ gap: 1.5, outer-gap: 2.5, color: '#cccccc', sides: front }`. `gap` 0 falzt ohne Streifen; die Felder verschmelzen, eines lässt sich allein ändern.",
   "card-key.language":
     "Die Sprache, in der die Karte gedruckt wird — aus welcher Übersetzungstabelle ihre Beschriftungen kommen.",
 
@@ -357,10 +349,6 @@ const de: Strings = {
     "Welche Papierkante beim Duplexdruck die Bindung ist, damit Vorder- und Rückseiten übereinanderliegen: `long-edge` oder `short-edge`.",
   "deck-key.fold":
     "Die Karten einer Notiz ungeschnitten nebeneinander, gefalzt statt geschnitten: `strip` (vorne 1, 2, 3, hinten 4, 5, 6), `cover` (vorne 5, 6, 1, Seite 1 als Umschlag mit der letzten Seite dahinter), `booklet` (ineinandergelegte Bögen zu zwei Karten, wie die Broschüre eines Druckertreibers) oder `off`.",
-  "card-key.fold-gap":
-    "Millimeter zwischen den Teilen einer Faltkarte, als grauer Streifen gedruckt: ein Scharnier, das vor dem Laminieren herausgeschnitten wird. 1,5 passt für eine einfache Faltung, 0 falzt ohne Lücke.",
-  "card-key.fold-gap-outer":
-    "Millimeter des äußeren Scharniers einer `cover`-Karte, zwischen Umschlag und letzter Seite, wenn drei Teile oder mehr darin eingefaltet sind. Standard: `fold-gap`.",
   "deck-key.cut-marks":
     "Die Schnittmarken an jeder Kartenecke; die Felder verschmelzen, eines lässt sich allein ändern.",
   "deck-key.paper-background":

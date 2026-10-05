@@ -25,15 +25,12 @@ function cards(count: number, faces: "both" | "front" = "both"): PhysicalCard[] 
   }));
 }
 
-/** A deck; `foldGap` / `foldGapOuter` are card settings, so they go onto every card. */
+/** A deck; `gap` / `outerGap` are the cards' hinge settings, so they go onto every card's hinge. */
 const deck = ({
-  foldGap,
-  foldGapOuter,
+  gap,
+  outerGap,
   ...over
-}: Partial<Composable> & {
-  foldGap?: number;
-  foldGapOuter?: number;
-} = {}): Composable => {
+}: Partial<Composable> & { gap?: number; outerGap?: number } = {}): Composable => {
   const composed: Composable = {
     cards: cards(6),
     cardSize: card("poker"),
@@ -43,12 +40,16 @@ const deck = ({
     cutMarks: { enabled: true, length: 3, margin: 0, color: "#aaaaaa", weight: 0.25 },
     ...over,
   };
+  if (gap === undefined && outerGap === undefined) return composed;
   return {
     ...composed,
     cards: composed.cards.map((c) => ({
       ...c,
-      ...(foldGap === undefined ? {} : { foldGap }),
-      ...(foldGapOuter === undefined ? {} : { foldGapOuter }),
+      hinge: {
+        ...c.hinge,
+        ...(gap === undefined ? {} : { gap }),
+        ...(outerGap === undefined ? {} : { outerGap }),
+      },
     })),
   };
 };
@@ -552,7 +553,7 @@ describe("fold gaps", () => {
     });
   const faces = (page: Page) => page.cells.map((c) => `${c.html ?? "-"}@${c.x},${c.y}`);
   const hinged = (over: Partial<Composable> = {}) =>
-    composePages(deck({ cards: notes(2), fold: "strip", foldGap: 3, ...over }));
+    composePages(deck({ cards: notes(2), fold: "strip", gap: 3, ...over }));
 
   it("stands the columns apart, the block centred, every back still behind its front", () => {
     const { pages, grid } = hinged();
@@ -567,7 +568,7 @@ describe("fold gaps", () => {
   });
 
   it("puts no gap between separate cards: three poker cards across A4 portrait, a hinged fold and a card not", () => {
-    const a4 = { paperSize: paper("A4 portrait"), pageMargin: 10, foldGap: 1.5 };
+    const a4 = { paperSize: paper("A4 portrait"), pageMargin: 10, gap: 1.5 };
     const singles = composePages(deck({ ...a4, cards: notes(1, 1, 1), fold: "strip" }));
     expect(faces(singles.pages[0]!)).toEqual([
       "A1f@10.5,16.5",
@@ -593,7 +594,7 @@ describe("fold gaps", () => {
     expect(hinged({ cards: notes(1, 1) }).pages[0]!.hinges).toEqual([]);
     // Three panels, two hinges.
     const three = composePages(
-      deck({ cards: notes(3), paperSize: paper("195 x 88"), fold: "cover", foldGap: 3 })
+      deck({ cards: notes(3), paperSize: paper("195 x 88"), fold: "cover", gap: 3 })
     );
     expect(three.pages[0]!.hinges.map((h) => h.x)).toEqual([63, 129]);
   });
@@ -615,10 +616,10 @@ describe("fold gaps", () => {
 
   it("is no gap at 0, and none when the deck does not fold", () => {
     const strip = deck({ cards: notes(2), fold: "strip" });
-    expect(composePages(deck({ cards: notes(2), fold: "strip", foldGap: 0 }))).toEqual(
+    expect(composePages(deck({ cards: notes(2), fold: "strip", gap: 0 }))).toEqual(
       composePages(strip)
     );
-    expect(composePages(deck({ foldGap: 3 }))).toEqual(composePages(deck()));
+    expect(composePages(deck({ gap: 3 }))).toEqual(composePages(deck()));
   });
 
   it("reads the gap and the hinges in the composition text", () => {
@@ -630,7 +631,7 @@ describe("fold gaps", () => {
   });
 
   it("gives a cover's outer hinge its own width once panels fold inside it", () => {
-    const outer = { foldGap: 1.5, foldGapOuter: 2.5, paperSize: paper("200 x 88") };
+    const outer = { gap: 1.5, outerGap: 2.5, paperSize: paper("200 x 88") };
     const { pages, grid } = composePages(
       deck({ ...outer, cards: notes(3), fold: "cover" })
     );
@@ -666,7 +667,7 @@ describe("fold gaps", () => {
         cards: notes(3),
         paperSize: paper("200 x 88"),
         fold: "cover",
-        foldGapOuter: 2.5,
+        outerGap: 2.5,
       })
     );
     expect(pages[0]!.hinges).toEqual([]);
@@ -674,12 +675,12 @@ describe("fold gaps", () => {
 
   it("paints each hinge in its own card's colour, escaped for the attribute", () => {
     const tinted = (color: string, group: number): PhysicalCard[] =>
-      notes(2).map((c) => ({ ...c, group, hingeColor: color }));
+      notes(2).map((c) => ({ ...c, group, hinge: { color } }));
     const { pages, grid } = composePages(
       deck({
         cards: [...tinted("#ff0000", 0), ...tinted('red" onload="x', 1)],
         fold: "strip",
-        foldGap: 1.5,
+        gap: 1.5,
       })
     );
     expect(pages[0]!.hinges.map((h) => h.color)).toEqual(["#ff0000", 'red" onload="x']);
@@ -689,31 +690,31 @@ describe("fold gaps", () => {
   });
 
   it("prints a hinge behind itself on the back page where its card asks for both sides", () => {
-    const both = notes(2).map((c) => ({ ...c, hingeSides: "both" as const }));
-    const long = composePages(deck({ cards: both, fold: "strip", foldGap: 3 }));
+    const both = notes(2).map((c) => ({ ...c, hinge: { sides: "both" as const } }));
+    const long = composePages(deck({ cards: both, fold: "strip", gap: 3 }));
     expect(long.pages[0]!.hinges.map((h) => h.x)).toEqual([68.5]);
     // 140 − 68.5 − 3: the strip lands behind itself, between the panels' backs.
     expect(long.pages[1]!.hinges).toEqual([
       { x: 68.5, y: 8, width: 3, height: 88, color: "#cccccc" },
     ]);
     const short = composePages(
-      deck({ cards: both, fold: "strip", foldGap: 3, duplexFlip: "short-edge" })
+      deck({ cards: both, fold: "strip", gap: 3, duplexFlip: "short-edge" })
     );
     expect(short.pages[1]!.hinges.map((h) => [h.x, h.y])).toEqual([[68.5, 184]]);
     // A card that says nothing keeps its back clean.
     expect(
-      composePages(deck({ cards: notes(2), fold: "strip", foldGap: 3 })).pages[1]!.hinges
+      composePages(deck({ cards: notes(2), fold: "strip", gap: 3 })).pages[1]!.hinges
     ).toEqual([]);
   });
 
   it("puts uneven hinges behind themselves too", () => {
-    const both = notes(3).map((c) => ({ ...c, hingeSides: "both" as const }));
+    const both = notes(3).map((c) => ({ ...c, hinge: { sides: "both" as const } }));
     const { pages } = composePages(
       deck({
         cards: both,
         fold: "cover",
-        foldGap: 1.5,
-        foldGapOuter: 2.5,
+        gap: 1.5,
+        outerGap: 2.5,
         paperSize: paper("200 x 88"),
       })
     );
@@ -726,7 +727,7 @@ describe("fold gaps", () => {
 
   it("takes each fold's hinge width from its own card", () => {
     const own = (gap: number, group: number): PhysicalCard[] =>
-      notes(2).map((c) => ({ ...c, group, foldGap: gap }));
+      notes(2).map((c) => ({ ...c, group, hinge: { gap } }));
     const { pages } = composePages(
       deck({
         cards: [...own(0.5, 0), ...own(1, 1), ...own(0, 2)],

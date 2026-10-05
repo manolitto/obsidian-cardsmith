@@ -125,10 +125,10 @@ describe("buildDeck over the fixture folders", () => {
       "dragonbane",
       deck.text.replace(
         "```cardsmith-deck\n",
-        "```cardsmith-deck\nfold: cover\nfold-gap: 3\n"
+        "```cardsmith-deck\nfold: cover\nhinge: { gap: 3 }\n"
       )
     );
-    expect(built.cards.every((c) => c.foldGap === 3)).toBe(true);
+    expect(built.cards.every((c) => c.hinge?.gap === 3)).toBe(true);
     const { pages, grid } = composeDeck(built);
     // `A4 portrait` inside 10 mm: three cards across, edge to edge, where a row holds no
     // fold; a two-card fold with its 3 mm hinge leaves no room for a card beside it.

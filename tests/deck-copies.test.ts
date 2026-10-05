@@ -78,7 +78,7 @@ describe("copies", () => {
       "Beil 1",
     ]);
     // A card's hinge colour rides along, absent where its chain sets none.
-    expect(out[0]).not.toHaveProperty("hingeColor");
+    expect(out[0]).not.toHaveProperty("hinge");
     // What a fold keeps together: one printing of one note, never two.
     expect(out.map((c) => c.group)).toEqual([0, 0, 1, 1, 2, 3, 4]);
   });
@@ -130,11 +130,13 @@ describe("copies", () => {
     ).toHaveLength(1);
   });
 
-  it("carries the card's hinge colour onto each of its physical cards", () => {
+  it("carries the card's hinge onto each of its physical cards", () => {
     const card = laidOut("K/Lang.md", 2);
-    card.card.settings = { hingeColor: "#336699", hingeSides: "both" };
+    card.card.settings = { hinge: { color: "#336699", sides: "both" } };
     const out = applyCopies([card], undefined, collectDiagnostics());
-    expect(out.map((c) => c.hingeColor)).toEqual(["#336699", "#336699"]);
-    expect(out.map((c) => c.hingeSides)).toEqual(["both", "both"]);
+    expect(out.map((c) => c.hinge)).toEqual([
+      { color: "#336699", sides: "both" },
+      { color: "#336699", sides: "both" },
+    ]);
   });
 });

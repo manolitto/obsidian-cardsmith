@@ -230,10 +230,7 @@ note, then the deck it is printed in, then the card type, then the system.
 | `language` | The language the card prints in — which translation table its captions come from. |
 | `display-height` | Height of the in-note preview, in pixels. |
 | `expand-by-roll` | One card per value of the roll range between `roll-min` and `roll-max`. |
-| `hinge-color` | The colour of the strip printed for a hinge when a deck folds the card with a gap — see [Laminating a folded card](decks.md#laminating-a-folded-card). Any CSS colour; default a light grey. |
-| `hinge-sides` | Where that strip is printed: `front` (default) or `both`, behind itself on the back of the sheet too. |
-| `fold-gap` | Millimetres between the panels of a fold, where a deck folds the card: a strip — a hinge — rather than a crease. Default `0`, a crease. |
-| `fold-gap-outer` | Millimetres of a `cover`'s outer hinge, between the cover and the last page, where three panels or more fold inside it. Default: `fold-gap`. |
+| `hinge` | Where a deck folds the card, the strip between two panels: `{ gap, outer-gap, color, sides }` — millimetres between panels (0, the default, folds along a crease), a `cover`'s outer hinge, the strip's colour, `front` or `both` sides. The fields merge across layers. See [Hinges](decks.md#hinges-laminating-or-a-fold-on-plain-paper). |
 | `layouts`, `layout-decision` | The named ways a card may be laid out and how the winner is chosen — a design's concern, set by the system. |
 
 Before it prints, every card is laid out: the type is scaled down towards

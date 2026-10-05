@@ -1,3 +1,4 @@
+import type { Hinge } from "../definitions/card-settings";
 import type { CardCopies } from "../definitions/deck-settings";
 import type { Diagnostics } from "../definitions/diagnostics";
 import type { LaidOutCard } from "../layout/engine";
@@ -16,13 +17,8 @@ export interface PhysicalCard {
    * own. What a fold keeps together.
    */
   group: number;
-  /** The colour of a hinge beside this card, when its fold has one; absent, the plain default. */
-  hingeColor?: string;
-  /** `both` prints that hinge behind itself on the back page too; absent, the front only. */
-  hingeSides?: "front" | "both";
-  /** Millimetres between the panels of its fold, and of a cover's outer hinge — from its chain. */
-  foldGap?: number;
-  foldGapOuter?: number;
+  /** Its hinge — gap, outer gap, colour, sides — as its chain resolved it; absent, none was set. */
+  hinge?: Hinge;
   front?: string;
   back?: string;
 }
@@ -72,18 +68,7 @@ export function applyCopies(
           name: card.name,
           cardTypeId: card.cardTypeId,
           group,
-          ...(card.settings.hingeColor === undefined
-            ? {}
-            : { hingeColor: card.settings.hingeColor }),
-          ...(card.settings.hingeSides === undefined
-            ? {}
-            : { hingeSides: card.settings.hingeSides }),
-          ...(card.settings.foldGap === undefined
-            ? {}
-            : { foldGap: card.settings.foldGap }),
-          ...(card.settings.foldGapOuter === undefined
-            ? {}
-            : { foldGapOuter: card.settings.foldGapOuter }),
+          ...(card.settings.hinge === undefined ? {} : { hinge: card.settings.hinge }),
           ...(faces.front === undefined || side === "back" ? {} : { front: faces.front }),
           ...(faces.back === undefined || side === "front" ? {} : { back: faces.back }),
         });
