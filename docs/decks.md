@@ -161,13 +161,19 @@ reaches — two poker cards on A4 make a card that opens, three a leaflet
 holds. A note on one card prints as a card under every fold, and copies
 of a note are separate folds.
 
-Folds go into the rows in deck order, beside single cards. A fold that
-does not fit what is left of a row starts the next one; the gap stays
-empty, so the print order is the deck's order. A folding deck needs at
-least two cards across; when `paper-size` leaves the orientation free, it
-picks the one that holds more cards in pairs — poker cards on A4 go
-landscape, four across, rather than three across with every third place
-left over.
+A folding deck prints its pieces of paper grouped by shape — how many
+panels, how wide their hinges, whether the hinges are cut out — in the
+order the deck first reaches each shape, and in deck order within it.
+Every shape starts a sheet of its own, and a fold that does not fit what
+is left of a row starts the next one; the gap stays empty. So the rows
+of a sheet share their lines: a cut or a crease runs through the sheet
+from top to bottom, and a paper cutter or a ruler takes it in one go. A
+sheet holding two shapes could not do that — where single cards are cut
+apart, a fold beside them has its crease — so a deck of several shapes
+may leave part of a sheet empty. A folding deck needs at least two cards
+across; when `paper-size` leaves the orientation free, it picks the one
+that holds more cards in pairs — poker cards on A4 go landscape, four
+across, rather than three across with every third place left over.
 
 The cut marks go round each piece of paper — a fold's panels together —
 and never along a crease. Each end of a crease gets a dashed fold mark
@@ -207,8 +213,8 @@ marks stand at both its edges.
 1. Cut the strips out with a craft knife, along the cut marks either
    side. Cut nothing else — the sheet stays in one piece.
 2. Laminate the whole sheet. Where a strip was, the film seals to itself.
-3. Cut the rows apart, then the cards out of each row. Each fold now bends
-   along its film hinge, lies flat when closed and stays closed.
+3. Cut the cards out. Each fold now bends along its film hinge, lies flat
+   when closed and stays closed.
 
 1.5 mm has proved itself for a single fold on 120 g paper in 80 µm film;
 thicker paper or film wants a little more, and thin film folds more easily
@@ -232,9 +238,9 @@ nothing inside a hinge and use `gap` throughout.
 
 Only a fold has gaps: separate cards stand edge to edge, as without a
 fold. A row is laid out by the millimetre, so a row with a fold and its
-hinges may hold one card fewer than a row of single cards — and the
-vertical cuts of two rows need not line up, which is why the rows are cut
-apart first. The strips are printed even with the cut marks off.
+hinges may hold one card fewer than a row of single cards — and is
+centred on its sheet as a row of cards is. The strips are printed even
+with the cut marks off.
 
 ## The block in reading view
 

@@ -23,7 +23,10 @@ import { DEFAULT_PAPER_PRESET, PAPER_PRESETS, type PaperSize } from "../model/pa
  * A deck may fold: the physical cards of one note then print side by side
  * in one row, uncut, and the strip is folded instead of cut apart. A row
  * is laid out in millimetres: pieces of paper — a card, or a fold's panels
- * — edge to edge, a fold never breaking across a row. Nothing changes for
+ * — edge to edge, a fold never breaking across a row. Pieces of one shape
+ * share their sheets and pieces of another start a sheet of their own, so
+ * the cuts and creases of a sheet run through it from top to bottom, for
+ * a paper cutter and a ruler rather than a row at a time. Nothing changes for
  * the back page: each panel's back lies behind it, mirrored about the
  * paper's centre, as any card's does. With a fold gap, the panels of a
  * fold stand that far apart, and the gap between two of them is a hinge:
@@ -188,11 +191,16 @@ function fit(
  * turned about the long edge, the columns mirror within the row; about
  * the short edge, the rows mirror within the column.
  *
- * A folding deck places folds, not cards: each goes into the current row
- * when it fits what is left of it, else starts the next one — so the
- * deck's order is the print order, and a row's remainder stays empty
- * rather than taking a later card. A row is measured in millimetres, so
- * hinges of different widths sit side by side.
+ * A folding deck places folds, not cards, grouped by shape — panel count,
+ * hinge widths, and whether the hinges are cut out — in the order the deck
+ * first reaches each shape, and in deck order within it. A piece goes into
+ * the current row when it fits what is left of it, else starts the next
+ * one; a new shape starts a new sheet. So every sheet holds one shape and
+ * its rows line up edge for edge and crease for crease — a sheet with two
+ * could not: one shape's cut would run through the other's crease. A
+ * row's remainder stays empty, and so does a sheet's. A row is measured in millimetres, so hinges of
+ * different widths would sit side by side; under `off` every piece is one
+ * card, one shape, and the deck's order is the print order.
  */
 export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
   const fold = deck.fold ?? "off";
@@ -224,10 +232,30 @@ export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
     }
     return reach;
   };
-  const pieces = foldPieces(deck.cards, fold, reachOf);
+  // A piece's shape is where its edges and creases lie, and which of its
+  // hinges are cut out: a single card is a single card, whatever its hinge.
+  const shapeOf = (piece: Place[]): string => {
+    if (piece.length === 1) return "1";
+    const source = piece[0]!.source;
+    const hinges = hingesOf(piece.length, source).map(mm);
+    return [piece.length, ...hinges, source.hinge?.cutOut === true].join(" ");
+  };
+  // Grouped by shape, in the order the deck first reaches each and in deck
+  // order within it, and renumbered in that order.
+  const byShape = new Map<string, Place[][]>();
+  for (const piece of foldPieces(deck.cards, fold, reachOf)) {
+    const shape = shapeOf(piece);
+    byShape.set(shape, [...(byShape.get(shape) ?? []), piece]);
+  }
+  let index = 0;
+  const pieces = [...byShape.values()]
+    .flat()
+    .map((piece) => piece.map((place) => ({ ...place, index: index++ })));
 
   // Rows in millimetres: each piece where it fits what is left of its row,
-  // else at the start of the next; the deck's order is the print order.
+  // else at the start of the next — and every shape on sheets of its own:
+  // the rows of a shape are cut and folded along the same lines, and a cut
+  // through one shape's row would cross another's crease.
   const placed: {
     piece: Place[];
     row: number;
@@ -238,15 +266,21 @@ export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
   }[] = [];
   let row = 0;
   let cursor = 0;
-  let widest = 0;
+  const widest: number[] = [];
+  let sheetShape: string | undefined;
   for (const piece of pieces) {
     const source = piece[0]!.source;
     const hinges = hingesOf(piece.length, source);
     const width = widthOf(piece.length, source);
-    if (cursor > 0 && cursor + width > plain.usable + 1e-9) {
+    const shape = shapeOf(piece);
+    if (sheetShape !== undefined && shape !== sheetShape) {
+      row = (Math.floor(row / plain.rows) + 1) * plain.rows;
+      cursor = 0;
+    } else if (cursor > 0 && cursor + width > plain.usable + 1e-9) {
       row++;
       cursor = 0;
     }
+    sheetShape = shape;
     // Each panel's left edge within the piece: the cards and hinges before it.
     const offsets = [0];
     for (const hinge of hinges) offsets.push(offsets.at(-1)! + card + hinge);
@@ -259,23 +293,26 @@ export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
       cutOut: source.hinge?.cutOut === true,
     });
     cursor += width;
-    widest = Math.max(widest, cursor);
+    const at = Math.floor(row / plain.rows);
+    widest[at] = Math.max(widest[at] ?? 0, cursor);
   }
 
-  // The block is the widest row, centred as a full row of cards would be,
-  // so that a deck without folds sits where it always did.
-  const width = Math.max(plain.width, widest);
-  const grid: Grid = {
-    ...plain,
-    originX: plain.originX - (width - plain.width) / 2,
-    width,
+  // A sheet's block is its widest row, centred as a full row of cards would
+  // be — so that a deck without folds sits where it always did, and a sheet
+  // of single cards sits in the middle of the paper whatever another
+  // sheet's folds are wide, its back exactly behind it.
+  const blockOf = (width: number): Grid => {
+    const wide = Math.max(plain.width, width);
+    return { ...plain, originX: plain.originX - (wide - plain.width) / 2, width: wide };
   };
+  const grid = blockOf(Math.max(0, ...widest));
   const withBacks = pieces.some((piece) =>
     piece.some((place) => place.back !== undefined)
   );
   // Per sheet: the cells, the strips each side prints, and the strips cut
   // out — whose ends are cuts too, on both sides of the paper.
   const sheets: {
+    grid: Grid;
     front: Cell[];
     back: Cell[];
     hinges: Hinge[];
@@ -287,6 +324,7 @@ export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
   for (const { piece, row, x, offsets, hinged, cutOut } of placed) {
     const local = row % grid.rows;
     const sheet = (sheets[Math.floor(row / grid.rows)] ??= {
+      grid: blockOf(widest[Math.floor(row / grid.rows)]!),
       front: [],
       back: [],
       hinges: [],
@@ -296,7 +334,7 @@ export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
     });
     const y = grid.originY + local * grid.card.height;
     piece.forEach((place, i) => {
-      const left = grid.originX + x + offsets[i]!;
+      const left = sheet.grid.originX + x + offsets[i]!;
       const common = {
         index: place.index,
         name: place.name,
@@ -348,7 +386,7 @@ export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
   }
 
   const pages: Page[] = [];
-  for (const { front, back, hinges, backHinges, slots, backSlots } of sheets) {
+  for (const { grid, front, back, hinges, backHinges, slots, backSlots } of sheets) {
     pages.push(page("front", front, grid, deck.cutMarks, hinges, slots));
     if (withBacks)
       pages.push(page("back", back, grid, deck.cutMarks, backHinges, backSlots));
@@ -588,11 +626,12 @@ export function cutMarks(
     ]),
   ]);
 
+  const { top, bottom } = printedRows(cells, height);
   const block = {
     left: mm(grid.originX),
     right: mm(grid.originX + grid.width),
-    top: mm(grid.originY),
-    bottom: mm(grid.originY + grid.rows * height),
+    top: mm(top),
+    bottom: mm(bottom),
   };
   const out: Line[] = [];
   const arm = (line: Line) => {
@@ -682,8 +721,9 @@ export function foldMarks(cells: readonly Cell[], grid: Grid, marks: CutMarks): 
   if (!marks.enabled) return [];
   const { creases } = paperPieces(cells, grid);
   const gap = marks.margin ?? 0;
-  const top = mm(grid.originY);
-  const bottom = mm(grid.originY + grid.rows * grid.card.height);
+  const rows = printedRows(cells, grid.card.height);
+  const top = mm(rows.top);
+  const bottom = mm(rows.bottom);
   const out: Line[] = [];
   for (const { x1: x, y1: start, y2: end } of creases) {
     if (mm(start) === top && start - gap > 0)
@@ -693,6 +733,20 @@ export function foldMarks(cells: readonly Cell[], grid: Grid, marks: CutMarks): 
     }
   }
   return out;
+}
+
+/**
+ * The top and bottom of the rows a page prints: the block's, unless the
+ * last sheet holds fewer rows than the grid — then its cuts and creases
+ * leave the block where its cards end, on the front at the bottom and,
+ * turned about the short edge, behind them at the top.
+ */
+function printedRows(
+  cells: readonly Cell[],
+  height: number
+): { top: number; bottom: number } {
+  const ys = cells.map((cell) => cell.y);
+  return { top: Math.min(...ys), bottom: Math.max(...ys) + height };
 }
 
 /**

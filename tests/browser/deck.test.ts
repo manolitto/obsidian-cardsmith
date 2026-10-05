@@ -112,9 +112,14 @@ describe("buildDeck over the fixture folders", () => {
       "Nebelweberei 1/2",
       "Nebelweberei 2/2",
     ]);
-    // Moorschleicher does not fit beside Knochensammler and opens the next row;
-    // Glutfunken, a single card, takes the place beside it.
-    expect(pages.map((page) => page.cells.length)).toEqual([8, 8, 5, 5]);
+    // The single cards come first, as the deck reaches them first: seven on the first
+    // sheet, Fischfang's rows among them. The folds follow on a sheet of their own,
+    // one to a row — none fits beside another, and no single card joins them.
+    const rows = pages
+      .filter((page) => page.side === "front")
+      .map((page) => [...new Set(page.cells.map((c) => c.y))].length);
+    expect(rows).toEqual([3, 3]);
+    expect(pages.map((page) => page.cells.length)).toEqual([7, 7, 6, 6]);
   });
 
   it("dragonbane folded with a gap: a hinge between the panels of each fold", async () => {
