@@ -48,6 +48,14 @@ export interface CardSettings {
   /** Print one card per value of the roll range — a property of the kind of card. */
   expandByRoll?: boolean;
   /**
+   * The colour a hinge is printed in, where this card folds with a gap — a
+   * CSS colour. A card setting rather than the deck's: every hinge belongs
+   * to one card, so a system or a card type may give its own.
+   */
+  hingeColor?: string;
+  /** Whether a hinge is printed on the front of the sheet only, or behind it on the back as well. */
+  hingeSides?: HingeSides;
+  /**
    * The language the card is printed in — which translation table captions
    * come from, and the `lang` its root carries. A setting rather than a
    * property: it says how the card comes out, not what the card is, and the
@@ -59,6 +67,7 @@ export interface CardSettings {
 
 export type OverflowMode = "none" | "extra-cards" | "back-then-cards";
 export type CardSide = "front" | "back" | "both";
+export type HingeSides = "front" | "both";
 
 /**
  * One way of laying a card out. The layout engine produces every candidate,
@@ -105,6 +114,8 @@ const CARD_SETTINGS: SettingTable<CardSettings> = {
   displayHeight: { key: "display-height", parse: positiveNumber },
   copies: { key: "copies", parse: positiveInteger },
   expandByRoll: { key: "expand-by-roll", parse: booleanValue },
+  hingeColor: { key: "hinge-color", parse: nonEmptyString },
+  hingeSides: { key: "hinge-sides", parse: oneOf(["front", "both"]) },
   language: { key: "language", parse: languageCode },
 };
 

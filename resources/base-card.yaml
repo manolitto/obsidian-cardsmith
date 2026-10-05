@@ -118,6 +118,15 @@ side: both
 # `true` once; every other card is printed as it is.
 expand-by-roll: false
 
+# The colour of the strip printed for a hinge — the gap to cut out between
+# the panels of a fold, when a deck folds with a `fold-gap`. Any CSS colour;
+# a system, a card type, a deck or a note may give its own.
+hinge-color: "#cccccc"
+
+# Where the hinge strip is printed: `front`, the side the knife works from,
+# or `both`, behind itself on the back of the sheet as well.
+hinge-sides: front
+
 # ── Deck settings ────────────────────────────────────────────────────
 
 # Paper the deck is imposed on. A sheet (`A4`, `Letter`, …), a card size

@@ -212,8 +212,20 @@ Only a fold has gaps: separate cards stand edge to edge, as without a
 fold. A row is laid out by the millimetre, so a row with a fold and its
 hinges may hold one card fewer than a row of single cards — and the
 vertical cuts of two rows need not line up, which is why the rows are cut
-apart first. The grey strips are printed even with the cut marks off, and
-only on the front of the sheet.
+apart first. The grey strips are printed even with the cut marks off.
+
+Two card settings shape the strips, so a system or a card type may give
+its folds a look of its own, and a deck block or a single note may
+override it:
+
+- `hinge-color` — light grey unless something says otherwise; any CSS
+  colour: `"#e8d9b5"` for a strip that disappears against a
+  parchment-coloured card edge, or a strong colour that is easy to see
+  while cutting.
+- `hinge-sides` — `front` (the default), the side you cut from, or `both`,
+  which prints the strip behind itself on the back of the sheet too, for a
+  hinge that is coloured through when it is not cut out, or when a sliver
+  is left at its edge.
 
 ## The block in reading view
 
