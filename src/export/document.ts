@@ -1,7 +1,7 @@
 import type { Deck } from "../deck/pipeline";
 import { splitFontFaces } from "../layout/host";
 import { escapeHtml } from "../templates/inline-markdown";
-import { composeDeck, cutMarksSvg, mm, type Grid, type Page } from "./compose";
+import { composeDeck, cutMarksSvg, hingesSvg, mm, type Grid, type Page } from "./compose";
 
 /*
  * The export document: a deck's pages as one self-contained HTML file.
@@ -60,9 +60,10 @@ export function exportDocument(
         (cell) =>
           `<div class="cs-cell" style="left:${mm(cell.x)}mm;top:${mm(cell.y)}mm;width:${mm(grid.card.width)}mm;height:${mm(grid.card.height)}mm">${cell.html}</div>`
       );
-    // The marks come last: siblings paint in order, so they lie over the
-    // cards, where the corners of a gapless grid are.
-    return `<div class="${pageClass}" data-cs-side="${page.side}">${cells.join("")}${cutMarksSvg(page, grid, cutMarks)}</div>`;
+    // Siblings paint in order: the hinges first, under the cards, so the
+    // cards' edges lie on them; the marks last, over the cards, where the
+    // corners of a gapless grid are.
+    return `<div class="${pageClass}" data-cs-side="${page.side}">${hingesSvg(page, grid)}${cells.join("")}${cutMarksSvg(page, grid, cutMarks)}</div>`;
   });
 
   return [
@@ -96,7 +97,7 @@ function pageStyles(width: number, height: number): string {
     `.cs-page { position: relative; width: ${mm(width)}mm; height: ${mm(height)}mm; overflow: hidden; break-after: page; }`,
     ".cs-page:last-child { break-after: auto; }",
     ".cs-cell { position: absolute; overflow: hidden; contain: layout paint; }",
-    ".cs-cut-marks { position: absolute; left: 0; top: 0; pointer-events: none; }",
+    ".cs-cut-marks, .cs-hinges { position: absolute; left: 0; top: 0; pointer-events: none; }",
     "@media print {",
     "  html, body { width: auto; height: auto; }",
     "  .cs-page { width: 100%; }",

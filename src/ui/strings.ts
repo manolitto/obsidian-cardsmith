@@ -74,7 +74,7 @@ const en = {
   "card-key.expand-by-roll":
     "Print one card per value of the roll range between `roll-min` and `roll-max`.",
   "card-key.hinge":
-    "Where a deck folds the card, the strip between two panels: `{ gap: 1.5, outer-gap: 2.5, color: '#cccccc', sides: front }`. `gap` 0 folds along a crease; the fields merge, so one can change alone.",
+    "Where a deck folds the card, the strip between two panels: `{ gap: 1.5, outer-gap: 2.5, color: '#cccccc', sides: front, cut-out: true }`. `gap` 0 folds along a crease; `cut-out: true` for a laminated card. The fields merge, so one can change alone.",
   "card-key.language":
     "The language the card is printed in — which translation table its captions come from.",
 
@@ -102,6 +102,8 @@ const en = {
   "deck.sides.front": "fronts only",
   "deck.sides.back": "backs only",
   "deck.sides.both": "fronts and backs",
+  "deck.fold": "Fold",
+  "deck.hinge": "Hinge",
   "deck.output": "Export to",
   "deck.preview": "Preview",
   "deck.export-pdf": "Export PDF",
@@ -280,7 +282,7 @@ const de: Strings = {
   "card-key.expand-by-roll":
     "Eine Karte je Wert des Würfelbereichs zwischen `roll-min` und `roll-max` drucken.",
   "card-key.hinge":
-    "Wo ein Deck die Karte faltet, der Streifen zwischen zwei Teilen: `{ gap: 1.5, outer-gap: 2.5, color: '#cccccc', sides: front }`. `gap` 0 falzt ohne Streifen; die Felder verschmelzen, eines lässt sich allein ändern.",
+    "Wo ein Deck die Karte faltet, der Streifen zwischen zwei Teilen: `{ gap: 1.5, outer-gap: 2.5, color: '#cccccc', sides: front, cut-out: true }`. `gap` 0 falzt ohne Streifen; `cut-out: true` für eine laminierte Karte. Die Felder verschmelzen, eines lässt sich allein ändern.",
   "card-key.language":
     "Die Sprache, in der die Karte gedruckt wird — aus welcher Übersetzungstabelle ihre Beschriftungen kommen.",
 
@@ -308,6 +310,8 @@ const de: Strings = {
   "deck.sides.front": "nur Vorderseiten",
   "deck.sides.back": "nur Rückseiten",
   "deck.sides.both": "Vorder- und Rückseiten",
+  "deck.fold": "Faltung",
+  "deck.hinge": "Scharnier",
   "deck.output": "Exportziel",
   "deck.preview": "Vorschau",
   "deck.export-pdf": "PDF exportieren",

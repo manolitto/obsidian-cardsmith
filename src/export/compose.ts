@@ -60,7 +60,14 @@ export interface Cell {
   /** The settled face; absent for the back of a card that has none — the place stays empty. */
   html?: string;
   /** Set when the place is a panel of a fold: which fold, which of its panels counted from 1, and whether hinges stand between them. */
-  fold?: { chunk: number; panel: number; panels: number; hinged?: boolean };
+  fold?: {
+    chunk: number;
+    panel: number;
+    panels: number;
+    /** Hinges stand between the panels; `cutOut`, and they are cut out, each panel a piece of its own. */
+    hinged?: boolean;
+    cutOut?: boolean;
+  };
 }
 
 export interface Page {
@@ -227,6 +234,7 @@ export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
     x: number;
     offsets: number[];
     hinged: boolean;
+    cutOut: boolean;
   }[] = [];
   let row = 0;
   let cursor = 0;
@@ -242,7 +250,14 @@ export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
     // Each panel's left edge within the piece: the cards and hinges before it.
     const offsets = [0];
     for (const hinge of hinges) offsets.push(offsets.at(-1)! + card + hinge);
-    placed.push({ piece, row, x: cursor, offsets, hinged: hinges.some((h) => h > 0) });
+    placed.push({
+      piece,
+      row,
+      x: cursor,
+      offsets,
+      hinged: hinges.some((h) => h > 0),
+      cutOut: source.hinge?.cutOut === true,
+    });
     cursor += width;
     widest = Math.max(widest, cursor);
   }
@@ -261,7 +276,7 @@ export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
   const sheets: { front: Cell[]; back: Cell[]; hinges: Hinge[]; backHinges: Hinge[] }[] =
     [];
 
-  for (const { piece, row, x, offsets, hinged } of placed) {
+  for (const { piece, row, x, offsets, hinged, cutOut } of placed) {
     const local = row % grid.rows;
     const sheet = (sheets[Math.floor(row / grid.rows)] ??= {
       front: [],
@@ -278,7 +293,7 @@ export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
         cardTypeId: place.cardTypeId,
         ...(place.fold === undefined
           ? {}
-          : { fold: hinged ? { ...place.fold, hinged } : place.fold }),
+          : { fold: hinged ? { ...place.fold, hinged, cutOut } : place.fold }),
       };
       sheet.front.push({
         ...common,
@@ -567,37 +582,25 @@ export function cutMarks(cells: readonly Cell[], grid: Grid, marks: CutMarks): L
 }
 
 /**
- * Fold marks for a page: at each end of every crease, an arm running on
- * from it the way a cut arm would — `margin` clear, `length` long, to the
- * paper's edge where the crease ends at the block's — drawn dashed, so a
- * fold is never taken for a cut. An end where a cut meets the crease gets
- * none: the cut's own arm is there. They follow the cut marks: on, off,
- * colour and weight alike.
+ * Fold marks for a page: where a crease meets the block's top or bottom
+ * edge, an arm running on from it out to the paper's edge, `margin` clear,
+ * drawn dashed so a fold is never taken for a cut. Only there: inside the
+ * block a crease ends against the next row's cards, and a mark would lie
+ * on them — the stub would stay on a card, where a fold has nothing to
+ * say. They follow the cut marks: on, off, colour and weight alike.
  */
 export function foldMarks(cells: readonly Cell[], grid: Grid, marks: CutMarks): Line[] {
   if (!marks.enabled) return [];
-  const { pieces, creases } = paperPieces(cells, grid);
-  if (creases.length === 0) return [];
-  const length = marks.length ?? 3;
+  const { creases } = paperPieces(cells, grid);
   const gap = marks.margin ?? 0;
-  const { height } = grid.card;
-  const corners = new Set<string>();
-  for (const piece of pieces) {
-    for (const x of [piece.x, piece.x + piece.width]) {
-      for (const y of [piece.y, piece.y + height]) corners.add(`${mm(x)},${mm(y)}`);
-    }
-  }
   const top = mm(grid.originY);
-  const bottom = mm(grid.originY + grid.rows * height);
+  const bottom = mm(grid.originY + grid.rows * grid.card.height);
   const out: Line[] = [];
   for (const { x1: x, y1: start, y2: end } of creases) {
-    if (!corners.has(`${mm(x)},${mm(start)}`)) {
-      const from = mm(start) === top ? 0 : start - gap - length;
-      if (from < start - gap) out.push({ x1: x, y1: from, x2: x, y2: start - gap });
-    }
-    if (!corners.has(`${mm(x)},${mm(end)}`)) {
-      const to = mm(end) === bottom ? grid.paper.height : end + gap + length;
-      if (end + gap < to) out.push({ x1: x, y1: end + gap, x2: x, y2: to });
+    if (mm(start) === top && start - gap > 0)
+      out.push({ x1: x, y1: 0, x2: x, y2: start - gap });
+    if (mm(end) === bottom && end + gap < grid.paper.height) {
+      out.push({ x1: x, y1: end + gap, x2: x, y2: grid.paper.height });
     }
   }
   return out;
@@ -605,9 +608,9 @@ export function foldMarks(cells: readonly Cell[], grid: Grid, marks: CutMarks): 
 
 /**
  * The pieces of paper a page is cut into — a card, or a fold's panels
- * together — and the creases inside them, top to bottom. With a hinge
- * between its panels a fold has no crease on paper: each panel is a piece
- * of its own.
+ * together — and the creases inside them, top to bottom: one between two
+ * panels edge to edge, one at each edge of a hinge that stays. A hinge that
+ * is cut out leaves no crease on paper: each panel is a piece of its own.
  */
 function paperPieces(
   cells: readonly Cell[],
@@ -618,7 +621,7 @@ function paperPieces(
   const creases: Line[] = [];
   const folds = new Map<number, Cell[]>();
   for (const cell of cells) {
-    if (cell.fold === undefined || cell.fold.hinged) {
+    if (cell.fold === undefined || cell.fold.cutOut) {
       pieces.push({ x: cell.x, y: cell.y, width });
       continue;
     }
@@ -627,42 +630,55 @@ function paperPieces(
     folds.set(cell.fold.chunk, panels);
   }
   for (const panels of folds.values()) {
-    const left = Math.min(...panels.map((cell) => cell.x));
-    const y = panels[0]!.y;
-    pieces.push({ x: left, y, width: panels.length * width });
-    for (let i = 1; i < panels.length; i++) {
-      creases.push({ x1: left + i * width, y1: y, x2: left + i * width, y2: y + height });
+    const sorted = [...panels].sort((a, b) => a.x - b.x);
+    const left = sorted[0]!.x;
+    const y = sorted[0]!.y;
+    pieces.push({ x: left, y, width: sorted.at(-1)!.x + width - left });
+    const crease = (x: number) => creases.push({ x1: x, y1: y, x2: x, y2: y + height });
+    for (let i = 1; i < sorted.length; i++) {
+      const end = sorted[i - 1]!.x + width;
+      const start = sorted[i]!.x;
+      crease(end);
+      if (mm(start) !== mm(end)) crease(start);
     }
   }
   return { pieces, creases };
 }
 
+/** How far a hinge's strip reaches under the cards either side, so that no seam of bare paper shows between card and strip. */
+const HINGE_OVERLAP = 0.5;
+
 /**
- * The marks of a page as an SVG the size of the paper, its units
- * millimetres: the hinges first, each filled in its card's colour — drawn
- * whether or not the marks are, being what to cut out rather than a mark —
- * then the cut marks, then the fold marks dashed.
+ * The hinges of a page as an SVG the size of the paper, painted under the
+ * cards: each strip filled in its card's colour and reaching a little under
+ * the panels either side, so that the anti-aliased edge of a card blends
+ * into the strip rather than into white paper. Drawn whether or not the
+ * marks are — it is the strip, not a mark.
  */
+export function hingesSvg(page: Page, grid: Grid): string {
+  if (page.hinges.length === 0) return "";
+  const { width, height } = grid.paper;
+  const rects = page.hinges.map(
+    (r) =>
+      `<rect x="${mm(r.x - HINGE_OVERLAP)}" y="${mm(r.y)}" width="${mm(r.width + 2 * HINGE_OVERLAP)}" height="${mm(r.height)}" fill="${attribute(r.color)}"/>`
+  );
+  return (
+    `<svg class="cs-hinges" width="${width}mm" height="${height}mm" viewBox="0 0 ${width} ${height}" ` +
+    `stroke="none" xmlns="http://www.w3.org/2000/svg">` +
+    rects.join("") +
+    `</svg>`
+  );
+}
+
+/** The marks of a page as an SVG the size of the paper, its units millimetres: the cut marks, then the fold marks dashed. */
 export function cutMarksSvg(page: Page, grid: Grid, marks: CutMarks): string {
-  if (page.marks.length === 0 && page.folds.length === 0 && page.hinges.length === 0)
-    return "";
+  if (page.marks.length === 0 && page.folds.length === 0) return "";
   const { width, height } = grid.paper;
   const stroke = marks.color ?? "#aaaaaa";
   const weight = marks.weight ?? 0.25;
   const line = (l: Line) =>
     `<line x1="${mm(l.x1)}" y1="${mm(l.y1)}" x2="${mm(l.x2)}" y2="${mm(l.y2)}"/>`;
-  const lines: string[] = [];
-  if (page.hinges.length > 0) {
-    lines.push(
-      `<g class="cs-hinges" stroke="none">`,
-      ...page.hinges.map(
-        (r) =>
-          `<rect x="${mm(r.x)}" y="${mm(r.y)}" width="${mm(r.width)}" height="${mm(r.height)}" fill="${attribute(r.color)}"/>`
-      ),
-      "</g>"
-    );
-  }
-  lines.push(...page.marks.map(line));
+  const lines = page.marks.map(line);
   if (page.folds.length > 0) {
     lines.push(
       `<g class="cs-fold-marks" stroke-dasharray="${mm(4 * weight)} ${mm(3 * weight)}">`,

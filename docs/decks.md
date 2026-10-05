@@ -190,6 +190,7 @@ hinge:
   outer-gap: 2.5    # a cover's outer hinge, see below; default: gap
   color: "#cccccc"  # the strip's colour, any CSS colour
   sides: front      # front, or both: behind itself on the back too
+  cut-out: false    # true: the strip is cut out, for a laminated card
 ```
 
 `hinge` is a card setting, not the deck's: a system or a card type may set
@@ -198,8 +199,9 @@ fold takes it from its own card. Its fields merge across those layers, so
 a deck block that writes `hinge: { gap: 1.5 }` keeps the system's colour
 and sides.
 
-**Laminated.** With `gap: 1.5` the panels stand 1.5 mm apart and the gap
-between them is printed as a grey strip.
+**Laminated.** With `gap: 1.5` and `cut-out: true` the panels stand
+1.5 mm apart, the gap between them is printed as a grey strip, and cut
+marks stand at both its edges.
 
 1. Cut the grey strips out with a craft knife, along the cut marks either
    side. Cut nothing else — the sheet stays in one piece.
@@ -211,11 +213,13 @@ between them is printed as a grey strip.
 thicker paper or film wants a little more, and thin film folds more easily
 than thick.
 
-**Not laminated.** The strips may also be left standing: then the strip is
-the spine of the folded card, and half a millimetre
-(`hinge: { gap: 0.5, outer-gap: 1 }`) lets 120 g paper fold flat without
-cracking the print at the edge — score along both edges of the strip
-first. Print the strip in the card's own colour on both sides
+**Not laminated** — the default, `cut-out: false`. The strip is left
+standing as the spine of the folded card: the fold is one piece of paper,
+with cut marks only around it and a dashed fold mark at each edge of the
+strip, out in the paper's margin — never between two rows of cards, where
+it would lie on the next card. Half a millimetre (`hinge: { gap: 0.5, outer-gap: 1 }`) lets 120 g
+paper fold flat without cracking the print at the edge — score along both
+edges of the strip first. Print the strip in the card's own colour on both sides
 (`color: "#d9c5a8"`, `sides: both` for a parchment card) and the fold reads
 as one card.
 

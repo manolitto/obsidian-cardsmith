@@ -129,10 +129,14 @@ expand-by-roll: false
 #   color      the strip's colour, any CSS colour.
 #   sides      `front`, the side a knife works from, or `both`, behind itself
 #              on the back of the sheet as well.
+#   cut-out    `true` for a laminated card: the strip is cut out and the film
+#              seals in the slot, cut marks either side. `false` keeps it as
+#              the fold's spine, with a fold mark at each edge.
 hinge:
   gap: 0
   color: "#cccccc"
   sides: front
+  cut-out: false
 
 # ── Deck settings ────────────────────────────────────────────────────
 

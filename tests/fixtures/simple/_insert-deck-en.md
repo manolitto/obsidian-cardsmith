@@ -74,8 +74,8 @@ card-type: simple
 # Print one card per value of the roll range between `roll-min` and `roll-max`.
 # expand-by-roll: false
 
-# Where a deck folds the card, the strip between two panels: `{ gap: 1.5, outer-gap: 2.5, color: '#cccccc', sides: front }`. `gap` 0 folds along a crease; the fields merge, so one can change alone.
-# hinge: {gap: 0, color: '#cccccc', sides: front}
+# Where a deck folds the card, the strip between two panels: `{ gap: 1.5, outer-gap: 2.5, color: '#cccccc', sides: front, cut-out: true }`. `gap` 0 folds along a crease; `cut-out: true` for a laminated card. The fields merge, so one can change alone.
+# hinge: {gap: 0, color: '#cccccc', sides: front, cut-out: false}
 
 # The language the card is printed in — which translation table its captions come from.
 # language:
