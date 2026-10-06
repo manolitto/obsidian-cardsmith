@@ -4,6 +4,7 @@
   Like front.hbs it renders PLACES, each named after where it sits:
 
     back-header-title      big green display title, top      ALWAYS
+    back-header-subtitle   smaller green line under it       OPTIONAL
     back-image-primary     the illustration
     back-footer-title      small parchment plaque, bottom    OPTIONAL
 
@@ -25,8 +26,11 @@
   the caption therefore has to come from the card's data rather than from
   the card type's translations.
 
-  `back-footer-title` prints only when it names something OTHER than the
-  header — repeating the line above it one size down would read as a mistake.
+  `back-header-subtitle` and `back-footer-title` print only when they name
+  something OTHER than the header — repeating the line above one size down
+  would read as a mistake. Nothing fills the subtitle at system level;
+  the rule card puts its `subcategory` there („ZAUBER" over „ELEMENTARMAGIE")
+  and its name on the plaque.
 
   The illustration is whatever the card type binds to `back-image-primary`.
   `back-image` is bound there system-wide (a vault image chosen per card),
@@ -41,6 +45,11 @@
   <div class="db-strip db-strip-top"></div>
 
   <div class="db-back-category"><span class="text-scalable">{{slot "back-header-title" plain=true fallback=(t "back-label")}}</span></div>
+  {{#if (slot "back-header-subtitle")}}
+  {{#unless (eq (slot "back-header-title" plain=true fallback=(t "back-label")) (slot "back-header-subtitle" plain=true))}}
+  <div class="db-back-subtitle"><span class="text-scalable">{{slot "back-header-subtitle" plain=true}}</span></div>
+  {{/unless}}
+  {{/if}}
 
   <div class="db-back-image-wrap{{#unless (slot "back-image-primary")}} db-back-emblem{{/unless}}">
     {{#if (slot "back-image-primary")}}

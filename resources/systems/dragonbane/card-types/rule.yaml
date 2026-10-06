@@ -61,7 +61,14 @@ properties:
       de: "Magie"
       en: "Magic"
 
+  # The shelf goes under the back title rather than on the plaque, and the
+  # plaque carries the card's name — so a fanned-out stack of backs shows
+  # which spell is which. `slot:` replaces, so `name` restates its front.
   subcategory:
+    slot: back-header-subtitle
+    description:
+      de: "Feinere Einordnung innerhalb der Kartenfamilie – erscheint in kleinerer Schrift unter dem großen Titel der Rückseite (z. B. „Elementarmagie“, „Heroisches Talent“). Ohne Angabe entfällt die Zeile; stimmt der Wert mit `category` überein, ebenfalls."
+      en: "Finer grouping within the card family — set in smaller type under the back's large title (e.g. \"Elementalism\", \"Heroic ability\"). Without it the line is omitted; if the value equals `category` it is omitted as well."
     sample:
       de: "Elementarmagie"
       en: "Elementalism"
@@ -75,10 +82,10 @@ properties:
     sample: "Ember Grip"
 
   name:
-    slot: front-header-title
+    slot: [front-header-title, back-footer-title]
     description:
-      de: "Name der Fertigkeit, des Talents oder des Zaubers."
-      en: "Name of the skill, ability or spell."
+      de: "Name der Fertigkeit, des Talents oder des Zaubers. Steht auch auf der Plakette der Rückseite."
+      en: "Name of the skill, ability or spell. Also on the plaque of the back."
     sample:
       de: "Glutgriff"
       en: "Ember Grip"
