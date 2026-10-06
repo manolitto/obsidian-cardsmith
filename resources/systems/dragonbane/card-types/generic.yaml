@@ -1,8 +1,9 @@
 # ── generic: the free card ─────────────────────────────────────────
 # Open a note, write the text, done. The body is the note's markdown —
 # paragraphs, sub-headings, lists, tables and embedded pictures included.
-# The card knows only two values: the title on the plaque and the source
-# reference along the edge. A deck cover, a licence page, a house rule.
+# The card knows three values: the title on the plaque, the source
+# reference along the edge, and a line under the back's title. A deck
+# cover, a licence page, a house rule.
 
 front-template: templates/generic-front.hbs
 back-template: templates/back.hbs
@@ -47,6 +48,18 @@ properties:
     description:
       de: "Der Abschnitt unter einer `## Vorderseite`-Überschrift in der Notiz füllt die Karte, wenn der Block keinen `content` setzt. Voll gerendert – Tabellen, Überschriften, Listen und eingebettete Bilder inklusive."
       en: "The section under a `## Vorderseite` or `## Front` heading in the note fills the card when the block sets no `content`. Fully rendered — tables, headings, lists and embedded pictures included."
+
+  # The back's second line. Not `subcategory`, which stays on the plaque:
+  # a card that sets both shows both.
+  back-subtitle:
+    slot: back-header-subtitle
+    aliases: [untertitel, rückseiten-untertitel, subtitle]
+    description:
+      de: "Zweite Zeile unter dem großen Titel der Rückseite, in kleinerer Schrift. Ohne Angabe entfällt sie; stimmt sie mit `category` überein, ebenfalls."
+      en: "Second line under the back's large title, in smaller type. Omitted when empty or when it equals `category`."
+    sample:
+      de: "Über dieses Deck"
+      en: "About this deck"
 
   # The generic front has no left edge label — the card knows a title
   # and a source, nothing else — so the system-wide binding is undone.

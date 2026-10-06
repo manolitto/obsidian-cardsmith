@@ -4,7 +4,7 @@ card:
   card-type: rule
   language: en
 data:
-  # Name of the skill, ability or spell.
+  # Name of the skill, ability or spell. Also on the plaque of the back.
   name: Ember Grip
 
   # Description or rule text of the card — the paragraph below the stat block.
@@ -19,7 +19,7 @@ data:
   # Card family — the large green title at the top of the back. Without it the card type's own label appears there ("Ausrüstung", "Waffe"). For roll tables put the table's name here ("Demon Roll in Melee", "Fear", "Hunting"); it then doubles as the title fallback when the table row has no name of its own. In a table note, set once in the frontmatter for all rows.
   category: Magic
 
-  # Finer grouping within the card family — rendered as the small parchment plaque under the back's illustration (e.g. "Clothing", "Tool", "Trade good"). Without it the plaque is omitted; if the value equals `category` it is suppressed as well.
+  # Finer grouping within the card family — set in smaller type under the back's large title (e.g. "Elementalism", "Heroic ability"). Without it the line is omitted; if the value equals `category` it is omitted as well.
   subcategory: Elementalism
 
   # Source reference — book title with page number, or a wikilink into the vault. Set upright along the card's right edge; falls back to "DRAGONBANE".

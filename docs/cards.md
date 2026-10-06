@@ -123,6 +123,7 @@ card:
   card-type: generic
 data:
   name: Schlafentzug
+  Untertitel: Erschöpfung
 ```
 ````
 

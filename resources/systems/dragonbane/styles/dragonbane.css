@@ -1435,6 +1435,30 @@
   margin: 0.25em 0 0;
 }
 
+/* The line under the back title (`back-header-subtitle`): the same voice a
+   step down — two thirds of the title's size, Bold rather than Black — set
+   close under it, so the two read as one heading. The gap below is the
+   wrap's, as under the title alone. The height of two lines at most: the
+   box would otherwise grow with a long subtitle and the layout engine,
+   which shrinks a `.text-scalable` only against a box it does not fit,
+   would never step it down. */
+.card-root.dragonbane .db-back-subtitle {
+  flex: 0 0 auto;
+  font-family: var(--font-monumental);
+  font-weight: 700;
+  font-size: clamp(var(--card-font-size-title-min),
+                   calc(var(--card-width, 63mm) * 0.0817),
+                   calc(var(--card-font-size-title-max) * 1.057));
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--db-green-deep);
+  padding: 0 4%;
+  margin: 0.1em 0 0;
+  max-height: 2.2em;
+}
+
 /* The caption plaque, when present, ends the face; the original sets it at
    77–89 % — clear of the bottom ornament. Its own top margin (an `em` of the
    plaque's text, meant for in-body use on the front) is dropped so the gap

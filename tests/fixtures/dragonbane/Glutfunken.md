@@ -2,7 +2,7 @@
 
 A spell with a picture on top, no source of its own (the right edge falls
 back to the system's name), and a `subcategory` that equals `category`, so
-the back's caption plaque stays out. Invented for this deck.
+the back's subtitle stays out and only the name stands on the plaque. Invented for this deck.
 
 ```cardsmith
 card:

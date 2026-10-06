@@ -27,4 +27,7 @@ data:
 
   # The section under a `## Vorderseite` or `## Front` heading in the note fills the card when the block sets no `content`. Fully rendered — tables, headings, lists and embedded pictures included.
   vorderseite: # no sample
+
+  # Second line under the back's large title, in smaller type. Omitted when empty or when it equals `category`.
+  back-subtitle: About this deck
 ```
