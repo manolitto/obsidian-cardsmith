@@ -67,14 +67,11 @@ export class PropertyReferenceModal extends Modal {
       const row = body.createEl("tr");
       row.createEl("td", { cls: "cs-reference-key" }).createEl("code", { text: key });
       row.createEl("td", { text: propertyDescription(def, this.language) ?? "" });
-      row.createEl("td", {
-        cls: "cs-reference-aliases",
-        text: (def.aliases ?? []).join(", "),
-      });
+      nameList(row.createEl("td", { cls: "cs-reference-aliases" }), def.aliases ?? []);
       row.createEl("td", { cls: "cs-reference-sample" }).createEl("code", {
         text: sampleText(propertySample(def, this.language)),
       });
-      row.createEl("td", { cls: "cs-reference-slot", text: (def.slot ?? []).join(", ") });
+      nameList(row.createEl("td", { cls: "cs-reference-slot" }), def.slot ?? []);
     }
   }
 
@@ -130,6 +127,19 @@ export class PropertyReferenceModal extends Modal {
   private block(mode: InsertMode): string {
     return buildCardBlock(this.system, this.cardType, this.language, mode);
   }
+}
+
+/**
+ * Names as a comma-separated list that wraps between names only: each
+ * name is one unbreakable item, so a long alias list folds onto several
+ * lines instead of widening the table, and `front-stat-1a` never breaks
+ * at its hyphens.
+ */
+function nameList(cell: HTMLElement, names: readonly string[]): void {
+  names.forEach((name, i) => {
+    if (i > 0) cell.appendText(", ");
+    cell.createSpan({ cls: "cs-reference-name", text: name });
+  });
 }
 
 /** A sample as one cell: a scalar as it is, a list or a map as YAML, long ones cut. */
