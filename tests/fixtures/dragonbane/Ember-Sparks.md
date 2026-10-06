@@ -14,7 +14,7 @@ data:
   back-image: "[[Drachensiegel.png]]"
   name: Ember Sparks
   category: Spell
-  subcategory: Spell
+  subcategory: Elementalism
   rank: "2"
   prerequisite: "[[Ember Grip]]"
   wp-cost: 2 per power level
