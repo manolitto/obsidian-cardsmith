@@ -72,8 +72,7 @@
 }
 
 .cs-reference-key,
-.cs-reference-slot,
-.cs-reference-aliases {
+.cs-reference-name {
   white-space: nowrap;
 }
 
@@ -84,6 +83,7 @@
 
 .cs-reference-sample code {
   white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 
 .cs-reference-keys {
