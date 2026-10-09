@@ -41,6 +41,13 @@ import { t, uiLanguage } from "./strings";
  * the file's metadata change and re-renders into the same element. A
  * result that arrives after the child unloaded, or after a newer render
  * started, is dropped before it touches the DOM.
+ *
+ * A re-render keeps the card it replaces on the screen until the new one
+ * is laid out, then swaps the two in one synchronous step. The editor
+ * re-renders on every keystroke that reaches the note's metadata; a block
+ * that collapsed to a one-line placeholder in between would change its
+ * height twice per edit and move the text below it under the reader's
+ * cursor. Only a block with nothing to show yet shows the placeholder.
  */
 
 /** What the processor needs from the plugin. */
@@ -123,12 +130,8 @@ class CardPreview extends MarkdownRenderChild {
   private async render(): Promise<void> {
     const generation = ++this.generation;
     const diagnostics = collectDiagnostics();
-    this.containerEl.empty();
     this.containerEl.addClass("cs-card-block");
-    const placeholder = this.containerEl.createDiv({
-      cls: "cs-card-placeholder",
-      text: t("preview.laying-out"),
-    });
+    this.busy();
 
     try {
       const file = this.context.app.vault.getAbstractFileByPath(this.path);
@@ -137,6 +140,7 @@ class CardPreview extends MarkdownRenderChild {
       if (!isFirstBlock(cardBlocks(text), this.block)) {
         if (this.stale(generation)) return;
         this.containerEl.empty();
+        this.containerEl.removeClass("cs-card-busy");
         this.containerEl.createDiv({
           cls: "cs-card-empty",
           text: t("preview.second-block"),
@@ -159,7 +163,8 @@ class CardPreview extends MarkdownRenderChild {
     this.noteMessages = diagnostics.messages;
 
     if (this.cards.length === 0) {
-      placeholder.remove();
+      this.containerEl.empty();
+      this.containerEl.removeClass("cs-card-busy");
       this.containerEl.createDiv({ cls: "cs-card-empty", text: t("preview.no-card") });
       this.showDiagnostics([]);
       return;
@@ -182,6 +187,7 @@ class CardPreview extends MarkdownRenderChild {
 
     const cardSize = card.settings.cardSize ?? CARD_PRESETS[DEFAULT_CARD_PRESET];
     this.containerEl.empty();
+    this.containerEl.removeClass("cs-card-busy");
     if (this.cards.length > 1) this.steppingBar();
     mountPreview(
       this.containerEl,
@@ -197,6 +203,21 @@ class CardPreview extends MarkdownRenderChild {
     this.showDiagnostics(diagnostics.messages);
   }
 
+  /**
+   * Work has started: a block with nothing to show yet says so; one
+   * showing a card keeps it, dimmed, until the next one replaces it.
+   */
+  private busy(): void {
+    if (this.containerEl.hasChildNodes()) {
+      this.containerEl.addClass("cs-card-busy");
+    } else {
+      this.containerEl.createDiv({
+        cls: "cs-card-placeholder",
+        text: t("preview.laying-out"),
+      });
+    }
+  }
+
   private steppingBar(): void {
     const bar = this.containerEl.createDiv({ cls: "cs-card-stepping" });
     const last = this.cards.length - 1;
@@ -210,6 +231,7 @@ class CardPreview extends MarkdownRenderChild {
       el.addEventListener("click", () => {
         this.index = target;
         // A step is a new render of the same cards; the note is not re-read.
+        this.busy();
         void this.show(++this.generation);
       });
     };
