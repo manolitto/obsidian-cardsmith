@@ -7,7 +7,7 @@ creature card type prints `large` on its own; a deck is one grid, so
 
 ```cardsmith-deck
 system: pf2e
-card-type: [creature, item, feat, action, trap]
+card-type: [generic, creature, item, feat, action, trap]
 card-languages: de
 card-size: poker
 paper-size: A4 portrait
