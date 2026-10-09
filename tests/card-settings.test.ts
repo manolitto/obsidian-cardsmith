@@ -46,6 +46,22 @@ describe("the card-setting chain", () => {
     expect(diagnostics.matching("hinge")).toHaveLength(4);
   });
 
+  it("knows four folds and no fifth, keeping the layer below for anything else", () => {
+    const diagnostics = collectDiagnostics();
+    for (const fold of ["off", "strip", "cover", "booklet"]) {
+      expect(resolve(["fold: off", `fold: ${fold}`]).fold).toBe(fold);
+    }
+    expect(resolve(["fold: off", "fold: book"], diagnostics).fold).toBe("off");
+    expect(diagnostics.matching("book")).toHaveLength(1);
+  });
+
+  it("lets a note fold where its deck does not, and the other way round", () => {
+    // baseline, deck, note: the note has the last word.
+    expect(resolve(["fold: off", "fold: cover", "fold: strip"]).fold).toBe("strip");
+    expect(resolve(["fold: off", "fold: strip", "fold: off"]).fold).toBe("off");
+    expect(resolve(["fold: off", "fold: cover", "copies: 2"]).fold).toBe("cover");
+  });
+
   it("lets every layer set every key, highest wins, values typed", () => {
     // baseline → system → card type → deck → note, and no per-key permission:
     // a deck overriding a card's size for one print run is the whole point of

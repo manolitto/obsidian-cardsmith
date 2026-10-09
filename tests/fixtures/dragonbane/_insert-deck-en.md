@@ -35,9 +35,6 @@ card-type: [gear, creature]
 # Which paper edge is the binding when printing duplex, so fronts and backs align: `long-edge` or `short-edge`.
 # duplex-flip: long-edge
 
-# A note's cards side by side, uncut, folded instead of cut apart: `strip` (1, 2, 3 across the front, 4, 5, 6 across the back), `cover` (5, 6, 1 across the front, page 1 a cover with the last page behind it), `booklet` (nested sheets of two, like a printer's booklet) or `off`.
-# fold: 'off'
-
 # The cut marks at every card corner; the fields merge, so one can change alone.
 # cut-marks: {enabled: true, length: 3, margin: 0, color: '#aaaaaa', weight: 0.25}
 
@@ -74,7 +71,10 @@ card-type: [gear, creature]
 # Print one card per value of the roll range between `roll-min` and `roll-max`.
 # expand-by-roll: false
 
-# Where a deck folds the card, the strip between two panels: `{ gap: 1.5, outer-gap: 2.5, color: '#ffffff', sides: front, cut-out: true }`. `gap` 0 folds along a crease; `cut-out: true` for a laminated card. The fields merge, so one can change alone.
+# Whether a note that runs onto several cards prints them side by side in one piece, uncut: `strip` (1, 2 on the front, 3, 4 behind — with `gap` 0, a wide card of columns), `cover` (folded inwards, page 1 a cover), `booklet` (sheets of two, nested) or `off`. Never split; wider than the paper stops the export.
+# fold: 'off'
+
+# Where the card folds, the strip between two panels: `{ gap: 1.5, outer-gap: 2.5, color: '#ffffff', sides: front, cut-out: true }`. `gap` 0 folds along a crease; `cut-out: true` for a laminated card. The fields merge, so one can change alone.
 # hinge: {gap: 0, color: '#ffffff', sides: front, cut-out: false}
 
 # The language the card is printed in — which translation table its captions come from.

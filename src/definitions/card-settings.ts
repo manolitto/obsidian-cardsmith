@@ -49,10 +49,17 @@ export interface CardSettings {
   /** Print one card per value of the roll range — a property of the kind of card. */
   expandByRoll?: boolean;
   /**
-   * Where the deck folds this card: the strip between its panels. A card
-   * setting rather than the deck's — every hinge belongs to one card, so a
-   * system may set what its paper wants — and a mapping whose fields merge
-   * across the layers, so a deck can change one of them alone.
+   * Whether a note's physical cards print side by side, uncut, to be folded
+   * rather than cut apart, and which face goes where. A card setting: a
+   * deck that folds says so for every card it holds, and a note — a wide
+   * card of columns among cards that are cut — says so for itself.
+   */
+  fold?: Fold;
+  /**
+   * Where this card folds: the strip between its panels. Every hinge
+   * belongs to one card, so a system may set what its paper wants; a
+   * mapping whose fields merge across the layers, so a deck can change one
+   * of them alone.
    */
   hinge?: Hinge;
   /**
@@ -67,6 +74,21 @@ export interface CardSettings {
 
 export type OverflowMode = "none" | "extra-cards" | "back-then-cards";
 export type CardSide = "front" | "back" | "both";
+
+/**
+ * Whether, and how, a note's cards fold. The faces are numbered in reading
+ * order — the first card's front and back, then the second's, and on.
+ */
+export type Fold =
+  /** Every card is cut out on its own. */
+  | "off"
+  /** Page 1 on the left, its fold on the right: 1, 2, 3 across the front, 4, 5, 6 across the back — unfolded, a strip with a front and a back. */
+  | "strip"
+  /** Page 1 on the right, its fold on the left: 5, 6, 1 across the front, 2, 3, 4 across the back — folded inwards, page 1 is a cover with the last page behind it. */
+  | "cover"
+  /** Sheets of two, nested and folded down the middle like a printed booklet: 8 | 1 and 2 | 7, then 6 | 3 and 4 | 5. */
+  | "booklet";
+
 /** Every field optional, because the chain merges them field by field. */
 export interface Hinge {
   /** Millimetres between two panels of a fold; 0 folds along a crease. */
@@ -130,6 +152,7 @@ const CARD_SETTINGS: SettingTable<CardSettings> = {
   displayHeight: { key: "display-height", parse: positiveNumber },
   copies: { key: "copies", parse: positiveInteger },
   expandByRoll: { key: "expand-by-roll", parse: booleanValue },
+  fold: { key: "fold", parse: oneOf(["off", "strip", "cover", "booklet"]) },
   hinge: {
     key: "hinge",
     parse: parseHinge,

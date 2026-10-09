@@ -1,6 +1,7 @@
 import type { PhysicalCard } from "../deck/copies";
 import type { Deck } from "../deck/pipeline";
-import type { CutMarks, DuplexFlip, Fold } from "../definitions/deck-settings";
+import type { Fold } from "../definitions/card-settings";
+import type { CutMarks, DuplexFlip } from "../definitions/deck-settings";
 import type { CardSize } from "../model/card-size";
 import { DEFAULT_PAPER_PRESET, PAPER_PRESETS, type PaperSize } from "../model/paper-size";
 
@@ -20,10 +21,13 @@ import { DEFAULT_PAPER_PRESET, PAPER_PRESETS, type PaperSize } from "../model/pa
  * so a card on paper its own size fills the page edge to edge, whatever
  * margin the deck asked for.
  *
- * A deck may fold: the physical cards of one note then print side by side
- * in one row, uncut, and the strip is folded instead of cut apart. A row
- * is laid out in millimetres: pieces of paper — a card, or a fold's panels
- * — edge to edge, a fold never breaking across a row. Pieces of one shape
+ * A note may fold: its physical cards then print side by side in one row,
+ * uncut, all of them, and the piece is folded instead of cut apart — or,
+ * with no gap and nothing folded, it is one wide card of columns. Whether
+ * a note folds is its card setting, so a deck may hold folds and cards cut
+ * apart alike. A row is laid out in millimetres: pieces of paper — a card,
+ * or a fold's panels — edge to edge, a fold never breaking across a row
+ * and never split into two. Pieces of one shape
  * share their sheets and pieces of another start a sheet of their own, so
  * the cuts and creases of a sheet run through it from top to bottom, for
  * a paper cutter and a ruler rather than a row at a time. Nothing changes for
@@ -111,23 +115,23 @@ export interface Composable {
   pageMargin: number;
   duplexFlip: DuplexFlip;
   cutMarks: CutMarks;
-  /** Absent: `off`. */
-  fold?: Fold;
 }
 
 /**
  * Lay the grid out. `auto` orientation tries the paper both ways and takes
  * the one that holds more cards, portrait on a tie. A card that does not
- * fit the paper even once is an error naming both. `minColumns` — two for
- * a deck that folds — has `auto` count only the cards that fit in runs of
- * that many across, so it never picks a way round with fewer, and a fixed
- * one with fewer is an error of its own.
+ * fit the paper even once is an error naming both. `minColumns` — the most
+ * panels a fold of the deck has — has `auto` count only the cards that fit
+ * in runs of that many across, and `minWidth` — that fold's width, hinges
+ * included — has it take only a way round whose row holds it; a fixed way
+ * round that falls short of either is an error of its own.
  */
 export function layoutGrid(
   paper: PaperSize,
   card: CardSize,
   pageMargin: number,
-  minColumns = 1
+  minColumns = 1,
+  minWidth = 0
 ): Grid {
   const short = Math.min(paper.width, paper.height);
   const long = Math.max(paper.width, paper.height);
@@ -136,14 +140,19 @@ export function layoutGrid(
   // Counted in runs of `minColumns`: a folding deck's place left over at
   // the end of an odd row holds a single card at best.
   const holds = (g: Grid) => Math.floor(g.columns / minColumns) * minColumns * g.rows;
+  const fits = (g: Grid) => g.columns >= minColumns && g.usable + 1e-9 >= minWidth;
   const chosen =
     paper.orientation === "portrait"
       ? portrait
       : paper.orientation === "landscape"
         ? landscape
-        : holds(landscape) > holds(portrait)
-          ? landscape
-          : portrait;
+        : fits(landscape) !== fits(portrait)
+          ? fits(landscape)
+            ? landscape
+            : portrait
+          : holds(landscape) > holds(portrait)
+            ? landscape
+            : portrait;
 
   const where = `${chosen.paper.width} × ${chosen.paper.height} mm paper`;
   if (chosen.columns < 1 || chosen.rows < 1) {
@@ -152,6 +161,11 @@ export function layoutGrid(
   if (chosen.columns < minColumns) {
     throw new Error(
       `A fold needs ${minColumns} ${card.width} × ${card.height} mm cards side by side, and ${where} holds ${chosen.columns}`
+    );
+  }
+  if (!fits(chosen)) {
+    throw new Error(
+      `A fold ${mm(minWidth)} mm across does not fit the ${mm(chosen.usable)} mm a row of ${where} has`
     );
   }
   return chosen;
@@ -191,7 +205,7 @@ function fit(
  * turned about the long edge, the columns mirror within the row; about
  * the short edge, the rows mirror within the column.
  *
- * A folding deck places folds, not cards, grouped by shape — panel count,
+ * Where notes fold, the deck places folds, not cards, grouped by shape — panel count,
  * hinge widths, and whether the hinges are cut out — in the order the deck
  * first reaches each shape, and in deck order within it. A piece goes into
  * the current row when it fits what is left of it, else starts the next
@@ -199,39 +213,46 @@ function fit(
  * its rows line up edge for edge and crease for crease — a sheet with two
  * could not: one shape's cut would run through the other's crease. A
  * row's remainder stays empty, and so does a sheet's. A row is measured in millimetres, so hinges of
- * different widths would sit side by side; under `off` every piece is one
- * card, one shape, and the deck's order is the print order.
+ * different widths would sit side by side; where nothing folds every piece
+ * is one card, one shape, and the deck's order is the print order.
+ *
+ * The widest fold decides the way round the paper goes, and one that fits
+ * neither — a fold is never split — is an error naming its note.
  */
 export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
-  const fold = deck.fold ?? "off";
-  const plain = layoutGrid(
-    deck.paperSize,
-    deck.cardSize,
-    deck.pageMargin,
-    fold === "off" ? 1 : 2
-  );
-  const card = plain.card.width;
-  // A card's hinges, from its own chain: none where the deck does not fold,
-  // the outer one only where there is an inner one to go with it.
-  const hingesOf = (count: number, source: PhysicalCard): number[] => {
-    const gap = fold === "off" ? 0 : (source.hinge?.gap ?? 0);
-    const outer = gap > 0 ? (source.hinge?.outerGap ?? gap) : 0;
-    return foldHinges(count, fold, gap, outer);
-  };
+  const card = deck.cardSize.width;
+  const hingesOf = (count: number, source: PhysicalCard) => pieceHinges(count, source);
   const widthOf = (count: number, source: PhysicalCard) =>
     count * card + hingesOf(count, source).reduce((sum, h) => sum + h, 0);
 
-  // A fold reaches as far as its panels and hinges fit a row.
-  const reachOf = (source: PhysicalCard): number => {
-    let reach = 1;
-    while (widthOf(reach + 1, source) <= plain.usable + 1e-9) reach++;
-    if (reach < 2) {
+  // The widest fold sets the floor the paper has to clear, and the most
+  // panels any fold has the runs `auto` counts in.
+  const folded = foldPieces(deck.cards);
+  let widestFold: { piece: Place[]; width: number } | undefined;
+  let panels = 1;
+  for (const piece of folded) {
+    if (piece.length === 1) continue;
+    panels = Math.max(panels, piece.length);
+    const width = widthOf(piece.length, piece[0]!.source);
+    if (widestFold === undefined || width > widestFold.width)
+      widestFold = { piece, width };
+  }
+  const gridFor = (minColumns: number, minWidth: number) =>
+    layoutGrid(deck.paperSize, deck.cardSize, deck.pageMargin, minColumns, minWidth);
+  let plain = gridFor(1, 0);
+  if (widestFold !== undefined) {
+    try {
+      plain = gridFor(panels, widestFold.width);
+    } catch {
+      const source = widestFold.piece[0]!.source;
+      const { paperSize: paper, cardSize } = deck;
+      const way =
+        paper.orientation === "auto" ? " either way round" : `, ${paper.orientation}`;
       throw new Error(
-        `A fold needs 2 ${plain.card.width} × ${plain.card.height} mm cards side by side with a ${mm(source.hinge?.gap ?? 0)} mm hinge, and ${plain.paper.width} × ${plain.paper.height} mm paper holds 1`
+        `"${source.name}": a ${source.fold} of ${widestFold.piece.length} ${cardSize.width} × ${cardSize.height} mm cards is ${mm(widestFold.width)} mm across and does not fit ${paper.width} × ${paper.height} mm paper${way} — a fold is never split; give the deck wider paper or the note fewer cards`
       );
     }
-    return reach;
-  };
+  }
   // A piece's shape is where its edges and creases lie, and which of its
   // hinges are cut out: a single card is a single card, whatever its hinge.
   const shapeOf = (piece: Place[]): string => {
@@ -243,7 +264,7 @@ export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
   // Grouped by shape, in the order the deck first reaches each and in deck
   // order within it, and renumbered in that order.
   const byShape = new Map<string, Place[][]>();
-  for (const piece of foldPieces(deck.cards, fold, reachOf)) {
+  for (const piece of folded) {
     const shape = shapeOf(piece);
     byShape.set(shape, [...(byShape.get(shape) ?? []), piece]);
   }
@@ -414,6 +435,18 @@ function page(
 }
 
 /**
+ * The hinges of a piece of `count` panels made from `source`'s note, left
+ * to right, from its own chain: none where it does not fold, the outer one
+ * only where there is an inner one to go with it.
+ */
+function pieceHinges(count: number, source: PhysicalCard): number[] {
+  const fold = source.fold ?? "off";
+  const gap = fold === "off" ? 0 : (source.hinge?.gap ?? 0);
+  const outer = gap > 0 ? (source.hinge?.outerGap ?? gap) : 0;
+  return foldHinges(count, fold, gap, outer);
+}
+
+/**
  * The hinges of a fold of `count` panels, left to right: `gap` each, but
  * for a `cover` of three panels or more, whose cover wraps the panels
  * folded accordion-wise inside it — its outer hinge, between the last
@@ -442,8 +475,9 @@ interface Place {
 
 /**
  * The deck's cards as pieces of paper, each a run of places side by side.
- * A note printing's cards — one `group` — fold together; a run of one is a
- * card as it is, whatever the fold, and with `off` every card is. The
+ * A note printing's cards — one `group` — fold together, as its own `fold`
+ * says; a run of one is a card as it is, whatever the fold, and with `off`
+ * every card is. The
  * faces are numbered in reading order, the first card's front 1, its back
  * 2, the second card's front 3, and on:
  *
@@ -455,16 +489,12 @@ interface Place {
  *   the back, so that folded inwards page 1 is a cover and the last page
  *   lies behind it;
  *
- * both as far as a row reaches, the rest a further piece. `booklet` is a
+ * both the whole note in one piece, never split. `booklet` is a
  * printer's booklet: the faces padded with blank pages to a multiple of
  * four, then sheets of two panels, nested — of eight, the outer sheet
  * 8 | 1 with 2 | 7 behind it, the inner 6 | 3 with 4 | 5.
  */
-function foldPieces(
-  cards: readonly PhysicalCard[],
-  fold: Fold,
-  reachOf: (card: PhysicalCard) => number
-): Place[][] {
+function foldPieces(cards: readonly PhysicalCard[]): Place[][] {
   const out: Place[][] = [];
   let index = 0;
   const place = (
@@ -484,14 +514,11 @@ function foldPieces(
   });
 
   for (let start = 0; start < cards.length;) {
-    // Asked for a booklet too, which is always sheets of two: it says
-    // whether two cards and their hinge fit a row at all.
-    const reach = fold === "off" ? 1 : reachOf(cards[start]!);
-    const longest = fold === "booklet" ? Infinity : reach;
+    const fold = cards[start]!.fold ?? "off";
     let end = start + 1;
     while (
       end < cards.length &&
-      end - start < longest &&
+      fold !== "off" &&
       cards[end]!.group === cards[start]!.group
     ) {
       end++;
@@ -551,7 +578,35 @@ export function composeDeck(deck: Deck): { pages: Page[]; grid: Grid } {
     pageMargin: settings.pageMargin ?? 0,
     duplexFlip: settings.duplexFlip ?? "long-edge",
     cutMarks: settings.cutMarks ?? {},
-    fold: settings.fold ?? "off",
+  });
+}
+
+/** One piece of a folding note as the reader holds it: each side read left to right. */
+export interface FoldSides {
+  /** The front's faces, left to right; `undefined` where a place is blank. */
+  front: (string | undefined)[];
+  /** The back's faces, left to right once the piece is turned over about its long edge. */
+  back: (string | undefined)[];
+  /** The hinge widths between the front's panels, left to right, in millimetres. */
+  hinges: number[];
+  /** The hinges' colour. */
+  color: string;
+}
+
+/**
+ * A note's physical cards as the pieces its fold makes of them — what the
+ * sheet prints, without a sheet: a fold is never split, so the paper has no
+ * say in it. A note that does not fold is a piece per card.
+ */
+export function foldSides(cards: readonly PhysicalCard[]): FoldSides[] {
+  return foldPieces(cards).map((piece) => {
+    const source = piece[0]!.source;
+    return {
+      front: piece.map((place) => place.front),
+      back: piece.map((place) => place.back).reverse(),
+      hinges: pieceHinges(piece.length, source),
+      color: source.hinge?.color ?? DEFAULT_HINGE_COLOR,
+    };
   });
 }
 

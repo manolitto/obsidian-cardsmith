@@ -93,6 +93,12 @@ describe("the cardsmith-deck block", () => {
     expect(deck?.cardLayer).toEqual({});
   });
 
+  it("hands fold to the card chain, as the layer under every note it holds", () => {
+    const deck = parse("system: simple\nfold: strip\nhinge: { gap: 0 }");
+    expect(deck?.cardLayer).toEqual({ fold: "strip", hinge: { gap: 0 } });
+    expect(deck?.deckLayer).toEqual({});
+  });
+
   it("keeps the deck's own layer beside the fold, so a summary can list what the block says", () => {
     const deck = parse(
       "system: simple\ncut-marks: { color: red }\nduplex-flip: short-edge"

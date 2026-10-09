@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { PhysicalCard } from "../src/deck/copies";
+import type { Fold } from "../src/definitions/card-settings";
 import type { Deck } from "../src/deck/pipeline";
 import { exportDocument } from "../src/export/document";
 import {
@@ -29,13 +30,18 @@ function cards(count: number, faces: "both" | "front" = "both"): PhysicalCard[] 
   }));
 }
 
-/** A deck; `gap` / `outerGap` are the cards' hinge settings, so they go onto every card's hinge. */
+/**
+ * A deck; `fold` is the cards' fold setting and `gap` / `outerGap` / `cutOut`
+ * their hinge settings, so they go onto every card, as a deck block's would.
+ */
 const deck = ({
+  fold,
   gap,
   outerGap,
   cutOut,
   ...over
 }: Partial<Composable> & {
+  fold?: Fold;
   gap?: number;
   outerGap?: number;
   cutOut?: boolean;
@@ -49,11 +55,14 @@ const deck = ({
     cutMarks: { enabled: true, length: 3, margin: 0, color: "#aaaaaa", weight: 0.25 },
     ...over,
   };
-  if (gap === undefined && outerGap === undefined && cutOut === undefined)
-    return composed;
+  const folded =
+    fold === undefined
+      ? composed
+      : { ...composed, cards: composed.cards.map((c) => ({ ...c, fold })) };
+  if (gap === undefined && outerGap === undefined && cutOut === undefined) return folded;
   return {
-    ...composed,
-    cards: composed.cards.map((c) => ({
+    ...folded,
+    cards: folded.cards.map((c) => ({
       ...c,
       hinge: {
         ...c.hinge,
@@ -491,12 +500,66 @@ describe("folding", () => {
     expect(faces(pages[1]!)).toEqual(["A2b@7,184", "A2f@70,184"]);
   });
 
-  it("folds a note as far as a row reaches, and goes on in a further piece", () => {
-    const { pages } = composePages(deck({ cards: notes(3), fold: "strip" }));
-    expect(faces(pages[0]!)).toEqual(["A1f@7,8", "A1b@70,8"]);
-    expect(pages[0]!.cells.map((c) => c.fold?.panels)).toEqual([2, 2]);
-    // The rest is a single card, and goes with the single cards.
-    expect(faces(pages[2]!)).toEqual(["A3f@7,8"]);
+  it("never splits a note: three large cards turn A4 the wide way round", () => {
+    const large = { cardSize: card("large"), paperSize: paper("A4"), pageMargin: 10 };
+    const { pages, grid } = composePages(
+      deck({ ...large, cards: notes(3), fold: "strip" })
+    );
+    expect(grid.paper).toEqual({ width: 297, height: 210 });
+    expect(pages[0]!.cells.map((c) => c.fold?.panels)).toEqual([3, 3, 3]);
+    // Two of them stay the narrow way round, as any deck of two-card folds did.
+    expect(
+      composePages(deck({ ...large, cards: notes(2), fold: "strip" })).grid.paper.width
+    ).toBe(210);
+  });
+
+  it("takes the way round the widest fold needs, for every fold and card of the deck", () => {
+    const large = { cardSize: card("large"), paperSize: paper("A4"), pageMargin: 10 };
+    const { pages, grid } = composePages(
+      deck({ ...large, cards: notes(2, 3, 1), fold: "strip" })
+    );
+    expect(grid).toMatchObject({ paper: { width: 297 }, columns: 3 });
+    expect(pages[0]!.cells.map((c) => `${c.name}${c.fold?.panels ?? 1}`)).toEqual([
+      "A2",
+      "A2",
+    ]);
+  });
+
+  it("refuses a fold wider than the paper, naming the note, rather than split it", () => {
+    const large = { cardSize: card("large"), pageMargin: 10 };
+    expect(() =>
+      composePages(
+        deck({ ...large, paperSize: paper("A4"), cards: notes(4), fold: "strip" })
+      )
+    ).toThrow(
+      '"A": a strip of 4 88.9 × 127 mm cards is 355.6 mm across and does not fit 210 × 297 mm paper either way round — a fold is never split; give the deck wider paper or the note fewer cards'
+    );
+    expect(() =>
+      composePages(
+        deck({
+          ...large,
+          paperSize: paper("A4 portrait"),
+          cards: notes(3),
+          fold: "cover",
+        })
+      )
+    ).toThrow(
+      "a cover of 3 88.9 × 127 mm cards is 266.7 mm across and does not fit 210 × 297 mm paper, portrait"
+    );
+  });
+
+  it("folds the notes that say so, and cuts apart the ones that do not", () => {
+    const cards = notes(2, 2).map((c) =>
+      c.group === 0 ? { ...c, fold: "strip" as const } : c
+    );
+    const { pages } = composePages(deck({ cards, paperSize: wide }));
+    const front = pages.filter((p) => p.side === "front").flatMap((p) => p.cells);
+    expect(front.map((c) => `${c.html}:${c.fold?.panels ?? 1}`)).toEqual([
+      "A1f:2",
+      "A1b:2",
+      "B1f:1",
+      "B2f:1",
+    ]);
   });
 
   it("groups the pieces by shape, in the order the deck first reaches each, a shape to a sheet", () => {

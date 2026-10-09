@@ -1,5 +1,6 @@
 import type { CardSide } from "../definitions/card-settings";
 import type { PaperBackground } from "../definitions/deck-settings";
+import { foldSides, type FoldSides } from "../export/compose";
 import type { LaidOutCard } from "../layout/engine";
 import { hoistFontFaces } from "../layout/host";
 import type { CardSize } from "../model/card-size";
@@ -17,7 +18,9 @@ import type { CardSize } from "../model/card-size";
  * layout host does it; a system's fonts are parsed once per document
  * however many previews show it. Plain paper is the same hook the export
  * stamps on its pages, `cs-paper-plain`, here on the faces' wrapper: the
- * card shows what the printer would print.
+ * card shows what the printer would print. A card that folds shows as the
+ * pieces it prints as — the panels of each side edge to edge, the hinges
+ * between them, the front above the back as the reader turns it over.
  *
  * DOM only: no Obsidian, no measurement, no scaling of text.
  */
@@ -30,19 +33,37 @@ export interface PreviewMount {
 /** CSS pixels per millimetre at the 96 dpi a browser renders `mm` at. */
 const PX_PER_MM = 96 / 25.4;
 
+/** What the preview shows side by side: a face on its own, or a fold's sides. */
+export type PreviewItem = string | FoldSides;
+
 /**
  * The faces of a laid-out card as the preview shows them: every face of
  * every physical card in print order, then the ones `side` keeps. `both`
  * keeps everything; a card that spilled onto three fronts under `side:
- * front` shows the three fronts.
+ * front` shows the three fronts. A card whose `fold` folds it shows its
+ * pieces, as the sheet prints them — a fold is never split, so no paper
+ * is needed to know them.
  */
-export function previewFaces(card: LaidOutCard, side: CardSide = "both"): string[] {
-  const out: string[] = [];
-  for (const pair of card.cards) {
-    if (pair.front !== undefined && side !== "back") out.push(pair.front);
-    if (pair.back !== undefined && side !== "front") out.push(pair.back);
+export function previewFaces(card: LaidOutCard, side: CardSide = "both"): PreviewItem[] {
+  const fold = card.settings.fold ?? "off";
+  if (fold === "off" || card.cards.length < 2) {
+    const out: string[] = [];
+    for (const pair of card.cards) {
+      if (pair.front !== undefined && side !== "back") out.push(pair.front);
+      if (pair.back !== undefined && side !== "front") out.push(pair.back);
+    }
+    return out;
   }
-  return out;
+  const physical = card.cards.map((pair) => ({
+    name: card.name,
+    cardTypeId: card.cardTypeId,
+    group: 0,
+    fold,
+    ...(card.settings.hinge === undefined ? {} : { hinge: card.settings.hinge }),
+    ...(pair.front === undefined || side === "back" ? {} : { front: pair.front }),
+    ...(pair.back === undefined || side === "front" ? {} : { back: pair.back }),
+  }));
+  return foldSides(physical);
 }
 
 /**
@@ -55,7 +76,7 @@ export function mountPreview(
   host: HTMLElement,
   systemId: string,
   stylesheet: string,
-  faces: readonly string[],
+  faces: readonly PreviewItem[],
   cardSize: CardSize,
   displayHeight: number,
   paperBackground: PaperBackground = "textured"
@@ -73,17 +94,48 @@ export function mountPreview(
   const root = mount.attachShadow({ mode: "open" });
   const facesClass =
     paperBackground === "plain" ? "cs-preview-faces cs-paper-plain" : "cs-preview-faces";
+  const box = (face: string | undefined) =>
+    `<div class="cs-preview-face" style="width:${width.toFixed(2)}px;height:${displayHeight}px">` +
+    (face === undefined
+      ? ""
+      : `<div class="cs-preview-scale" style="transform:scale(${scale.toFixed(5)})">${face}</div>`) +
+    `</div>`;
+  // A side of a fold: its panels edge to edge, the hinges between them at
+  // their width, scaled as the faces are.
+  const foldSide = (panels: (string | undefined)[], hinges: number[], color: string) =>
+    `<div class="cs-preview-fold-side">` +
+    panels
+      .map((face, i) => {
+        const hinge = hinges[i];
+        return (
+          box(face) +
+          (hinge === undefined || hinge <= 0
+            ? ""
+            : `<div class="cs-preview-hinge" style="width:${(hinge * PX_PER_MM * scale).toFixed(2)}px;background:${color}"></div>`)
+        );
+      })
+      .join("") +
+    `</div>`;
+  const item = (face: PreviewItem) => {
+    if (typeof face === "string") return box(face);
+    // Turned over, the hinges run the other way round.
+    const sides: [(string | undefined)[], number[]][] = [
+      [face.front, face.hinges],
+      [face.back, [...face.hinges].reverse()],
+    ];
+    return (
+      `<div class="cs-preview-fold">` +
+      sides
+        .filter(([panels]) => panels.some((panel) => panel !== undefined))
+        .map(([panels, hinges]) => foldSide(panels, hinges, face.color))
+        .join("") +
+      `</div>`
+    );
+  };
   root.innerHTML =
     `<style>${css}\n${MOUNT_CSS}</style>` +
     `<div class="${facesClass}">` +
-    faces
-      .map(
-        (face) =>
-          `<div class="cs-preview-face" style="width:${width.toFixed(2)}px;height:${displayHeight}px">` +
-          `<div class="cs-preview-scale" style="transform:scale(${scale.toFixed(5)})">${face}</div>` +
-          `</div>`
-      )
-      .join("") +
+    faces.map(item).join("") +
     `</div>`;
 
   return {
@@ -103,4 +155,8 @@ const MOUNT_CSS = `
 .cs-preview-faces { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; }
 .cs-preview-face { position: relative; overflow: hidden; flex: none; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.18); }
 .cs-preview-scale { transform-origin: top left; }
+.cs-preview-fold { display: flex; flex-direction: column; gap: 16px; flex: none; }
+.cs-preview-fold-side { display: flex; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.18); }
+.cs-preview-fold-side > .cs-preview-face { box-shadow: none; }
+.cs-preview-hinge { flex: none; }
 `;

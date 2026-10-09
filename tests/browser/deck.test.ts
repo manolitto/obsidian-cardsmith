@@ -95,7 +95,7 @@ describe("buildDeck over the fixture folders", () => {
     const { built } = await build("dragonbane");
     const { pages, grid } = composeDeck({
       ...built,
-      settings: { ...built.settings, fold: "strip" },
+      cards: built.cards.map((card) => ({ ...card, fold: "strip" as const })),
     });
     // The deck writes `A4 portrait`: three across, three down.
     expect(grid).toMatchObject({ paper: { width: 210 }, columns: 3, rows: 3 });
