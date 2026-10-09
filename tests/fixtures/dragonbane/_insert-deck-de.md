@@ -35,9 +35,6 @@ card-type: [gear, creature]
 # Welche Papierkante beim Duplexdruck die Bindung ist, damit Vorder- und Rückseiten übereinanderliegen: `long-edge` oder `short-edge`.
 # duplex-flip: long-edge
 
-# Die Karten einer Notiz ungeschnitten nebeneinander, gefalzt statt geschnitten: `strip` (vorne 1, 2, 3, hinten 4, 5, 6), `cover` (vorne 5, 6, 1, Seite 1 als Umschlag mit der letzten Seite dahinter), `booklet` (ineinandergelegte Bögen zu zwei Karten, wie die Broschüre eines Druckertreibers) oder `off`.
-# fold: 'off'
-
 # Die Schnittmarken an jeder Kartenecke; die Felder verschmelzen, eines lässt sich allein ändern.
 # cut-marks: {enabled: true, length: 3, margin: 0, color: '#aaaaaa', weight: 0.25}
 
@@ -74,7 +71,10 @@ card-type: [gear, creature]
 # Eine Karte je Wert des Würfelbereichs zwischen `roll-min` und `roll-max` drucken.
 # expand-by-roll: false
 
-# Wo ein Deck die Karte faltet, der Streifen zwischen zwei Teilen: `{ gap: 1.5, outer-gap: 2.5, color: '#ffffff', sides: front, cut-out: true }`. `gap` 0 falzt ohne Streifen; `cut-out: true` für eine laminierte Karte. Die Felder verschmelzen, eines lässt sich allein ändern.
+# Ob eine Notiz, die mehrere Karten füllt, sie nebeneinander in einem Stück druckt, ungeschnitten: `strip` (1, 2 vorne, 3, 4 dahinter — mit `gap` 0 eine Breitkarte in Spalten), `cover` (nach innen gefaltet, Seite 1 als Umschlag), `booklet` (Bögen zu zwei, ineinander) oder `off`. Nie geteilt; breiter als das Papier bricht den Export ab.
+# fold: 'off'
+
+# Wo die Karte gefaltet wird, der Streifen zwischen zwei Teilen: `{ gap: 1.5, outer-gap: 2.5, color: '#ffffff', sides: front, cut-out: true }`. `gap` 0 falzt ohne Streifen; `cut-out: true` für eine laminierte Karte. Die Felder verschmelzen, eines lässt sich allein ändern.
 # hinge: {gap: 0, color: '#ffffff', sides: front, cut-out: false}
 
 # Die Sprache, in der die Karte gedruckt wird — aus welcher Übersetzungstabelle ihre Beschriftungen kommen.

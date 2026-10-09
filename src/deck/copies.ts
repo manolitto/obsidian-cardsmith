@@ -1,4 +1,4 @@
-import type { Hinge } from "../definitions/card-settings";
+import type { Fold, Hinge } from "../definitions/card-settings";
 import type { CardCopies } from "../definitions/deck-settings";
 import type { Diagnostics } from "../definitions/diagnostics";
 import type { LaidOutCard } from "../layout/engine";
@@ -17,6 +17,8 @@ export interface PhysicalCard {
    * own. What a fold keeps together.
    */
   group: number;
+  /** Whether its group folds, and how, as its chain resolved it; absent, it does not. */
+  fold?: Fold;
   /** Its hinge — gap, outer gap, colour, sides — as its chain resolved it; absent, none was set. */
   hinge?: Hinge;
   front?: string;
@@ -68,6 +70,7 @@ export function applyCopies(
           name: card.name,
           cardTypeId: card.cardTypeId,
           group,
+          ...(card.settings.fold === undefined ? {} : { fold: card.settings.fold }),
           ...(card.settings.hinge === undefined ? {} : { hinge: card.settings.hinge }),
           ...(faces.front === undefined || side === "back" ? {} : { front: faces.front }),
           ...(faces.back === undefined || side === "front" ? {} : { back: faces.back }),

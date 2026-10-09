@@ -118,7 +118,21 @@ side: both
 # `true` once; every other card is printed as it is.
 expand-by-roll: false
 
-# Where a deck folds the card (`fold:` in its block), the strip between two
+# Whether a note that runs onto several cards prints them side by side,
+# uncut, as one piece folded instead of cut apart — and which face goes
+# where. The faces count in reading order: the first card's front 1, its
+# back 2, the second card's front 3, and on. `strip`: page 1 on the left,
+# its fold on the right — 1, 2, 3 across the front, 4, 5, 6 across the back;
+# with no gap and nothing folded, a wide card of columns. `cover`: page 1 on
+# the right, its fold on the left — 5, 6, 1 across the front, 2, 3, 4 across
+# the back, so that folded inwards page 1 is a cover with the last page
+# behind it. Both keep the whole note in one piece; one wider than the paper
+# stops the export. `booklet`: sheets of two cards, nested and folded down
+# the middle like a printer's booklet. `off` cuts every card out. A deck sets
+# it for every card it holds, a note for itself.
+fold: off
+
+# Where the card folds (`fold:` above), the strip between two
 # panels — a hinge — rather than a crease. The fields merge across layers, so
 # a deck can change one alone:
 #   gap        millimetres between two panels; 0 folds along a crease. Cut out
@@ -155,18 +169,6 @@ page-margin: 10
 # Which edge of the paper is the binding when printing duplex, so that fronts
 # and backs align after the flip. `long-edge` or `short-edge`.
 duplex-flip: long-edge
-
-# Whether a note that runs onto several cards prints them side by side,
-# uncut, as one strip folded instead of cut apart — and which face goes where.
-# The faces count in reading order: the first card's front 1, its back 2, the
-# second card's front 3, and on. `strip`: page 1 on the left, its fold on
-# the right — 1, 2, 3 across the front, 4, 5, 6 across the back. `cover`:
-# page 1 on the right, its fold on the left — 5, 6, 1 across the front, 2, 3,
-# 4 across the back, so that folded inwards page 1 is a cover with the last
-# page behind it. Both fold a note as far as one row of the grid reaches.
-# `booklet`: sheets of two cards, nested and folded down the middle like a
-# printer's booklet. `off` cuts every card out.
-fold: off
 
 # Alignment marks at each card's outer corners; a page that holds a single
 # card gets none. The fields merge across layers, so a deck can change the

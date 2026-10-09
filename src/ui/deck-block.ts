@@ -114,7 +114,7 @@ export function deckBlockProcessor(context: DeckBlockContext) {
       }
       row("deck.card-size", [...sizes].join(", "));
       if (cardLayer.side) row("deck.sides", t(`deck.sides.${cardLayer.side}`));
-      if (deckLayer.fold) row("deck.fold", deckLayer.fold);
+      if (cardLayer.fold) row("deck.fold", cardLayer.fold);
       if (cardLayer.hinge) row("deck.hinge", settingText("hinge", cardLayer.hinge));
       for (const [key, value] of [
         ...deckSettingEntries(deckLayer),

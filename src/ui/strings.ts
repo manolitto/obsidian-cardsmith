@@ -74,7 +74,9 @@ const en = {
   "card-key.expand-by-roll":
     "Print one card per value of the roll range between `roll-min` and `roll-max`.",
   "card-key.hinge":
-    "Where a deck folds the card, the strip between two panels: `{ gap: 1.5, outer-gap: 2.5, color: '#ffffff', sides: front, cut-out: true }`. `gap` 0 folds along a crease; `cut-out: true` for a laminated card. The fields merge, so one can change alone.",
+    "Where the card folds, the strip between two panels: `{ gap: 1.5, outer-gap: 2.5, color: '#ffffff', sides: front, cut-out: true }`. `gap` 0 folds along a crease; `cut-out: true` for a laminated card. The fields merge, so one can change alone.",
+  "card-key.fold":
+    "Whether a note that runs onto several cards prints them side by side in one piece, uncut: `strip` (1, 2 on the front, 3, 4 behind — with `gap` 0, a wide card of columns), `cover` (folded inwards, page 1 a cover), `booklet` (sheets of two, nested) or `off`. Never split; wider than the paper stops the export.",
   "card-key.language":
     "The language the card is printed in — which translation table its captions come from.",
 
@@ -143,8 +145,6 @@ const en = {
     "Blank space around the card grid, in millimetres. Yields where the paper is too small for it; the card never does.",
   "deck-key.duplex-flip":
     "Which paper edge is the binding when printing duplex, so fronts and backs align: `long-edge` or `short-edge`.",
-  "deck-key.fold":
-    "A note's cards side by side, uncut, folded instead of cut apart: `strip` (1, 2, 3 across the front, 4, 5, 6 across the back), `cover` (5, 6, 1 across the front, page 1 a cover with the last page behind it), `booklet` (nested sheets of two, like a printer's booklet) or `off`.",
   "deck-key.cut-marks":
     "The cut marks at every card corner; the fields merge, so one can change alone.",
   "deck-key.paper-background":
@@ -282,7 +282,9 @@ const de: Strings = {
   "card-key.expand-by-roll":
     "Eine Karte je Wert des Würfelbereichs zwischen `roll-min` und `roll-max` drucken.",
   "card-key.hinge":
-    "Wo ein Deck die Karte faltet, der Streifen zwischen zwei Teilen: `{ gap: 1.5, outer-gap: 2.5, color: '#ffffff', sides: front, cut-out: true }`. `gap` 0 falzt ohne Streifen; `cut-out: true` für eine laminierte Karte. Die Felder verschmelzen, eines lässt sich allein ändern.",
+    "Wo die Karte gefaltet wird, der Streifen zwischen zwei Teilen: `{ gap: 1.5, outer-gap: 2.5, color: '#ffffff', sides: front, cut-out: true }`. `gap` 0 falzt ohne Streifen; `cut-out: true` für eine laminierte Karte. Die Felder verschmelzen, eines lässt sich allein ändern.",
+  "card-key.fold":
+    "Ob eine Notiz, die mehrere Karten füllt, sie nebeneinander in einem Stück druckt, ungeschnitten: `strip` (1, 2 vorne, 3, 4 dahinter — mit `gap` 0 eine Breitkarte in Spalten), `cover` (nach innen gefaltet, Seite 1 als Umschlag), `booklet` (Bögen zu zwei, ineinander) oder `off`. Nie geteilt; breiter als das Papier bricht den Export ab.",
   "card-key.language":
     "Die Sprache, in der die Karte gedruckt wird — aus welcher Übersetzungstabelle ihre Beschriftungen kommen.",
 
@@ -351,8 +353,6 @@ const de: Strings = {
     "Rand um das Kartenraster, in Millimetern. Weicht, wo das Papier zu klein dafür ist; die Karte nie.",
   "deck-key.duplex-flip":
     "Welche Papierkante beim Duplexdruck die Bindung ist, damit Vorder- und Rückseiten übereinanderliegen: `long-edge` oder `short-edge`.",
-  "deck-key.fold":
-    "Die Karten einer Notiz ungeschnitten nebeneinander, gefalzt statt geschnitten: `strip` (vorne 1, 2, 3, hinten 4, 5, 6), `cover` (vorne 5, 6, 1, Seite 1 als Umschlag mit der letzten Seite dahinter), `booklet` (ineinandergelegte Bögen zu zwei Karten, wie die Broschüre eines Druckertreibers) oder `off`.",
   "deck-key.cut-marks":
     "Die Schnittmarken an jeder Kartenecke; die Felder verschmelzen, eines lässt sich allein ändern.",
   "deck-key.paper-background":

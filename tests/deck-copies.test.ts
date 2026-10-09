@@ -139,4 +139,12 @@ describe("copies", () => {
       { color: "#336699", sides: "both" },
     ]);
   });
+
+  it("carries the card's fold onto each of its physical cards, and none where it sets none", () => {
+    const folding = laidOut("K/Lang.md", 2);
+    folding.card.settings = { fold: "strip" };
+    const plain = laidOut("K/Kurz.md", 1);
+    const out = applyCopies([folding, plain], undefined, collectDiagnostics());
+    expect(out.map((c) => c.fold)).toEqual(["strip", "strip", undefined]);
+  });
 });

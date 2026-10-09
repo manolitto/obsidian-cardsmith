@@ -7,6 +7,7 @@ import type { LoadedSystem } from "../../src/systems/loader";
 import {
   mountPreview,
   previewFaces,
+  type PreviewItem,
   type PreviewMount,
 } from "../../src/ui/preview-mount";
 import { loadedSystem } from "../helpers/render";
@@ -48,7 +49,7 @@ afterEach(() => {
 function mountAt(
   system: LoadedSystem,
   card: RenderedCard,
-  faces: string[],
+  faces: PreviewItem[],
   height: number,
   stylesheet: string,
   paperBackground: PaperBackground = "textured"
@@ -129,6 +130,33 @@ describe("mountPreview", () => {
     const { root } = mountAt(system, cards[0]!, previewFaces(first), 300, stylesheet);
     expect(root.querySelectorAll(".card-root.card-front")).toHaveLength(1);
   });
+
+  it("shows a fold as one piece: its panels edge to edge, the back below the front", async () => {
+    const { system, cards, first } = await laidOut("dragonbane", "Fischspeer");
+    const stylesheet = await system.stylesheet(cards[0]!.cardTypeId);
+    const [front, back] = previewFaces(first) as string[];
+    const folding: LaidOutCard = {
+      ...first,
+      settings: { fold: "strip", hinge: { gap: 2, color: "#d9c5a8" } },
+      cards: [
+        { front: front!, back: back! },
+        { front: front!, back: back! },
+      ],
+    };
+    const { root } = mountAt(system, cards[0]!, previewFaces(folding), 300, stylesheet);
+
+    const sides = root.querySelectorAll<HTMLElement>(".cs-preview-fold-side");
+    expect(sides).toHaveLength(2);
+    const [a, hinge, b] = Array.from(sides[0]!.children).map((el) =>
+      el.getBoundingClientRect()
+    );
+    // 2 mm of hinge at the faces' scale, flush against both panels.
+    const scale = 300 / (88 * PX_PER_MM);
+    expect(hinge!.width).toBeCloseTo(2 * PX_PER_MM * scale, 1);
+    expect(hinge!.left).toBeCloseTo(a!.right, 1);
+    expect(b!.left).toBeCloseTo(hinge!.right, 1);
+    expect(sides[1]!.getBoundingClientRect().top).toBeGreaterThan(a!.bottom);
+  });
 });
 
 describe("previewFaces", () => {
@@ -154,5 +182,35 @@ describe("previewFaces", () => {
     };
     expect(previewFaces(card)).toEqual(["f1", "b1", "f2", "b2"]);
     expect(previewFaces(card, "front")).toEqual(["f1", "f2"]);
+  });
+
+  it("shows a folding card as its pieces, each side read left to right", () => {
+    const card = (fold: "strip" | "cover", count: number): LaidOutCard => ({
+      name: "x",
+      cardTypeId: "t",
+      settings: { fold },
+      cards: Array.from({ length: count }, (_, i) => ({
+        front: `${2 * i + 1}`,
+        back: `${2 * i + 2}`,
+      })),
+      clipped: false,
+    });
+    // A wide card of columns: 1 | 2 on the front, 3 | 4 turned over.
+    expect(previewFaces(card("strip", 2))).toEqual([
+      { front: ["1", "2"], back: ["3", "4"], hinges: [0], color: "#ffffff" },
+    ]);
+    expect(previewFaces(card("strip", 3))).toEqual([
+      { front: ["1", "2", "3"], back: ["4", "5", "6"], hinges: [0, 0], color: "#ffffff" },
+    ]);
+    // A greeting card: 4 | 1 outside, 2 | 3 inside.
+    expect(previewFaces(card("cover", 2))).toEqual([
+      { front: ["4", "1"], back: ["2", "3"], hinges: [0], color: "#ffffff" },
+    ]);
+    // Fronts only: the faces keep their places, the backs' places stay blank — as printed.
+    expect(previewFaces(card("strip", 2), "front")).toEqual([
+      { front: ["1", undefined], back: ["3", undefined], hinges: [0], color: "#ffffff" },
+    ]);
+    // A card that fits one face is a card, whatever its fold.
+    expect(previewFaces(card("strip", 1))).toEqual(["1", "2"]);
   });
 });

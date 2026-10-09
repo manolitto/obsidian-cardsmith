@@ -91,7 +91,7 @@ consecutively.
 | `page-margin` | Blank space around the card grid, in millimetres. The margin yields where the paper is too small for it — the card never does. |
 | `cut-marks` | `{enabled: true, length: 3, margin: 0, color: '#aaaaaa', weight: 0.25}` — a cross at every card corner, its arms along the cuts and `margin` mm clear of the corner, printed over the cards. An arm on a card is `length` mm long; an arm that leaves the block of cards runs on to the paper's edge, so a guillotine can be set against it. The fields merge, so one can change alone. A page that holds a single card gets none. |
 | `duplex-flip` | Which edge is the binding when printing duplex, `long-edge` or `short-edge`, so a back lands behind its front. |
-| `fold` | `off` (default), `strip`, `cover` or `booklet`: a note's cards printed side by side, uncut, and folded instead of cut apart — see *Folded cards*. |
+| `fold` | `off` (default), `strip`, `cover` or `booklet`: a note's cards printed side by side, uncut, and folded instead of cut apart — see *Folded cards*. A card setting: written here, it holds for every note of the deck that does not say otherwise in its own block. |
 | `paper-background` | `textured` prints the system's background pictures, `plain` leaves them out. Default: the plugin setting. |
 
 The cards are packed without gaps on one grid and centred inside the
@@ -124,7 +124,9 @@ folds side by side in a row, and the same holds for each of their panels.
 
 A note whose text runs onto several cards can print them as one strip of
 paper instead, folded rather than cut apart: `fold: strip`, `cover` or
-`booklet`. The faces are numbered in reading order: the first card's
+`booklet`. `fold` is a card setting: a deck block that writes it folds
+every note it holds, and a note's own block may say otherwise — a deck
+can fold one note and cut the next apart. The faces are numbered in reading order: the first card's
 front is 1, its back 2, the second card's front 3, and on. Each row below
 is one side of the paper as you look at it, the back after turning it
 over like a page.
@@ -155,11 +157,34 @@ over like a page.
   multiple of four — three cards are six faces, so pages 7 and 8 are
   blank.
 
-`strip` and `cover` fold a note as far as one row of the grid
-reaches — two poker cards on A4 make a card that opens, three a leaflet
-— and go on in a further piece when the note has more cards than a row
-holds. A note on one card prints as a card under every fold, and copies
-of a note are separate folds.
+`strip` and `cover` keep a note in one piece, all its cards side by
+side — two poker cards make a card that opens, three a leaflet — half
+its faces on the front and half behind. A fold is never split: a note
+whose cards are wider together than the paper stops the export with a
+message naming the note, and the fix is wider paper for the deck or
+fewer cards for the note (a smaller `card-size`, less text). A note on
+one card prints as a card under every fold, and copies of a note are
+separate folds.
+
+The in-note preview shows a folding note as it prints: the front's
+panels edge to edge, the back below it as you see it turned over.
+
+**A wide card of columns.** With no hinge and nothing folded, a `strip`
+is a card wider than any preset, its text running in columns — a rules
+summary of two large cards is 177.8 × 127 mm, columns 1 and 2 on the
+front, 3 and 4 on the back:
+
+```yaml
+card:
+  card-size: large
+  overflow-mode: back-then-cards
+  fold: strip
+  hinge: { gap: 0 }
+```
+
+Cut marks go only round the outside, so it is cut out as one card. A
+system may give its continuation faces a quieter head for this case,
+keyed on a layout candidate the note names.
 
 A folding deck prints its pieces of paper grouped by shape — how many
 panels, how wide their hinges, whether the hinges are cut out — in the
@@ -170,10 +195,13 @@ of a sheet share their lines: a cut or a crease runs through the sheet
 from top to bottom, and a paper cutter or a ruler takes it in one go. A
 sheet holding two shapes could not do that — where single cards are cut
 apart, a fold beside them has its crease — so a deck of several shapes
-may leave part of a sheet empty. A folding deck needs at least two cards
-across; when `paper-size` leaves the orientation free, it picks the one
-that holds more cards in pairs — poker cards on A4 go landscape, four
-across, rather than three across with every third place left over.
+may leave part of a sheet empty. The widest fold of a deck decides the
+paper's way round: when `paper-size` leaves the orientation free, the
+deck takes one whose rows hold that fold, and of two that both do, the
+one that holds more cards in runs of its panels — poker cards folded in
+pairs on A4 go landscape, four across, rather than three across with
+every third place left over; three large cards side by side turn A4
+landscape too, since only that way round is wide enough.
 
 The cut marks go round each piece of paper — a fold's panels together —
 and never along a crease. Each end of a crease gets a dashed fold mark
