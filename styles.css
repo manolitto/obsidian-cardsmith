@@ -18,6 +18,12 @@
   padding: var(--size-4-2) 0;
 }
 
+/* A re-render keeps the card it replaces, greyed, until the new one is mounted. */
+.cs-card-busy > .cs-preview {
+  opacity: 0.6;
+  filter: grayscale(0.6);
+}
+
 .cs-card-stepping {
   display: flex;
   align-items: center;
