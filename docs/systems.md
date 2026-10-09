@@ -68,6 +68,7 @@ English books.
 | <img src="images/cards/pf2e/feat.webp" alt="pf2e feat card, front and back" width="360"> | `feat` | a feat: name, action cost and level in the header |
 | <img src="images/cards/pf2e/action.webp" alt="pf2e action card, front and back" width="360"> | `action` | basic and skill actions, with the outcomes |
 | <img src="images/cards/pf2e/trap.webp" alt="pf2e trap card, front and back" width="360"> | `trap` | a hazard |
+| <img src="images/cards/pf2e/generic.webp" alt="pf2e generic card, front and back" width="360"> | `generic` | a free card: a title and Markdown |
 
 Poker unless said otherwise; `de`, `en`. The action glyphs and the "P" mark are
 Paizo's, under the Community Use Policy.

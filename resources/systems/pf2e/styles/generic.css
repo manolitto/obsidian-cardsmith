@@ -1,0 +1,80 @@
+/* ── Pathfinder 2e — the generic card ───────────────────────────────
+   The header, the footer and the running text are pf2e.css's; the
+   generic card adds a house style for free prose — what a heading, a
+   list, a table and an embedded picture look like in the stat-block
+   look. Keyed on `.pf2e-generic-body` rather than on the face, so a
+   continuation face sets identically. */
+
+.pf2e-generic-body {
+  margin: 0.3em 0 0.2em;
+}
+
+.pf2e-generic-body > :first-child { margin-top: 0; }
+.pf2e-generic-body > :last-child { margin-bottom: 0; }
+
+/* Headings. `##` is the section splitter's — it decides what reaches the
+   card at all — so a card's inner headings start at `###`; `h1` and `h2`
+   are styled alongside, so a note that opens with one does not print it
+   unstyled. Condensed red caps over a hairline, the way the books set a
+   sub-rule. */
+.pf2e-generic-body h1,
+.pf2e-generic-body h2,
+.pf2e-generic-body h3,
+.pf2e-generic-body h4 {
+  font-family: var(--pf2e-font-condensed);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--pf2e-accent-red);
+  font-size: 1.1em;
+  line-height: 1.1;
+  border-bottom: 0.08em solid color-mix(in srgb, var(--pf2e-rule) 50%, transparent);
+  margin: 0.5em 0 0.2em;
+}
+
+.pf2e-generic-body ul,
+.pf2e-generic-body ol {
+  margin: 0.2em 0 0.3em;
+  padding-left: 1.2em;
+}
+
+.pf2e-generic-body li { margin: 0.1em 0; }
+
+/* A table in the books' manner: a red head row, cream-gold bands. */
+.pf2e-generic-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.3em 0;
+  font-size: 0.95em;
+}
+
+.pf2e-generic-body th {
+  background: var(--pf2e-accent-red);
+  color: var(--pf2e-cream);
+  font-family: var(--pf2e-font-condensed);
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: left;
+  padding: 0.2em 0.35em 0.1em;
+}
+
+.pf2e-generic-body td {
+  padding: 0.12em 0.35em;
+  vertical-align: top;
+}
+
+.pf2e-generic-body tbody tr:nth-child(even) td {
+  background: color-mix(in srgb, var(--pf2e-pill-band) 35%, transparent);
+}
+
+/* ── The back's subtitle ──────────────────────────────────────────── */
+
+.pf2e-back-subtitle {
+  flex: 0 0 auto;
+  text-align: center;
+  font-family: var(--pf2e-font-condensed);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--pf2e-accent-red);
+  font-size: 0.95em;
+  margin: -0.15em 0 0.4em;
+}

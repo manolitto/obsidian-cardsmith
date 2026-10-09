@@ -1,0 +1,33 @@
+{{!--
+  Pathfinder 2e — the generic card, front.
+
+    front-title    the name, in the shared header over the red rule
+    front-body     the card's text as markdown, the whole of the content
+
+  The furniture of every other front — the header, the footer with the
+  source and the English original — around a body that has no structure
+  of its own: running text, `###` sub-headings, lists, tables and
+  pictures, written as markdown in the note itself. The body is one
+  place, and the card type says what fills it, in order: `content` in
+  the block, a `## Vorderseite` section, and failing both the note's own
+  text before its first heading. Open a note, write the card.
+
+  The author steers the pagination: what must stay together goes between
+  `%% keep-together %%` and `%% /keep-together %%`, a hard break is
+  `%% card-break %%`. Both are Obsidian comments, invisible in the note.
+--}}
+<div class="card-root card-front pf2e generic-card">
+  {{> header}}
+
+  <div class="card-content-container">
+    <div class="card-body-scalable">
+
+    {{#if (slot "front-body")}}
+    <div class="pf2e-flavor pf2e-generic-body">{{slot "front-body" markdown="block"}}</div>
+    {{/if}}
+
+    </div>
+  </div>
+
+  {{> footer}}
+</div>

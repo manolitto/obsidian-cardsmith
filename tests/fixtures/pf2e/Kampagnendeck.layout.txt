@@ -1,0 +1,11 @@
+Kampagnendeck · 1 card · 2 faces · clipped: no
+1. front [cs-overflow-active cs-layout-default cs-front-first cs-front-has-next] scale 1.00
+   div.pf2e-flavor.pf2e-generic-body
+     h1 "Kampagnendeck"
+     p [img]
+     p "Zusammengestellt für die Kampagne im Sumpf …"
+     table (4 rows) "Deck Karten Kreaturen 24 Gegenstände 31 …"
+2. back-as-front [cs-overflow-back-as-front cs-overflow-active cs-layout-default cs-front-continued] scale 1.00
+   div.pf2e-flavor.pf2e-generic-body
+     h3 "Lizenz"
+     p "Pathfinder ist ein Warenzeichen von Paizo …"

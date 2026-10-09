@@ -181,3 +181,4 @@ card-types:
   feat:     card-types/feat.yaml
   action:   card-types/action.yaml
   trap:     card-types/trap.yaml
+  generic:  card-types/generic.yaml
