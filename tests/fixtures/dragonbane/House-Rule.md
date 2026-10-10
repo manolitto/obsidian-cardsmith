@@ -1,3 +1,5 @@
+This intro is the note's own text. The card type reads a `## Front` section before it, so the card shows the section and not this paragraph.
+
 ## Front
 
 A character who spends a **night** without rest gets a bane on all rolls until they have slept again.
@@ -9,7 +11,7 @@ A character who spends a **night** without rest gets a bane on all rolls until t
 
 ## Notes
 
-The same rule in English, the body from a `## Front` section and no intro: `front` is an alias, and an intro is the canonical `body` of the place's first property, which a heading reached by alias cannot beat. The deck prints `de` and leaves it out.
+The same rule in English, the body from a `## Front` section, which wins over the intro above it. The deck prints `de` and leaves it out.
 
 ```cardsmith
 card:
