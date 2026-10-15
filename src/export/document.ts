@@ -58,12 +58,12 @@ export function exportDocument(
       .filter((cell) => cell.html !== undefined)
       .map(
         (cell) =>
-          `<div class="cs-cell" style="left:${mm(cell.x)}mm;top:${mm(cell.y)}mm;width:${mm(grid.card.width)}mm;height:${mm(grid.card.height)}mm">${cell.html}</div>`
+          `<div class="cs-cell" style="left:${mm(cell.x)}mm;top:${mm(cell.y)}mm;width:${mm(page.grid.card.width)}mm;height:${mm(page.grid.card.height)}mm">${cell.html}</div>`
       );
     // Siblings paint in order: the hinges first, under the cards, so the
     // cards' edges lie on them; the marks last, over the cards, where the
     // corners of a gapless grid are.
-    return `<div class="${pageClass}" data-cs-side="${page.side}">${hingesSvg(page, grid)}${cells.join("")}${cutMarksSvg(page, grid, cutMarks)}</div>`;
+    return `<div class="${pageClass}" data-cs-side="${page.side}">${hingesSvg(page, page.grid)}${cells.join("")}${cutMarksSvg(page, page.grid, cutMarks)}</div>`;
   });
 
   return [

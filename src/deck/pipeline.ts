@@ -1,7 +1,6 @@
 import type { DeckSettings } from "../definitions/deck-settings";
 import type { Diagnostics } from "../definitions/diagnostics";
 import { layoutCard, type LaidOutCard } from "../layout/engine";
-import { CARD_PRESETS, DEFAULT_CARD_PRESET, type CardSize } from "../model/card-size";
 import type { CardRenderer, RenderedCard } from "../render/renderer";
 import type { LoadedSystem } from "../systems/loader";
 import { parseDeckBlock, type DeckSelection } from "./block";
@@ -21,8 +20,6 @@ export interface Deck {
   cards: PhysicalCard[];
   /** Baseline → deck. */
   settings: DeckSettings;
-  /** The one size every card resolved to — or `buildDeck` threw. */
-  cardSize: CardSize;
   /** One per card type in the deck, in print order of first use; fonts included, for the document to hoist once. */
   stylesheets: string[];
   outputPath: { pdf: string; html: string };
@@ -50,8 +47,8 @@ export type DeckProgress = (
  * Build the deck a note describes. The document is the one the layout
  * host mounts in — the plugin window's, or the test's. Throws, with the
  * message the user should see, when there is no deck to build: no block,
- * a system that does not load, no card matching the block, or cards of
- * two sizes. Everything survivable goes to `diagnostics`.
+ * a system that does not load, or no card matching the block. Everything
+ * survivable goes to `diagnostics`.
  */
 export async function buildDeck(
   text: string,
@@ -102,8 +99,6 @@ export async function buildDeck(
     selection.cardTypeIds,
     Object.keys(system.cardTypes)
   );
-  const cardSize = oneCardSize(ordered, path);
-
   const laidOut: DeckCard[] = [];
   const stylesheets = new Map<string, string>();
   const clipped: string[] = [];
@@ -121,7 +116,6 @@ export async function buildDeck(
   return {
     cards: applyCopies(laidOut, settings.cardCopies, diagnostics),
     settings,
-    cardSize,
     stylesheets: [...stylesheets.values()],
     outputPath: block.outputPath,
     clipped,
@@ -144,38 +138,6 @@ function paintBetween(doc: Document): () => Promise<void> {
     await new Promise<void>((resolve) => win.requestAnimationFrame(() => resolve()));
     last = performance.now();
   };
-}
-
-/**
- * The size every card resolved to. A page holds one grid and a grid is
- * one card size, so two sizes in a deck are an error naming both card
- * types and both sizes — and the fix, since a deck's own `card-size:`
- * overrides every card's.
- */
-function oneCardSize(cards: readonly RenderedCard[], path: string): CardSize {
-  const first = cards[0];
-  if (!first) return { ...CARD_PRESETS[DEFAULT_CARD_PRESET] };
-  const size = sizeOf(first);
-  const other = cards.find((card) => {
-    const s = sizeOf(card);
-    return s.width !== size.width || s.height !== size.height;
-  });
-  if (other) {
-    const o = sizeOf(other);
-    throw new Error(
-      `${path}: the deck's cards come in two sizes — ${first.cardTypeId} at ${mm(size)}, ` +
-        `${other.cardTypeId} at ${mm(o)}. Set card-size: on the deck block to print them on one grid.`
-    );
-  }
-  return size;
-}
-
-function sizeOf(card: RenderedCard): CardSize {
-  return card.settings.cardSize ?? CARD_PRESETS[DEFAULT_CARD_PRESET];
-}
-
-function mm(size: CardSize): string {
-  return `${size.width} × ${size.height} mm`;
 }
 
 /** Where the deck looked, for the message that it found nothing: "no card note under "X" or among the 2 named notes". */

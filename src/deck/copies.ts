@@ -2,6 +2,7 @@ import type { Fold, Hinge } from "../definitions/card-settings";
 import type { CardCopies } from "../definitions/deck-settings";
 import type { Diagnostics } from "../definitions/diagnostics";
 import type { LaidOutCard } from "../layout/engine";
+import { CARD_PRESETS, DEFAULT_CARD_PRESET, type CardSize } from "../model/card-size";
 
 /**
  * One card as it goes onto a sheet: a front, a back, or both, settled.
@@ -17,6 +18,8 @@ export interface PhysicalCard {
    * own. What a fold keeps together.
    */
   group: number;
+  /** The size it was laid out at; the export puts each size on sheets of its own. */
+  cardSize: CardSize;
   /** Whether its group folds, and how, as its chain resolved it; absent, it does not. */
   fold?: Fold;
   /** Its hinge — gap, outer gap, colour, sides — as its chain resolved it; absent, none was set. */
@@ -70,6 +73,7 @@ export function applyCopies(
           name: card.name,
           cardTypeId: card.cardTypeId,
           group,
+          cardSize: card.settings.cardSize ?? CARD_PRESETS[DEFAULT_CARD_PRESET],
           ...(card.settings.fold === undefined ? {} : { fold: card.settings.fold }),
           ...(card.settings.hinge === undefined ? {} : { hinge: card.settings.hinge }),
           ...(faces.front === undefined || side === "back" ? {} : { front: faces.front }),

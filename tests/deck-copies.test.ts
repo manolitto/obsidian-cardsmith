@@ -34,6 +34,7 @@ describe("copies", () => {
       name: "Beil",
       cardTypeId: "gear",
       group: 0,
+      cardSize: { width: 63, height: 88 },
       front: "Beil 1",
       back: "Beil back",
     });

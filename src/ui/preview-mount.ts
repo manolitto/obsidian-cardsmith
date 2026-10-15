@@ -3,7 +3,7 @@ import type { PaperBackground } from "../definitions/deck-settings";
 import { foldSides, type FoldSides } from "../export/compose";
 import type { LaidOutCard } from "../layout/engine";
 import { hoistFontFaces } from "../layout/host";
-import type { CardSize } from "../model/card-size";
+import { CARD_PRESETS, DEFAULT_CARD_PRESET, type CardSize } from "../model/card-size";
 
 /*
  * Settled faces on the screen, at a display height.
@@ -58,6 +58,7 @@ export function previewFaces(card: LaidOutCard, side: CardSide = "both"): Previe
     name: card.name,
     cardTypeId: card.cardTypeId,
     group: 0,
+    cardSize: card.settings.cardSize ?? CARD_PRESETS[DEFAULT_CARD_PRESET],
     fold,
     ...(card.settings.hinge === undefined ? {} : { hinge: card.settings.hinge }),
     ...(pair.front === undefined || side === "back" ? {} : { front: pair.front }),

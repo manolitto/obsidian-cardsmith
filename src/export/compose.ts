@@ -2,14 +2,20 @@ import type { PhysicalCard } from "../deck/copies";
 import type { Deck } from "../deck/pipeline";
 import type { Fold } from "../definitions/card-settings";
 import type { CutMarks, DuplexFlip } from "../definitions/deck-settings";
-import type { CardSize } from "../model/card-size";
-import { DEFAULT_PAPER_PRESET, PAPER_PRESETS, type PaperSize } from "../model/paper-size";
+import { CARD_PRESETS, DEFAULT_CARD_PRESET, type CardSize } from "../model/card-size";
+import {
+  DEFAULT_PAPER_PRESET,
+  PAPER_PRESETS,
+  type PaperOrientation,
+  type PaperSize,
+} from "../model/paper-size";
 
 /*
  * Page composition: a deck's physical cards onto sheets of paper.
  *
  * Everything here is millimetres and pure arithmetic. A page holds one
- * grid of one card size, packed without gaps and centred inside the page
+ * grid of one card size — a deck of several sizes puts each on sheets of
+ * its own — packed without gaps and centred inside the page
  * margin; the fronts of a sheet go on one page and their backs, mirrored
  * along the axis the duplex flip turns about, on the next. What comes out
  * is positions — where each side of each card sits, and where the cut
@@ -79,6 +85,8 @@ export interface Cell {
 
 export interface Page {
   side: "front" | "back";
+  /** The grid of the sheet: its card size, and where its block sits. */
+  grid: Grid;
   cells: Cell[];
   /** The cut marks, as lines in millimetres on the page. */
   marks: Line[];
@@ -110,7 +118,6 @@ export interface Line {
 /** What the composer reads of a deck. */
 export interface Composable {
   cards: readonly PhysicalCard[];
-  cardSize: CardSize;
   paperSize: PaperSize;
   pageMargin: number;
   duplexFlip: DuplexFlip;
@@ -205,6 +212,13 @@ function fit(
  * turned about the long edge, the columns mirror within the row; about
  * the short edge, the rows mirror within the column.
  *
+ * A sheet holds one card size. Where the deck holds several, each size
+ * goes on sheets of its own, in the order the deck first reaches it and in
+ * deck order within, each with its own grid. The paper goes the same way
+ * round for all of them — a duplex print turns every sheet about the same
+ * edge — so `auto` takes the way that fits every size, and where both do,
+ * the way the largest card would choose on its own.
+ *
  * Where notes fold, the deck places folds, not cards, grouped by shape — panel count,
  * hinge widths, and whether the hinges are cut out — in the order the deck
  * first reaches each shape, and in deck order within it. A piece goes into
@@ -216,59 +230,157 @@ function fit(
  * different widths would sit side by side; where nothing folds every piece
  * is one card, one shape, and the deck's order is the print order.
  *
- * The widest fold decides the way round the paper goes, and one that fits
- * neither — a fold is never split — is an error naming its note.
+ * The widest fold of a size decides the way round the paper goes, and one
+ * that fits neither — a fold is never split — is an error naming its note.
+ * The grid returned is the widest sheet's of the first size.
  */
 export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
-  const card = deck.cardSize.width;
-  const hingesOf = (count: number, source: PhysicalCard) => pieceHinges(count, source);
-  const widthOf = (count: number, source: PhysicalCard) =>
-    count * card + hingesOf(count, source).reduce((sum, h) => sum + h, 0);
+  const bySize = new Map<string, Place[][]>();
+  for (const piece of foldPieces(deck.cards)) {
+    const { width, height } = piece[0]!.source.cardSize;
+    const key = `${mm(width)} ${mm(height)}`;
+    bySize.set(key, [...(bySize.get(key) ?? []), piece]);
+  }
+  const sizes = [...bySize.values()].map((pieces) => sizeGroup(pieces));
 
+  const gridOf = (size: SizeGroup, orientation: PaperOrientation): Grid => {
+    const paper = { ...deck.paperSize, orientation };
+    const plain = layoutGrid(paper, size.card, deck.pageMargin);
+    const fold = size.widestFold;
+    if (fold === undefined) return plain;
+    try {
+      return layoutGrid(paper, size.card, deck.pageMargin, size.panels, fold.width);
+    } catch {
+      const source = fold.piece[0]!.source;
+      const way = orientation === "auto" ? " either way round" : `, ${orientation}`;
+      throw new Error(
+        `"${source.name}": a ${source.fold} of ${fold.piece.length} ${size.card.width} × ${size.card.height} mm cards is ${mm(fold.width)} mm across and does not fit ${paper.width} × ${paper.height} mm paper${way} — a fold is never split; give the deck wider paper or the note fewer cards`
+      );
+    }
+  };
+  // One way round for every size: the one way that fits them all, else the
+  // largest card's choice — which, where nothing fits both, also names
+  // what does not fit.
+  let orientation = deck.paperSize.orientation;
+  if (orientation === "auto" && sizes.length > 1) {
+    const fitsAll = (way: PaperOrientation) =>
+      sizes.every((size) => {
+        try {
+          gridOf(size, way);
+          return true;
+        } catch {
+          return false;
+        }
+      });
+    const ways = (["portrait", "landscape"] as const).filter(fitsAll);
+    const area = (size: SizeGroup) => size.card.width * size.card.height;
+    const largest = sizes.reduce((a, b) => (area(b) > area(a) ? b : a));
+    const chosen = gridOf(largest, "auto").paper;
+    orientation =
+      ways.length === 1
+        ? ways[0]!
+        : chosen.width > chosen.height
+          ? "landscape"
+          : "portrait";
+  }
+
+  // A place's back, not a card's: a booklet puts a front behind a front.
+  const withBacks = sizes.some((size) =>
+    size.pieces.some((piece) => piece.some((place) => place.back !== undefined))
+  );
+  const pages: Page[] = [];
+  let first: Grid | undefined;
+  let index = 0;
+  for (const size of sizes) {
+    const composed = composeSize(size, gridOf(size, orientation), index, deck.duplexFlip);
+    index += composed.places;
+    first ??= composed.grid;
+    for (const sheet of composed.sheets) {
+      const { grid, hinges, slots } = sheet;
+      pages.push(page("front", sheet.front, grid, deck.cutMarks, hinges, slots));
+      if (withBacks) {
+        const { backHinges, backSlots } = sheet;
+        pages.push(page("back", sheet.back, grid, deck.cutMarks, backHinges, backSlots));
+      }
+    }
+  }
+  return {
+    pages,
+    grid:
+      first ??
+      layoutGrid(deck.paperSize, CARD_PRESETS[DEFAULT_CARD_PRESET], deck.pageMargin),
+  };
+}
+
+/** The pieces of one card size, with the widest of its folds and the most panels any has. */
+interface SizeGroup {
+  card: CardSize;
+  pieces: Place[][];
+  widestFold?: { piece: Place[]; width: number };
+  panels: number;
+}
+
+/** A piece's width: its panels and the hinges between them. */
+function pieceWidth(piece: readonly Place[], card: CardSize): number {
+  const hinges = pieceHinges(piece.length, piece[0]!.source);
+  return piece.length * card.width + hinges.reduce((sum, h) => sum + h, 0);
+}
+
+function sizeGroup(pieces: Place[][]): SizeGroup {
+  const card = pieces[0]![0]!.source.cardSize;
   // The widest fold sets the floor the paper has to clear, and the most
   // panels any fold has the runs `auto` counts in.
-  const folded = foldPieces(deck.cards);
-  let widestFold: { piece: Place[]; width: number } | undefined;
+  let widestFold: SizeGroup["widestFold"];
   let panels = 1;
-  for (const piece of folded) {
+  for (const piece of pieces) {
     if (piece.length === 1) continue;
     panels = Math.max(panels, piece.length);
-    const width = widthOf(piece.length, piece[0]!.source);
+    const width = pieceWidth(piece, card);
     if (widestFold === undefined || width > widestFold.width)
       widestFold = { piece, width };
   }
-  const gridFor = (minColumns: number, minWidth: number) =>
-    layoutGrid(deck.paperSize, deck.cardSize, deck.pageMargin, minColumns, minWidth);
-  let plain = gridFor(1, 0);
-  if (widestFold !== undefined) {
-    try {
-      plain = gridFor(panels, widestFold.width);
-    } catch {
-      const source = widestFold.piece[0]!.source;
-      const { paperSize: paper, cardSize } = deck;
-      const way =
-        paper.orientation === "auto" ? " either way round" : `, ${paper.orientation}`;
-      throw new Error(
-        `"${source.name}": a ${source.fold} of ${widestFold.piece.length} ${cardSize.width} × ${cardSize.height} mm cards is ${mm(widestFold.width)} mm across and does not fit ${paper.width} × ${paper.height} mm paper${way} — a fold is never split; give the deck wider paper or the note fewer cards`
-      );
-    }
-  }
+  return { card, pieces, panels, ...(widestFold === undefined ? {} : { widestFold }) };
+}
+
+/** One sheet's cells, the strips each side prints, and the strips cut out — whose ends are cuts too, on both sides of the paper. */
+interface Sheet {
+  grid: Grid;
+  front: Cell[];
+  back: Cell[];
+  hinges: Hinge[];
+  backHinges: Hinge[];
+  slots: Rect[];
+  backSlots: Rect[];
+}
+
+/**
+ * One card size's pieces onto sheets of its own, laid out in `plain`, the
+ * places numbered on from `first`: grouped by shape, rows in millimetres,
+ * a block per sheet. `grid` is the widest sheet's.
+ */
+function composeSize(
+  size: SizeGroup,
+  plain: Grid,
+  first: number,
+  duplexFlip: DuplexFlip
+): { sheets: Sheet[]; grid: Grid; places: number } {
+  const card = size.card.width;
   // A piece's shape is where its edges and creases lie, and which of its
   // hinges are cut out: a single card is a single card, whatever its hinge.
   const shapeOf = (piece: Place[]): string => {
     if (piece.length === 1) return "1";
     const source = piece[0]!.source;
-    const hinges = hingesOf(piece.length, source).map(mm);
+    const hinges = pieceHinges(piece.length, source).map(mm);
     return [piece.length, ...hinges, source.hinge?.cutOut === true].join(" ");
   };
   // Grouped by shape, in the order the deck first reaches each and in deck
   // order within it, and renumbered in that order.
   const byShape = new Map<string, Place[][]>();
-  for (const piece of folded) {
+  for (const piece of size.pieces) {
     const shape = shapeOf(piece);
     byShape.set(shape, [...(byShape.get(shape) ?? []), piece]);
   }
-  let index = 0;
+  let index = first;
   const pieces = [...byShape.values()]
     .flat()
     .map((piece) => piece.map((place) => ({ ...place, index: index++ })));
@@ -291,8 +403,8 @@ export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
   let sheetShape: string | undefined;
   for (const piece of pieces) {
     const source = piece[0]!.source;
-    const hinges = hingesOf(piece.length, source);
-    const width = widthOf(piece.length, source);
+    const hinges = pieceHinges(piece.length, source);
+    const width = pieceWidth(piece, size.card);
     const shape = shapeOf(piece);
     if (sheetShape !== undefined && shape !== sheetShape) {
       row = (Math.floor(row / plain.rows) + 1) * plain.rows;
@@ -327,20 +439,7 @@ export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
     return { ...plain, originX: plain.originX - (wide - plain.width) / 2, width: wide };
   };
   const grid = blockOf(Math.max(0, ...widest));
-  const withBacks = pieces.some((piece) =>
-    piece.some((place) => place.back !== undefined)
-  );
-  // Per sheet: the cells, the strips each side prints, and the strips cut
-  // out — whose ends are cuts too, on both sides of the paper.
-  const sheets: {
-    grid: Grid;
-    front: Cell[];
-    back: Cell[];
-    hinges: Hinge[];
-    backHinges: Hinge[];
-    slots: Rect[];
-    backSlots: Rect[];
-  }[] = [];
+  const sheets: Sheet[] = [];
 
   for (const { piece, row, x, offsets, hinged, cutOut } of placed) {
     const local = row % grid.rows;
@@ -376,7 +475,7 @@ export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
       sheet.back.push({
         ...common,
         side: "back",
-        ...(deck.duplexFlip === "short-edge"
+        ...(duplexFlip === "short-edge"
           ? { x: left, y: grid.originY + (grid.rows - 1 - local) * grid.card.height }
           : { x: grid.paper.width - left - grid.card.width, y }),
         ...(place.back === undefined ? {} : { html: place.back }),
@@ -393,7 +492,7 @@ export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
         // Behind itself: mirrored as a place is, so the two meet through
         // the paper.
         const behind =
-          deck.duplexFlip === "short-edge"
+          duplexFlip === "short-edge"
             ? { ...hinge, y: grid.originY + (grid.rows - 1 - local) * grid.card.height }
             : { ...hinge, x: grid.paper.width - hinge.x - hinge.width };
         sheet.hinges.push(hinge);
@@ -405,14 +504,7 @@ export function composePages(deck: Composable): { pages: Page[]; grid: Grid } {
       }
     });
   }
-
-  const pages: Page[] = [];
-  for (const { grid, front, back, hinges, backHinges, slots, backSlots } of sheets) {
-    pages.push(page("front", front, grid, deck.cutMarks, hinges, slots));
-    if (withBacks)
-      pages.push(page("back", back, grid, deck.cutMarks, backHinges, backSlots));
-  }
-  return { pages, grid };
+  return { sheets, grid, places: index - first };
 }
 
 function page(
@@ -425,6 +517,7 @@ function page(
 ): Page {
   return {
     side,
+    grid,
     cells,
     marks: cutMarks(cells, grid, marks, slots),
     folds: foldMarks(cells, grid, marks),
@@ -570,7 +663,6 @@ export function composeDeck(deck: Deck): { pages: Page[]; grid: Grid } {
   const { settings } = deck;
   return composePages({
     cards: deck.cards,
-    cardSize: deck.cardSize,
     paperSize: settings.paperSize ?? {
       ...PAPER_PRESETS[DEFAULT_PAPER_PRESET],
       orientation: "auto",
@@ -903,7 +995,8 @@ export function mm(value: number): string {
 }
 
 /**
- * The composition as text: page count, then per page each cell's side,
+ * The composition as text: page count, then per page — with its grid
+ * where its card size is not the first one's — each cell's side,
  * position, panel when it folds, and card name — what a reviewer reads
  * when a card moves.
  */
@@ -912,8 +1005,13 @@ export function compositionText(pages: readonly Page[], grid: Grid): string {
     `${pages.length} ${pages.length === 1 ? "page" : "pages"} · ${mm(grid.paper.width)} × ${mm(grid.paper.height)} mm · ${grid.columns} × ${grid.rows} of ${mm(grid.card.width)} × ${mm(grid.card.height)} mm at ${mm(grid.originX)}, ${mm(grid.originY)}`,
   ];
   pages.forEach((page, i) => {
+    const own = page.grid.card;
+    const size =
+      own.width === grid.card.width && own.height === grid.card.height
+        ? ""
+        : ` · ${page.grid.columns} × ${page.grid.rows} of ${mm(own.width)} × ${mm(own.height)} mm at ${mm(page.grid.originX)}, ${mm(page.grid.originY)}`;
     lines.push(
-      `${i + 1}. ${page.side} · ${page.marks.length} marks${page.folds.length > 0 ? ` · ${page.folds.length} fold marks` : ""}${page.hinges.length > 0 ? ` · ${page.hinges.length} ${page.hinges.length === 1 ? "hinge" : "hinges"} (${[...new Set(page.hinges.map((h) => mm(h.width)))].join(", ")} mm)` : ""}`
+      `${i + 1}. ${page.side}${size} · ${page.marks.length} marks${page.folds.length > 0 ? ` · ${page.folds.length} fold marks` : ""}${page.hinges.length > 0 ? ` · ${page.hinges.length} ${page.hinges.length === 1 ? "hinge" : "hinges"} (${[...new Set(page.hinges.map((h) => mm(h.width)))].join(", ")} mm)` : ""}`
     );
     for (const cell of page.cells) {
       const panel = cell.fold ? `panel ${cell.fold.panel}/${cell.fold.panels} ` : "";

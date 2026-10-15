@@ -99,15 +99,22 @@ margin, every card at its own size whatever the paper. A paper the size of
 the card — `paper-size: poker` for a poker deck — prints one borderless
 card per page, without cut marks: a PDF for a screen.
 
+A deck may hold cards of several sizes — poker gear beside large creature
+cards. Each size goes on sheets of its own, in the order the deck first
+reaches it, with its own grid. The paper goes the same way round on every
+sheet, so a duplex print turns them all about the same edge: when
+`paper-size` leaves the orientation free, the deck takes the way that fits
+every size, and where both do, the way the largest card would take on its
+own.
+
 ## The cards' settings
 
 Every card setting a note may write, a deck block may write too:
 `card-size`, `overflow-mode`, `side`, `language`, `copies` and the rest
 (see [Cards](cards.md)). A deck's value beats the card type's; a note's
-own value beats the deck's — with one exception. **A deck is one grid,
-so it is one card size:** a deck block that names `card-size` prints
-every card at it and reports each note it overrode. A deck of two sizes
-without the key refuses to export, naming both.
+own value beats the deck's — with one exception: a deck block that names
+`card-size` prints every card at it, one grid for the whole deck, and
+reports each note it overrode.
 
 `side: front` on the deck prints fronts only, and the deck has no back
 pages then.
