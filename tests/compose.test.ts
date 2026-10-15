@@ -14,7 +14,7 @@ import {
   type Page,
   hingesSvg,
 } from "../src/export/compose";
-import { CARD_PRESETS, type CardPreset } from "../src/model/card-size";
+import { CARD_PRESETS, type CardPreset, type CardSize } from "../src/model/card-size";
 import { parsePaperSize, type PaperSize } from "../src/model/paper-size";
 
 const paper = (s: string): PaperSize => parsePaperSize(s)!;
@@ -25,36 +25,43 @@ function cards(count: number, faces: "both" | "front" = "both"): PhysicalCard[] 
     name: `Card ${i + 1}`,
     cardTypeId: "gear",
     group: i,
+    cardSize: card("poker"),
     front: `<div>front ${i + 1}</div>`,
     ...(faces === "both" ? { back: `<div>back ${i + 1}</div>` } : {}),
   }));
 }
 
 /**
- * A deck; `fold` is the cards' fold setting and `gap` / `outerGap` / `cutOut`
- * their hinge settings, so they go onto every card, as a deck block's would.
+ * A deck; `cardSize` and `fold` are the cards' size and fold setting and
+ * `gap` / `outerGap` / `cutOut` their hinge settings, so they go onto every
+ * card, as a deck block's would.
  */
 const deck = ({
+  cardSize,
   fold,
   gap,
   outerGap,
   cutOut,
   ...over
 }: Partial<Composable> & {
+  cardSize?: CardSize;
   fold?: Fold;
   gap?: number;
   outerGap?: number;
   cutOut?: boolean;
 } = {}): Composable => {
-  const composed: Composable = {
+  const given: Composable = {
     cards: cards(6),
-    cardSize: card("poker"),
     paperSize: paper("140 x 280"),
     pageMargin: 0,
     duplexFlip: "long-edge",
     cutMarks: { enabled: true, length: 3, margin: 0, color: "#aaaaaa", weight: 0.25 },
     ...over,
   };
+  const composed =
+    cardSize === undefined
+      ? given
+      : { ...given, cards: given.cards.map((c) => ({ ...c, cardSize })) };
   const folded =
     fold === undefined
       ? composed
@@ -356,6 +363,101 @@ describe("cut marks", () => {
   });
 });
 
+describe("mixed card sizes", () => {
+  const sized = (p: CardPreset, count: number, from = 0): PhysicalCard[] =>
+    cards(count).map((c, i) => ({
+      ...c,
+      name: `${p} ${i + 1}`,
+      group: from + i,
+      cardSize: card(p),
+    }));
+  const a4 = { paperSize: paper("A4"), pageMargin: 10 };
+
+  it("puts each size on sheets of its own, in the order the deck first reaches it", () => {
+    const { pages, grid } = composePages(
+      deck({
+        ...a4,
+        cards: [...sized("poker", 2), ...sized("large", 2, 2), ...sized("poker", 1, 4)],
+      })
+    );
+    const fronts = pages.filter((p) => p.side === "front");
+    expect(fronts.map((p) => p.cells.map((c) => `${c.index + 1}:${c.name}`))).toEqual([
+      ["1:poker 1", "2:poker 2", "3:poker 1"],
+      ["4:large 1", "5:large 2"],
+    ]);
+    expect(fronts.map((p) => `${p.grid.columns} × ${p.grid.rows}`)).toEqual([
+      "3 × 3",
+      "2 × 2",
+    ]);
+    // Each back page mirrors in its own sheet's grid.
+    expect(pages.map((p) => p.side)).toEqual(["front", "back", "front", "back"]);
+    expect(pages[3]!.cells[0]!.x).toBeCloseTo(210 - fronts[1]!.cells[0]!.x - 88.9);
+    expect(grid.card).toEqual(card("poker"));
+  });
+
+  it("turns the paper one way for every size: the largest card's choice where both fit", () => {
+    // On its own mini goes landscape (18 over 16), poker portrait (9 over 8).
+    const { pages } = composePages(
+      deck({ ...a4, cards: [...sized("mini", 2), ...sized("poker", 2, 2)] })
+    );
+    expect(
+      new Set(pages.map((p) => `${p.grid.paper.width} × ${p.grid.paper.height}`))
+    ).toEqual(new Set(["210 × 297"]));
+    expect(pages[0]!.grid).toMatchObject({ columns: 4, rows: 4 });
+  });
+
+  it("takes the one way round that fits every size", () => {
+    // Three large cards folded fit A4 only the wide way; poker follows.
+    const strip = sized("large", 3).map((c) => ({
+      ...c,
+      group: 0,
+      fold: "strip" as const,
+    }));
+    const { pages } = composePages(
+      deck({ ...a4, cards: [...sized("poker", 2, 1), ...strip] })
+    );
+    expect(new Set(pages.map((p) => p.grid.paper.width))).toEqual(new Set([297]));
+    expect(pages[0]!.grid).toMatchObject({ columns: 4, rows: 2 });
+  });
+
+  it("keeps a fixed way round for every size", () => {
+    const { pages } = composePages(
+      deck({
+        paperSize: paper("A4 landscape"),
+        pageMargin: 10,
+        cards: [...sized("poker", 1), ...sized("large", 1, 1)],
+      })
+    );
+    expect(
+      pages.map((p) => `${p.grid.paper.width}:${p.grid.columns}×${p.grid.rows}`)
+    ).toEqual(["297:4×2", "297:4×2", "297:3×1", "297:3×1"]);
+  });
+
+  it("names the size that fits the paper no way round", () => {
+    expect(() =>
+      composePages(
+        deck({
+          paperSize: paper("100 x 100"),
+          pageMargin: 0,
+          cards: [...sized("mini", 1), ...sized("tarot", 1, 1)],
+        })
+      )
+    ).toThrow("A 70 × 120 mm card does not fit on 100 × 100 mm paper");
+  });
+
+  it("writes a page's grid into the text where its size is not the first one's", () => {
+    const { pages, grid } = composePages(
+      deck({ ...a4, cards: [...sized("poker", 1), ...sized("large", 1, 1)] })
+    );
+    const text = compositionText(pages, grid).split("\n");
+    expect(text[0]).toMatch(/ · 3 × 3 of 63 × 88 mm at /);
+    expect(text[1]).toMatch(/^1\. front · \d+ marks$/);
+    expect(text[5]).toMatch(
+      /^3\. front · 2 × 2 of 88\.9 × 127 mm at 16\.1, 21\.5 · \d+ marks$/
+    );
+  });
+});
+
 describe("compositionText", () => {
   it("reads as a page count, then each cell's side, place and name", () => {
     const { pages, grid } = composePages(
@@ -385,6 +487,7 @@ describe("folding", () => {
         name: note,
         cardTypeId: "gear",
         group,
+        cardSize: card("poker"),
         front: `${note}${i + 1}f`,
         back: `${note}${i + 1}b`,
       }));
@@ -548,6 +651,12 @@ describe("folding", () => {
     );
   });
 
+  it("prints a back page for a booklet of fronts alone: its pages lie behind each other", () => {
+    const fronts = cards(2, "front").map((c) => ({ ...c, group: 0 }));
+    const { pages } = composePages(deck({ cards: fronts, fold: "booklet" }));
+    expect(pages.map((p) => p.side)).toEqual(["front", "back"]);
+  });
+
   it("folds the notes that say so, and cuts apart the ones that do not", () => {
     const cards = notes(2, 2).map((c) =>
       c.group === 0 ? { ...c, fold: "strip" as const } : c
@@ -676,6 +785,7 @@ describe("fold gaps", () => {
         name: note,
         cardTypeId: "gear",
         group,
+        cardSize: card("poker"),
         front: `${note}${i + 1}f`,
         back: `${note}${i + 1}b`,
       }));

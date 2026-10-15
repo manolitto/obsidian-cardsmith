@@ -55,7 +55,9 @@ describe("buildDeck over the fixture folders", () => {
       "Rope of Climbing",
       "Wand of Embers",
     ]);
-    expect(built.cardSize).toEqual({ width: 63, height: 88 });
+    expect(
+      built.cards.every((c) => c.cardSize.width === 63 && c.cardSize.height === 88)
+    ).toBe(true);
     expect(built.stylesheets).toHaveLength(1);
     expect(built.settings.paperSize).toEqual({
       width: 210,
@@ -87,7 +89,9 @@ describe("buildDeck over the fixture folders", () => {
       "roll-table/Fischfang",
       "roll-table/Fischfang",
     ]);
-    expect(built.cardSize).toEqual({ width: 63, height: 88 });
+    expect(
+      new Set(built.cards.map((c) => `${c.cardSize.width} × ${c.cardSize.height}`))
+    ).toEqual(new Set(["63 × 88"]));
     expect(built.stylesheets).toHaveLength(5);
   });
 
@@ -179,21 +183,33 @@ describe("buildDeck over the fixture folders", () => {
     expect(diagnostics.matching('card-copies: "Nobody" names no card')).toHaveLength(1);
   });
 
-  it("fails a deck of two card sizes, naming both types and both sizes and the fix", async () => {
+  it("prints a deck of two card sizes, each size on sheets of its own, the paper one way round", async () => {
     const deck = await deckNote("dragonbane");
-    await expect(
-      buildDeck(
-        "```cardsmith-deck\nsystem: dragonbane\n```",
-        deck.path,
-        fixtureDeckSource,
-        systems,
-        fixtureRenderer(),
-        document,
-        collectDiagnostics()
-      )
-    ).rejects.toThrow(
-      "two sizes — gear at 63 × 88 mm, creature at 88.9 × 127 mm. Set card-size: on the deck block"
+    const built = await buildDeck(
+      "```cardsmith-deck\nsystem: dragonbane\ncard-languages: de\npaper-size: A4\n```",
+      deck.path,
+      fixtureDeckSource,
+      systems,
+      fixtureRenderer(),
+      document,
+      collectDiagnostics()
     );
+    const size = (c: { cardSize: { width: number; height: number } }) =>
+      `${c.cardSize.width} × ${c.cardSize.height}`;
+    expect(new Set(built.cards.map(size))).toEqual(new Set(["63 × 88", "88.9 × 127"]));
+    const { pages } = composeDeck(built);
+    // Poker first — the deck reaches it first — then the creatures, on sheets of their own.
+    const fronts = pages.filter((p) => p.side === "front");
+    expect(fronts.map((p) => `${p.grid.card.width}:${p.cells.length}`)).toEqual([
+      "63:9",
+      "88.9:3",
+    ]);
+    expect(
+      fronts[1]!.cells.map((c) => c.cardTypeId).every((id) => id === "creature")
+    ).toBe(true);
+    expect(
+      new Set(pages.map((p) => `${p.grid.paper.width} × ${p.grid.paper.height}`))
+    ).toEqual(new Set(["210 × 297"]));
   });
 
   it("takes the notes it names instead of its folder, and reports those it cannot take", async () => {
